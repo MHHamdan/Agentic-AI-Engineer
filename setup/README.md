@@ -8,7 +8,7 @@ Everything you need to get the labs running locally. If you only want the fast p
 
 ```bash
 git clone https://github.com/MHHamdan/Agentic-AI-Engineer.git
-cd agentic-ai-engineer
+cd Agentic-AI-Engineer
 
 # Install dependencies (uv is recommended)
 uv sync
