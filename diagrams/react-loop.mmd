@@ -1,0 +1,28 @@
+%% ReAct loop — thought / action / observation interleaving.
+%% Companion to concepts/agents/react-pattern.md.
+%% Renders natively on GitHub.
+
+flowchart TD
+    Start([User request]) --> S[State<br/>system + user + history]
+    S --> LLM{LLM call}
+
+    LLM -->|emits| T[💭 Thought<br/>natural-language reasoning]
+    T --> A[🔧 Action<br/>tool call OR final answer]
+
+    A -->|final answer| END([Return to user])
+    A -->|tool call| EXEC[Execute tool]
+    EXEC --> O[👁 Observation<br/>tool result]
+
+    O -->|append T, A, O to state| S
+
+    classDef state fill:#eef,stroke:#447,stroke-width:1px;
+    classDef thought fill:#ffd,stroke:#a80,stroke-width:1px;
+    classDef action fill:#dfd,stroke:#080,stroke-width:1px;
+    classDef obs fill:#fed,stroke:#a40,stroke-width:1px;
+    classDef terminal fill:#eee,stroke:#666,stroke-width:1px;
+
+    class S state;
+    class T thought;
+    class A action;
+    class O,EXEC obs;
+    class Start,END terminal;

@@ -45,6 +45,22 @@ When a tool ships a breaking change (e.g., `langgraph.prebuilt` → `langchain.a
 
 ### Added
 
+- **Foundations content — tool design and selection.**
+  - `concepts/tools/tool-design.md` — name, description, schema, return contract, executor; patterns (one-tool-per-intent, discriminated unions, pagination); seven common tool-design mistakes mapped to symptom/cause/fix.
+  - `concepts/tools/tool-selection.md` — the four selection levers (system prompt, descriptions, history, `tool_choice`); five selection-failure modes; pruning strategies for large toolsets; tool-count guidance table.
+  - `concepts/tools/README.md` — section index.
+  - `labs/02-tool-design-and-selection/README.md` — lab brief, ~90–120 min, beginner-friendly.
+  - `labs/02-tool-design-and-selection/lab.ipynb` — 32-cell notebook (19 md / 13 code) demonstrating the broken-tools → fixed-tools comparison on a mock e-commerce backend. Same agent code, two toolsets, observable behavior difference. Covers strict-mode Pydantic schemas (`ConfigDict(extra="forbid")`), structured errors, destructive-action gates, `tool_choice` (auto/required/none/named), `parallel_tool_calls`, and a stretch router pattern. Notebook outputs stripped; sample outputs in markdown cells.
+  - `diagrams/react-loop.mmd` — Mermaid source for the ReAct thought/action/observation diagram (distinct from the general 4-step `agent-loop.mmd`).
+
+- **Foundations quizzes — first batch.**
+  - `quizzes/README.md` — quiz hub, format specification (YAML front-matter + `<details>` static rendering), and contribution rules.
+  - `quizzes/foundations/agents-basics.md` — 8 questions on `what-is-an-agent.md`.
+  - `quizzes/foundations/agent-loop.md` — 8 questions on `agent-loop.md`.
+  - `quizzes/foundations/react-pattern.md` — 8 questions on `react-pattern.md`.
+  - `quizzes/foundations/tool-design-and-selection.md` — 8 questions on the two tool concept pages and Lab 02.
+  - Format: single-select only, 6–8 questions per quiz, difficulty tags (`easy`/`medium`/`hard`), stable per-question IDs (`q1`–`q8`), `review:` field anchoring each question to a specific source section. YAML front-matter as the source of truth; static `<details>` reveal blocks render natively on GitHub. The format is designed to be parseable by a future interactive renderer (deferred sibling project `agentic-ai-engineer-web`) with zero content rewriting.
+
 - **First curriculum content batch — Foundations.**
   - `concepts/agents/what-is-an-agent.md` — foundational concept page; the most-linked page in the repo.
   - `concepts/agents/agent-loop.md` — the four-step perceive/reason/act/observe cycle.
@@ -57,24 +73,29 @@ When a tool ships a breaking change (e.g., `langgraph.prebuilt` → `langchain.a
   - `learning-paths/01-foundations/README.md` — curated reading list for the Foundations path.
   - `diagrams/agent-loop.mmd` — Mermaid source for the canonical agent-loop diagram.
 
-- **`SECURITY.md`** (from previous patch batch) — closes the last Community Standards row; private reporting channel via GitHub Security Advisories.
+- **`SECURITY.md`** — closes the last Community Standards row; private reporting channel via GitHub Security Advisories.
 
 ### Changed
 
+- **`learning-paths/01-foundations/README.md`** — expanded from 3 modules to 5: added Module 3 (Tools: design + selection + Lab 02), promoted math to Module 4, added Module 5 (Quizzes). Updated flowchart to include the new modules. Time estimate bumped from 8–12 to 10–15 hours. References list now includes Toolformer and Gorilla; added Berkeley F25 *Agentic AI* course link alongside F24.
 - **`CITATION.cff`** — `date-released` set to actual release date (`2026-05-23`). Passes `cffconvert --validate`.
-- **`.lycheeignore`** — removed patterns for content now authored (concept pages, math notes, lab 01, learning-paths/01-foundations).
-- **`.github/workflows/ci.yml`** — cleaner empty-repo handling, `markdownlint` made informational, lychee uses auto-detected `.lycheeignore` (no broken `--exclude-path` flag).
+- **`.lycheeignore`** — removed patterns for content now authored (concept pages, math notes, lab 01, learning-paths/01-foundations; tool concept pages, Lab 02, quizzes). Kept patterns for forthcoming labs (03, 04, 05, …), patterns/, recipes/, projects/, and tools/ pages that haven't been authored yet.
+- **`.github/workflows/ci.yml`** — cleaner empty-repo handling, `markdownlint` made informational, lychee uses auto-detected `.lycheeignore` (no broken `--exclude-path` flag); ruff switched from `nbqa` to native notebook support (drops `nbqa` dependency, fixes per-file-ignores not applying to notebooks).
+- **`pyproject.toml`** — added `[tool.uv] package = false` and removed empty `[tool.hatch.build.targets.wheel]` block to fix `uv sync` failing on modern Hatchling. Added `I001` to notebook per-file-ignores in `[tool.ruff.lint.per-file-ignores]`.
 - **Internal links** in `README.md`, `CONTRIBUTING.md`, `LICENSING.md`, `docs/start-here.md`, `tools/README.md`, `diagrams/README.md` — converted GitHub-relative URLs (`../../issues`, `../../discussions`) to absolute `https://github.com/MHHamdan/Agentic-AI-Engineer/...` URLs; de-linked template placeholder paths to avoid false-positive link errors.
 
 ### Fixed
 
 - Two CI failures from the initial v0.1.0 push: `Validate metadata` (placeholder date in `CITATION.cff`) and `Check Markdown links` (49 broken or forward-reference links). All CI jobs now pass.
+- CI lint failures from notebook handling: `nbqa ruff` was bypassing per-file-ignores from `pyproject.toml`; switched to native ruff 0.6+ notebook support and added `I001` to notebook per-file-ignores. Fixed 3 real lint issues in `lab.ipynb` (E401 split-import, UP035 `typing.Callable` → `collections.abc.Callable`, F541 unneeded f-prefix), and 1 in Lab 02's `lab.ipynb` (B007 unused tuple-unpack variable `fn` → `_fn`).
+- `uv sync` failure: modern Hatchling rejects empty `packages = []` declaration; replaced with canonical `[tool.uv] package = false` virtual-root declaration. `[build-system]` retained for future `pip install -e .` compatibility.
+- Lab 01 link bug: `math-foundations/04-agents-as-policies.md` linked to `../../labs/...` when it should have been `../labs/...`.
 
 ### Verified Tool Snapshots
 
-- `openai` ≥ 1.40 — verified 2026-05-23 (used in Lab 01).
-- `anthropic` ≥ 0.34 — verified 2026-05-23 (used in Lab 01 as alternative provider).
-- `pydantic` ≥ 2.7 — verified 2026-05-23 (used for tool schemas in Lab 01).
+- `openai` ≥ 1.40 — verified 2026-05-23 (used in Labs 01 and 02; `tool_choice` modes and `parallel_tool_calls` exercised in Lab 02).
+- `anthropic` ≥ 0.34 — verified 2026-05-23 (used in Labs 01 and 02 as alternative provider).
+- `pydantic` ≥ 2.7 — verified 2026-05-23 (used for tool schemas; strict-mode patterns with `ConfigDict(extra="forbid")` and `Literal` types demonstrated in Lab 02).
 
 ---
 

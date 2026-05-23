@@ -16,10 +16,10 @@
 # in, remove the matching line so the checker re-enforces it.
 
 # Concept pages (forward references from learning paths and the root README)
-# Note: concepts/agents/{what-is-an-agent,agent-loop,react-pattern}.md are authored.
+# Note: concepts/agents/{what-is-an-agent,agent-loop,react-pattern}.md authored.
+# Note: concepts/tools/{tool-design,tool-selection}.md authored (batch 7).
 ^.*/concepts/agents/plan-and-execute\.md$
 ^.*/concepts/context/context-budget\.md$
-^.*/concepts/tools/tool-selection\.md$
 ^.*/concepts/evaluation/?$
 
 # Pattern pages (referenced from concept pages but not yet authored)
@@ -43,9 +43,10 @@
 ^.*/learning-paths/08-mathematical-foundations/?$
 ^.*/learning-paths/09-capstones/?$
 
-# Labs (numbered labs not yet shipped — Lab 01 is now authored)
-# Note: references to a solution/lab.ipynb may temporarily 404 until follow-up batch.
+# Labs (numbered labs not yet shipped — Labs 01 and 02 are authored)
+# Note: references to solution/lab.ipynb may temporarily 404 until follow-up batch.
 ^.*/labs/01-first-agent-from-scratch/solution/.*$
+^.*/labs/02-tool-design-and-selection/solution/.*$
 
 # Tools subfolders (per-framework pages not yet authored)
 ^.*/tools/langsmith/?$
