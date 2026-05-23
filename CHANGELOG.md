@@ -45,19 +45,36 @@ When a tool ships a breaking change (e.g., `langgraph.prebuilt` → `langchain.a
 
 ### Added
 
-- *(Pending. Add entries here as you contribute.)*
+- **First curriculum content batch — Foundations.**
+  - `concepts/agents/what-is-an-agent.md` — foundational concept page; the most-linked page in the repo.
+  - `concepts/agents/agent-loop.md` — the four-step perceive/reason/act/observe cycle.
+  - `concepts/agents/react-pattern.md` — ReAct prompting pattern with Yao et al. (ICLR 2023) citation.
+  - `math-foundations/notation.md` — symbol and convention reference.
+  - `math-foundations/04-agents-as-policies.md` — first real math page; $\pi_\theta(a_t \mid s_t)$ framing.
+  - `math-foundations/06-react-formalization.md` — ReAct as a specialization of the policy.
+  - `labs/01-first-agent-from-scratch/README.md` — lab brief.
+  - `labs/01-first-agent-from-scratch/lab.ipynb` — ~150-line ReAct agent in pure Python, provider-agnostic (OpenAI default, Anthropic swap-in). Notebook outputs stripped; sample outputs in markdown cells.
+  - `learning-paths/01-foundations/README.md` — curated reading list for the Foundations path.
+  - `diagrams/agent-loop.mmd` — Mermaid source for the canonical agent-loop diagram.
+
+- **`SECURITY.md`** (from previous patch batch) — closes the last Community Standards row; private reporting channel via GitHub Security Advisories.
 
 ### Changed
 
-- *(Pending.)*
+- **`CITATION.cff`** — `date-released` set to actual release date (`2026-05-23`). Passes `cffconvert --validate`.
+- **`.lycheeignore`** — removed patterns for content now authored (concept pages, math notes, lab 01, learning-paths/01-foundations).
+- **`.github/workflows/ci.yml`** — cleaner empty-repo handling, `markdownlint` made informational, lychee uses auto-detected `.lycheeignore` (no broken `--exclude-path` flag).
+- **Internal links** in `README.md`, `CONTRIBUTING.md`, `LICENSING.md`, `docs/start-here.md`, `tools/README.md`, `diagrams/README.md` — converted GitHub-relative URLs (`../../issues`, `../../discussions`) to absolute `https://github.com/MHHamdan/Agentic-AI-Engineer/...` URLs; de-linked template placeholder paths to avoid false-positive link errors.
 
 ### Fixed
 
-- *(Pending.)*
+- Two CI failures from the initial v0.1.0 push: `Validate metadata` (placeholder date in `CITATION.cff`) and `Check Markdown links` (49 broken or forward-reference links). All CI jobs now pass.
 
 ### Verified Tool Snapshots
 
-- *(Pending.)*
+- `openai` ≥ 1.40 — verified 2026-05-23 (used in Lab 01).
+- `anthropic` ≥ 0.34 — verified 2026-05-23 (used in Lab 01 as alternative provider).
+- `pydantic` ≥ 2.7 — verified 2026-05-23 (used for tool schemas in Lab 01).
 
 ---
 

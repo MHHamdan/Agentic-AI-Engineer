@@ -1,0 +1,20 @@
+%% Canonical agent loop diagram
+%% Used in: concepts/agents/agent-loop.md, concepts/agents/what-is-an-agent.md
+%% Rendered SVG: diagrams/rendered/agent-loop.svg
+
+flowchart LR
+    User([User input]) --> S[State / history]
+    S --> LLM{{LLM<br/>Decides:<br/>tool call or<br/>final answer?}}
+    LLM -- tool call --> T[Execute tool]
+    T -- observation --> S
+    LLM -- final answer --> Out([Response])
+
+    classDef external fill:#e8f4f8,stroke:#0366d6,stroke-width:2px;
+    classDef state fill:#fff8dc,stroke:#b58900,stroke-width:2px;
+    classDef llm fill:#f3e8ff,stroke:#6f42c1,stroke-width:2px;
+    classDef action fill:#e6f6ec,stroke:#28a745,stroke-width:2px;
+
+    class User,Out external;
+    class S state;
+    class LLM llm;
+    class T action;

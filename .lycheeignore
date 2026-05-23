@@ -16,12 +16,24 @@
 # in, remove the matching line so the checker re-enforces it.
 
 # Concept pages (forward references from learning paths and the root README)
-^.*/concepts/agents/?$
-^.*/concepts/agents/what-is-an-agent\.md$
+# Note: concepts/agents/{what-is-an-agent,agent-loop,react-pattern}.md are authored.
+^.*/concepts/agents/plan-and-execute\.md$
+^.*/concepts/context/context-budget\.md$
+^.*/concepts/tools/tool-selection\.md$
 ^.*/concepts/evaluation/?$
 
+# Pattern pages (referenced from concept pages but not yet authored)
+^.*/patterns/01-single-agent-tool-use\.md$
+^.*/patterns/03-supervisor-workers\.md$
+^.*/patterns/06-plan-and-execute\.md$
+^.*/patterns/10-human-in-the-loop\.md$
+
+# Math pages not yet authored
+^.*/math-foundations/02-embeddings-similarity\.md$
+^.*/math-foundations/05-mdp-pomdp\.md$
+
 # Learning paths (folders not yet populated — only the index README exists)
-^.*/learning-paths/01-foundations/?$
+# Note: learning-paths/01-foundations/ now has authored content; line for it removed.
 ^.*/learning-paths/02-agentic-rag/?$
 ^.*/learning-paths/03-multi-agent-systems/?$
 ^.*/learning-paths/04-tool-protocols-mcp-a2a/?$
@@ -31,8 +43,9 @@
 ^.*/learning-paths/08-mathematical-foundations/?$
 ^.*/learning-paths/09-capstones/?$
 
-# Labs (numbered labs not yet shipped)
-^.*/labs/01-first-agent-from-scratch/?$
+# Labs (numbered labs not yet shipped — Lab 01 is now authored)
+# Note: references to a solution/lab.ipynb may temporarily 404 until follow-up batch.
+^.*/labs/01-first-agent-from-scratch/solution/.*$
 
 # Tools subfolders (per-framework pages not yet authored)
 ^.*/tools/langsmith/?$
