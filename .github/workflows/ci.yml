@@ -61,7 +61,7 @@ jobs:
           PY
 
   # ──────────────────────────────────────────────────────────────────────────
-  # Lint Python and notebooks (skips cleanly when nothing to lint yet)
+  # Lint Python and notebooks (ruff 0.6+ supports .ipynb natively)
   # ──────────────────────────────────────────────────────────────────────────
   lint-python:
     name: Lint Python and notebooks
@@ -74,30 +74,22 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install linters
+      - name: Install ruff
         run: |
           python -m pip install --upgrade pip
-          pip install "ruff>=0.6" "nbqa>=1.8"
+          pip install "ruff>=0.6"
 
-      - name: Ruff check (Python)
+      - name: Ruff check (Python + notebooks)
         run: |
+          # ruff 0.6+ discovers both .py and .ipynb by default and applies
+          # per-file-ignores from pyproject.toml correctly. No nbqa wrapper.
+          # Exits 0 cleanly if nothing matches.
           shopt -s globstar nullglob
-          py_files=( **/*.py )
-          if [ ${#py_files[@]} -eq 0 ]; then
-            echo "No Python files yet — skipping."
+          if [ -z "$(ls **/*.py **/*.ipynb 2>/dev/null)" ]; then
+            echo "No Python files or notebooks yet — skipping."
             exit 0
           fi
           ruff check .
-
-      - name: Ruff check (notebooks)
-        run: |
-          shopt -s globstar nullglob
-          nb_files=( **/*.ipynb )
-          if [ ${#nb_files[@]} -eq 0 ]; then
-            echo "No notebooks yet — skipping."
-            exit 0
-          fi
-          nbqa ruff .
 
   # ──────────────────────────────────────────────────────────────────────────
   # Lint Markdown (informational only until rules stabilize)
