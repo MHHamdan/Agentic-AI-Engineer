@@ -1,0 +1,56 @@
+cff-version: 1.2.0
+message: "If you use this material in research, teaching, or technical writing, please cite it as below."
+title: "Agentic AI Engineer: An open learning hub for building real agentic AI systems"
+abstract: >-
+  An open, community-maintained reference and curriculum for engineers building
+  agentic AI systems. Covers stable concepts (agents, RAG, multi-agent topologies,
+  context engineering, evaluation) and dated snapshots of fast-changing tooling
+  (LangGraph, MCP, A2A, LangSmith, vector databases). Organized as learning paths,
+  concept pages, labs, recipes, architecture patterns, and projects, with an
+  integrated mathematical-foundations track.
+
+type: software
+version: "0.1.0"
+date-released: "YYYY-MM-DD"
+
+# Replace with the actual repository URL once the GitHub org is set up.
+repository-code: "https://github.com/MHHamdan/Agentic-AI-Engineer"
+url: "https://github.com/MHHamdan/Agentic-AI-Engineer"
+
+# Apache-2.0 covers code, scripts, and notebooks.
+# Prose, diagrams, and other written content are separately licensed under CC-BY-4.0;
+# see LICENSE-CC-BY-4.0 for the full text.
+license: "Apache-2.0"
+
+keywords:
+  - agentic-ai
+  - ai-agents
+  - large-language-models
+  - llm-agents
+  - retrieval-augmented-generation
+  - rag
+  - multi-agent-systems
+  - langgraph
+  - model-context-protocol
+  - mcp
+  - agent2agent
+  - a2a
+  - context-engineering
+  - llm-evaluation
+  - llm-observability
+  - agent-safety
+  - open-curriculum
+  - machine-learning
+  - python
+
+authors:
+  - name: "Agentic AI Engineer contributors"
+    # Replace this collective placeholder with named maintainers as the project grows.
+    # Example:
+    # - family-names: "Lastname"
+    #   given-names: "Firstname"
+    #   orcid: "https://orcid.org/0000-0000-0000-0000"
+    #   affiliation: "Independent"
+
+# A preferred-citation block can be added when a companion paper or report exists.
+# For now, the software citation above is sufficient.
