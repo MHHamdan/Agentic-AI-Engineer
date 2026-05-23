@@ -1,6 +1,6 @@
 # Agentic AI Engineer
 
-> An open, community-built learning hub for engineers who want to design, build, evaluate, and ship real agentic AI systems — continually updated.
+> An open, community-built learning hub for engineers who want to design, build, evaluate, and ship real agentic AI systems — not just prompts.
 
 <p>
   <img alt="License: Apache-2.0 (code)" src="https://img.shields.io/badge/code-Apache--2.0-blue">
@@ -296,7 +296,7 @@ This is built to be a community resource, not a one-author site. Useful contribu
 - Filing issues when something is unclear, wrong, or stale.
 - Adding your project to the [showcase](./docs/community/showcase.md).
 
-The contribution workflow, templates for each content type, and the style guide are in [`CONTRIBUTING.md`](./CONTRIBUTING.md). Good first issues are labeled [`good-first-issue`](https://github.com/MHHamdan/Agentic-AI-Engineer/labels/good-first-issue).
+The contribution workflow, templates for each content type, and the style guide are in [`CONTRIBUTING.md`](./CONTRIBUTING.md). Good first issues are labeled [`good-first-issue`](https://github.com/MHHamdan/Agentic-AI-Engineer/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
 
 We follow a [Code of Conduct](./CODE_OF_CONDUCT.md) — please read it before posting.
 

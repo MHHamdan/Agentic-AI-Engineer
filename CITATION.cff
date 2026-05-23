@@ -11,9 +11,8 @@ abstract: >-
 
 type: software
 version: "0.1.0"
-date-released: "YYYY-MM-DD"
+date-released: "2026-05-23"
 
-# Replace with the actual repository URL once the GitHub org is set up.
 repository-code: "https://github.com/MHHamdan/Agentic-AI-Engineer"
 url: "https://github.com/MHHamdan/Agentic-AI-Engineer"
 
@@ -47,8 +46,8 @@ authors:
   - name: "Agentic AI Engineer contributors"
     # Replace this collective placeholder with named maintainers as the project grows.
     # Example:
-    # - family-names: "Lastname"
-    #   given-names: "Firstname"
+    # - family-names: "Hamdan"
+    #   given-names: "Mohammed"
     #   orcid: "https://orcid.org/0000-0000-0000-0000"
     #   affiliation: "Independent"
 

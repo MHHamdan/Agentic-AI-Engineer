@@ -50,7 +50,7 @@ These are some of the most-linked pages in the repo. If you want to contribute, 
 
 ## How to keep tool pages fresh
 
-Stale tool pages are tracked via the [`stale-tool-version`](../../../issues?q=label%3Astale-tool-version) issue label. Opening such an issue is a real contribution even if you don't fix it yourself.
+Stale tool pages are tracked via the [`stale-tool-version`](https://github.com/MHHamdan/Agentic-AI-Engineer/issues?q=is%3Aissue+label%3Astale-tool-version) issue label. Opening such an issue is a real contribution even if you don't fix it yourself.
 
 Maintainers run periodic sweeps to refresh verification dates against the upstream sources. Sweeps are noted in [`CHANGELOG.md`](../CHANGELOG.md).
 

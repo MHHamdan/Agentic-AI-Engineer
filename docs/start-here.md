@@ -23,7 +23,7 @@ Pick the option that matches where you are:
 | Need to solve a specific problem now | Search [`recipes/`](../recipes/) → fall back to [`patterns/`](../patterns/) if you need architecture-level guidance |
 | Researching for a decision (framework / pattern / vector DB) | Go to [`tools/comparisons/`](../tools/comparisons/) and the relevant page in [`patterns/`](../patterns/) |
 | Want to teach this material | Read [`LICENSING.md`](../LICENSING.md) for attribution rules, then use the curriculum freely under CC-BY-4.0 |
-| Want to contribute | Read [`CONTRIBUTING.md`](../CONTRIBUTING.md) and look for [`good-first-issue`](../../../issues?q=label%3Agood-first-issue) |
+| Want to contribute | Read [`CONTRIBUTING.md`](../CONTRIBUTING.md) and look for [`good-first-issue`](https://github.com/MHHamdan/Agentic-AI-Engineer/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) |
 
 ---
 
@@ -33,7 +33,7 @@ Before anything else, get a working agent running locally. This confirms your en
 
 ```bash
 # 1. Clone and enter the repo
-git clone https://github.com/MHHamdan/Agentic-AI-Engineer.git
+git clone https://github.com/<your-org>/agentic-ai-engineer.git
 cd agentic-ai-engineer
 
 # 2. Set up the environment
@@ -117,7 +117,7 @@ A few habits that help when the repo grows:
 | A concept is unclear | Open an issue with the `docs` label — vague pages are bugs |
 | Tool snapshot looks stale | Open an issue with the `stale-tool-version` label |
 | Want a new recipe / lab / pattern | Open an issue with the `enhancement` label, or send a PR |
-| General question or discussion | [GitHub Discussions](../../../discussions) |
+| General question or discussion | [GitHub Discussions](https://github.com/MHHamdan/Agentic-AI-Engineer/discussions) |
 
 ---
 

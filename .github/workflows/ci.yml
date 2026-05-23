@@ -5,10 +5,8 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  # Allow manual runs from the Actions tab
   workflow_dispatch:
 
-# Cancel in-flight runs on the same branch when a new commit lands
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -18,7 +16,7 @@ permissions:
 
 jobs:
   # ──────────────────────────────────────────────────────────────────────────
-  # Validate non-code files (CITATION.cff, YAML configs, etc.)
+  # Validate non-code files (CITATION.cff, YAML configs, pyproject)
   # ──────────────────────────────────────────────────────────────────────────
   validate:
     name: Validate metadata
@@ -34,7 +32,7 @@ jobs:
       - name: Install validators
         run: |
           python -m pip install --upgrade pip
-          pip install cffconvert pyyaml tomli
+          pip install cffconvert pyyaml
 
       - name: Validate CITATION.cff
         run: cffconvert --validate -i CITATION.cff
@@ -49,7 +47,6 @@ jobs:
           import pathlib, yaml, sys
           errors = []
           for p in pathlib.Path(".").rglob("*.y*ml"):
-              # skip large generated files if any land in the repo
               try:
                   with open(p) as f:
                       list(yaml.safe_load_all(f))
@@ -64,7 +61,7 @@ jobs:
           PY
 
   # ──────────────────────────────────────────────────────────────────────────
-  # Lint Python and notebooks
+  # Lint Python and notebooks (skips cleanly when nothing to lint yet)
   # ──────────────────────────────────────────────────────────────────────────
   lint-python:
     name: Lint Python and notebooks
@@ -84,36 +81,48 @@ jobs:
 
       - name: Ruff check (Python)
         run: |
-          # Only run if there are Python files; ruff exits 0 on no-files-found by default
+          shopt -s globstar nullglob
+          py_files=( **/*.py )
+          if [ ${#py_files[@]} -eq 0 ]; then
+            echo "No Python files yet — skipping."
+            exit 0
+          fi
           ruff check .
 
       - name: Ruff check (notebooks)
         run: |
-          # nbqa exits cleanly when no notebooks are present
-          nbqa ruff . || true
+          shopt -s globstar nullglob
+          nb_files=( **/*.ipynb )
+          if [ ${#nb_files[@]} -eq 0 ]; then
+            echo "No notebooks yet — skipping."
+            exit 0
+          fi
+          nbqa ruff .
 
   # ──────────────────────────────────────────────────────────────────────────
-  # Lint Markdown
+  # Lint Markdown (informational only until rules stabilize)
   # ──────────────────────────────────────────────────────────────────────────
   lint-markdown:
     name: Lint Markdown
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
 
       - name: markdownlint
         uses: DavidAnson/markdownlint-cli2-action@v16
         with:
-          # Lenient defaults — see .markdownlint.jsonc for project rules.
-          # Failing this job won't block until we add the config file.
           globs: |
             **/*.md
             !**/LICENSE*
             !**/CHANGELOG.md
+            !**/CODE_OF_CONDUCT.md
         continue-on-error: true
 
   # ──────────────────────────────────────────────────────────────────────────
-  # Check for broken internal links
+  # Check internal Markdown links.
+  # .lycheeignore (regex patterns matched against resolved URLs) is
+  # auto-detected from the repo root by lychee.
   # ──────────────────────────────────────────────────────────────────────────
   link-check:
     name: Check Markdown links
@@ -124,13 +133,15 @@ jobs:
       - name: lychee link checker
         uses: lycheeverse/lychee-action@v2
         with:
-          # Internal links only by default. External link checks can be enabled
-          # in a separate scheduled workflow if desired (rate-limit-friendly).
-          args: --offline --no-progress --include-fragments "./**/*.md"
+          args: >-
+            --offline
+            --no-progress
+            --include-fragments
+            ./**/*.md
           fail: true
 
   # ──────────────────────────────────────────────────────────────────────────
-  # Verify CHANGELOG was updated on content-bearing PRs
+  # Soft reminder when content-bearing PRs forget CHANGELOG
   # ──────────────────────────────────────────────────────────────────────────
   changelog-reminder:
     name: Changelog reminder (PR only)
@@ -148,7 +159,6 @@ jobs:
           changed=$(git diff --name-only "$base" "$head")
           echo "Changed files:"
           echo "$changed"
-          # If a content-bearing path changed but CHANGELOG didn't, warn (not fail).
           if echo "$changed" | grep -qE '^(concepts|labs|recipes|patterns|projects|tools|math-foundations)/' && ! echo "$changed" | grep -q '^CHANGELOG\.md$'; then
             echo "::warning::This PR touches content but doesn't update CHANGELOG.md. Add an entry under [Unreleased] if the change is meaningful."
           else

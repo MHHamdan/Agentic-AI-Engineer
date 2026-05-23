@@ -81,7 +81,7 @@ When reusing either kind of content, please include:
 A single example covers most reuse cases:
 
 ```
-Adapted from "Agentic AI Engineer" — https://github.com/MHHamdan/Agentic-AI-Engineer
+Adapted from "Agentic AI Engineer" — https://github.com/<your-org>/agentic-ai-engineer
 Code under Apache-2.0; prose and diagrams under CC-BY-4.0. Changes: <brief description>.
 ```
 
@@ -115,6 +115,6 @@ A clean repo carries these license-related files:
 | [`LICENSE`](./LICENSE) | Full Apache-2.0 license text. GitHub auto-detects this and displays the license badge. |
 | [`LICENSE-CC-BY-4.0`](./LICENSE-CC-BY-4.0) | Full Creative Commons Attribution 4.0 license text. |
 | [`LICENSING.md`](./LICENSING.md) | This page — the explainer that disambiguates what's covered by what. |
-| [`NOTICE`](./NOTICE) *(optional)* | Apache-2.0 NOTICE file, added if/when third-party code is bundled. |
+| `NOTICE` *(optional)* | Apache-2.0 NOTICE file, added if/when third-party code is bundled. |
 
 Both `LICENSE` and `LICENSING.md` are referenced from the root [`README.md`](./README.md) and from [`CONTRIBUTING.md`](./CONTRIBUTING.md).

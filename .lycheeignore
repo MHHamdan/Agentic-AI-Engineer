@@ -1,0 +1,68 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# lychee link-checker ignore list
+#
+# Patterns are PCRE2 regex matched against the full URL/file path. Lines
+# starting with '#' are comments. Be conservative — every entry here is a
+# real broken link we're choosing not to enforce.
+#
+# Categories below mark what kind of exception each block represents.
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+# ─── Category 1: Content not yet authored ────────────────────────────────────
+# These paths are referenced from concept stubs, learning-path overviews, and
+# the root README as forward references to content we'll write next. They'll
+# resolve to real files as the curriculum lands. When a path here is filled
+# in, remove the matching line so the checker re-enforces it.
+
+# Concept pages (forward references from learning paths and the root README)
+^.*/concepts/agents/?$
+^.*/concepts/agents/what-is-an-agent\.md$
+^.*/concepts/evaluation/?$
+
+# Learning paths (folders not yet populated — only the index README exists)
+^.*/learning-paths/01-foundations/?$
+^.*/learning-paths/02-agentic-rag/?$
+^.*/learning-paths/03-multi-agent-systems/?$
+^.*/learning-paths/04-tool-protocols-mcp-a2a/?$
+^.*/learning-paths/05-context-engineering/?$
+^.*/learning-paths/06-evaluation-observability/?$
+^.*/learning-paths/07-production-and-safety/?$
+^.*/learning-paths/08-mathematical-foundations/?$
+^.*/learning-paths/09-capstones/?$
+
+# Labs (numbered labs not yet shipped)
+^.*/labs/01-first-agent-from-scratch/?$
+
+# Tools subfolders (per-framework pages not yet authored)
+^.*/tools/langsmith/?$
+^.*/tools/comparisons/?$
+
+# Setup deep-dive pages (the overview README exists; the rest will follow)
+^.*/setup/python-environment\.md$
+^.*/setup/api-keys\.md$
+^.*/setup/local-models\.md$
+^.*/setup/docker\.md$
+^.*/setup/troubleshooting\.md$
+
+# References pages (the README exists; per-type lists land later)
+^.*/references/papers\.md$
+^.*/references/books\.md$
+^.*/references/talks\.md$
+^.*/references/community\.md$
+
+# Docs pages (start-here exists; how-to-use and community/showcase land later)
+^.*/docs/how-to-use-this-repo\.md$
+^.*/docs/community/showcase\.md$
+
+
+# ─── Category 2: Optional / conditional files ────────────────────────────────
+# Mentioned in LICENSING.md as "added if/when third-party code is bundled".
+# Not a real broken link — a placeholder reference.
+^.*/NOTICE$
+
+
+# ─── Category 3: External URLs to skip in offline mode ───────────────────────
+# (None for now. External link-checking is disabled via --offline in CI.
+# When we enable scheduled external checks, this section will hold
+# false-positive external URLs that consistently 403/429 on automated checks.)

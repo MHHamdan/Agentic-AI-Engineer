@@ -54,11 +54,7 @@ For diagrams reused in multiple pages, embed the SVG instead:
 ![Agent loop](../diagrams/rendered/agent-loop.svg)
 ```
 
-The page also links to the `.mmd` source so contributors can find the editable version:
-
-```markdown
-> Source: [`diagrams/agent-loop.mmd`](../diagrams/agent-loop.mmd)
-```
+The page also links to the `.mmd` source so contributors can find the editable version. Use a quoted source line at the top or bottom of the page, naming the relative path in inline code (no link target needed — the file lives in this folder and is easy to find).
 
 ## Rendering Mermaid to SVG
 

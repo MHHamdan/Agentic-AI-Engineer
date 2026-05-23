@@ -38,7 +38,7 @@ What we're cautious about:
 - **Long opinion pieces.** This isn't a blog. Strong opinions belong in patterns ("when NOT to use") with diagrams and tradeoffs.
 - **Marketing content.** If your contribution promotes a specific commercial product without engineering substance, it will be declined.
 
-If you're not sure whether a contribution fits, open a [Discussion](../../discussions) before investing time.
+If you're not sure whether a contribution fits, open a [Discussion](https://github.com/MHHamdan/Agentic-AI-Engineer/discussions) before investing time.
 
 ---
 
@@ -84,9 +84,9 @@ treatment in `math-foundations/`.
 
 ## See also
 
-- Math: [`math-foundations/...`](../../math-foundations/...)
-- Lab: [`labs/...`](../../labs/...)
-- Pattern: [`patterns/...`](../../patterns/...)
+- Math: `math-foundations/<topic>.md`
+- Lab: `labs/<NN-name>/`
+- Pattern: `patterns/<NN-name>.md`
 
 ## References
 
@@ -199,8 +199,8 @@ Three or four sentences. The engineering intuition.
 
 ## See also
 
-- Concept: [`concepts/...`](../concepts/...)
-- Pattern: [`patterns/...`](../patterns/...)
+- Concept: `concepts/<topic>.md`
+- Pattern: `patterns/<NN-name>.md`
 ````
 
 **Guidelines:**
@@ -236,7 +236,7 @@ When you update a tool page, you must:
 
 5. **Open the PR with the label `tool-snapshot`.** Maintainers prioritize these.
 
-Stale tool pages are tracked via the [`stale-tool-version`](../../issues?q=label%3Astale-tool-version) issue label. If you spot one without fixing it, opening the issue is a real contribution.
+Stale tool pages are tracked via the [`stale-tool-version`](https://github.com/MHHamdan/Agentic-AI-Engineer/issues?q=is%3Aissue+label%3Astale-tool-version) issue label. If you spot one without fixing it, opening the issue is a real contribution.
 
 ---
 
