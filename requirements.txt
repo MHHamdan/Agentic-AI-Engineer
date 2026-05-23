@@ -1,0 +1,42 @@
+# Agentic AI Engineer — pip fallback
+#
+# uv is the recommended workflow (uses pyproject.toml + uv.lock).
+# This file mirrors the [project.dependencies] block in pyproject.toml for
+# users on plain pip. Optional extras (RAG, MCP, A2A, eval, vector DBs) are
+# not included here — install them per-lab as needed, or install from the
+# pyproject extras:
+#
+#   pip install -e ".[rag]"
+#   pip install -e ".[mcp,a2a,eval]"
+#   pip install -e ".[all]"          # everything
+#
+# Major framework versions are pinned with caret-style ranges so we get
+# patch updates automatically but breaking changes are deliberate.
+
+# Core async / HTTP
+httpx>=0.27
+python-dotenv>=1.0
+pydantic>=2.7
+
+# LLM SDKs
+openai>=1.40
+anthropic>=0.34
+google-generativeai>=0.7
+
+# LangChain / LangGraph 1.0+
+langchain>=1.0,<2.0
+langchain-core>=1.0,<2.0
+langgraph>=1.0,<2.0
+
+# Notebooks
+jupyterlab>=4.2
+ipykernel>=6.29
+ipywidgets>=8.1
+
+# Common utilities used across labs
+rich>=13.7
+tenacity>=8.5
+tiktoken>=0.7
+
+# Lightweight numeric stack
+numpy>=1.26

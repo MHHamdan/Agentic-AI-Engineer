@@ -1,0 +1,197 @@
+[project]
+name = "agentic-ai-engineer"
+version = "0.1.0"
+description = "An open, community-built learning hub for engineers building real agentic AI systems."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "Agentic AI Engineer contributors" },
+]
+keywords = [
+    "agentic-ai",
+    "ai-agents",
+    "llm",
+    "rag",
+    "multi-agent",
+    "langgraph",
+    "mcp",
+    "a2a",
+    "education",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Education",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+# Core dependencies are kept minimal — labs install their own extras as needed.
+# Major framework versions are pinned with caret-style ranges so we get patch
+# updates automatically but breaking changes require a deliberate bump
+# (tracked in CHANGELOG.md under "Verified Tool Snapshots").
+dependencies = [
+    # Core async / HTTP
+    "httpx>=0.27",
+    "python-dotenv>=1.0",
+    "pydantic>=2.7",
+
+    # LLM SDKs (one of these is usually enough; we install all so labs work
+    # with any provider the user has a key for)
+    "openai>=1.40",
+    "anthropic>=0.34",
+    "google-generativeai>=0.7",
+
+    # LangChain / LangGraph — 1.0+, see CHANGELOG.md for verified snapshot
+    "langchain>=1.0,<2.0",
+    "langchain-core>=1.0,<2.0",
+    "langgraph>=1.0,<2.0",
+
+    # Notebooks
+    "jupyterlab>=4.2",
+    "ipykernel>=6.29",
+    "ipywidgets>=8.1",
+
+    # Common utilities used across labs
+    "rich>=13.7",
+    "tenacity>=8.5",
+    "tiktoken>=0.7",
+
+    # Lightweight in-memory vector store for early labs (real vector DB
+    # adapters are optional extras below)
+    "numpy>=1.26",
+]
+
+[project.optional-dependencies]
+# Each extra unlocks a family of labs. Install with:
+#   uv sync --extra rag
+#   pip install -e ".[rag]"
+rag = [
+    "chromadb>=0.5",
+    "sentence-transformers>=3.0",
+    "rank-bm25>=0.2",
+    "unstructured>=0.15",
+    "pypdf>=4.3",
+]
+mcp = [
+    "mcp>=1.0",
+    "fastmcp>=0.4",
+]
+a2a = [
+    "a2a-sdk>=0.2",
+]
+eval = [
+    "langsmith>=0.1.100",
+    "ragas>=0.2",
+    "deepeval>=1.0",
+]
+vector-pinecone = ["pinecone>=5.0"]
+vector-qdrant = ["qdrant-client>=1.10"]
+vector-weaviate = ["weaviate-client>=4.6"]
+vector-pgvector = ["pgvector>=0.3", "psycopg[binary]>=3.2"]
+
+# "all" pulls in everything — useful for CI and contributors who want full coverage.
+all = [
+    "agentic-ai-engineer[rag,mcp,a2a,eval,vector-pinecone,vector-qdrant,vector-weaviate,vector-pgvector]",
+]
+
+dev = [
+    "ruff>=0.6",
+    "black>=24.8",
+    "mypy>=1.11",
+    "pytest>=8.3",
+    "pytest-asyncio>=0.23",
+    "nbqa>=1.8",
+    "nbstripout>=0.7",
+    "pre-commit>=3.8",
+]
+
+[project.urls]
+Homepage = "https://github.com/MHHamdan/Agentic-AI-Engineer"
+Repository = "https://github.com/MHHamdan/Agentic-AI-Engineer"
+Issues = "https://github.com/MHHamdan/Agentic-AI-Engineer/issues"
+Changelog = "https://github.com/MHHamdan/Agentic-AI-Engineer/blob/main/CHANGELOG.md"
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Build system
+# ─────────────────────────────────────────────────────────────────────────────
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+# This repo is primarily an educational resource, not a published package.
+# We still declare a wheel so `pip install -e .` works for contributors who
+# want to import shared helpers from a `src/` layout when it's added.
+packages = []
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Ruff — linting + formatting
+# ─────────────────────────────────────────────────────────────────────────────
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # flake8-bugbear
+    "C4",   # flake8-comprehensions
+    "UP",   # pyupgrade
+    "SIM",  # flake8-simplify
+]
+ignore = [
+    "E501",  # line length handled by formatter
+    "B008",  # function-call-in-default-argument (common pattern in agent setup)
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Notebook-friendly relaxations
+"**/*.ipynb" = ["E402", "F401", "F811"]
+# Lab scaffolding may have unused imports for clarity
+"labs/**/*.py" = ["F401"]
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Black
+# ─────────────────────────────────────────────────────────────────────────────
+[tool.black]
+line-length = 100
+target-version = ["py311", "py312"]
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Pytest
+# ─────────────────────────────────────────────────────────────────────────────
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Mypy
+# ─────────────────────────────────────────────────────────────────────────────
+[tool.mypy]
+python_version = "3.11"
+strict = false                  # relaxed for educational code; tighten for shared modules
+warn_unused_ignores = true
+warn_redundant_casts = true
+check_untyped_defs = true
+no_implicit_optional = true
+
+[[tool.mypy.overrides]]
+module = ["ipywidgets.*", "tiktoken.*", "sentence_transformers.*"]
+ignore_missing_imports = true

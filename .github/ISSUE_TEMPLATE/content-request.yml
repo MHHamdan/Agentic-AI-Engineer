@@ -1,0 +1,67 @@
+name: ✨ Content request — concept, lab, recipe, or pattern
+description: Suggest new educational content for the repo.
+title: "[content] <short description>"
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting new content. Before submitting:
+        - Search open issues to avoid duplicates.
+        - If you want to write it yourself, you can also open a PR directly — but for substantial additions (new pattern, full lab, capstone), an issue first lets us align on scope.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of content?
+      options:
+        - Concept page (10-min explainer)
+        - Lab (guided notebook)
+        - Recipe (copy-paste solution)
+        - Pattern (architecture decision)
+        - Tool page (new framework / vector DB / etc.)
+        - Math note
+        - Project / Build Challenge
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: title
+    attributes:
+      label: Working title
+      placeholder: e.g. "Streaming partial tool outputs from LangGraph"
+    validations:
+      required: true
+
+  - type: textarea
+    id: gap
+    attributes:
+      label: What gap does this fill?
+      description: What is a reader trying to do, and why is the current repo not enough?
+    validations:
+      required: true
+
+  - type: textarea
+    id: sketch
+    attributes:
+      label: Rough outline (optional)
+      description: A bullet list of sections, or a one-paragraph sketch.
+
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources / inspiration (optional)
+      description: Papers, blog posts, talks, or codebases that should inform the content.
+
+  - type: checkboxes
+    id: offer
+    attributes:
+      label: Want to write it?
+      options:
+        - label: I'd like to author this.
+          required: false
+        - label: I'd like to co-author with a maintainer.
+          required: false
+        - label: I'm only suggesting — happy for someone else to pick it up.
+          required: false

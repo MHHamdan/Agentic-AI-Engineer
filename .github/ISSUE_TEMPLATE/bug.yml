@@ -1,0 +1,68 @@
+name: 🐞 Bug — code, link, or claim is wrong
+description: Something in the repo doesn't work or doesn't match reality.
+title: "[bug] <short description>"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug. Before submitting, please:
+        - Check open issues to avoid duplicates.
+        - For stale tool versions specifically, use the *Stale tool version* template instead.
+
+  - type: input
+    id: location
+    attributes:
+      label: Where is the problem?
+      description: File path or URL to the page / notebook / line.
+      placeholder: e.g. labs/07-rag-from-scratch/lab.ipynb cell 8
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should happen?
+      placeholder: Describe the correct behavior or claim.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happens?
+      placeholder: |
+        Paste the error message, screenshot, or quote of the incorrect claim.
+        If it's code, please include the full traceback.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce (if code-related)
+      description: Minimal steps. Skip if not applicable.
+      placeholder: |
+        1. uv sync
+        2. uv run jupyter lab labs/.../lab.ipynb
+        3. Run cell 8
+        4. See error
+      render: bash
+
+  - type: input
+    id: env
+    attributes:
+      label: Environment (if code-related)
+      placeholder: Python 3.12.3, macOS 14.5, langgraph 1.x.y
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Acknowledgements
+      options:
+        - label: I've checked open issues for duplicates.
+          required: true
+        - label: I've read the relevant section of `CONTRIBUTING.md`.
+          required: false

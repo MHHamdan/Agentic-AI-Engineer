@@ -1,0 +1,67 @@
+name: 🔴 Stale tool version
+description: A `tools/` page or code snippet references an outdated version.
+title: "[stale] <tool>: <what's outdated>"
+labels: ["stale-tool-version"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for spotting this. Tool snapshots age fast — these reports keep the repo accurate.
+
+        You don't have to fix it yourself. Opening the issue is already useful.
+
+  - type: input
+    id: tool
+    attributes:
+      label: Which tool?
+      placeholder: e.g. LangGraph, MCP spec, Pinecone
+    validations:
+      required: true
+
+  - type: input
+    id: page
+    attributes:
+      label: Which page or file?
+      placeholder: e.g. tools/langgraph/state-and-checkpoints.md
+    validations:
+      required: true
+
+  - type: input
+    id: current-version
+    attributes:
+      label: Version currently documented in the repo
+      placeholder: e.g. 1.0.x, verified 2026-MM-DD
+    validations:
+      required: false
+
+  - type: input
+    id: actual-version
+    attributes:
+      label: Current upstream version
+      placeholder: e.g. 1.2.x as of YYYY-MM-DD
+    validations:
+      required: true
+
+  - type: input
+    id: source
+    attributes:
+      label: Primary source for the new version
+      description: Link to official changelog, release notes, or spec page.
+      placeholder: https://changelog.langchain.com/...
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: What breaks (if anything)?
+      description: Has the API changed? Is the page subtly wrong, or actively misleading?
+      placeholder: e.g. `langgraph.prebuilt.create_react_agent` was renamed.
+
+  - type: checkboxes
+    id: offer
+    attributes:
+      label: Want to fix it?
+      options:
+        - label: I'd like to submit a PR for this.
+          required: false

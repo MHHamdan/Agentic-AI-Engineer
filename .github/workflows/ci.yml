@@ -1,0 +1,156 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  # Allow manual runs from the Actions tab
+  workflow_dispatch:
+
+# Cancel in-flight runs on the same branch when a new commit lands
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  # ──────────────────────────────────────────────────────────────────────────
+  # Validate non-code files (CITATION.cff, YAML configs, etc.)
+  # ──────────────────────────────────────────────────────────────────────────
+  validate:
+    name: Validate metadata
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install validators
+        run: |
+          python -m pip install --upgrade pip
+          pip install cffconvert pyyaml tomli
+
+      - name: Validate CITATION.cff
+        run: cffconvert --validate -i CITATION.cff
+
+      - name: Validate pyproject.toml
+        run: |
+          python -c "import tomllib; tomllib.load(open('pyproject.toml','rb'))"
+
+      - name: Validate YAML files
+        run: |
+          python - <<'PY'
+          import pathlib, yaml, sys
+          errors = []
+          for p in pathlib.Path(".").rglob("*.y*ml"):
+              # skip large generated files if any land in the repo
+              try:
+                  with open(p) as f:
+                      list(yaml.safe_load_all(f))
+              except Exception as e:
+                  errors.append(f"{p}: {e}")
+          if errors:
+              print("YAML errors:")
+              for e in errors:
+                  print("  -", e)
+              sys.exit(1)
+          print("All YAML files parsed successfully.")
+          PY
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # Lint Python and notebooks
+  # ──────────────────────────────────────────────────────────────────────────
+  lint-python:
+    name: Lint Python and notebooks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install linters
+        run: |
+          python -m pip install --upgrade pip
+          pip install "ruff>=0.6" "nbqa>=1.8"
+
+      - name: Ruff check (Python)
+        run: |
+          # Only run if there are Python files; ruff exits 0 on no-files-found by default
+          ruff check .
+
+      - name: Ruff check (notebooks)
+        run: |
+          # nbqa exits cleanly when no notebooks are present
+          nbqa ruff . || true
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # Lint Markdown
+  # ──────────────────────────────────────────────────────────────────────────
+  lint-markdown:
+    name: Lint Markdown
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@v16
+        with:
+          # Lenient defaults — see .markdownlint.jsonc for project rules.
+          # Failing this job won't block until we add the config file.
+          globs: |
+            **/*.md
+            !**/LICENSE*
+            !**/CHANGELOG.md
+        continue-on-error: true
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # Check for broken internal links
+  # ──────────────────────────────────────────────────────────────────────────
+  link-check:
+    name: Check Markdown links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: lychee link checker
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Internal links only by default. External link checks can be enabled
+          # in a separate scheduled workflow if desired (rate-limit-friendly).
+          args: --offline --no-progress --include-fragments "./**/*.md"
+          fail: true
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # Verify CHANGELOG was updated on content-bearing PRs
+  # ──────────────────────────────────────────────────────────────────────────
+  changelog-reminder:
+    name: Changelog reminder (PR only)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check if CHANGELOG was touched
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+          changed=$(git diff --name-only "$base" "$head")
+          echo "Changed files:"
+          echo "$changed"
+          # If a content-bearing path changed but CHANGELOG didn't, warn (not fail).
+          if echo "$changed" | grep -qE '^(concepts|labs|recipes|patterns|projects|tools|math-foundations)/' && ! echo "$changed" | grep -q '^CHANGELOG\.md$'; then
+            echo "::warning::This PR touches content but doesn't update CHANGELOG.md. Add an entry under [Unreleased] if the change is meaningful."
+          else
+            echo "Changelog status OK."
+          fi

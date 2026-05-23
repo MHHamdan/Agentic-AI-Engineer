@@ -1,0 +1,164 @@
+# ───────────────────────────────────────────────────────────────────────────
+# Secrets — never commit these
+# ───────────────────────────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials.json
+service-account*.json
+
+# ───────────────────────────────────────────────────────────────────────────
+# Python
+# ───────────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Package managers
+.python-version
+pip-log.txt
+pip-delete-this-directory.txt
+
+# uv lockfile is committed; uv cache is not
+.uv-cache/
+
+# ───────────────────────────────────────────────────────────────────────────
+# Jupyter
+# ───────────────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+profile_default/
+ipython_config.py
+.jupyter/
+
+# Notebook outputs should be stripped before commit (see CONTRIBUTING.md).
+# Uncomment the next line if you want to enforce that locally via a pre-commit hook.
+# *.ipynb
+
+# ───────────────────────────────────────────────────────────────────────────
+# Testing and linting
+# ───────────────────────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+
+# ───────────────────────────────────────────────────────────────────────────
+# Agent / LLM / vector DB scratch
+# ───────────────────────────────────────────────────────────────────────────
+# Local vector stores and checkpoints
+*.db
+*.sqlite
+*.sqlite3
+chroma_db/
+qdrant_storage/
+.langgraph_checkpoints/
+.langgraph_api/
+
+# LangSmith / tracing local artifacts
+langsmith_cache/
+.langchain.db
+.langchain.cache
+
+# Downloaded model weights (use Hugging Face cache or Ollama instead)
+models/
+*.gguf
+*.bin
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+
+# Cached embeddings and indexes
+embeddings_cache/
+*.faiss
+*.npy
+
+# Scratch directories for lab work
+scratch/
+sandbox/
+tmp/
+.tmp/
+
+# ───────────────────────────────────────────────────────────────────────────
+# IDE and editor
+# ───────────────────────────────────────────────────────────────────────────
+.vscode/
+!.vscode/settings.json.example
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.spyderproject
+.spyproject
+
+# ───────────────────────────────────────────────────────────────────────────
+# OS junk
+# ───────────────────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ───────────────────────────────────────────────────────────────────────────
+# Documentation builds (when/if we add MkDocs or similar)
+# ───────────────────────────────────────────────────────────────────────────
+site/
+_site/
+.docusaurus/
+
+# ───────────────────────────────────────────────────────────────────────────
+# Working artifacts (slide OCR, etc.) — present in repo, but local outputs ignored
+# ───────────────────────────────────────────────────────────────────────────
+assets/slides-ocr/_working/
+assets/slides-ocr/*.raw
