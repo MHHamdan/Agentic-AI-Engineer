@@ -38,7 +38,7 @@
 # Learning paths (folders not yet populated — only the index README exists)
 # Note: learning-paths/01-foundations/ now has authored content; line for it removed.
 # Note: learning-paths/02-agentic-rag/ now has authored content (Path 02 first batch).
-^.*/learning-paths/03-multi-agent-systems/?$
+# Note: learning-paths/03-multi-agent-systems/ now has authored content (Path 03 v1 opening, batch 15).
 ^.*/learning-paths/04-tool-protocols-mcp-a2a/?$
 ^.*/learning-paths/05-context-engineering/?$
 ^.*/learning-paths/06-evaluation-observability/?$
@@ -49,6 +49,13 @@
 # Labs solutions are now authored (batch 14):
 #   Labs 01, 02, 03, 05, 06, 07, 08, 09 — each has solution/lab.ipynb + solution/README.md.
 # Lab 04 is not yet authored and has no forward-reference to track.
+# Lab 10 (Path 03) solution will land in a follow-up batch.
+^.*/labs/10-supervisor-worker-from-scratch/solution/.*$
+
+# Multi-agent concept pages — future Path 03 batches will author these
+^.*/concepts/multi-agent/agent-debate\.md$
+^.*/concepts/multi-agent/plan-and-execute\.md$
+^.*/concepts/multi-agent/multi-agent-evaluation\.md$
 
 # Tools subfolders (per-framework pages not yet authored)
 # Note: tools/langgraph/ now has authored content (snapshot-v1.0.md, README); lines removed.
@@ -56,6 +63,7 @@
 # Note: tools/embeddings/ and tools/vector-stores/ now have authored content as of batch 10.
 ^.*/tools/langsmith/?$
 ^.*/tools/comparisons/?$
+^.*/tools/frameworks/.*$
 
 # Setup deep-dive pages (the overview README exists; the rest will follow)
 ^.*/setup/python-environment\.md$
