@@ -18,6 +18,7 @@
 # Concept pages (forward references from learning paths and the root README)
 # Note: concepts/agents/{what-is-an-agent,agent-loop,react-pattern,agents-vs-frameworks}.md authored.
 # Note: concepts/tools/{tool-design,tool-selection,search-tools}.md authored (batches 7, 9).
+# Note: concepts/rag/{what-is-rag,retrieval-as-a-tool,chunking-and-indexing}.md authored (batch 10).
 ^.*/concepts/agents/plan-and-execute\.md$
 ^.*/concepts/context/context-budget\.md$
 ^.*/concepts/evaluation/?$
@@ -34,7 +35,7 @@
 
 # Learning paths (folders not yet populated — only the index README exists)
 # Note: learning-paths/01-foundations/ now has authored content; line for it removed.
-^.*/learning-paths/02-agentic-rag/?$
+# Note: learning-paths/02-agentic-rag/ now has authored content (Path 02 first batch).
 ^.*/learning-paths/03-multi-agent-systems/?$
 ^.*/learning-paths/04-tool-protocols-mcp-a2a/?$
 ^.*/learning-paths/05-context-engineering/?$
@@ -43,16 +44,18 @@
 ^.*/learning-paths/08-mathematical-foundations/?$
 ^.*/learning-paths/09-capstones/?$
 
-# Labs (numbered labs not yet shipped — Labs 01, 02, 03, and 05 are authored)
+# Labs (numbered labs not yet shipped — Labs 01, 02, 03, 05, and 06 are authored)
 # Note: references to solution/lab.ipynb may temporarily 404 until follow-up batch.
 ^.*/labs/01-first-agent-from-scratch/solution/.*$
 ^.*/labs/02-tool-design-and-selection/solution/.*$
 ^.*/labs/03-multi-step-research-agent/solution/.*$
 ^.*/labs/05-langgraph-rewrite/solution/.*$
+^.*/labs/06-agentic-rag-from-scratch/solution/.*$
 
 # Tools subfolders (per-framework pages not yet authored)
 # Note: tools/langgraph/ now has authored content (snapshot-v1.0.md, README); lines removed.
 # Note: tools/search/ now has authored content (snapshot-v1.0.md, README) as of batch 9.
+# Note: tools/embeddings/ and tools/vector-stores/ now have authored content as of batch 10.
 ^.*/tools/langsmith/?$
 ^.*/tools/comparisons/?$
 

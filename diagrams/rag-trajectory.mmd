@@ -1,0 +1,48 @@
+%% Agentic RAG trajectory — the typical control flow for a multi-step
+%% retrieval query against a controlled corpus, with failure-recovery branches.
+%% Companion to labs/06-agentic-rag-from-scratch/ and concepts/rag/retrieval-as-a-tool.md.
+%% Renders natively on GitHub.
+
+flowchart TD
+    Q[/"User question"/] --> SEARCH["search_corpus<br/>(snippets + scores)"]
+
+    SEARCH --> CHECK{Results status?}
+    CHECK -->|empty<br/>(no chunk above floor)| REFINE["Refine query<br/>(repeated-action detector<br/>blocks identical retry)"]
+    REFINE --> SEARCH
+    CHECK -->|ok, but snippets<br/>look irrelevant| REFINE
+    CHECK -->|ok, relevant<br/>snippets| TRIAGE["Model picks 1-2<br/>candidate chunks"]
+    CHECK -->|ok, snippets<br/>answer directly| DIRECT["Synthesize<br/>from snippets"]
+
+    DIRECT --> CITELESS[/"Answer<br/>(citations empty —<br/>no chunks read in full)"/]
+
+    TRIAGE --> READ["read_chunk<br/>(one chunk_id)"]
+
+    READ --> RRESULT{Result status?}
+    RRESULT -->|ok| GROUND["Read content<br/>track citation<br/>(chunk_id, doc_id, title)"]
+    RRESULT -->|not_found| NEXT["Pick next<br/>candidate chunk"]
+    NEXT --> READ
+    RRESULT -->|all candidates<br/>tried| REFINE
+
+    GROUND --> ENOUGH{Enough<br/>evidence?}
+    ENOUGH -->|no, need more<br/>from another doc| REFINE
+    ENOUGH -->|no, but same doc<br/>has more chunks| TRIAGE
+    ENOUGH -->|yes| SYNTH["Synthesize answer<br/>citations come from<br/>read-confirmed log"]
+
+    SYNTH --> FINAL[/"Answer +<br/>chunk-level citations"/]
+
+    %% Step cap escape
+    SEARCH -. step cap .-> GRACEFUL["Graceful exit:<br/>'I couldn't find this<br/>in the corpus'<br/>+ what was read"]
+    READ -. step cap .-> GRACEFUL
+    GRACEFUL --> FINAL
+
+    classDef tool fill:#dfd,stroke:#080,stroke-width:1px;
+    classDef decision fill:#ffd,stroke:#a80,stroke-width:1px;
+    classDef action fill:#def,stroke:#446,stroke-width:1px;
+    classDef terminal fill:#eee,stroke:#666,stroke-width:1px;
+    classDef escape fill:#fed,stroke:#a40,stroke-width:1px,stroke-dasharray:4 4;
+
+    class SEARCH,READ tool;
+    class CHECK,RRESULT,ENOUGH decision;
+    class TRIAGE,GROUND,NEXT,REFINE,SYNTH,DIRECT action;
+    class Q,FINAL,CITELESS terminal;
+    class GRACEFUL escape;
