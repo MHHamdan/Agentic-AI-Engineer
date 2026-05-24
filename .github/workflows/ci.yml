@@ -135,24 +135,4 @@ jobs:
   # ──────────────────────────────────────────────────────────────────────────
   # Soft reminder when content-bearing PRs forget CHANGELOG
   # ──────────────────────────────────────────────────────────────────────────
-  changelog-reminder:
-    name: Changelog reminder (PR only)
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Check if CHANGELOG was touched
-        run: |
-          base="${{ github.event.pull_request.base.sha }}"
-          head="${{ github.event.pull_request.head.sha }}"
-          changed=$(git diff --name-only "$base" "$head")
-          echo "Changed files:"
-          echo "$changed"
-          if echo "$changed" | grep -qE '^(concepts|labs|recipes|patterns|projects|tools|math-foundations)/' && ! echo "$changed" | grep -q '^CHANGELOG\.md$'; then
-            echo "::warning::This PR touches content but doesn't update CHANGELOG.md. Add an entry under [Unreleased] if the change is meaningful."
-          else
-            echo "Changelog status OK."
-          fi
+  

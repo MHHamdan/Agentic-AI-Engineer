@@ -1,0 +1,16 @@
+name: PR reminders
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  changelog-reminder:
+    name: Changelog reminder
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Remind contributors to update changelog
+        run: |
+          echo "Reminder: if this PR changes content meaningfully, update CHANGELOG.md."
+          echo "Trivial typo/link fixes do not need a changelog entry."
