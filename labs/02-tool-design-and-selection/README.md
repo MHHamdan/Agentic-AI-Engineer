@@ -89,7 +89,9 @@ The notebook walks through these in order:
 
 ## Solution discussion
 
-A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) (added in a follow-up batch). The two design choices to flag in the solution:
+A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) with notes in [`solution/README.md`](./solution/README.md). It ships only `tools_v1` (the working design) since you've already worked through the `tools_v0` failure walk. 21 cells vs the lab's 32; the diagnosis section is implicit in the v1 shape.
+
+The two design choices to flag in the solution:
 
 - **The "broken" toolset isn't pathological** — it looks like real code many engineers ship. The failures it causes are realistic, not contrived.
 - **The "fixed" toolset doesn't add capabilities** — it implements the same operations. The only change is design quality. This is intentional. The point is that *design alone* moves agent reliability by a large margin.

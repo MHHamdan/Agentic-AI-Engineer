@@ -140,7 +140,7 @@ A few things that catch people on the first run:
 
 ## Solution discussion
 
-A reference implementation will land in [`solution/lab.ipynb`](./solution/lab.ipynb) in a dedicated solutions batch later. Three design choices worth flagging up front:
+A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) with notes in [`solution/README.md`](./solution/README.md). 17 cells vs the lab's 35; the three-failure-mode walkthrough is removed since the hardening ships as default behavior. Three design choices worth flagging:
 
 - **We deliberately don't use `ddgs.extract(url)`** for `fetch_page`. It works and produces cleaner Markdown — but the whole point of `fetch_page` is to make the HTTP failure modes visible. Abstracting them away defeats the lab. Production code should consider `ddgs.extract` or `tavily_client.extract`.
 - **`max_chars=8000` on `fetch_page` is a deliberately tight cap.** Real pages can be 100K+ characters. The cap forces the agent to deal with truncation as a real failure mode, which is what production agents face when context-budgeting.

@@ -100,7 +100,7 @@ If you finish early or want to push further:
 
 ## Solution discussion
 
-A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) (added in a follow-up batch). The solution doesn't add anything dramatic over the in-notebook code — it just packages it cleanly as a single module you can copy into your own project.
+A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) with notes in [`solution/README.md`](./solution/README.md). It packages the in-notebook code cleanly — same agent loop, same tools, same dedup pattern — as a polished module you can copy into your own project. 16 cells vs the lab's 35; the failure walks and incremental builds are removed since you've already worked through them.
 
 The two design choices worth flagging in the solution:
 

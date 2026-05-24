@@ -140,7 +140,7 @@ Anti-scope, kept explicit:
 
 ## Solution discussion
 
-A reference implementation will land in [`solution/lab.ipynb`](./solution/lab.ipynb) in a dedicated solutions batch later. Two design choices worth flagging:
+A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) with notes in [`solution/README.md`](./solution/README.md). 26 cells vs the lab's 46 — three rewrite modes (`hyde`, `multi`, `decompose`) composed in `search_corpus_v3` with the cache-or-generate pattern from Anthropic's verbatim `CONTEXT_PROMPT`. Two design choices worth flagging:
 
 - **The lab uses an LLM call per chunk** without prompt caching. Caching would reduce index-time cost ~80% on long documents but adds complexity that distracts from the core mechanism. Real production builds *should* use caching; the [contextual-retrieval.md](../../concepts/rag/contextual-retrieval.md#the-cost-question) cost section explains how.
 - **The lab uses the same LLM as the agent loop** for context generation. Production systems often use a *cheaper* model for context generation (e.g., Haiku for context, Sonnet for answers). Same provider, two model strings — trivial substitution. The lab uses one model for clarity.
