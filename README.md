@@ -227,24 +227,26 @@ Agentic AI moves fast. The shape of this repo reflects that.
 
 ```mermaid
 flowchart LR
-    subgraph Stable[🟢 Stable — months to years]
-        S1[concepts/]
-        S2[math-foundations/]
-        S3[patterns/]
+    subgraph Stable["🟢 Stable — months to years"]
+        S1["concepts/"]
+        S2["math-foundations/"]
+        S3["patterns/"]
     end
-    subgraph SlowMoving[🟡 Slow-moving — quarters]
-        M1[recipes/]
-        M2[projects/]
-        M3[evaluation/]
+
+    subgraph SlowMoving["🟡 Slow-moving — quarters"]
+        M1["recipes/"]
+        M2["projects/"]
+        M3["evaluation/"]
     end
-    subgraph FastChanging[🔴 Fast-changing — weeks to months]
-        F1[tools/]
-        F2[examples/]
-        F3[production/ deployment specifics]
+
+    subgraph FastChanging["🔴 Fast-changing — weeks to months"]
+        F1["tools/"]
+        F2["examples/"]
+        F3["production/ deployment specifics"]
     end
+
     Stable --> SlowMoving
     SlowMoving --> FastChanging
-```
 
 | Tier | Update cadence | What lives here |
 |---|---|---|
