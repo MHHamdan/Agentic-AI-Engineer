@@ -226,7 +226,6 @@ Math pages are cross-linked from the concept pages, so you can read either track
 Agentic AI moves fast. The shape of this repo reflects that.
 
 
-````markdown
 ```mermaid
 flowchart LR
     subgraph Stable["🟢 Stable — months to years"]
@@ -249,6 +248,7 @@ flowchart LR
 
     Stable --> SlowMoving
     SlowMoving --> FastChanging
+```
 
 | Tier | Update cadence | What lives here |
 |---|---|---|
