@@ -178,9 +178,9 @@ Try each question before expanding its answer. Score yourself at the end.
 
 What are the four steps of the agent loop, in order?
 
-A. Plan → execute → log → respond.
-B. Perceive → reason → act → observe.
-C. Tokenize → embed → search → generate.
+A. Plan → execute → log → respond.  
+B. Perceive → reason → act → observe.  
+C. Tokenize → embed → search → generate.  
 D. Receive → validate → process → return.
 
 <details>
@@ -200,9 +200,9 @@ The agent loop is *perceive* (read the state), *reason* (LLM decides next move),
 
 What is the **state** in a typical LLM agent?
 
-A. A fixed-size vector of features extracted from the user request.
-B. The list of messages — system prompt, user request, tool calls, tool results.
-C. The model's hidden activations from the last forward pass.
+A. A fixed-size vector of features extracted from the user request.  
+B. The list of messages — system prompt, user request, tool calls, tool results.  
+C. The model's hidden activations from the last forward pass.  
 D. A graph of tools the agent has access to.
 
 <details>
@@ -222,9 +222,9 @@ In LLM agents, the state is the running conversation: the system prompt, the use
 
 Which of the following is the **most common** bug in homegrown agent loops?
 
-A. The tool calls fail intermittently due to API rate limits.
-B. The model emits malformed JSON for tool arguments.
-C. The loop has no step cap, so a buggy agent burns through tokens.
+A. The tool calls fail intermittently due to API rate limits.  
+B. The model emits malformed JSON for tool arguments.  
+C. The loop has no step cap, so a buggy agent burns through tokens.  
 D. The state is too small to fit the conversation.
 
 <details>
@@ -244,9 +244,9 @@ All four can happen, but the single most common bug in homemade agent code is fo
 
 Why is it important to distinguish errors from data in tool observations?
 
-A. Errors should never reach the model — they should crash the agent.
-B. Logging frameworks treat them differently.
-C. The model can only react correctly if "not found", "error", and "empty result" look distinct.
+A. Errors should never reach the model — they should crash the agent.  
+B. Logging frameworks treat them differently.  
+C. The model can only react correctly if "not found", "error", and "empty result" look distinct.  
 D. Errors are larger and cost more tokens than data.
 
 <details>
@@ -266,9 +266,9 @@ The model treats observations as the only signal from reality. If a 404, a timeo
 
 What does it mean to say the agent operates in *partial observability*?
 
-A. The agent sometimes can't see the user's input.
-B. The world contains more state than the agent's context, and the agent acts on what it has observed so far.
-C. Some tool results are encrypted.
+A. The agent sometimes can't see the user's input.  
+B. The world contains more state than the agent's context, and the agent acts on what it has observed so far.  
+C. Some tool results are encrypted.  
 D. The model's weights change between calls.
 
 <details>
@@ -288,9 +288,9 @@ Partial observability is the POMDP framing: the world has more state than the ag
 
 An agent calls three independent lookup tools in one response (parallel tool calls). How does the loop change?
 
-A. The four-step model breaks down completely — a new model is needed.
-B. Same shape: one reason step, one act step (now wider), one observe step. Just executed in parallel.
-C. Each tool call gets its own loop iteration, sequentially.
+A. The four-step model breaks down completely — a new model is needed.  
+B. Same shape: one reason step, one act step (now wider), one observe step. Just executed in parallel.  
+C. Each tool call gets its own loop iteration, sequentially.  
 D. Parallel calls aren't possible in modern LLM APIs.
 
 <details>
@@ -310,9 +310,9 @@ The loop is the same shape. The "act" step just runs $k$ tool calls concurrently
 
 Which of these is **not** a reason to use a framework like LangGraph instead of a hand-rolled loop?
 
-A. Durable execution — pausing and resuming runs across crashes.
-B. Cleaner expression of complex control flow with conditional edges.
-C. Built-in checkpoint and human-in-the-loop support.
+A. Durable execution — pausing and resuming runs across crashes.  
+B. Cleaner expression of complex control flow with conditional edges.  
+C. Built-in checkpoint and human-in-the-loop support.  
 D. The framework makes the model itself smarter.
 
 <details>
@@ -332,9 +332,9 @@ Frameworks don't change the model — they don't fine-tune it, they don't change
 
 An agent's state has grown so large that observations are getting buried and the model can't see the most recent tool result. Which is the **best** first intervention?
 
-A. Switch to a model with a larger context window.
-B. Add summarization between raw tool returns and what gets appended to state.
-C. Increase `max_steps` to give the agent more chances.
+A. Switch to a model with a larger context window.  
+B. Add summarization between raw tool returns and what gets appended to state.  
+C. Increase `max_steps` to give the agent more chances.  
 D. Restart the agent loop from scratch on each step.
 
 <details>

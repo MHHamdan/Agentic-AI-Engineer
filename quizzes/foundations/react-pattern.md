@@ -173,9 +173,9 @@ Try each question before expanding its answer. Score yourself at the end.
 
 What does *ReAct* stand for in the context of LLM agents?
 
-A. Reactive Architecture.
-B. Reasoning + Acting.
-C. Recursive Activation.
+A. Reactive Architecture.  
+B. Reasoning + Acting.  
+C. Recursive Activation.  
 D. Real-time Action.
 
 <details>
@@ -195,9 +195,9 @@ ReAct = Reasoning + Acting. The pattern interleaves natural-language thoughts (r
 
 In a ReAct step, what order do thought, action, and observation appear in?
 
-A. Action → Observation → Thought.
-B. Thought → Action → Observation.
-C. Observation → Thought → Action.
+A. Action → Observation → Thought.  
+B. Thought → Action → Observation.  
+C. Observation → Thought → Action.  
 D. Thought → Observation → Action.
 
 <details>
@@ -217,9 +217,9 @@ Thought first (the model plans), then Action (it commits to a tool call), then O
 
 Why is *acting only* (no thoughts) less reliable than ReAct on multi-step tasks?
 
-A. Acting only is slower per step.
-B. Without a thought slot, the model has no place to reason about the last observation before committing the next action.
-C. Tool APIs reject responses with no text content.
+A. Acting only is slower per step.  
+B. Without a thought slot, the model has no place to reason about the last observation before committing the next action.  
+C. Tool APIs reject responses with no text content.  
 D. Acting only produces malformed JSON.
 
 <details>
@@ -239,9 +239,9 @@ Acting-only is faster and cheaper, but it removes the model's "workspace" for in
 
 What does the *Thought* in a ReAct step actually do, mechanically?
 
-A. It is executed by the agent runtime.
-B. It is appended to the state, conditioning future model outputs, but is never executed.
-C. It is shown to the user but discarded from state.
+A. It is executed by the agent runtime.  
+B. It is appended to the state, conditioning future model outputs, but is never executed.  
+C. It is shown to the user but discarded from state.  
 D. It is sent as a system message on the next turn.
 
 <details>
@@ -261,9 +261,9 @@ Thoughts are appended to the state (the conversation) along with the action and 
 
 ReAct's termination condition is...
 
-A. A hardcoded `max_steps` always set to 5.
-B. Any non-tool response from the model, plus runtime-enforced step caps.
-C. An external classifier that decides "is the agent done?"
+A. A hardcoded `max_steps` always set to 5.  
+B. Any non-tool response from the model, plus runtime-enforced step caps.  
+C. An external classifier that decides "is the agent done?"  
 D. The model emits a special end-of-stream token.
 
 <details>
@@ -283,9 +283,9 @@ In ReAct, terminating is just one of the available actions — the model produce
 
 A ReAct agent emits a thought that says "I should check X", but then calls a tool that does Y. What's the most likely cause?
 
-A. Bug in the LLM provider's API.
-B. The model has cached an earlier plan and is following it instead of this turn's thought.
-C. The tool descriptions are too short.
+A. Bug in the LLM provider's API.  
+B. The model has cached an earlier plan and is following it instead of this turn's thought.  
+C. The tool descriptions are too short.  
 D. The temperature is set to 0.
 
 <details>
@@ -305,9 +305,9 @@ Thought-action mismatch is most often caused by the model anchoring on an earlie
 
 Which of these tasks is ReAct **not** the right pattern for?
 
-A. Searching the web, reading results, following up with another query.
-B. Inspecting a dataframe and deciding what to plot.
-C. Translating a paragraph from English to Spanish.
+A. Searching the web, reading results, following up with another query.  
+B. Inspecting a dataframe and deciding what to plot.  
+C. Translating a paragraph from English to Spanish.  
 D. A code agent reading a file, running a test, editing on failure.
 
 <details>
@@ -327,9 +327,9 @@ ReAct fits when the next move depends on the last observation. A one-shot transl
 
 In the formal factorization $\pi_\theta(\tau_t, a_t \mid s_t) = \pi_\theta(\tau_t \mid s_t) \cdot \pi_\theta(a_t \mid s_t, \tau_t)$, what does the *second factor* represent?
 
-A. The probability of generating the thought given the state.
-B. The probability of the action given the state *and* the thought.
-C. The transition probability of the world.
+A. The probability of generating the thought given the state.  
+B. The probability of the action given the state *and* the thought.  
+C. The transition probability of the world.  
 D. The reward for taking action $a_t$.
 
 <details>
