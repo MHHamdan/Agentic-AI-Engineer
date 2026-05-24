@@ -88,7 +88,6 @@ a2a = [
 ]
 eval = [
     "langsmith>=0.1.100",
-    "ragas>=0.2",
     "deepeval>=1.0",
 ]
 vector-pinecone = ["pinecone>=5.0"]
