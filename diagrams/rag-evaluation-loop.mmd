@@ -1,0 +1,75 @@
+flowchart LR
+    %% RAG evaluation loop:
+    %% corpus → eval set → strategies → answers → metrics → decision
+
+    subgraph INPUTS["📚 Inputs"]
+        corpus["Corpus (8 docs<br/>~55 chunks)"]
+        eval_set["eval_set.jsonl<br/>(30 hand-curated<br/>queries)"]
+    end
+
+    subgraph PIPELINES["🔬 Retrieval pipelines"]
+        baseline["dense_baseline<br/>(Lab 06)"]
+        hybrid_rrf["hybrid_rrf<br/>(Lab 07)"]
+        hybrid_rerank["hybrid_rerank<br/>(Lab 07)"]
+        contextual["contextual_rerank<br/>(Lab 08)"]
+    end
+
+    subgraph HARNESS["⚙️ Harness"]
+        run["For each pipeline,<br/>run all 30 queries"]
+        chunks["Ranked chunks<br/>per (pipeline, query)"]
+        answers["Generated answers<br/>+ citations<br/>(agent loop)"]
+    end
+
+    subgraph METRICS["📊 Metrics"]
+        retrieval_m["Retrieval:<br/>hits@k, recall@k,<br/>MRR, mean rank"]
+        answer_m["Answer:<br/>groundedness,<br/>refusal quality"]
+        judge["LLM-as-judge<br/>(faithfulness,<br/>optional)"]
+    end
+
+    subgraph DECISIONS["🎯 Decisions"]
+        slice["Slice by category<br/>(lexical / paraphrase /<br/>referential / compound /<br/>off-corpus)"]
+        compare["Compare pipelines<br/>per category"]
+        ship{"Ship the change?<br/>regress / improve /<br/>category-dependent"}
+    end
+
+    corpus --> baseline
+    corpus --> hybrid_rrf
+    corpus --> hybrid_rerank
+    corpus --> contextual
+
+    eval_set --> run
+
+    baseline --> run
+    hybrid_rrf --> run
+    hybrid_rerank --> run
+    contextual --> run
+
+    run --> chunks
+    chunks --> retrieval_m
+    chunks --> answers
+    answers --> answer_m
+    answers --> judge
+
+    retrieval_m --> slice
+    answer_m --> slice
+    judge --> slice
+    slice --> compare
+    compare --> ship
+
+    ship -- "yes" --> production["Deploy to production<br/>(Path 06)"]
+    ship -- "no" --> intervene["Add intervention<br/>(retrieval failure modes<br/>decision tree)"]
+    intervene -.-> baseline
+
+    classDef inputBox fill:#e0f4ff,stroke:#0066cc,stroke-width:1px
+    classDef pipelineBox fill:#fff3e0,stroke:#e65100,stroke-width:1px
+    classDef harnessBox fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px
+    classDef metricsBox fill:#e8f5e9,stroke:#2e7d32,stroke-width:1px
+    classDef decisionBox fill:#fce4ec,stroke:#c2185b,stroke-width:1px
+    classDef outputBox fill:#fff9c4,stroke:#f57f17,stroke-width:1px
+
+    class corpus,eval_set inputBox
+    class baseline,hybrid_rrf,hybrid_rerank,contextual pipelineBox
+    class run,chunks,answers harnessBox
+    class retrieval_m,answer_m,judge metricsBox
+    class slice,compare,ship decisionBox
+    class production,intervene outputBox
