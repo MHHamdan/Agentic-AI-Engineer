@@ -1,14 +1,14 @@
 # 02 · Agentic RAG
 
-> 🟡 Intermediate · ⏱ 10–15 hours (through batch 12; path grows over subsequent batches) · 📍 Start here once you've completed Path 01
+> 🟡 Intermediate · ⏱ 12–17 hours · 📍 Start here once you've completed Path 01 · ✅ Path 02 v1 complete
 
 ## Who this is for
 
 You've finished Foundations: you can build an agent loop from scratch, design tools that work, and ship a research agent against the real web (Lab 03). Now you want to do the same thing with a *controlled corpus* instead of the open web — retrieval-augmented generation, the pattern most production agent systems converge on.
 
-This path takes you from "I understand the search/retrieval distinction conceptually" to "I can build an agentic RAG system end-to-end with a production-grade retrieval pipeline, from chunking through reranking to chunk-level context augmentation to query-side rewriting, with a debugging mental model for production failure modes." It does this from scratch in pure Python first — same discipline as the Foundations labs — so when you later reach for LangChain or LlamaIndex, you'll know what those abstractions are hiding and when they help.
+This path takes you from "I understand the search/retrieval distinction conceptually" to "I can build an agentic RAG system end-to-end with a production-grade retrieval pipeline, from chunking through reranking to chunk-level context augmentation to query-side rewriting, with a debugging mental model for production failure modes — *and* an evaluation harness that tells me whether my interventions actually helped." It does this from scratch in pure Python first — same discipline as the Foundations labs — so when you later reach for LangChain or LlamaIndex or RAGAS or TruLens or DeepEval, you'll know what those abstractions are hiding and when they help.
 
-By the end of the current batches you should be able to:
+By the end of Path 02 v1 you should be able to:
 
 - Explain what RAG is and why naive vs. agentic RAG are meaningfully different patterns.
 - Implement chunking that respects document boundaries and stays under the embedding model's silent-truncation limit.
@@ -22,6 +22,9 @@ By the end of the current batches you should be able to:
 - Implement HyDE, multi-query expansion, and query decomposition from scratch as query-rewriting interventions.
 - Diagnose RAG failures against an 8-failure-mode taxonomy and pick the right intervention for each.
 - Make an informed call between MiniLM-L6-v2 and OpenAI's `text-embedding-3-small` for a given workload.
+- **Build a hand-curated eval set and a from-scratch evaluation harness** that produces comparison tables across every Path 02 intervention.
+- Compute retrieval metrics (hits@k, recall@k, MRR, mean rank) and rule-based answer-quality metrics (groundedness, refusal quality) from scratch, plus an optional LLM-as-judge faithfulness check.
+- Slice metrics by query category so the per-failure-mode picture is visible, not just the aggregate.
 
 ## Prerequisites
 
@@ -33,11 +36,11 @@ Minimum:
 - The [`search-tools`](../../concepts/tools/search-tools.md) concept page read and understood.
 - All five Foundations quizzes passed at 6+/8.
 
-If you've also done Lab 05 (LangGraph), great — but it's not required here. Labs 06-08 stay from-scratch on purpose, mirroring Lab 03's approach.
+If you've also done Lab 05 (LangGraph), great — but it's not required here. Labs 06-09 stay from-scratch on purpose, mirroring Lab 03's approach.
 
 ## How this path is structured
 
-Batch 10 covered the conceptual frame and the from-scratch lab. Batch 11 added the retrieval-quality stack: strategies, hybrid search, and reranking. This third batch (12) adds corpus-side and query-side quality interventions: contextual retrieval, query rewriting, and a failure-modes synthesis. Subsequent batches will add a RAG evaluation primer, the framework-bridge lab, and conversational RAG.
+Path 02 v1 is the closed loop: *build* retrieval (Labs 06-08), *diagnose* what fails (failure modes), *measure* whether your interventions help (Lab 09). Five batches across the foundation, the retrieval-quality stack, the corpus and query-side interventions, the failure-modes synthesis, and the evaluation primer. Future batches will add the framework-bridge lab and conversational RAG.
 
 ```mermaid
 flowchart LR
@@ -58,10 +61,16 @@ flowchart LR
     QR --> FM[📖 Retrieval failure modes]
     FM --> L8[🧪 Lab 08: Contextual retrieval and query rewriting]
     L8 --> Q3[🧠 Contextual retrieval and query rewriting quiz]
-    Q3 --> N[Future batches]
+    Q3 --> E1[📖 What is RAG evaluation?]
+    E1 --> E2[📖 Eval set construction]
+    E2 --> E3[📖 Retrieval metrics]
+    E3 --> E4[📖 Answer quality metrics]
+    E4 --> L9[🧪 Lab 09: Evaluating agentic RAG]
+    L9 --> Q4[🧠 RAG evaluation quiz]
+    Q4 --> N[Future batches]
 ```
 
-The arrows reflect the *recommended* order. Each three-concept-page set is designed to be read together; they cross-reference each other and converge on the matching lab.
+The arrows reflect the *recommended* order. Each concept-page set is designed to be read together; they cross-reference each other and converge on the matching lab.
 
 ## The reading list — Module 1: Conceptual frame
 
@@ -139,36 +148,63 @@ The corpus-side and query-side interventions for the failure modes Module 5/6 co
 
 17. 🧠 **[Contextual retrieval and query rewriting quiz](../../quizzes/agentic-rag/contextual-retrieval-and-query-rewriting.md)** *(~10 min)* — 8 single-select questions on Anthropic's technique mechanics, HyDE, the cost question, the failure-modes decision tree, and the canonical mis-diagnosis (failure mode 7).
 
+## Module 11: RAG evaluation primer
+
+After Lab 08, you've built every standard retrieval intervention. The honest question becomes: **did any of them actually help on your corpus?** Module 11 is the answer. Four concept pages in `concepts/evaluation/` covering what to measure, how to construct an eval set that surfaces the failures synthetic queries would miss, and what the metrics on each side of the retrieval/generation split actually reveal vs. hide. Read in order; Lab 09 assumes them.
+
+18. 📖 **[What is RAG evaluation?](../../concepts/evaluation/what-is-rag-evaluation.md)** *(~10 min)* — Orientation: the retrieval/generation split, offline vs online, correctness vs groundedness (the distinction most teams conflate). Frames the rest of the section.
+
+19. 📖 **[Eval set construction](../../concepts/evaluation/eval-set-construction.md)** *(~10 min)* — The foundation: why 30-50 hand-curated queries beat 1,000 synthetic ones, expected_doc vs expected_chunks tradeoffs, category and failure-label tagging, common pitfalls.
+
+20. 📖 **[Retrieval metrics](../../concepts/evaluation/retrieval-metrics.md)** *(~11 min)* — Hits@k, recall@k, precision@k, MRR, nDCG@k, mean rank of expected chunk. Engineer-friendly Python formulas. What each reveals, what each hides, when each is the right metric.
+
+21. 📖 **[Answer quality metrics](../../concepts/evaluation/answer-quality-metrics.md)** *(~11 min)* — Faithfulness, groundedness, citation accuracy, answer relevance, refusal quality. Rule-based vs LLM-as-judge tradeoffs. The Zheng et al. 2023 documented biases (position, verbosity, self-enhancement). RAGAS, TruLens, and DeepEval as future production tools — mentioned only.
+
+## Module 12: The evaluation lab
+
+22. 🧪 **[Lab 09: Evaluating agentic RAG](../../labs/09-evaluating-agentic-rag/)** *(~100–130 min)* — The synthesis lab. A from-scratch evaluation harness that runs your Labs 06-08 pipelines against a 30-question hand-curated eval set (shipped as `eval_set.jsonl`), produces comparison tables sliced by category, scores answer quality with rule-based metrics, and optionally runs LLM-as-judge faithfulness on a small subset.
+
+**No new dependencies** on top of Lab 08. The harness is ~200 lines of pure Python; no RAGAS, no TruLens, no DeepEval — those are deliberately deferred to Path 06 so you understand what they *wrap* before adopting them.
+
+> 💡 After Lab 09, Path 02 v1 closes. You can now build retrieval, diagnose failures, and measure interventions — the closed loop of production RAG work.
+
+## Module 13: Fourth self-assessment
+
+23. 🧠 **[RAG evaluation quiz](../../quizzes/agentic-rag/rag-evaluation.md)** *(~12 min)* — 8 single-select questions on the retrieval/generation split, eval set construction tradeoffs, MRR mechanics, the canonical correctness/groundedness distinction, Zheng et al.'s LLM-as-judge biases, and the rule-based vs LLM-as-judge tradeoff.
+
 ## What's *not* in this path yet
 
 Anti-scope, kept explicit so you know what's coming and what isn't:
 
 - ❌ **Production vector stores in the headline labs** (Chroma, Pinecone, Qdrant, Weaviate). Covered in the survey snapshot but not exercised in any lab.
-- ❌ **RAG evaluation frameworks** (Ragas, TruLens, custom evaluators). That's Path 06. Labs 07-08 use informal side-by-side comparison instead.
+- ❌ **RAG evaluation frameworks as dependencies** (RAGAS, TruLens, DeepEval, Phoenix). Mentioned by name in Module 11 only as future production tools. Path 06 covers them in depth.
 - ❌ **LangChain / LlamaIndex RAG abstractions**. Reserved for a future framework-bridge lab analogous to Lab 05.
 - ❌ **Multi-agent coordination** (researcher + synthesizer, etc.). That's Path 03.
 - ❌ **Late-interaction retrieval** (ColBERT, PLAID, ColPali). Mentioned briefly in `reranking.md` as a production path; full treatment deferred.
 - ❌ **Conversational query rewriting** (multi-turn rewriting against chat history). Future framework-bridge or conversational-RAG batch.
 - ❌ **Fine-tuning** (rewriters, embedders, rerankers). Out of scope.
+- ❌ **Production observability** (LangSmith, LangFuse, W&B). Different problem from offline eval; Path 06.
+- ❌ **A/B testing and drift detection.** Path 06.
+- ❌ **Synthetic eval set generation via LLM.** Briefly discussed in Module 11; recommended against for the first 30-50 queries.
 
 Each item above is meaningful enough to deserve its own focused treatment rather than a paragraph buried elsewhere.
 
 ## What comes in later batches
 
-When subsequent Path 02 batches land, this page will grow. The shape we're working toward:
+Path 02 v1 is now complete. Future Path 02 batches:
 
-- **Module 11: RAG evaluation primer** — measuring faithfulness, groundedness, citation accuracy on your own corpus. Lightweight before Path 06 in earnest.
-- **Module 12: Framework bridge** — same Lab 06–08 agent in LangChain/LangGraph, analogous to Lab 05 for Foundations.
-- **Module 13: Conversational RAG** — multi-turn retrieval with chat history, query rewriting against context.
+- **Module 14: Framework bridge** — same Lab 06–09 agent in LangChain/LangGraph, analogous to Lab 05 for Foundations.
+- **Module 15: Conversational RAG** — multi-turn retrieval with chat history, query rewriting against context.
 
-If you finish the current batches and want more *now*, the natural next moves are:
+If you've finished Path 02 v1 and want more *now*, the natural next moves are:
 
+- **Solutions batch.** Polished reference implementations for Labs 01-09 with production-grade choices. The forward-references in every lab's "Solution discussion" section finally resolve.
 - **Path 03 — Multi-Agent Systems.** The patterns from Labs 06 + 07 + 08 transfer cleanly. A research agent + a synthesizer is just two of the loops you've built.
-- **Path 06 — Evaluation & Observability.** Once you have a RAG agent with a good retrieval stack, the next honest question is "is it actually good?" — and that's a different curriculum.
+- **Path 06 — Evaluation & Observability.** Lab 09 was the *primer*. Path 06 is the production-grade treatment with RAGAS, TruLens, DeepEval, drift detection, A/B testing, and observability tracing.
 
 ## A note on time
 
-The 10–15 hour estimate covers reading the nine concept pages, skimming the two snapshots, doing the three labs, and taking the three quizzes. Most of it is the three labs. If you're already comfortable with sentence-transformers, numpy, and async LLM calls, each lab takes 60–90 minutes; if you're learning the libraries for the first time, expect closer to two hours each. The conceptual material adds up to about ninety minutes total.
+The 12–17 hour estimate covers reading the thirteen concept pages, skimming the two snapshots, doing the four labs, and taking the four quizzes. Most of it is the four labs. If you're already comfortable with sentence-transformers, numpy, and async LLM calls, each lab takes 60–90 minutes; if you're learning the libraries for the first time, expect closer to two hours each. The conceptual material adds up to about two hours total.
 
 ---
 
@@ -176,18 +212,38 @@ The 10–15 hour estimate covers reading the nine concept pages, skimming the tw
 
 Foundational sources cited across this path's pages:
 
+### RAG foundations
+
 - Lewis, P. et al. (2020). [*Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*](https://arxiv.org/abs/2005.11401). NeurIPS 2020. The paper that named the pattern.
 - Karpukhin, V. et al. (2020). [*Dense Passage Retrieval for Open-Domain Question Answering*](https://arxiv.org/abs/2004.04906). EMNLP 2020. The dense retrieval mechanism Lewis et al. built on.
 - Gao, Y. et al. (2024). [*Retrieval-Augmented Generation for Large Language Models: A Survey*](https://arxiv.org/abs/2312.10997). The standard 2024 survey covering naive, advanced, and modular RAG.
 - Reimers, N., & Gurevych, I. (2019). [*Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks*](https://arxiv.org/abs/1908.10084). EMNLP 2019. The paper introducing the sentence-transformers approach our default embedding model uses; Section 5.3 establishes the cross-encoder as a distinct architecture.
+
+### Retrieval mechanics
+
 - Robertson, S., & Zaragoza, H. (2009). [*The Probabilistic Relevance Framework: BM25 and Beyond*](https://www.staff.city.ac.uk/~sb317/papers/foundations_bm25_review.pdf). The definitive BM25 review.
 - Cormack, G. V., Clarke, C. L. A., & Büttcher, S. (2009). [*Reciprocal rank fusion outperforms Condorcet and individual rank learning methods*](https://dl.acm.org/doi/10.1145/1571941.1572114). SIGIR 2009. The RRF paper; introduces the `k=60` constant Lab 07 uses.
 - Carbonell, J., & Goldstein, J. (1998). [*The use of MMR, diversity-based reranking for reordering documents and producing summaries*](https://dl.acm.org/doi/10.1145/290941.291025). SIGIR 1998. The MMR paper.
 - Nogueira, R., & Cho, K. (2019). [*Passage Re-ranking with BERT*](https://arxiv.org/abs/1901.04085). The lineage of the `cross-encoder/ms-marco-MiniLM-L-6-v2` reranker Lab 07 uses.
-- Thakur, N. et al. (2021). [*BEIR: A Heterogeneous Benchmark for Zero-shot Evaluation of Information Retrieval Models*](https://arxiv.org/abs/2104.08663). NeurIPS 2021. The standard reference benchmark.
+- Malkov, Y. A., & Yashunin, D. A. (2018). [*Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs*](https://arxiv.org/abs/1603.09320). The HNSW paper — the basis for most ANN indexes used in production vector stores.
+
+### Quality interventions
+
 - Anthropic (2024). [*Introducing Contextual Retrieval*](https://www.anthropic.com/news/contextual-retrieval). Published Sep 19, 2024. The primary source for Module 8's headline technique, including the published prompt template and the 35-67% retrieval-failure-rate reduction benchmarks.
 - Gao, L., Ma, X., Lin, J., & Callan, J. (2022). [*Precise Zero-Shot Dense Retrieval without Relevance Labels*](https://arxiv.org/abs/2212.10496). ACL 2023. The HyDE paper.
 - Wang, L., Yang, N., & Wei, F. (2023). [*Query2doc: Query Expansion with Large Language Models*](https://arxiv.org/abs/2303.07678). EMNLP 2023. The canonical reference for LLM-driven query expansion / multi-query.
 - Ma, X., Gong, Y., He, P., Zhao, H., & Duan, N. (2023). [*Query Rewriting for Retrieval-Augmented Large Language Models*](https://arxiv.org/abs/2305.14283). The Rewrite-Retrieve-Read formalization.
 - Barnett, S., Kurniawan, S., Thudumu, S., Brannelly, Z., & Abdelrazek, M. (2024). [*Seven Failure Points When Engineering a Retrieval Augmented Generation System*](https://arxiv.org/abs/2401.05856). Complementary taxonomy to Module 8's failure-modes page.
-- Malkov, Y. A., & Yashunin, D. A. (2018). [*Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs*](https://arxiv.org/abs/1603.09320). The HNSW paper — the basis for most ANN indexes used in production vector stores.
+
+### Evaluation
+
+- Manning, C. D., Raghavan, P., & Schütze, H. (2008). [*Introduction to Information Retrieval*](https://nlp.stanford.edu/IR-book/). Cambridge University Press. Free online. Chapter 8 is the textbook source for retrieval metric definitions.
+- Järvelin, K., & Kekäläinen, J. (2002). [*Cumulated gain-based evaluation of IR techniques*](https://dl.acm.org/doi/10.1145/582415.582418). ACM TOIS. The original DCG / nDCG paper.
+- Craswell, N. (2009). [*Mean Reciprocal Rank*](https://link.springer.com/referenceworkentry/10.1007/978-0-387-39940-9_488). Encyclopedia of Database Systems. The formal definition of MRR.
+- Thakur, N. et al. (2021). [*BEIR: A Heterogeneous Benchmark for Zero-shot Evaluation of Information Retrieval Models*](https://arxiv.org/abs/2104.08663). NeurIPS 2021. The standard reference benchmark; establishes nDCG@10 + recall@100 as the cross-corpus retrieval-eval convention.
+- Bajaj, P. et al. (2018). [*MS MARCO: A Human Generated MAchine Reading COmprehension Dataset*](https://arxiv.org/abs/1611.09268). The reference real-query benchmark whose MRR@10 became the default retrieval metric in much dense-retrieval literature.
+- Es, S., James, J., Espinosa-Anke, L., & Schockaert, S. (2023). [*RAGAS: Automated Evaluation of Retrieval Augmented Generation*](https://arxiv.org/abs/2309.15217). The framework paper; introduces `faithfulness`, `answer_relevancy`, `context_precision`, `context_recall` as a standardized metric set. RAGAS is mentioned in Module 11 as a future tool; not used in Path 02.
+- Min, S. et al. (2023). [*FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation*](https://arxiv.org/abs/2305.14251). EMNLP 2023. The atomic-claim-decomposition approach to faithfulness checking.
+- Zheng, L. et al. (2023). [*Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*](https://arxiv.org/abs/2306.05685). NeurIPS 2023 Datasets and Benchmarks Track. The canonical LLM-as-judge paper; documents the position, verbosity, and self-enhancement biases that every LLM-as-judge user needs to design around.
+- Saad-Falcon, J., Khattab, O., Potts, C., & Zaharia, M. (2023). [*ARES: An Automated Evaluation Framework for Retrieval-Augmented Generation Systems*](https://arxiv.org/abs/2311.09476). NAACL 2024. Argues for synthetic-question generation with human-validated subsets; honest about the limits.
+- Liu, Y. et al. (2024). [*G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment*](https://arxiv.org/abs/2303.16634). EMNLP 2023. The standard LLM-as-judge protocol for text generation; chain-of-thought scoring template that many frameworks adopted.
