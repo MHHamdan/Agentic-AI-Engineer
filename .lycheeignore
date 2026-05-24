@@ -16,7 +16,7 @@
 # in, remove the matching line so the checker re-enforces it.
 
 # Concept pages (forward references from learning paths and the root README)
-# Note: concepts/agents/{what-is-an-agent,agent-loop,react-pattern}.md authored.
+# Note: concepts/agents/{what-is-an-agent,agent-loop,react-pattern,agents-vs-frameworks}.md authored.
 # Note: concepts/tools/{tool-design,tool-selection}.md authored (batch 7).
 ^.*/concepts/agents/plan-and-execute\.md$
 ^.*/concepts/context/context-budget\.md$
@@ -43,12 +43,14 @@
 ^.*/learning-paths/08-mathematical-foundations/?$
 ^.*/learning-paths/09-capstones/?$
 
-# Labs (numbered labs not yet shipped — Labs 01 and 02 are authored)
+# Labs (numbered labs not yet shipped — Labs 01, 02, and 05 are authored)
 # Note: references to solution/lab.ipynb may temporarily 404 until follow-up batch.
 ^.*/labs/01-first-agent-from-scratch/solution/.*$
 ^.*/labs/02-tool-design-and-selection/solution/.*$
+^.*/labs/05-langgraph-rewrite/solution/.*$
 
 # Tools subfolders (per-framework pages not yet authored)
+# Note: tools/langgraph/ now has authored content (snapshot-v1.0.md, README); lines removed.
 ^.*/tools/langsmith/?$
 ^.*/tools/comparisons/?$
 
