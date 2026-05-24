@@ -1,0 +1,64 @@
+%% Supervisor-worker pattern: the trajectory of a single user task
+%% through Lab 10's three-agent system.
+%%
+%% Matches the diagrammatic vocabulary of rag-trajectory.mmd,
+%% research-agent-trajectory.mmd, retrieval-pipeline.mmd:
+%%   - user / terminal nodes at the edges
+%%   - agent nodes in the center (each agent = one Lab 01 loop)
+%%   - handoff edges labeled with the structured payload shape
+%%   - failure-mode edges as dotted lines
+
+flowchart LR
+    U(["👤 User"])
+    Final(["📝 Final answer"])
+
+    subgraph Supervisor["🎯 Supervisor agent loop"]
+        direction TB
+        S1["Receive task"]
+        S2["Decide: which worker?"]
+        S3["Synthesize"]
+        S1 --> S2
+        S2 --> S3
+    end
+
+    subgraph Researcher["🔍 Researcher worker (own loop)"]
+        direction TB
+        R1["web_search"]
+        R2["fetch_page"]
+        R3["Summarize findings"]
+        R1 --> R2
+        R2 --> R3
+    end
+
+    subgraph Writer["✍️ Writer worker (no tools)"]
+        direction TB
+        W1["Compose prose"]
+        W2["Inline citations"]
+        W1 --> W2
+    end
+
+    U -->|"task: str"| S1
+
+    S2 -.->|"call_researcher(question)"| R1
+    R3 -.->|"{status, findings, citations}"| S2
+
+    S2 ==>|"call_writer(findings, citations)"| W1
+    W2 ==>|"{status, answer}"| S3
+
+    S3 --> Final
+
+    %% Failure-mode edges (dotted) — these are the paths the supervisor
+    %% takes when worker results indicate problems
+    R3 -.->|"status: step_cap → supervisor surfaces partial"| S2
+    W2 -.->|"status: needs_more_research → supervisor re-routes"| S2
+
+    %% Styling
+    classDef user fill:#e8eaf6,stroke:#3949ab,stroke-width:2px,color:#1a237e
+    classDef supervisor fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,color:#e65100
+    classDef worker fill:#e0f2f1,stroke:#00695c,stroke-width:1px,color:#004d40
+    classDef terminal fill:#f1f8e9,stroke:#558b2f,stroke-width:2px,color:#33691e
+
+    class U user
+    class S1,S2,S3 supervisor
+    class R1,R2,R3,W1,W2 worker
+    class Final terminal
