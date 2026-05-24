@@ -41,31 +41,27 @@ dependencies = [
     "httpx>=0.27",
     "python-dotenv>=1.0",
     "pydantic>=2.7",
-
     # LLM SDKs (one of these is usually enough; we install all so labs work
     # with any provider the user has a key for)
     "openai>=1.40",
     "anthropic>=0.34",
     "google-generativeai>=0.7",
-
     # LangChain / LangGraph — 1.0+, see CHANGELOG.md for verified snapshot
     "langchain>=1.0,<2.0",
     "langchain-core>=1.0,<2.0",
     "langgraph>=1.0,<2.0",
-
     # Notebooks
     "jupyterlab>=4.2",
     "ipykernel>=6.29",
     "ipywidgets>=8.1",
-
     # Common utilities used across labs
     "rich>=13.7",
     "tenacity>=8.5",
     "tiktoken>=0.7",
-
     # Lightweight in-memory vector store for early labs (real vector DB
     # adapters are optional extras below)
     "numpy>=1.26",
+    "rank-bm25>=0.2.2,<0.3",
 ]
 
 [project.optional-dependencies]

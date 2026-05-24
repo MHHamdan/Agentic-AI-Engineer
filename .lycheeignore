@@ -20,6 +20,7 @@
 # Note: concepts/tools/{tool-design,tool-selection,search-tools}.md authored (batches 7, 9).
 # Note: concepts/rag/{what-is-rag,retrieval-as-a-tool,chunking-and-indexing}.md authored (batch 10).
 # Note: concepts/rag/{retrieval-strategies,hybrid-search,reranking}.md authored (batch 11).
+# Note: concepts/rag/{contextual-retrieval,query-rewriting,retrieval-failure-modes}.md authored (batch 12).
 ^.*/concepts/agents/plan-and-execute\.md$
 ^.*/concepts/context/context-budget\.md$
 ^.*/concepts/evaluation/?$
@@ -45,7 +46,7 @@
 ^.*/learning-paths/08-mathematical-foundations/?$
 ^.*/learning-paths/09-capstones/?$
 
-# Labs (numbered labs not yet shipped — Labs 01, 02, 03, 05, 06, and 07 are authored)
+# Labs (numbered labs not yet shipped — Labs 01, 02, 03, 05, 06, 07, and 08 are authored)
 # Note: references to solution/lab.ipynb may temporarily 404 until follow-up batch.
 ^.*/labs/01-first-agent-from-scratch/solution/.*$
 ^.*/labs/02-tool-design-and-selection/solution/.*$
@@ -53,6 +54,7 @@
 ^.*/labs/05-langgraph-rewrite/solution/.*$
 ^.*/labs/06-agentic-rag-from-scratch/solution/.*$
 ^.*/labs/07-retrieval-strategies-and-reranking/solution/.*$
+^.*/labs/08-contextual-retrieval-and-query-rewriting/solution/.*$
 
 # Tools subfolders (per-framework pages not yet authored)
 # Note: tools/langgraph/ now has authored content (snapshot-v1.0.md, README); lines removed.

@@ -2,7 +2,7 @@
 
 > 🟢 Stable explainers · concepts/rag/ is the conceptual spine of Path 02 (Agentic RAG).
 
-The pages here cover the *stable* conceptual material for retrieval-augmented generation: what it is, how it relates to the agent loop, the decisions that govern how a corpus gets chunked and indexed, and the strategies that improve retrieval quality. Fast-changing tools (embedding models, vector stores) have their own versioned snapshots in [`tools/embeddings/`](../../tools/embeddings/) and [`tools/vector-stores/`](../../tools/vector-stores/).
+The pages here cover the *stable* conceptual material for retrieval-augmented generation: what RAG is, how it relates to the agent loop, the decisions that govern how a corpus gets chunked and indexed, the strategies that improve retrieval quality, and the corpus-side and query-side interventions for the harder failure modes. Fast-changing tools (embedding models, vector stores) have their own versioned snapshots in [`tools/embeddings/`](../../tools/embeddings/) and [`tools/vector-stores/`](../../tools/vector-stores/).
 
 ## Current pages
 
@@ -26,16 +26,27 @@ These three are prerequisites for [Lab 06](../../labs/06-agentic-rag-from-scratc
 
 These three are prerequisites for [Lab 07](../../labs/07-retrieval-strategies-and-reranking/).
 
+### Quality interventions
+
+| Page | Read time | Covers |
+|------|-----------|--------|
+| 📖 [contextual-retrieval.md](./contextual-retrieval.md) | ~11 min | Anthropic's chunk-augmentation technique. Indexing with LLM-generated doc context. |
+| 📖 [query-rewriting.md](./query-rewriting.md) | ~10 min | HyDE, multi-query expansion, decomposition. The query-side counterpart. |
+| 📖 [retrieval-failure-modes.md](./retrieval-failure-modes.md) | ~11 min | The synthesis: 8 RAG failure modes, how to diagnose each, which intervention to reach for. |
+
+These three are prerequisites for [Lab 08](../../labs/08-contextual-retrieval-and-query-rewriting/), and the failure-modes page is the debugging mental model the whole Path 02 curriculum builds toward.
+
 ## Pending pages (future Path 02 batches)
 
 The following concept pages are forward-referenced from this curriculum but not yet authored:
 
-- `contextual-retrieval.md` — Anthropic's contextual retrieval technique (augmenting chunks with document-level context before embedding).
-- `query-expansion.md` — HyDE, multi-query generation, query rewriting.
 - `rag-evaluation.md` — faithfulness, groundedness, citation accuracy. (Likely lives in `concepts/evaluation/` cross-referenced from here.)
+- `conversational-rag.md` — multi-turn query rewriting, chat history handling, when to recompute retrieval.
+- `framework-bridge-rag.md` — same Lab 06–08 agent in LangChain/LangGraph.
 
 ## Where this is used
 
 - 🧪 [Lab 06: Agentic RAG from scratch](../../labs/06-agentic-rag-from-scratch/) — built on the foundations pages.
 - 🧪 [Lab 07: Retrieval strategies and reranking](../../labs/07-retrieval-strategies-and-reranking/) — built on the retrieval-quality pages, extends Lab 06.
+- 🧪 [Lab 08: Contextual retrieval and query rewriting](../../labs/08-contextual-retrieval-and-query-rewriting/) — built on the quality-interventions pages, extends Lab 07.
 - 🗺 [Path 02 — Agentic RAG](../../learning-paths/02-agentic-rag/) — curated reading list using these pages.

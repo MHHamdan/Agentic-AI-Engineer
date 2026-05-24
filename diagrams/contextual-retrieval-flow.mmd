@@ -1,0 +1,70 @@
+%% Contextual retrieval flow — the index-time augmentation + query-time
+%% rewriting + retrieval pipeline built in Lab 08. Companion to
+%% concepts/rag/{contextual-retrieval,query-rewriting,retrieval-failure-modes}.md
+%% Renders natively on GitHub.
+
+flowchart TD
+    %% Index-time path (top half)
+    DOC[/"Document"/] --> CHUNKER["Chunker<br/>(target_tokens=160,<br/>overlap=32)"]
+    CHUNKER --> CHUNKS["Chunks"]
+
+    CHUNKS --> CONTEXTUALIZER["Contextualizer LLM<br/>prompt: situate chunk<br/>within whole document<br/>(50-100 tokens out)"]
+    DOC -. full doc as context .-> CONTEXTUALIZER
+
+    CONTEXTUALIZER --> CACHE[("context_cache.json<br/>keyed by chunk_id")]
+    CACHE --> AUGMENTED["Augmented chunks<br/>(context summary +<br/>original chunk text)"]
+
+    AUGMENTED --> BM25_IDX["Contextual BM25 index<br/>(rank-bm25 over<br/>augmented chunks)"]
+    AUGMENTED --> DENSE_IDX["Contextual dense index<br/>(MiniLM over<br/>augmented chunks)"]
+
+    %% Query-time path (bottom half)
+    Q[/"User query"/] --> REWRITE{Query rewriting?}
+    REWRITE -->|"hyde"| HYDE["HyDE LLM<br/>generate hypothetical<br/>answer; embed THAT"]
+    REWRITE -->|"multi"| MULTI["Multi-query LLM<br/>generate 3 rephrasings;<br/>retrieve each"]
+    REWRITE -->|"decompose"| DECOMP["Decomposer LLM<br/>split compound query<br/>into sub-queries"]
+    REWRITE -->|"none<br/>(default)"| PASSTHRU["pass query as-is"]
+
+    HYDE --> DENSE["Dense retrieval<br/>top-30 candidates"]
+    MULTI --> DENSE
+    DECOMP --> DENSE
+    PASSTHRU --> DENSE
+
+    HYDE --> BM25["BM25 retrieval<br/>top-30 candidates"]
+    MULTI --> BM25
+    DECOMP --> BM25
+    PASSTHRU --> BM25
+
+    DENSE -. uses .-> DENSE_IDX
+    BM25 -. uses .-> BM25_IDX
+
+    DENSE --> RRF["Reciprocal Rank Fusion<br/>k=60 (Cormack 2009)"]
+    BM25 --> RRF
+
+    RRF --> RERANK["Cross-encoder rerank<br/>ms-marco-MiniLM-L-6-v2<br/>(scores ORIGINAL query<br/>against augmented chunks)"]
+
+    RERANK --> FLOOR{Score floor?}
+    FLOOR -->|all below| EMPTY[/"status: empty"/]
+    FLOOR -->|some above| TOPK["Top-k by rerank<br/>(default k=5)"]
+
+    TOPK --> ENVELOPE["Build envelope<br/>(same contract as Lab 06/07)<br/>chunk_id, snippet, score"]
+
+    ENVELOPE --> AGENT["Agent reads ORIGINAL chunk<br/>via read_chunk<br/>(NOT augmented chunk —<br/>context is retrieval-aid only)"]
+
+    AGENT --> OUT[/"Synthesized answer<br/>with chunk-level citations"/]
+
+    classDef index_time fill:#cef,stroke:#247,stroke-width:1px;
+    classDef query_time fill:#dfd,stroke:#080,stroke-width:1px;
+    classDef rewrite fill:#fcf,stroke:#739,stroke-width:1px;
+    classDef retrieval fill:#fed,stroke:#a40,stroke-width:1px;
+    classDef decision fill:#ffd,stroke:#a80,stroke-width:1px;
+    classDef storage fill:#eef,stroke:#558,stroke-width:1px;
+    classDef terminal fill:#eee,stroke:#666,stroke-width:1px;
+    classDef agent_node fill:#fec,stroke:#a60,stroke-width:1px;
+
+    class CHUNKER,CHUNKS,CONTEXTUALIZER,AUGMENTED index_time;
+    class CACHE,BM25_IDX,DENSE_IDX storage;
+    class HYDE,MULTI,DECOMP,PASSTHRU rewrite;
+    class DENSE,BM25,RRF,RERANK,TOPK,ENVELOPE retrieval;
+    class REWRITE,FLOOR decision;
+    class AGENT agent_node;
+    class DOC,Q,OUT,EMPTY terminal;
