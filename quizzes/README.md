@@ -78,9 +78,9 @@ Below the front-matter, each question renders as:
 
 The question text.
 
-A. First option
-B. Second option
-C. Third option
+A. First option  ⏎
+B. Second option  ⏎
+C. Third option  ⏎
 D. Fourth option
 
 <details>
@@ -93,6 +93,8 @@ D. Fourth option
 → Review: `[{page} § "{section}"]({page}#{anchor})`
 </details>
 ```
+
+> **Note on option rendering:** each of A, B, C ends with **two trailing spaces** (shown as `⏎` in the example for visibility). This forces a `<br />` between options so they render vertically on GitHub. Without the trailing spaces, GitHub-flavored Markdown collapses the four lines into a single wrapped paragraph. The last option (D) does not get trailing spaces — the blank line below it ends the paragraph naturally.
 
 This rendering is deterministic from the YAML, which means a contributor (or a future build step) can regenerate the body from the front-matter without losing fidelity.
 

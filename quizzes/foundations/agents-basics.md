@@ -177,9 +177,9 @@ Try each question before expanding its answer. Score yourself at the end.
 
 What is the *defining* property that distinguishes an agent from a one-shot LLM call?
 
-A. The agent uses a larger model with more parameters.
-B. The agent has access to external tools.
-C. The LLM picks the next action in a loop, based on what it observed.
+A. The agent uses a larger model with more parameters.  
+B. The agent has access to external tools.  
+C. The LLM picks the next action in a loop, based on what it observed.  
 D. The agent persists memory across user sessions.
 
 <details>
@@ -199,9 +199,9 @@ Model size is irrelevant — small models can be agents. Tool access is *necessa
 
 Why doesn't a single, very elaborate prompt solve the problems that agents solve?
 
-A. Single prompts cost more than agent loops.
-B. Single prompts can't condition on external information observed at runtime.
-C. Single prompts always exceed the model's context window.
+A. Single prompts cost more than agent loops.  
+B. Single prompts can't condition on external information observed at runtime.  
+C. Single prompts always exceed the model's context window.  
 D. Single prompts can't be cached.
 
 <details>
@@ -221,9 +221,9 @@ Cost and caching aren't the issue. Context windows accommodate reasonable prompt
 
 Which of the following is **not** one of the four minimal components of an agent?
 
-A. A language model.
-B. A set of tools.
-C. A reward function.
+A. A language model.  
+B. A set of tools.  
+C. A reward function.  
 D. A loop with state.
 
 <details>
@@ -243,9 +243,9 @@ The four minimal components are: a language model, a set of tools, a loop, and a
 
 A task can be expressed as a fixed sequence of LLM calls and code, with no branching that depends on intermediate LLM output. What should you build?
 
-A. An agent — it's more flexible.
-B. A pipeline — agents add unnecessary cost and latency.
-C. A multi-agent system — each step should have its own agent.
+A. An agent — it's more flexible.  
+B. A pipeline — agents add unnecessary cost and latency.  
+C. A multi-agent system — each step should have its own agent.  
 D. A single very long prompt that does everything.
 
 <details>
@@ -265,9 +265,9 @@ If the control flow is fixed and doesn't depend on the LLM's output to decide wh
 
 An agent keeps calling the same web-search tool with slight rewordings, never making progress. Which failure mode is this?
 
-A. Hallucinated tool calls.
-B. Looping without progress.
-C. Lost in the observations.
+A. Hallucinated tool calls.  
+B. Looping without progress.  
+C. Lost in the observations.  
 D. Silent failures.
 
 <details>
@@ -287,9 +287,9 @@ The signature here is *repeated, near-identical actions that don't change the st
 
 Why is the agent loop more useful than a bigger model for tasks like "browse the web and summarize"?
 
-A. Bigger models cost too much for everyone.
-B. The loop provides grounding — the model can see real tool results and react.
-C. Bigger models are slower at producing tokens.
+A. Bigger models cost too much for everyone.  
+B. The loop provides grounding — the model can see real tool results and react.  
+C. Bigger models are slower at producing tokens.  
 D. The loop reduces the number of tokens needed per response.
 
 <details>
@@ -309,9 +309,9 @@ A larger one-shot model can produce more fluent text but has no access to curren
 
 An agent receives a 50KB JSON response from a tool. By step 4, the context is bloated and the agent is confused. Which of the following is **not** an appropriate fix?
 
-A. Insert a summarization step between the raw tool result and what's appended to state.
-B. Have the tool return a handle/page token that the agent can selectively dereference.
-C. Switch to a bigger model with a larger context window.
+A. Insert a summarization step between the raw tool result and what's appended to state.  
+B. Have the tool return a handle/page token that the agent can selectively dereference.  
+C. Switch to a bigger model with a larger context window.  
 D. Compress the tool's return contract so it only includes fields the model needs.
 
 <details>
@@ -331,9 +331,9 @@ A, B, and D are all real fixes that address the root cause: noise in observation
 
 In the agent-as-policy framing, what mathematical object is the LLM?
 
-A. A reward function $r(s, a)$.
-B. A value function $V(s)$.
-C. A policy $\pi_\theta(a_t \mid s_t)$.
+A. A reward function $r(s, a)$.  
+B. A value function $V(s)$.  
+C. A policy $\pi_\theta(a_t \mid s_t)$.  
 D. A transition function $T(s, a, s')$.
 
 <details>

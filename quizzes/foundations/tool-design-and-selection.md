@@ -188,9 +188,9 @@ Try each question before expanding its answer. Score yourself at the end.
 
 Which of these is the **single most important** field for correct tool selection?
 
-A. The tool's name.
-B. The tool's description.
-C. The tool's return type.
+A. The tool's name.  
+B. The tool's description.  
+C. The tool's return type.  
 D. The tool's execution latency.
 
 <details>
@@ -210,9 +210,9 @@ Names matter, but they're short. Return types and latency don't affect selection
 
 You have a database tool with a `mode` parameter that switches between `lookup`, `search`, `create`, `update`, and `delete`. Should you split it?
 
-A. No — combining keeps the toolset small.
-B. Yes — when *required arguments differ* between modes, split into per-intent tools.
-C. It doesn't matter — the model treats them identically.
+A. No — combining keeps the toolset small.  
+B. Yes — when *required arguments differ* between modes, split into per-intent tools.  
+C. It doesn't matter — the model treats them identically.  
 D. Yes — every tool should have only one argument.
 
 <details>
@@ -232,9 +232,9 @@ The "one tool per intent" rule says: if the *required arguments differ* between 
 
 Under OpenAI's `strict` mode for function calling, how do you express an *optional* field?
 
-A. Omit it from the `required` list.
-B. Add it to `properties` but allow `null` as a type.
-C. Set `default: null` in JSON Schema.
+A. Omit it from the `required` list.  
+B. Add it to `properties` but allow `null` as a type.  
+C. Set `default: null` in JSON Schema.  
 D. You can't have optional fields in strict mode.
 
 <details>
@@ -254,9 +254,9 @@ Strict mode has a quirk that catches everyone: *all* fields in `properties` must
 
 A tool returns `null` when there are no results. Why is this a bad design choice?
 
-A. Null values are slower to serialize.
-B. The model can't distinguish "not found" from "tool failed" from "tool succeeded with empty results".
-C. Null is reserved by the OpenAI API.
+A. Null values are slower to serialize.  
+B. The model can't distinguish "not found" from "tool failed" from "tool succeeded with empty results".  
+C. Null is reserved by the OpenAI API.  
 D. It breaks JSON schema validation.
 
 <details>
@@ -276,9 +276,9 @@ Returning `null` for every failure mode collapses three different signals into o
 
 You have 20+ tools in your toolset, and selection accuracy is degrading. What is the **most effective** first intervention?
 
-A. Switch to a larger model.
-B. Rewrite all tool descriptions to be longer and more detailed.
-C. Prune the toolset per call — show only the relevant subset.
+A. Switch to a larger model.  
+B. Rewrite all tool descriptions to be longer and more detailed.  
+C. Prune the toolset per call — show only the relevant subset.  
 D. Set `tool_choice='required'` on every step.
 
 <details>
@@ -298,9 +298,9 @@ Empirically, selection accuracy degrades past ~12–25 tools. The strongest fix 
 
 Which `tool_choice` value should you use on the *synthesis step* — when the agent should now write a final answer without calling another tool?
 
-A. `'auto'` — let the model decide.
-B. `'required'` — force a tool call.
-C. `'none'` — forbid tool calls.
+A. `'auto'` — let the model decide.  
+B. `'required'` — force a tool call.  
+C. `'none'` — forbid tool calls.  
 D. A named tool, e.g., `{'type': 'function', 'function': {'name': 'synthesize'}}`.
 
 <details>
@@ -320,9 +320,9 @@ Leaving `tool_choice="auto"` on the synthesis step is a common bug: the model ma
 
 Two tools `search_customers` (fuzzy) and `find_customer_by_email` (exact) both seem to apply to a user's request. The agent keeps picking the wrong one. What's the strongest fix?
 
-A. Delete one of the tools.
-B. Add explicit **negative guidance** to both descriptions ("Do NOT use this for X — use Y for that").
-C. Increase the model's temperature.
+A. Delete one of the tools.  
+B. Add explicit **negative guidance** to both descriptions ("Do NOT use this for X — use Y for that").  
+C. Increase the model's temperature.  
 D. Rename them to something shorter.
 
 <details>
@@ -342,9 +342,9 @@ Negative guidance — "Do NOT use this for X — use Y" — is the single most r
 
 In Lab 02, the same agent code was run against `tools_v0` (broken design) and `tools_v1` (fixed design). The destructive `update_order` cancelled an order immediately in v0, but in v1 it required confirmation. Where did the safety come from in v1?
 
-A. A new layer of code in the agent loop.
-B. A switch to a more capable model.
-C. A schema-level change: a `confirmed: bool` field plus a tool-side check that returns a structured error when it's `false`.
+A. A new layer of code in the agent loop.  
+B. A switch to a more capable model.  
+C. A schema-level change: a `confirmed: bool` field plus a tool-side check that returns a structured error when it's `false`.  
 D. A system-prompt instruction that warned the model about destructive tools.
 
 <details>
