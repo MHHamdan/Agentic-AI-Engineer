@@ -2,9 +2,11 @@
 
 > 🟢 Stable explainers · concepts/rag/ is the conceptual spine of Path 02 (Agentic RAG).
 
-The pages here cover the *stable* conceptual material for retrieval-augmented generation: what it is, how it relates to the agent loop, and the decisions that govern how a corpus gets chunked and indexed. Fast-changing tools (embedding models, vector stores) have their own versioned snapshots in [`tools/embeddings/`](../../tools/embeddings/) and [`tools/vector-stores/`](../../tools/vector-stores/).
+The pages here cover the *stable* conceptual material for retrieval-augmented generation: what it is, how it relates to the agent loop, the decisions that govern how a corpus gets chunked and indexed, and the strategies that improve retrieval quality. Fast-changing tools (embedding models, vector stores) have their own versioned snapshots in [`tools/embeddings/`](../../tools/embeddings/) and [`tools/vector-stores/`](../../tools/vector-stores/).
 
 ## Current pages
+
+### Foundations (read these first)
 
 | Page | Read time | Covers |
 |------|-----------|--------|
@@ -12,16 +14,28 @@ The pages here cover the *stable* conceptual material for retrieval-augmented ge
 | 📖 [retrieval-as-a-tool.md](./retrieval-as-a-tool.md) | ~9 min | The agentic framing: how retrieval becomes a tool inside the Lab 01/03 loop. |
 | 📖 [chunking-and-indexing.md](./chunking-and-indexing.md) | ~12 min | Stable patterns: chunk size, overlap, boundaries, metadata, what an index actually is. |
 
+These three are prerequisites for [Lab 06](../../labs/06-agentic-rag-from-scratch/).
+
+### Retrieval quality
+
+| Page | Read time | Covers |
+|------|-----------|--------|
+| 📖 [retrieval-strategies.md](./retrieval-strategies.md) | ~11 min | The four knobs that drive retrieval quality: top_k, score floors, MMR, query construction. |
+| 📖 [hybrid-search.md](./hybrid-search.md) | ~10 min | BM25 + dense fusion via reciprocal rank fusion (RRF). When hybrid beats dense alone. |
+| 📖 [reranking.md](./reranking.md) | ~10 min | Cross-encoder reranking, the retrieve-then-rerank pipeline, what changes vs bi-encoders. |
+
+These three are prerequisites for [Lab 07](../../labs/07-retrieval-strategies-and-reranking/).
+
 ## Pending pages (future Path 02 batches)
 
-The following concept pages are forward-referenced from this batch but not yet authored. They'll land in subsequent Path 02 batches:
+The following concept pages are forward-referenced from this curriculum but not yet authored:
 
-- `retrieval-strategies.md` — top-k tuning, MMR, re-ranking strategies.
-- `hybrid-search.md` — BM25 + dense retrieval fusion.
-- `contextual-retrieval.md` — Anthropic's contextual retrieval technique.
+- `contextual-retrieval.md` — Anthropic's contextual retrieval technique (augmenting chunks with document-level context before embedding).
+- `query-expansion.md` — HyDE, multi-query generation, query rewriting.
 - `rag-evaluation.md` — faithfulness, groundedness, citation accuracy. (Likely lives in `concepts/evaluation/` cross-referenced from here.)
 
 ## Where this is used
 
-- 🧪 [Lab 06: Agentic RAG from scratch](../../labs/06-agentic-rag-from-scratch/) — primary consumer; all three pages are prerequisites.
+- 🧪 [Lab 06: Agentic RAG from scratch](../../labs/06-agentic-rag-from-scratch/) — built on the foundations pages.
+- 🧪 [Lab 07: Retrieval strategies and reranking](../../labs/07-retrieval-strategies-and-reranking/) — built on the retrieval-quality pages, extends Lab 06.
 - 🗺 [Path 02 — Agentic RAG](../../learning-paths/02-agentic-rag/) — curated reading list using these pages.

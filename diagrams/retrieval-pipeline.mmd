@@ -1,0 +1,55 @@
+%% Retrieval pipeline — the dense + BM25 → RRF → MMR → cross-encoder rerank
+%% cascade built in Lab 07. Companion to concepts/rag/{retrieval-strategies,
+%% hybrid-search,reranking}.md.
+%% Renders natively on GitHub.
+
+flowchart TD
+    Q[/"Query string<br/>(from agent or user)"/] --> SPLIT(("split"))
+
+    SPLIT --> DENSE["Dense retrieval<br/>bi-encoder + numpy dot product<br/>over (n_chunks, 384) index"]
+    SPLIT --> BM25["BM25 retrieval<br/>rank-bm25 over tokenized<br/>corpus (k1=1.5, b=0.75)"]
+
+    DENSE --> DTOP["top-30 by cosine"]
+    BM25 --> BTOP["top-30 by BM25 score"]
+
+    DTOP --> RRF["Reciprocal Rank Fusion<br/>RRF_score = Σ 1/(60 + rank)<br/>across both retrievers"]
+    BTOP --> RRF
+
+    RRF --> FUSED["Unified top-30 candidates<br/>(score scales unified by rank fusion)"]
+
+    FUSED --> MMRCHECK{Diversify?}
+    MMRCHECK -->|use_mmr=True<br/>(redundancy-prone query)| MMR["MMR rerank<br/>λ=0.7 default<br/>maximise: λ·rel - (1-λ)·max_redundancy"]
+    MMRCHECK -->|use_mmr=False<br/>(default)| RERANK_IN
+    MMR --> RERANK_IN["Top-30 candidates<br/>(diversified if MMR applied)"]
+
+    RERANK_IN --> RERANK["Cross-encoder rerank<br/>ms-marco-MiniLM-L-6-v2<br/>~30 (query, chunk) pairs<br/>output: raw logits"]
+
+    RERANK --> FLOOR{All scores below<br/>MIN_SIMILARITY?}
+    FLOOR -->|yes| EMPTY[/"status: empty<br/>'no chunks crossed<br/>rerank floor'"/]
+    FLOOR -->|no| TOPK["Top-k by rerank score<br/>(default k=5)"]
+
+    TOPK --> ENVELOPE["Build envelope:<br/>chunk_id, doc_id, title,<br/>snippet, score,<br/>retrieval_signals dict"]
+
+    ENVELOPE --> OUT[/"status: ok<br/>results: [{...}, ...]<br/>same contract as Lab 06"/]
+
+    %% Latency annotations (CPU laptop)
+    DENSE -. ~10-50ms .-> DTOP
+    BM25 -. ~1-5ms .-> BTOP
+    RRF -. ~1ms .-> FUSED
+    MMR -. ~5-20ms .-> RERANK_IN
+    RERANK -. ~300-1500ms<br/>(dominant cost) .-> FLOOR
+
+    classDef retriever fill:#dfd,stroke:#080,stroke-width:1px;
+    classDef fusion fill:#cef,stroke:#247,stroke-width:1px;
+    classDef rerank fill:#fcf,stroke:#739,stroke-width:1px;
+    classDef decision fill:#ffd,stroke:#a80,stroke-width:1px;
+    classDef terminal fill:#eee,stroke:#666,stroke-width:1px;
+    classDef escape fill:#fed,stroke:#a40,stroke-width:1px;
+    classDef split fill:#fff,stroke:#888,stroke-width:1px;
+
+    class DENSE,BM25,DTOP,BTOP retriever;
+    class RRF,FUSED,MMR,RERANK_IN fusion;
+    class RERANK,TOPK,ENVELOPE rerank;
+    class MMRCHECK,FLOOR decision;
+    class Q,OUT,EMPTY terminal;
+    class SPLIT split;
