@@ -45,6 +45,15 @@ When a tool ships a breaking change (e.g., `langgraph.prebuilt` → `langchain.a
 
 ### Added
 
+- **Foundations bridge to frameworks — LangGraph rewrite of Lab 01.**
+  - `concepts/agents/agents-vs-frameworks.md` — when does a framework pay off? Eight-dimension decision table covering readability, state, debugging, reliability, checkpointing, human approval, maintainability, and learning value. Honest about tradeoffs; explicitly notes that frameworks don't fix tool-design problems.
+  - `tools/langgraph/snapshot-v1.0.md` — 🔴 verified tool snapshot for LangGraph `1.x` series, anchored to LangChain's [1.0 announcement (2025-10-22)](https://blog.langchain.com/langchain-langgraph-1dot0/) and the [official migration guide](https://docs.langchain.com/oss/python/migrate/langgraph-v1). Pins the APIs the labs use (`StateGraph`, `MessagesState`, `add_messages`, `ToolNode`, `tools_condition`, `InMemorySaver`, `interrupt`/`Command`, `create_agent`). Documents the `create_react_agent` → `create_agent` migration and the TypedDict-only state requirement gotcha. Includes a freshness check protocol for future updates.
+  - `tools/langgraph/README.md` — section index for forthcoming LangGraph pages.
+  - `labs/05-langgraph-rewrite/README.md` — lab brief (~90–120 min, intermediate).
+  - `labs/05-langgraph-rewrite/lab.ipynb` — 39-cell notebook (25 md / 14 code). Step-by-step rebuild of Lab 01's agent in LangGraph 1.x, then two extensions Lab 01 couldn't do: (a) checkpointing with `InMemorySaver` + thread_id-based resume, (b) human-in-the-loop with `interrupt(...)` + `Command(resume=...)`. Also covers `create_agent` as the high-level alternative, and `.stream(...)` for live trace observation. Outputs stripped; sample-output markdown cells after key steps. Same domain, same queries as Lab 01 — only the wiring changes.
+  - `quizzes/foundations/langgraph-basics.md` — 8 questions testing *what LangGraph adds* (state, persistence, interrupts), not API syntax. Includes the key trap question: "what changes about the model?" → nothing.
+  - `diagrams/langgraph-state-flow.mmd` — Mermaid source for the LangGraph state flow (model ↔ tools loop with checkpointer overlay).
+
 - **Foundations content — tool design and selection.**
   - `concepts/tools/tool-design.md` — name, description, schema, return contract, executor; patterns (one-tool-per-intent, discriminated unions, pagination); seven common tool-design mistakes mapped to symptom/cause/fix.
   - `concepts/tools/tool-selection.md` — the four selection levers (system prompt, descriptions, history, `tool_choice`); five selection-failure modes; pruning strategies for large toolsets; tool-count guidance table.
@@ -77,7 +86,8 @@ When a tool ships a breaking change (e.g., `langgraph.prebuilt` → `langchain.a
 
 ### Changed
 
-- **`learning-paths/01-foundations/README.md`** — expanded from 3 modules to 5: added Module 3 (Tools: design + selection + Lab 02), promoted math to Module 4, added Module 5 (Quizzes). Updated flowchart to include the new modules. Time estimate bumped from 8–12 to 10–15 hours. References list now includes Toolformer and Gorilla; added Berkeley F25 *Agentic AI* course link alongside F24.
+- **`learning-paths/01-foundations/README.md`** — expanded from 5 modules to 6: added Module 5 (Bridge to frameworks: `agents-vs-frameworks.md` concept page + `tools/langgraph/snapshot-v1.0.md` + Lab 05), renumbered the original Quizzes module to Module 6. Updated flowchart, references list (added LangChain 1.0 announcement, LangGraph migration guide, Anthropic's "Building effective agents"), and time estimate (12–18 hours). Earlier in this Unreleased cycle: expanded from 3 modules to 5 with the tool-design module.
+- **`.lycheeignore`** — removed forward-reference patterns now resolved by batch 8 (`concepts/agents/agents-vs-frameworks.md`, `tools/langgraph/`, `labs/05-langgraph-rewrite/`, `quizzes/foundations/langgraph-basics.md`). Added forward reference for `labs/05-langgraph-rewrite/solution/` (solution notebooks land in a future batch).
 - **`CITATION.cff`** — `date-released` set to actual release date (`2026-05-23`). Passes `cffconvert --validate`.
 - **`.lycheeignore`** — removed patterns for content now authored (concept pages, math notes, lab 01, learning-paths/01-foundations; tool concept pages, Lab 02, quizzes). Kept patterns for forthcoming labs (03, 04, 05, …), patterns/, recipes/, projects/, and tools/ pages that haven't been authored yet.
 - **`.github/workflows/ci.yml`** — cleaner empty-repo handling, `markdownlint` made informational, lychee uses auto-detected `.lycheeignore` (no broken `--exclude-path` flag); ruff switched from `nbqa` to native notebook support (drops `nbqa` dependency, fixes per-file-ignores not applying to notebooks).
@@ -93,6 +103,9 @@ When a tool ships a breaking change (e.g., `langgraph.prebuilt` → `langchain.a
 
 ### Verified Tool Snapshots
 
+- `langgraph` `>=1.0,<2.0` — verified 2026-05-23. Latest: `1.2.1` (Apr 2026). GA on 2025-10-22 with public commitment to no breaking changes until 2.0. Used in Lab 05. Source: [LangChain & LangGraph 1.0 announcement](https://blog.langchain.com/langchain-langgraph-1dot0/); [LangGraph v1 migration guide](https://docs.langchain.com/oss/python/migrate/langgraph-v1); [Releases on GitHub](https://github.com/langchain-ai/langgraph/releases). Full snapshot: [`tools/langgraph/snapshot-v1.0.md`](./tools/langgraph/snapshot-v1.0.md).
+- `langchain` `>=1.0,<2.0` — verified 2026-05-23. The `langchain.agents.create_agent` entry point replaces the deprecated `langgraph.prebuilt.create_react_agent`. Used in Lab 05 as the recommended high-level helper.
+- `langchain-openai` and `langchain-anthropic` `>=0.2` — verified 2026-05-23. The LangGraph-friendly provider wrappers used in Lab 05.
 - `openai` ≥ 1.40 — verified 2026-05-23 (used in Labs 01 and 02; `tool_choice` modes and `parallel_tool_calls` exercised in Lab 02).
 - `anthropic` ≥ 0.34 — verified 2026-05-23 (used in Labs 01 and 02 as alternative provider).
 - `pydantic` ≥ 2.7 — verified 2026-05-23 (used for tool schemas; strict-mode patterns with `ConfigDict(extra="forbid")` and `Literal` types demonstrated in Lab 02).

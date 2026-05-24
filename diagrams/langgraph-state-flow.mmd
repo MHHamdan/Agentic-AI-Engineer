@@ -1,0 +1,34 @@
+%% LangGraph state flow — the standard model ↔ tools loop with checkpointing.
+%% Companion to labs/05-langgraph-rewrite/ and concepts/agents/agents-vs-frameworks.md.
+%% Renders natively on GitHub.
+
+flowchart TD
+    START([__start__]) --> MODEL[model node<br/>llm_with_tools.invoke]
+
+    MODEL --> COND{tools_condition}
+    COND -->|has tool_calls| TOOLS[tools node<br/>ToolNode]
+    COND -->|no tool_calls| END([__end__])
+
+    TOOLS -->|append tool results| MODEL
+
+    %% Checkpointer persists state at every node boundary
+    MODEL -.->|save| CKPT[(checkpointer<br/>InMemorySaver /<br/>PostgresSaver)]
+    TOOLS -.->|save| CKPT
+    CKPT -.->|restore by thread_id| MODEL
+
+    %% State container
+    STATE["MessagesState<br/>messages: Annotated list, add_messages"]
+    MODEL -.reads / writes via reducer.-> STATE
+    TOOLS -.reads / writes via reducer.-> STATE
+
+    classDef node fill:#dfd,stroke:#080,stroke-width:1px;
+    classDef cond fill:#ffd,stroke:#a80,stroke-width:1px;
+    classDef state fill:#eef,stroke:#447,stroke-width:1px;
+    classDef terminal fill:#eee,stroke:#666,stroke-width:1px;
+    classDef persist fill:#fed,stroke:#a40,stroke-width:1px;
+
+    class MODEL,TOOLS node;
+    class COND cond;
+    class STATE state;
+    class START,END terminal;
+    class CKPT persist;
