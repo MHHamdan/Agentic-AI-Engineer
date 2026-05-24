@@ -150,7 +150,7 @@ The lab's headline is "what does an agentic RAG system look like from scratch?" 
 
 ## Solution discussion
 
-A reference implementation will land in [`solution/lab.ipynb`](./solution/lab.ipynb) in a dedicated solutions batch later. Three design choices worth flagging up front:
+A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) with notes in [`solution/README.md`](./solution/README.md). 19 cells vs the lab's 38 — the failure-mode walks are removed since you've worked through them. Chunker config is pinned (`TARGET_TOKENS=160`, `OVERLAP_TOKENS=32`) for stability across Labs 07-09. Three design choices worth flagging up front:
 
 - **We use `sentence-transformers` even though it's a heavyweight dependency** (~500 MB with PyTorch). The alternative — calling a hosted embedding API as the default — requires an API key and adds network latency. For a community lab focused on retrieval mechanics, having the embedding layer local and inspectable is more valuable than a smaller install footprint.
 - **The numpy index is *not* a toy.** It's a real, working vector index — just brute-force at this scale. Production vector stores add persistence, metadata indexing, and ANN algorithms, but the math is identical. Knowing this changes how you read the marketing.

@@ -135,7 +135,7 @@ Anti-scope, kept explicit:
 
 ## Solution discussion
 
-A reference implementation will land in [`solution/lab.ipynb`](./solution/lab.ipynb) in a dedicated solutions batch later (the same forward-reference as Labs 01-08). Two design choices worth flagging now:
+A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) with notes in [`solution/README.md`](./solution/README.md). 33 cells vs the lab's 40 — the per-category interpretation walkthrough is condensed; the harness runs 4 pipelines end-to-end with the comparison tables as the headline output. Two design choices worth flagging now:
 
 - **`expected_doc` over `expected_chunks` for loose matching.** Robust to chunker changes; loses the "which chunk specifically" information. Production teams that have pinned their chunker should switch to `expected_chunks`. The lab notebook shows how the metrics would change.
 - **Rule-based metrics first, LLM-as-judge only on a subset.** Cheap to iterate, deterministic, runs in CI. LLM-as-judge is reserved for substance-of-claim checks where rules can't reach.
@@ -163,7 +163,7 @@ That's the closed loop. Real production RAG work uses these three capabilities t
 
 What's next in this curriculum:
 
-- **Solutions batch** — polished reference implementations for Labs 01-09 to compare against. The forward-references in every lab finally resolve.
+- **Solutions batch** ✅ — polished reference implementations for Labs 01-09 now live in each lab's `solution/` directory. Compare your work against them.
 - **Path 03 — Multi-Agent Systems** — the next major track. Lab 06-08's patterns transfer; a multi-agent RAG is just two agents talking.
 - **Path 06 — Evaluation & Observability** — the production-grade version of Lab 09 with RAGAS, TruLens, DeepEval, drift detection, A/B testing.
 - **Path 02 expansion batches** — conversational RAG (multi-turn) and framework bridge (LangChain/LangGraph) are scoped but not authored.

@@ -101,7 +101,7 @@ A few things that catch people on the first run:
 
 ## Solution discussion
 
-A reference implementation will land in [`solution/lab.ipynb`](./solution/lab.ipynb) in a follow-up batch. Two design choices worth flagging:
+A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) with notes in [`solution/README.md`](./solution/README.md). 23 cells vs the lab's 39 — uses the `create_agent` shorthand as the headline (the explicit `StateGraph` build is still in the lab for understanding what `create_agent` wraps). Two design choices worth flagging:
 
 - **We deliberately don't optimize the graph code.** The lab's graph is verbose because it's instructive — every edge is explicit. A real production graph would use `create_agent` for the simple case and only drop down to `StateGraph` for parts that need custom control.
 - **The human approval gate is a tool-level interrupt, not a node-level one.** That is, the `interrupt()` call lives inside a tool definition that triggers on destructive arguments, not in a separate "approval" node before tool execution. Both patterns are valid; the tool-level form keeps the graph topology simpler at the cost of putting more logic inside the tool. We discuss the tradeoff in step 7.

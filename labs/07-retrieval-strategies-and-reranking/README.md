@@ -142,7 +142,7 @@ Anti-scope, kept explicit:
 
 ## Solution discussion
 
-A reference implementation will land in [`solution/lab.ipynb`](./solution/lab.ipynb) in a dedicated solutions batch later. Three design choices worth flagging:
+A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) with notes in [`solution/README.md`](./solution/README.md). 25 cells vs the lab's 41 — the rank-shift step-by-step is consolidated; `search_corpus_v2` composes hybrid + RRF + (optional MMR) + cross-encoder rerank in one function. Three design choices worth flagging:
 
 - **We use `rank-bm25` (a library) for BM25 but implement RRF and MMR from scratch.** BM25 has subtle math (term frequency saturation, length normalization, IDF) that's worth using a tested implementation for. RRF and MMR are 10-15 lines each — writing them from scratch is faster than learning a library's API.
 - **The numpy index stays.** Lab 07's headline pipeline runs over a numpy array, just like Lab 06. The math is identical to what Chroma or Qdrant do; the moving parts are visible.

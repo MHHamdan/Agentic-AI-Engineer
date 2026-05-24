@@ -46,16 +46,9 @@
 ^.*/learning-paths/08-mathematical-foundations/?$
 ^.*/learning-paths/09-capstones/?$
 
-# Labs (numbered labs not yet shipped — Labs 01, 02, 03, 05, 06, 07, 08, and 09 are authored)
-# Note: references to solution/lab.ipynb may temporarily 404 until follow-up batch.
-^.*/labs/01-first-agent-from-scratch/solution/.*$
-^.*/labs/02-tool-design-and-selection/solution/.*$
-^.*/labs/03-multi-step-research-agent/solution/.*$
-^.*/labs/05-langgraph-rewrite/solution/.*$
-^.*/labs/06-agentic-rag-from-scratch/solution/.*$
-^.*/labs/07-retrieval-strategies-and-reranking/solution/.*$
-^.*/labs/08-contextual-retrieval-and-query-rewriting/solution/.*$
-^.*/labs/09-evaluating-agentic-rag/solution/.*$
+# Labs solutions are now authored (batch 14):
+#   Labs 01, 02, 03, 05, 06, 07, 08, 09 — each has solution/lab.ipynb + solution/README.md.
+# Lab 04 is not yet authored and has no forward-reference to track.
 
 # Tools subfolders (per-framework pages not yet authored)
 # Note: tools/langgraph/ now has authored content (snapshot-v1.0.md, README); lines removed.
