@@ -1,0 +1,44 @@
+%% Research-agent trajectory — the typical control flow for a multi-step
+%% research query, including the failure-recovery branches.
+%% Companion to labs/03-multi-step-research-agent/ and concepts/tools/search-tools.md.
+%% Renders natively on GitHub.
+
+flowchart TD
+    Q[/"User question"/] --> SEARCH1["web_search<br/>(snippets only)"]
+
+    SEARCH1 --> CHECK{Results?}
+    CHECK -->|empty| REFINE["Refine query<br/>(repeated-action detector<br/>prevents identical retry)"]
+    REFINE --> SEARCH1
+    CHECK -->|noisy / SEO spam| REFINE
+    CHECK -->|relevant snippets| TRIAGE["Model picks 1-2<br/>candidate URLs"]
+
+    TRIAGE --> FETCH["fetch_page<br/>(one URL)"]
+
+    FETCH --> FRESULT{Result status?}
+    FRESULT -->|ok / too_long| READ["Read content<br/>track citation"]
+    FRESULT -->|timeout / 4xx / blocked| NEXT["Pick next<br/>candidate URL"]
+    NEXT --> FETCH
+    FRESULT -->|all candidates failed| REFINE
+
+    READ --> ENOUGH{Enough<br/>evidence?}
+    ENOUGH -->|no, need more| REFINE
+    ENOUGH -->|yes| SYNTH["Synthesize answer<br/>with citations from<br/>fetched-pages log"]
+
+    SYNTH --> FINAL[/"Answer +<br/>citations list"/]
+
+    %% Step cap escape
+    SEARCH1 -. step cap .-> GRACEFUL["Graceful exit:<br/>'no confident answer'<br/>+ what we did find"]
+    FETCH -. step cap .-> GRACEFUL
+    GRACEFUL --> FINAL
+
+    classDef tool fill:#dfd,stroke:#080,stroke-width:1px;
+    classDef decision fill:#ffd,stroke:#a80,stroke-width:1px;
+    classDef action fill:#def,stroke:#446,stroke-width:1px;
+    classDef terminal fill:#eee,stroke:#666,stroke-width:1px;
+    classDef escape fill:#fed,stroke:#a40,stroke-width:1px,stroke-dasharray:4 4;
+
+    class SEARCH1,FETCH tool;
+    class CHECK,FRESULT,ENOUGH decision;
+    class TRIAGE,READ,NEXT,REFINE,SYNTH action;
+    class Q,FINAL terminal;
+    class GRACEFUL escape;
