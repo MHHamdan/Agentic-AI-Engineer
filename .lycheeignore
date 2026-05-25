@@ -51,13 +51,15 @@
 # Lab 04 is not yet authored and has no forward-reference to track.
 # Lab 10 (Path 03) solution will land in a follow-up batch.
 # Lab 11 (Path 03 Module 2) solution will land in a follow-up batch.
+# Lab 12 (Path 03 Module 3) solution will land in a follow-up batch.
 ^.*/labs/10-supervisor-worker-from-scratch/solution/.*$
 ^.*/labs/11-generator-critic-from-scratch/solution/.*$
+^.*/labs/12-plan-and-execute-from-scratch/solution/.*$
 
 # Multi-agent concept pages — future Path 03 batches will author these.
 # Note: agent-debate-and-critics.md + generator-critic-pattern.md authored in batch 16
 # (the agent-debate.md forward-ref from batch 15 is resolved by these — note the name change).
-^.*/concepts/multi-agent/plan-and-execute\.md$
+# Note: plan-and-execute.md (multi-agent) + planner-executor-pattern.md authored in batch 17.
 ^.*/concepts/multi-agent/multi-agent-evaluation\.md$
 
 # Tools subfolders (per-framework pages not yet authored)

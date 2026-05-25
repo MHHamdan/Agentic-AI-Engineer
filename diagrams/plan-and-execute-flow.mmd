@@ -1,0 +1,107 @@
+%% Plan-and-execute pattern: Lab 12's planner-executor flow.
+%%
+%% Extends supervisor-worker-flow.mmd (Lab 10) and
+%% generator-critic-flow.mmd (Lab 11) with the planner agent, the
+%% structured Plan artifact, the dependency-resolving dispatcher, the
+%% bounded executor pool, and the bounded replanning cycle.
+%%
+%% Same diagrammatic vocabulary as the two prior multi-agent diagrams:
+%%   - user / terminal nodes at the edges
+%%   - agent subgraphs in the center (each agent = one Lab 01 loop)
+%%   - solid edges for primary flow; dotted edges for failure modes
+%%   - structured payloads labeled on the edges
+%%
+%% The execution pool is bounded (MAX_PARALLEL_EXECUTORS = 3); the
+%% replanning cycle is bounded (MAX_REPLANS = 2). Dotted edges show the
+%% four plan-and-execute-specific failure modes.
+
+flowchart LR
+    U(["👤 User"])
+    Final(["📝 Final answer"])
+
+    subgraph Planner["📋 Planner agent"]
+        direction TB
+        P1["Read task + tool registry"]
+        P2["Emit JSON Plan"]
+        P3["Validate graph
+        (cycles, parallel groups, tools)"]
+        P1 --> P2
+        P2 --> P3
+    end
+
+    PlanArtifact(["📄 Plan artifact
+    {steps, depends_on,
+    parallel_group}"])
+
+    subgraph Supervisor["🎯 Supervisor + dispatcher (Python, not LLM)"]
+        direction TB
+        S1["Compute ready steps
+        (deps satisfied)"]
+        S2["Group by parallel_group"]
+        S3["Submit to pool
+        (max 3 concurrent)"]
+        S4["Collect results
+        (action-hash dedup)"]
+        S5["All done? Replan? Surface?"]
+        S1 --> S2
+        S2 --> S3
+        S3 --> S4
+        S4 --> S5
+    end
+
+    subgraph Pool["⚙️ Executor pool (bounded, stateless)"]
+        direction TB
+        E1["Executor 1: run step"]
+        E2["Executor 2: run step"]
+        E3["Executor 3: run step"]
+    end
+
+    subgraph Synthesizer["✍️ Synthesizer"]
+        direction TB
+        SY1["Compose final answer"]
+        SY2["Preserve citations"]
+        SY1 --> SY2
+    end
+
+    U -->|"task: str"| P1
+
+    P3 ==>|"Plan validated"| PlanArtifact
+    PlanArtifact ==>|"steps[]"| S1
+
+    S3 ==>|"step + dep_outputs"| E1
+    S3 ==>|"step + dep_outputs"| E2
+    S3 ==>|"step + dep_outputs"| E3
+    E1 ==>|"{status, tool, args, result}"| S4
+    E2 ==>|"{status, tool, args, result}"| S4
+    E3 ==>|"{status, tool, args, result}"| S4
+
+    S5 ==>|"all ok"| SY1
+    SY2 --> Final
+
+    %% Failure-mode edges (dotted): the four plan-and-execute failure modes
+    P2 -.->|"plan brittleness: planner guessed wrong"| S5
+    E1 -.->|"execution drift: wrong_tool error"| S5
+    S5 -.->|"replanning thrash: MAX_REPLANS = 2
+    + plan-signature dedup"| P1
+    P3 -.->|"plan-execution gap: validation rejects
+    unknown tools, retry planner"| P1
+
+    %% Cap-reached escalation
+    S5 -.->|"MAX_REPLANS reached: surface partial honestly"| SY1
+
+    %% Styling — extends supervisor-worker-flow.mmd / generator-critic-flow.mmd
+    classDef user fill:#e8eaf6,stroke:#3949ab,stroke-width:2px,color:#1a237e
+    classDef planner fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1
+    classDef supervisor fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,color:#e65100
+    classDef executor fill:#e0f2f1,stroke:#00695c,stroke-width:1px,color:#004d40
+    classDef synthesizer fill:#f3e5f5,stroke:#6a1b9a,stroke-width:1px,color:#4a148c
+    classDef artifact fill:#fffde7,stroke:#f9a825,stroke-width:2px,color:#f57f17
+    classDef terminal fill:#f1f8e9,stroke:#558b2f,stroke-width:2px,color:#33691e
+
+    class U user
+    class P1,P2,P3 planner
+    class S1,S2,S3,S4,S5 supervisor
+    class E1,E2,E3 executor
+    class SY1,SY2 synthesizer
+    class PlanArtifact artifact
+    class Final terminal

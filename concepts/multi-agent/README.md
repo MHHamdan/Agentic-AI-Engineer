@@ -14,12 +14,16 @@
 - [📖 Agent debate and critics](./agent-debate-and-critics.md) — ~10 min. The framing of iterative-refinement-via-critique. Self-critique vs. separate-critic vs. multi-agent debate. The four debate-specific failure modes (sycophancy, infinite agreement, runaway disagreement, critique drift).
 - [📖 The generator-critic pattern](./generator-critic-pattern.md) — ~10 min. The specific pattern Lab 11 implements. Critic prompt design rules. Bounded refinement. Sycophancy detection and mitigation.
 
+## Plan-and-execute (batch 17 — Module 3)
+
+- [📖 Plan-and-execute](./plan-and-execute.md) — ~10 min. The framing: when plan-first beats supervisor-worker and ReAct. Plan-first vs. interleaved planning. The parallelism trade-off. The four failure modes specific to plan-and-execute (plan brittleness, execution drift, replanning thrash, plan-execution gap).
+- [📖 The planner-executor pattern](./planner-executor-pattern.md) — ~10 min. The specific pattern Lab 12 implements. The `Plan` and `PlanStep` schemas. The five planner-prompt design rules. Executor pool concurrency (`MAX_PARALLEL_EXECUTORS = 3`). Replanning policy (`MAX_REPLANS = 2`). Four-cap composition.
+
 ## Patterns (future batches)
 
 These pages will land in future Path 03 batches, each paired with a lab:
 
-- 📖 *Plan-and-execute* (planned) — A planner agent emits a structured plan; one or more executor agents carry it out. When this beats supervisor-worker and when it doesn't.
-- 📖 *Multi-agent RAG* (planned) — Composing Path 02 retrieval with the supervisor-worker and generator-critic patterns.
+- 📖 *Multi-agent RAG* (planned) — Composing Path 02 retrieval with the supervisor-worker, generator-critic, and planner-executor patterns.
 
 ## Production and evaluation (Path 06)
 
