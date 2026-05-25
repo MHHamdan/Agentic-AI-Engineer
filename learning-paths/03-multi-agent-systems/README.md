@@ -1,6 +1,6 @@
 # 03 · Multi-Agent Systems
 
-> 🟡 Intermediate · ⏱ 14–19 hours (Modules 1-3) · 📍 Start here once you've completed Path 01 · 🚧 Path 03 in progress (foundations, supervisor-worker, generator-critic, plan-and-execute)
+> 🟡 Intermediate · ⏱ 17–23 hours (Modules 1-4) · 📍 Start here once you've completed Path 01 (recommended: also Path 02 for Module 4) · 🚧 Path 03 in progress (foundations, supervisor-worker, generator-critic, plan-and-execute, multi-agent RAG)
 
 ## Who this is for
 
@@ -8,7 +8,7 @@ You've finished Foundations: you can build an agent loop from scratch (Lab 01), 
 
 This path takes you from "I can build *one* agent" to "I can wire *several* agents together to do something none of them could do alone — and I know the difference between when that's a genuine win and when it's expensive theater."
 
-By the end of Path 03 Modules 1-3 you should be able to:
+By the end of Path 03 Modules 1-4 you should be able to:
 
 - Decide honestly when a task wants a multi-agent system and when it doesn't.
 - Reason about coordination cost — every handoff is an extra LLM call, with latency, tokens, and failure-mode implications.
@@ -26,6 +26,11 @@ By the end of Path 03 Modules 1-3 you should be able to:
 - Wire bounded executor-pool concurrency (`ThreadPoolExecutor(max_workers=3)`) and reason about parallelism as a wall-clock optimization rather than a cost or quality optimization.
 - Handle replanning with `MAX_REPLANS = 2` — invoke the planner with failure context, finalize honestly when the cap fires.
 - Recognize the four plan-and-execute-specific failure modes (plan brittleness, execution drift, replanning thrash, plan-execution gap) and the mitigation each requires.
+- Compose Path 02's retrieval pipeline (Labs 06-08) with the supervisor-worker pattern: wrap retrieval as a single worker the supervisor can call, with structured `{status, chunks}` envelope.
+- Apply the four retrieval-decision rules (retrieve when corpus-grounded, skip for stable-knowledge, one retrieval per distinct factual question, pass chunks verbatim) and explain why each prevents a specific failure mode.
+- Recognize the four multi-agent-RAG-specific failure modes (citation drift, retrieval skip, retrieval over-call, chunk drift) and the mitigation each requires.
+- Preserve citations across the retrieval → supervisor → synthesis handoff without trusting the LLM to track them by hand.
+- Decide honestly when multi-agent RAG beats single-agent RAG (when deciding-to-retrieve is non-trivial, when multiple retrievals must be composed, when precision justifies a critic) — and when it doesn't.
 
 ## Prerequisites
 
@@ -39,11 +44,11 @@ Minimum:
 
 Lab 05 (LangGraph) is helpful but not required. Path 03 stays from-scratch in v1 for the same reason Path 02 did: framework-bridge batches come later, after the mechanism is clear.
 
-Path 02 (Agentic RAG) is **not** a prerequisite for Path 03. The paths are independent — you can do them in either order, or interleave them. A later Path 03 batch will build a multi-agent RAG system that combines them.
+Path 02 (Agentic RAG) is recommended for Module 4. Modules 1-3 are independent of Path 02; you can do them in any order. Module 4 (multi-agent RAG) explicitly composes Labs 06-08 with the multi-agent patterns from Labs 10-12 — if you haven't built the retrieval pipeline, the Module 4 lab still runs (it builds chunks inline from Lab 06's corpus), but the conceptual framing assumes you understand what dense + BM25 + RRF + cross-encoder rerank is doing inside the retriever.
 
 ## How this path is structured
 
-Path 03 v1 opens with Module 1 (foundations and the supervisor-worker pattern); Module 2 extends it with iterative refinement via generator-critic; Module 3 adds plan-and-execute with bounded parallel executor pool. Future batches add multi-agent evaluation, the framework-bridge lab, and multi-agent RAG.
+Path 03 v1 opens with Module 1 (foundations and the supervisor-worker pattern); Module 2 extends it with iterative refinement via generator-critic; Module 3 adds plan-and-execute with bounded parallel executor pool; Module 4 composes Path 02's retrieval pipeline with these coordination patterns as multi-agent RAG. Future batches add multi-agent evaluation and the framework-bridge lab.
 
 ```mermaid
 flowchart LR
@@ -59,13 +64,17 @@ flowchart LR
     F --> G[📖 Planner-executor pattern]
     G --> L12[🧪 Lab 12: Plan-and-execute from scratch]
     L12 --> Q3[🧠 Plan-and-execute quiz]
+    Q3 --> H[📖 Multi-agent RAG]
+    H --> I[📖 Retriever-as-worker pattern]
+    I --> L13[🧪 Lab 13: Multi-agent RAG from scratch]
+    L13 --> Q4[🧠 Multi-agent RAG quiz]
 
     classDef concept fill:#e8f0fe,stroke:#1a73e8
     classDef lab fill:#fef7e0,stroke:#f9ab00
     classDef quiz fill:#e6f4ea,stroke:#137333
-    class A,B,C,D,E,F,G concept
-    class L10,L11,L12 lab
-    class Q1,Q2,Q3 quiz
+    class A,B,C,D,E,F,G,H,I concept
+    class L10,L11,L12,L13 lab
+    class Q1,Q2,Q3,Q4 quiz
 ```
 
 ## Modules
@@ -116,24 +125,41 @@ flowchart LR
 
 - [🧠 Plan-and-execute](../../quizzes/multi-agent/plan-and-execute.md) — 8 single-select questions on when plan-and-execute beats supervisor-worker / ReAct, plan brittleness, parallel groups honesty, replanning policy, dependencies vs. parallel groups, plan-execution gap, and how the pattern composes with Lab 10's machinery.
 
+### Module 4 — Multi-agent RAG (batch 18)
+
+The integrative module. Composes Path 02's retrieval pipeline (Labs 06-08) with the multi-agent coordination patterns from Labs 10-12.
+
+**Two concept pages:**
+
+- [📖 Multi-agent RAG](../../concepts/multi-agent/multi-agent-rag.md) — ~10 min. The framing: what changes from single-agent RAG (retrieval becomes a coordinated concern). Three architectural patterns (retriever-as-worker, planner-driven research, critic-on-retrieval) with tradeoffs. When multi-agent RAG earns its place over single-agent RAG (deciding-to-retrieve is non-trivial, multiple retrievals must be composed, precision justifies a critic). The four multi-agent-RAG-specific failure modes (citation drift, retrieval skip, retrieval over-call, chunk drift). When self-RAG / CRAG are the right pattern instead.
+- [📖 The retriever-as-worker pattern](../../concepts/multi-agent/retriever-as-worker.md) — ~10 min. The specific pattern Lab 13 implements. The retriever-worker contract (structured `{status, chunks: [{id, text, source, score}, ...]}` envelope). The four retrieval-decision rules (retrieve when corpus-grounded, skip for stable-knowledge, one retrieval per distinct factual question, pass chunks verbatim). Citation preservation discipline. Composing with Lab 11's critic on synthesis. Composing with Lab 12's planner for compound queries.
+
+**One lab:**
+
+- [🧪 Lab 13 — Multi-agent RAG from scratch](../../labs/13-multi-agent-rag-from-scratch/) — ~130-160 min. Wrap Lab 06-08's retrieval pipeline as a single worker the supervisor calls. Auto-detects v2 (Lab 07: dense + BM25 + RRF + rerank) vs v3 (Lab 08: + contextual augmentation) based on whether the context cache is available. Includes the retrieve/skip diagnostic, the four-failure-mode walkthrough, an optional Lab 11 critic-on-synthesis stretch, and an optional Lab 12 planner-driven parallel-retrieval stretch.
+
+**One quiz:**
+
+- [🧠 Multi-agent RAG](../../quizzes/multi-agent/multi-agent-rag.md) — 8 single-select questions on when multi-agent RAG beats single-agent RAG, citation preservation across handoffs, the four retrieval-decision rules, the four multi-agent-RAG-specific failure modes, composing with Lab 11's critic, and when CRAG / self-RAG are the right alternative.
+
 ## What's not in this batch (anti-scope)
 
-These are explicitly out of scope for Modules 1-3 — they're scoped for future Path 03 batches or other paths entirely:
+These are explicitly out of scope for Modules 1-4 — they're scoped for future Path 03 batches or other paths entirely:
 
 - **Frameworks.** No CrewAI, no AutoGen, no LangGraph multi-agent helpers (`langgraph.prebuilt.create_supervisor`, `AutoGen.GroupChat`, `crewai.Crew`, `langgraph.types.Send`). The headline labs use only the Path 01 agent loop. Framework-bridge batches come later — the same way Path 02 saved its framework-bridge lab for later.
 - **Swarm, tree-of-thoughts, MCTS-style plan search.** These are different multi-agent patterns or different search strategies. Future Path 03 batches may cover swarm; tree search over plans is out of scope for the educational track.
+- **Self-RAG / CRAG / GraphRAG.** These are different multi-agent RAG patterns with their own design tradeoffs (training-time intervention for Self-RAG; retrieval-evaluator-with-fallback for CRAG; graph-structured retrieval for GraphRAG). The framing page explains when each is the right call; the labs don't implement them.
+- **New retrieval techniques.** Lab 13 *composes* the retrieval from Labs 06-08; it doesn't invent new retrieval. Distributed retrieval, vector DB integrations (Qdrant, Pinecone, Weaviate), and federated multi-corpus search are out of scope.
 - **Tool-protocol coverage.** MCP and A2A are [Path 04](../04-tool-protocols-mcp-a2a/) territory. They're how agents (and their tools) interoperate across processes / vendors; not the same problem as in-process multi-agent coordination.
-- **Multi-agent RAG.** A later Path 03 batch will combine Lab 06-08 retrieval with the supervisor-worker, generator-critic, and planner-executor patterns.
 - **Distributed execution / persistent plan state.** Lab 12 uses thread-based concurrency for IO-bound LLM calls. Distributed execution across processes / machines and durable plan state across restarts are out of scope.
-- **Production observability + evaluation of multi-agent systems.** Same pattern as Path 02: build the mechanism first, evaluate it later (Path 06 territory).
+- **Production observability + evaluation of multi-agent systems.** Same pattern as Path 02: build the mechanism first, evaluate it later (Path 06 territory; Module 6 brings trajectory-level metrics into Path 03).
 
 ## What comes next
 
-After Module 3 (this batch) lands, the planned Path 03 expansion is:
+After Module 4 (this batch) lands, the planned Path 03 expansion is:
 
-- **Module 4 — Multi-agent RAG.** Composing Lab 06-08 retrieval with the supervisor-worker, generator-critic, and planner-executor patterns. A retriever-worker + synthesizer-worker + critic + supervisor-as-coordinator, with the planner deciding the overall research strategy.
-- **Module 5 — Framework bridge.** Re-implement Labs 10-12 in LangGraph's multi-agent primitives (`Send`, `Command`, sub-graphs); compare line-by-line; honest discussion of when the framework earns its complexity.
-- **Module 6 — Multi-agent evaluation.** Trajectory-level metrics, handoff-success rate, citation-preservation rate, plan-quality metrics, replan rate; the harness pattern from Lab 09 extended for multi-agent.
+- **Module 5 — Framework bridge.** Re-implement Labs 10-13 in LangGraph's multi-agent primitives (`Send`, `Command`, sub-graphs); compare line-by-line; honest discussion of when the framework earns its complexity.
+- **Module 6 — Multi-agent evaluation.** Trajectory-level metrics, handoff-success rate, citation-preservation rate, plan-quality metrics, replan rate, groundedness; the harness pattern from Lab 09 extended for multi-agent.
 
 Each future batch follows the same shape as v1: concept pages first, lab from-scratch, quiz, then the framework comparison only after the from-scratch version is solid.
 
@@ -153,5 +179,8 @@ The papers and projects that shaped how this path is taught:
 - **Wang et al. 2023 (Plan-and-Solve)** — ["Plan-and-Solve Prompting"](https://arxiv.org/abs/2305.04091). The prompting-level baseline for plan-then-execute; useful for understanding the pattern's pedigree before it generalized to multi-agent.
 - **Yao et al. 2023 (ReAct)** — ["ReAct: Synergizing Reasoning and Acting"](https://arxiv.org/abs/2210.03629). The interleaved-planning alternative to plan-first; required reading for understanding when plan-and-execute is the wrong call.
 - **Xu et al. 2024 (AgentBench)** — ["AgentBench: Evaluating LLMs as Agents"](https://arxiv.org/abs/2308.03688). Empirical benchmarks across agentic patterns; useful for understanding where plan-and-execute outperforms ReAct and vice versa.
+- **Lewis et al. 2020 (RAG)** — ["Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"](https://arxiv.org/abs/2005.11401). The original RAG paper. Useful as the baseline single-agent pattern Module 4 extends.
+- **Asai et al. 2023 (Self-RAG)** — ["Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"](https://arxiv.org/abs/2310.11511). Training-time approach to retrieval-aware models; conceptually adjacent to multi-agent RAG but a different design problem.
+- **Yan et al. 2024 (CRAG)** — ["Corrective Retrieval Augmented Generation"](https://arxiv.org/abs/2401.15884). Retrieval evaluator + fallback design; the pattern multi-agent RAG with critic-on-retrieval approximates.
 
 These are starting points, not a reading list. The papers are dense and the field moves fast — verify any specific claim against [`tools/frameworks/snapshot-v1.0.md`](../../tools/frameworks/snapshot-v1.0.md) if it exists, or the framework's own docs if it doesn't.

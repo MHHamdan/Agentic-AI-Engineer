@@ -19,11 +19,16 @@
 - [📖 Plan-and-execute](./plan-and-execute.md) — ~10 min. The framing: when plan-first beats supervisor-worker and ReAct. Plan-first vs. interleaved planning. The parallelism trade-off. The four failure modes specific to plan-and-execute (plan brittleness, execution drift, replanning thrash, plan-execution gap).
 - [📖 The planner-executor pattern](./planner-executor-pattern.md) — ~10 min. The specific pattern Lab 12 implements. The `Plan` and `PlanStep` schemas. The five planner-prompt design rules. Executor pool concurrency (`MAX_PARALLEL_EXECUTORS = 3`). Replanning policy (`MAX_REPLANS = 2`). Four-cap composition.
 
+## Multi-agent RAG (batch 18 — Module 4)
+
+- [📖 Multi-agent RAG](./multi-agent-rag.md) — ~10 min. The integrative framing. What changes from single-agent RAG (Lab 06-08): retrieval becomes a coordinated concern, not a single always-on tool call. Three architectural patterns (retriever-as-worker, planner-driven research, critic-on-retrieval) with tradeoffs. When multi-agent RAG earns its place. The four multi-agent-RAG-specific failure modes (citation drift, retrieval skip, retrieval over-call, chunk drift). When self-RAG / CRAG are the right pattern instead.
+- [📖 The retriever-as-worker pattern](./retriever-as-worker.md) — ~10 min. The specific pattern Lab 13 implements. The retriever-worker contract (structured chunks envelope). The four retrieval-decision rules. Citation preservation discipline (the canonical multi-agent-RAG bug). Composing with Lab 11's critic on synthesis. Composing with Lab 12's planner for compound queries.
+
 ## Patterns (future batches)
 
 These pages will land in future Path 03 batches, each paired with a lab:
 
-- 📖 *Multi-agent RAG* (planned) — Composing Path 02 retrieval with the supervisor-worker, generator-critic, and planner-executor patterns.
+- 📖 *Multi-agent evaluation* (planned, Module 6) — Trajectory-level metrics, handoff-success rate, plan-quality metrics, replan rate, groundedness; the Lab 09 harness extended for multi-agent.
 
 ## Production and evaluation (Path 06)
 
