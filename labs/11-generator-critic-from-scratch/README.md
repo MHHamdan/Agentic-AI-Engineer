@@ -108,7 +108,7 @@ At gpt-4o-mini rates, well under $0.10 per full lab run. Wall-clock is dominated
 
 ## Solution
 
-A reference implementation will land in `solution/lab.ipynb` in a follow-up solutions batch, paired with `solution/README.md`. Two implementation choices worth flagging up front:
+A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) with notes in [`solution/README.md`](./solution/README.md). 17 cells vs the lab's 32 — the sycophancy diagnostic (the "deliberately bad draft" cell), the unbounded-loop walkthrough, and the structured-trace appendix are condensed; the bounded refinement loop reads end-to-end. Two implementation choices flagged there:
 
 - **The critic receives only `(current_draft, original_brief)`** — explicitly *not* the revision history. The stateless critic prevents critique drift; this is a deliberate design choice, not an oversight.
 - **The action-hash dedup is unchanged from Lab 10.** It composes naturally: if the writer produces the same draft twice (failing to address critic feedback), the next critic call has identical args and dedup catches it. This is a useful signal that the refinement isn't actually refining.
@@ -116,5 +116,5 @@ A reference implementation will land in `solution/lab.ipynb` in a follow-up solu
 ## Next
 
 - After completing the lab, take the [agent debate and critics quiz](../../quizzes/multi-agent/agent-debate-and-critics.md).
-- Path 03 v1 continues with Module 3 (plan-and-execute) in a future batch.
-- If you've also done Path 02, the future multi-agent RAG batch will compose Lab 06-08's retrieval pipeline with the supervisor + critic patterns from Labs 10-11.
+- Path 03 continues with [Lab 12 (plan-and-execute)](../12-plan-and-execute-from-scratch/) and [Lab 13 (multi-agent RAG)](../13-multi-agent-rag-from-scratch/), then Module 5's framework bridge in [Lab 14](../14-langgraph-supervisor-bridge/) + [Lab 15](../15-langgraph-plan-execute-bridge/).
+- If you've also done Path 02, [Lab 13](../13-multi-agent-rag-from-scratch/) composes Lab 06-08's retrieval pipeline with the supervisor + critic patterns from Labs 10-11.

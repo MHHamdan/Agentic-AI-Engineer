@@ -149,7 +149,7 @@ At gpt-4o-mini rates, well under $0.05 per query. The retrieval pipeline itself 
 
 ## Solution
 
-A reference implementation will land in `solution/lab.ipynb` in a follow-up solutions batch. Two implementation choices worth flagging up front:
+A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) with notes in [`solution/README.md`](./solution/README.md). 19 cells vs the lab's 38 — the retrieve/skip diagnostic, the four-failure-mode walkthrough, and the structured-trace appendix are removed since you've already worked through them; the integrated retriever-worker + supervisor + synthesizer reads end-to-end. Two implementation choices flagged there:
 
 - **The retriever is a function wrapper, not a class.** The retrieval pipeline has state (loaded models, indexed chunks) that lives in module-level closures. The `retriever_agent(query, top_k)` function reads that closure state but doesn't own it. This keeps the worker-as-function pattern from Lab 10 intact.
 - **The supervisor never sees individual retrieval signals.** No BM25 scores, no dense cosines, no rerank logits. The `score` field in the chunks envelope is informational; the supervisor's system prompt explicitly says not to reason about it. If the chunks are present, they're usable; if not, the retriever returned `empty`.
@@ -157,5 +157,5 @@ A reference implementation will land in `solution/lab.ipynb` in a follow-up solu
 ## Next
 
 - After completing the lab, take the [multi-agent RAG quiz](../../quizzes/multi-agent/multi-agent-rag.md).
-- Path 03 continues with Module 5 (framework bridge — re-implementing Labs 10-13 in LangGraph's multi-agent primitives) in a future batch.
-- A follow-up solutions batch will provide reference implementations for Labs 10/11/12/13 together.
+- Path 03 continues with Module 5's framework bridge: [Lab 14 (LangGraph supervisor)](../14-langgraph-supervisor-bridge/) and [Lab 15 (LangGraph plan-and-execute with `Send`)](../15-langgraph-plan-execute-bridge/) — re-implementations of Labs 10 and 12 in LangGraph's multi-agent primitives, for a concrete comparison.
+- Reference implementations for Labs 10/11/12/13 are now shipped in each lab's `solution/` directory.
