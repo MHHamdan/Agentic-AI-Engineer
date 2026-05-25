@@ -49,13 +49,8 @@
 # Labs solutions are now authored:
 #   Labs 01, 02, 03, 05, 06, 07, 08, 09 — solutions in batch 14.
 #   Labs 10, 11, 12, 13 — solutions in batch 19.
+#   Labs 14, 15, 16 — solutions in batch 23.
 # Lab 04 is not yet authored and has no forward-reference to track.
-# Lab 14 (Path 03 Module 5) solution will land in a follow-up batch.
-# Lab 15 (Path 03 Module 5) solution will land in a follow-up batch.
-^.*/labs/14-langgraph-supervisor-bridge/solution/.*$
-^.*/labs/15-langgraph-plan-execute-bridge/solution/.*$
-# Lab 16 (Path 03 Module 6) solution will land in a follow-up batch.
-^.*/labs/16-multi-agent-evaluation-from-scratch/solution/.*$
 
 # Multi-agent concept pages — future Path 03 batches will author these.
 # Note: agent-debate-and-critics.md + generator-critic-pattern.md authored in batch 16
