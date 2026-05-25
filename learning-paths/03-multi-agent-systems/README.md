@@ -1,6 +1,6 @@
 # 03 · Multi-Agent Systems
 
-> 🟡 Intermediate · ⏱ 17–23 hours (Modules 1-4) · 📍 Start here once you've completed Path 01 (recommended: also Path 02 for Module 4) · 🚧 Path 03 in progress (foundations, supervisor-worker, generator-critic, plan-and-execute, multi-agent RAG)
+> 🟡 Intermediate · ⏱ 21–28 hours (Modules 1-5) · 📍 Start here once you've completed Path 01 (recommended: also Path 02 for Module 4) · 🚧 Path 03 in progress (foundations, supervisor-worker, generator-critic, plan-and-execute, multi-agent RAG, framework bridge)
 
 ## Who this is for
 
@@ -42,13 +42,13 @@ Minimum:
 - The [`tool-design`](../../concepts/tools/tool-design.md) and [`tool-selection`](../../concepts/tools/tool-selection.md) concept pages read.
 - All five Foundations quizzes passed at 6+/8.
 
-Lab 05 (LangGraph) is helpful but not required. Path 03 stays from-scratch in v1 for the same reason Path 02 did: framework-bridge batches come later, after the mechanism is clear.
+Lab 05 (LangGraph single-agent) is helpful for Modules 1-4 and **required** for Module 5 — Labs 14/15 assume you've seen `StateGraph`, `MessagesState`, `add_messages`, `Command`, and `interrupt()`. If you haven't built Lab 05, do that first before attempting Module 5.
 
 Path 02 (Agentic RAG) is recommended for Module 4. Modules 1-3 are independent of Path 02; you can do them in any order. Module 4 (multi-agent RAG) explicitly composes Labs 06-08 with the multi-agent patterns from Labs 10-12 — if you haven't built the retrieval pipeline, the Module 4 lab still runs (it builds chunks inline from Lab 06's corpus), but the conceptual framing assumes you understand what dense + BM25 + RRF + cross-encoder rerank is doing inside the retriever.
 
 ## How this path is structured
 
-Path 03 v1 opens with Module 1 (foundations and the supervisor-worker pattern); Module 2 extends it with iterative refinement via generator-critic; Module 3 adds plan-and-execute with bounded parallel executor pool; Module 4 composes Path 02's retrieval pipeline with these coordination patterns as multi-agent RAG. Future batches add multi-agent evaluation and the framework-bridge lab.
+Path 03 v1 opens with Module 1 (foundations and the supervisor-worker pattern); Module 2 extends it with iterative refinement via generator-critic; Module 3 adds plan-and-execute with bounded parallel executor pool; Module 4 composes Path 02's retrieval pipeline with these coordination patterns as multi-agent RAG; Module 5 (framework bridge) rebuilds Labs 10 and 12 in LangGraph and provides line-by-line comparisons against the from-scratch baselines. Future batches add multi-agent evaluation.
 
 ```mermaid
 flowchart LR
@@ -68,13 +68,18 @@ flowchart LR
     H --> I[📖 Retriever-as-worker pattern]
     I --> L13[🧪 Lab 13: Multi-agent RAG from scratch]
     L13 --> Q4[🧠 Multi-agent RAG quiz]
+    Q4 --> J[📖 LangGraph multi-agent primitives]
+    J --> K[📖 When frameworks earn complexity]
+    K --> L14[🧪 Lab 14: LangGraph supervisor bridge]
+    L14 --> L15[🧪 Lab 15: LangGraph plan-execute bridge]
+    L15 --> Q5[🧠 Framework bridge quiz]
 
     classDef concept fill:#e8f0fe,stroke:#1a73e8
     classDef lab fill:#fef7e0,stroke:#f9ab00
     classDef quiz fill:#e6f4ea,stroke:#137333
-    class A,B,C,D,E,F,G,H,I concept
-    class L10,L11,L12,L13 lab
-    class Q1,Q2,Q3,Q4 quiz
+    class A,B,C,D,E,F,G,H,I,J,K concept
+    class L10,L11,L12,L13,L14,L15 lab
+    class Q1,Q2,Q3,Q4,Q5 quiz
 ```
 
 ## Modules
@@ -142,11 +147,33 @@ The integrative module. Composes Path 02's retrieval pipeline (Labs 06-08) with 
 
 - [🧠 Multi-agent RAG](../../quizzes/multi-agent/multi-agent-rag.md) — 8 single-select questions on when multi-agent RAG beats single-agent RAG, citation preservation across handoffs, the four retrieval-decision rules, the four multi-agent-RAG-specific failure modes, composing with Lab 11's critic, and when CRAG / self-RAG are the right alternative.
 
+### Module 5 — Framework bridge (batch 20)
+
+The framework comparison module. Rebuilds Lab 10 (supervisor-worker) and Lab 12 (plan-and-execute) in LangGraph, providing line-by-line comparisons against the from-scratch baselines. The pedagogical payoff of Path 03's "from-scratch first" approach: with working code on both sides, framework-adoption trade-offs become concrete rather than abstract.
+
+**Two concept pages:**
+
+- [📖 LangGraph multi-agent: the primitives](../../concepts/multi-agent/langgraph-multi-agent.md) — ~15 min. Maps LangGraph's five multi-agent primitives (`StateGraph` + `TypedDict` state, `Command(goto=..., update=..., graph=...)`, `Send(node, state)`, sub-graphs, checkpointer) onto from-scratch concepts. Each primitive carries a "what you gain / what you trade away" comparison. The three multi-agent topologies LangGraph names (supervisor, swarm, hierarchical). What carries over unchanged from from-scratch: prompts, worker contracts, citation discipline.
+- [📖 When frameworks earn complexity](../../concepts/multi-agent/when-frameworks-earn-complexity.md) — ~10 min. The boundary discussion. Five things from-scratch pays for; five things the framework pays for; a decision table for when each fits. The upstream `langgraph-supervisor` deprecation as evidence that high-level multi-agent helpers age poorly because the underlying patterns evolve faster than the helpers.
+
+**Two labs:**
+
+- [🧪 Lab 14 — LangGraph supervisor bridge](../../labs/14-langgraph-supervisor-bridge/) — ~120-150 min. Rebuilds Lab 10's supervisor-worker in LangGraph using the manual supervisor-via-tools pattern (the one LangChain currently recommends, NOT the deprecated `create_supervisor()` helper). Adds checkpointer for crash-resume, streaming for observable execution, and demonstrates `Command(goto=..., graph=Command.PARENT)` as the swarm-topology building block. Closes with a line-by-line comparison showing where the framework adds limited but useful structure.
+- [🧪 Lab 15 — LangGraph plan-and-execute bridge](../../labs/15-langgraph-plan-execute-bridge/) — ~120-150 min. Rebuilds Lab 12's plan-and-execute in LangGraph using the `Send` primitive. The dispatcher transformation: ~70 lines of manual `ThreadPoolExecutor` + `threading.Lock` becomes ~10 lines of `Send` returns plus a reducer on the `completed` state field. The strong framework value case for multi-agent.
+
+**One quiz:**
+
+- [🧠 Framework bridge](../../quizzes/multi-agent/framework-bridge.md) — 8 single-select questions covering `Command` semantics, `Send` vs `ThreadPoolExecutor`, the `langgraph-supervisor` deprecation reasoning, what the checkpointer adds, supervisor vs swarm trade-offs, reducer-on-parallel-update-fields, when migration isn't worth it, and what the framework comparison actually demonstrates.
+
 ## What's not in this batch (anti-scope)
 
-These are explicitly out of scope for Modules 1-4 — they're scoped for future Path 03 batches or other paths entirely:
+These are explicitly out of scope for Modules 1-5 — they're scoped for future Path 03 batches or other paths entirely:
 
-- **Frameworks.** No CrewAI, no AutoGen, no LangGraph multi-agent helpers (`langgraph.prebuilt.create_supervisor`, `AutoGen.GroupChat`, `crewai.Crew`, `langgraph.types.Send`). The headline labs use only the Path 01 agent loop. Framework-bridge batches come later — the same way Path 02 saved its framework-bridge lab for later.
+- **CrewAI and AutoGen framework counterparts.** Module 5 covers the LangGraph framework bridge; CrewAI and AutoGen are different frameworks with different trade-offs. A different batch may cover them; not in scope here.
+- **`langgraph-supervisor` package usage.** Per [the upstream deprecation note](https://github.com/langchain-ai/langgraph-supervisor-py), new code should use the manual supervisor-via-tools pattern (Lab 14 demonstrates). The `create_supervisor()` helper is not part of the verified surface in this path.
+- **LangGraph Cloud / Platform / Studio.** Out of scope. Production deployment is Path 06 territory.
+- **Distributed `Send` dispatch across machines.** `Send` (Lab 15) runs in-process. Cross-machine parallelism would require LangGraph Cloud or a custom worker pool.
+- **Swarm and hierarchical topologies built out as full labs.** Lab 14 introduces the building blocks (`Command(goto=..., graph=Command.PARENT)` and sub-graph composition); building full implementations is left as extension exercises.
 - **Swarm, tree-of-thoughts, MCTS-style plan search.** These are different multi-agent patterns or different search strategies. Future Path 03 batches may cover swarm; tree search over plans is out of scope for the educational track.
 - **Self-RAG / CRAG / GraphRAG.** These are different multi-agent RAG patterns with their own design tradeoffs (training-time intervention for Self-RAG; retrieval-evaluator-with-fallback for CRAG; graph-structured retrieval for GraphRAG). The framing page explains when each is the right call; the labs don't implement them.
 - **New retrieval techniques.** Lab 13 *composes* the retrieval from Labs 06-08; it doesn't invent new retrieval. Distributed retrieval, vector DB integrations (Qdrant, Pinecone, Weaviate), and federated multi-corpus search are out of scope.
@@ -156,18 +183,18 @@ These are explicitly out of scope for Modules 1-4 — they're scoped for future 
 
 ## What comes next
 
-After Module 4 (this batch) lands, the planned Path 03 expansion is:
+After Module 5 (this batch) lands, the planned Path 03 expansion is:
 
-- **Module 5 — Framework bridge.** Re-implement Labs 10-13 in LangGraph's multi-agent primitives (`Send`, `Command`, sub-graphs); compare line-by-line; honest discussion of when the framework earns its complexity.
 - **Module 6 — Multi-agent evaluation.** Trajectory-level metrics, handoff-success rate, citation-preservation rate, plan-quality metrics, replan rate, groundedness; the harness pattern from Lab 09 extended for multi-agent.
+- **Solutions for Labs 14 and 15.** Reference implementations in the same pattern as the Labs 01-13 solutions (batches 14 and 19).
 
-Each future batch follows the same shape as v1: concept pages first, lab from-scratch, quiz, then the framework comparison only after the from-scratch version is solid.
+Each future batch follows the same shape as v1: concept pages first, lab from-scratch, quiz; framework comparisons come after the from-scratch version is solid.
 
 ## References
 
 The papers and projects that shaped how this path is taught:
 
-- **Wang et al. 2023** — "A Survey on Large Language Model based Autonomous Agents" (arXiv:2308.11432). The taxonomy of agent architectures; useful for honest framing of where multi-agent fits.
+- **Wang et al. 2023** — "A Survey on Large Language Model based Autonomous Agents" (arXiv:2308.11432). The taxonomy of agent architectures; useful framing of where multi-agent fits.
 - **Wu et al. 2023** — "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation" (arXiv:2308.08155). The architecture paper, not the framework. Read for the conversation-driven design philosophy.
 - **Hong et al. 2023** — "MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework" (arXiv:2308.00352). One of the cleaner examples of role-specialized agents producing useful artifacts.
 - **Qian et al. 2023** — "Communicative Agents for Software Development" / ChatDev (arXiv:2307.07924). A multi-agent system that produces working software; useful concrete example of when role specialization pays off.

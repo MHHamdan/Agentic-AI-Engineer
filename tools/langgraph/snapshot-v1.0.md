@@ -54,6 +54,25 @@ Notes on each:
 - **`interrupt(payload)` and `Command(resume=value)`** — the human-in-the-loop primitives. `interrupt()` pauses graph execution from inside a node and surfaces `payload` to the caller; resuming with `graph.invoke(Command(resume=value), config=...)` makes `value` the return value of `interrupt()` and continues from there. **A checkpointer is required** for interrupts to resume across process restarts.
 - **`create_agent`** — the **LangChain 1.x** high-level agent helper that runs on LangGraph. It supersedes `langgraph.prebuilt.create_react_agent` for new code. Use it when you want a fast path to a tool-using agent with middleware support; drop down to raw `StateGraph` when you need custom routing or state shapes.
 
+### Multi-agent surface (added for Path 03 Module 5 labs)
+
+Labs 14 and 15 use these additional primitives, all part of the `1.0` stability contract:
+
+```python
+# Multi-agent control flow + parallel dispatch
+from langgraph.types import Send, Command
+```
+
+- **`Command(goto=..., update=..., graph=...)`** — combined control-flow + state-update return value from a node. The `goto` argument names the next node (or `"__end__"`); the `update` argument is a partial state dict merged via the configured reducers; the optional `graph=Command.PARENT` argument navigates out of a sub-graph to its parent. Replaces the older pattern of returning a state-update dict and using `add_conditional_edges` for routing.
+- **`Send(node, state)`** — runtime-determined parallel dispatch. A node that returns `list[Send]` triggers concurrent execution of the named nodes with each `Send`'s state payload. Results merge back into the parent state via reducers. This is the primary parallel-dispatch primitive; it replaces manual `ThreadPoolExecutor` patterns at the graph level.
+- **Sub-graph composition** — a compiled `StateGraph` can be passed as a node to a parent `StateGraph` via `parent.add_node("subgraph_node", subgraph_compiled)`. State maps between parent and sub-graph via state-key overlap (matching keys are passed through; differing schemas require explicit mapping). Used for hierarchical multi-agent composition.
+
+Notes for multi-agent specifically:
+
+- **The `langgraph-supervisor` package is no longer recommended for new code.** As of early 2026, the package's own README states: *"We now recommend using the supervisor pattern directly via tools rather than this library for most use cases."* Lab 14 uses the recommended manual supervisor-via-tools pattern with `Command(goto=...)` returns. The `langgraph_supervisor` package can still be installed and used, but is not part of this repo's verified surface.
+- **`recursion_limit`** on `invoke()` (and `astream()`) bounds the worst-case number of graph steps. Default is 25. For multi-agent graphs, set this explicitly via `graph.invoke(input, config={"recursion_limit": 40})`. Each supervisor → worker → supervisor cycle is two steps; budget accordingly.
+- **Reducers for parallel updates.** When using `Send` to dispatch multiple parallel workers, the state field they update needs a reducer (typically `operator.add` for lists or `add_messages` for message lists). Without a reducer, the last write wins; with one, all parallel updates merge correctly.
+
 ## What changed in 1.0 (and what got deprecated)
 
 These are the headline changes that matter for anyone migrating from `0.x` code or following 2024-era tutorials:
@@ -87,6 +106,14 @@ If you're following a tutorial that uses `initialize_agent(...)` or `AgentExecut
 ### `langgraph-checkpoint` is now a separate package
 
 `pip install langgraph` no longer transitively pulls in the database backends — install `langgraph-checkpoint-postgres`, `langgraph-checkpoint-sqlite`, etc. explicitly. `InMemorySaver` is part of the core `langgraph` package and remains zero-config.
+
+### `langgraph-supervisor` helper deprecated for new code
+
+The `langgraph-supervisor` package (which provided `create_supervisor()` as a high-level helper) is no longer recommended by its maintainers for new code. As of early 2026, the package README states the supervisor pattern should be implemented directly via tool calling, not via the `create_supervisor()` helper. The helper still works for existing code; new code should use the manual supervisor pattern that Lab 14 demonstrates. This is consistent with the pattern documented in the [LangGraph multi-agent guide](https://langchain-ai.github.io/langgraph/concepts/multi_agent/).
+
+### `recursion_limit` for multi-agent worst-case bounds
+
+LangGraph's `recursion_limit` config parameter (default: 25) bounds the maximum number of graph steps in a single invocation. For multi-agent graphs where supervisor → worker → supervisor cycles each consume 2 steps, set this explicitly: `graph.invoke(input, config={"recursion_limit": 40})`. Hitting the limit raises `GraphRecursionError`; if you hit it frequently in practice, the cause is almost always a routing loop, not a need for a higher limit.
 
 ## Tradeoffs to keep in mind
 
