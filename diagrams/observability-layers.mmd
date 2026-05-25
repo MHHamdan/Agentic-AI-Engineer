@@ -1,0 +1,90 @@
+%% Path 06 Module 1: Observability layers
+%% Read top-down: agent runtime emits spans → SDK translates → backend ingests
+%% → backend processes → consumers (dashboards, evaluators, alerts) read.
+
+flowchart TD
+    %% ─── Agent runtime (instrumentation source) ───
+    subgraph RUNTIME[Agent runtime - the source]
+        AGENT[Multi-agent system<br/>e.g. Lab 12 plan-and-execute]
+        SPANS[Per-step spans<br/>LLM calls / tool calls / handoffs]
+        CTX[OTel context propagation<br/>parent-child + cross-process]
+    end
+
+    %% ─── Instrumentation layer ───
+    subgraph INSTRUM[Instrumentation - the portable layer]
+        OTEL[OpenTelemetry SDK<br/>GenAI semantic conventions]
+        PLATFORM_SDK[Platform-native SDK<br/>LangSmith @traceable / Phoenix / Langfuse]
+        HYBRID[Hybrid pattern<br/>OTel-native + platform extensions]
+    end
+
+    %% ─── Backends (ingestion + storage) ───
+    subgraph BACKENDS[Backends - ingestion + storage]
+        LS[LangSmith<br/>LangChain-native]
+        PHX[Arize Phoenix<br/>OpenInference]
+        LF[Langfuse<br/>open-source MIT]
+        LAM[Laminar<br/>OTel-native]
+        BT[Braintrust<br/>eval-rigor]
+        APM[APM tools<br/>Datadog / New Relic<br/>generic OTel ingest]
+    end
+
+    %% ─── Processing layer ───
+    subgraph PROCESS[Processing - what platforms add]
+        SAMPLE[Tail-based sampling<br/>keep failed/expensive in full]
+        EVAL[Online evaluators<br/>fire on ingested traces]
+        DRIFT[Drift detection<br/>KS-test / PSI / rolling windows]
+        COST[Cost attribution<br/>per-user / per-task / per-tenant]
+    end
+
+    %% ─── Consumers ───
+    subgraph CONSUMERS[Consumers - what humans see]
+        DASH[Dashboards<br/>trends + cohort breakdowns]
+        ALERT[Alerts<br/>regression / threshold]
+        DEBUG[Debug session<br/>per-trace inspection]
+        CI[CI gate<br/>regression on PR]
+    end
+
+    %% ─── Flows ───
+    AGENT --> SPANS
+    SPANS --> CTX
+    CTX --> OTEL
+    CTX --> PLATFORM_SDK
+    OTEL -.fanout to multiple.-> PLATFORM_SDK
+    OTEL --> HYBRID
+    PLATFORM_SDK --> HYBRID
+
+    HYBRID --> LS
+    HYBRID --> PHX
+    HYBRID --> LF
+    HYBRID --> LAM
+    HYBRID --> BT
+    OTEL -.generic OTel.-> APM
+
+    LS --> SAMPLE
+    PHX --> SAMPLE
+    LF --> SAMPLE
+    LAM --> SAMPLE
+    BT --> SAMPLE
+
+    SAMPLE --> EVAL
+    SAMPLE --> COST
+    EVAL --> DRIFT
+
+    DRIFT --> DASH
+    EVAL --> ALERT
+    SAMPLE --> DEBUG
+    EVAL --> CI
+
+    %% ─── Styling ───
+    classDef runtime fill:#e1f0ff,stroke:#2a7ab8,color:#000
+    classDef instrum fill:#fff3cd,stroke:#856404,color:#000
+    classDef backend fill:#d4edda,stroke:#155724,color:#000
+    classDef process fill:#e2d6f3,stroke:#553580,color:#000
+    classDef consumer fill:#f8d7da,stroke:#721c24,color:#000
+    classDef apm fill:#f4f4f4,stroke:#777,color:#000,stroke-dasharray: 5 5
+
+    class AGENT,SPANS,CTX runtime
+    class OTEL,PLATFORM_SDK,HYBRID instrum
+    class LS,PHX,LF,LAM,BT backend
+    class APM apm
+    class SAMPLE,EVAL,DRIFT,COST process
+    class DASH,ALERT,DEBUG,CI consumer
