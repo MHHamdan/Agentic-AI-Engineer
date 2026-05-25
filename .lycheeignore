@@ -46,11 +46,11 @@
 ^.*/learning-paths/08-mathematical-foundations/?$
 ^.*/learning-paths/09-capstones/?$
 
-# Path 06 future Modules 2-7 content — not yet authored.
-# Module 2 (LangSmith trace ingestion lab) will land in a follow-up batch.
-^.*/labs/17-langsmith-trace-ingestion/.*$
-# Module 4 (online evaluation) concept page.
-^.*/concepts/evaluation/online-evaluation\.md$
+# Path 06 future Modules 3-7 content — not yet authored.
+# Note: Lab 17 (Module 2 trace ingestion) authored in batch 25.
+# Note: langsmith-tracing-shape.md and online-vs-offline-evaluation.md authored in batch 25.
+# Module 4 (online evaluation deep-dive: live trace stream + tail-based sampling).
+^.*/concepts/evaluation/online-evaluator-registration\.md$
 # Module 5 (drift detection + agent-as-judge calibration) concept pages.
 ^.*/concepts/evaluation/drift-detection\.md$
 ^.*/concepts/evaluation/agent-as-judge-calibration\.md$
