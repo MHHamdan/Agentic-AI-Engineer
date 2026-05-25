@@ -1,6 +1,6 @@
 # Path 06 — Evaluation & Observability
 
-> 🔴 Advanced · ⏱ 18-25 hours (Modules 1-2 shipped — full path estimated ~50h when complete) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · 🚧 Path 06 in progress (Modules 1-2 shipped; Modules 3-7 in future batches)
+> 🔴 Advanced · ⏱ 18-25 hours (Modules 1-3 shipped — full path estimated ~50h when complete) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · 🚧 Path 06 in progress (Modules 1-3 shipped; Modules 4-7 in future batches)
 
 The production layer. Path 02's Lab 09 and Path 03's Lab 16 give you the evaluation *mechanism* — metric implementations, hand-curated fixtures, the aggregate-then-slice-then-per-agent discipline. Path 06 connects that mechanism to the operational reality: live trace ingestion, distributed-tracing correlation across parallel sub-agents, drift detection on metric distributions, alerting on regressions, agent-as-judge calibration against human ground truth, cost attribution across users and tasks and tenants.
 
@@ -71,14 +71,30 @@ The first Path 06 lab. Takes a Lab 14-style LangGraph supervisor agent (slim ver
 
 - [🧠 LangSmith trace ingestion](../../quizzes/evaluation/langsmith-ingestion.md) — 8 single-select questions covering Module 1 framing + Module 2 LangSmith specifics. Passing: 6/8.
 
-### Modules 3-7 — planned, not yet built
+### Module 3 — OpenTelemetry portable layer (batch 26)
 
-These modules will be added in future batches. The plan is sketched here so you can see where Modules 1-2 lead:
+The vendor-neutral counterpart to Module 2. Same Lab 14 supervisor agent; instrumented with OpenTelemetry's GenAI semantic conventions instead of LangSmith's native SDK. Fanout to LangSmith + console + optional Jaeger demonstrates the portability story end-to-end.
 
-- **Module 3 — OpenTelemetry as the portable layer.** Same agent, OTel-native instrumentation. Fanout to LangSmith + a generic OTel collector. The vendor-neutral path.
+**Two concept pages**:
+
+- [📖 OpenTelemetry GenAI semantic conventions](../../concepts/evaluation/opentelemetry-genai-conventions.md) — ~14 min. The six layers (events, exceptions, metrics, model spans, agent spans, client spans). Core attributes that stabilized (`gen_ai.system`, `gen_ai.request.model`, `gen_ai.usage.input_tokens`, `gen_ai.tool.name`, `gen_ai.agent.name`). The v1.37 transition from per-message events to aggregated attributes. `OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental` for new code. Span-kind discipline (CLIENT for LLM calls, INTERNAL for tools/agents). Auto-instrumentation via `OpenAIInstrumentor` / OpenLLMetry vs manual spans.
+- [📖 Platform fanout and portability](../../concepts/evaluation/platform-fanout-and-portability.md) — ~10 min. The fanout pattern (one TracerProvider, multiple SpanProcessors, multiple exporters). Three configurations: dev (console + LangSmith), staging (LangSmith + APM), production (collector-based with self-hosted backends). Platform landscape with 6 agent-native platforms + 4 APM tools that ingest GenAI OTel. The lock-in cost reframed: it lives in the instrumentation, not the platform. Decision boundary for picking Lab 17 vs Lab 18 paths. The migration story across team scale.
+
+**One lab**:
+
+- [🧪 Lab 18 — OpenTelemetry portable tracing](../../labs/18-opentelemetry-portable-tracing/) — 25 cells, ~90-110 min. Instruments the same Lab 14 supervisor as Lab 17. Manual `gen_ai.chat` spans with `SpanKind.CLIENT`; auto-instrumentation via `OpenAIInstrumentor`; agent-boundary `gen_ai.invoke_agent` spans. Fanout: console + OTLP→LangSmith + optional OTLP→Jaeger. Closes with Lab 17 vs Lab 18 comparison + decision framework for picking the right path. Cost per run: ~$0.05-0.20.
+
+**One quiz**:
+
+- [🧠 OpenTelemetry portable tracing](../../quizzes/evaluation/opentelemetry-portable.md) — 8 single-select questions covering the GenAI conventions (3), fanout patterns (2), and Lab 17 vs Lab 18 trade-offs (3). Passing: 6/8.
+
+### Modules 4-7 — planned, not yet built
+
+These modules will be added in future batches. The plan is sketched here so you can see where Modules 1-3 lead:
+
 - **Module 4 — Online evaluation.** Register evaluators against a live trace stream. Tail-based sampling. Alert on metric regressions.
 - **Module 5 — Drift detection + agent-as-judge calibration.** Periodic human-calibrated judge. Distribution-drift detection (KS-test, PSI, rolling windows).
-- **Module 6 — Cost attribution + tail-based sampling at scale.** Multi-dimensional cost (per-user, per-task, per-tenant). Production-scale sampling decisions.
+- **Module 6 — Cost attribution + tail-based sampling at scale.** Multi-dimensional cost (per-user, per-task, per-tenant). Production-scale sampling decisions. OTel Collector deep-dive.
 - **Module 7 — Multi-turn (threaded) evaluation.** Extending Lab 16's metric set for conversation-level trajectories.
 
 Each module is ~1-2 batches of work. Path 06 v1 is roughly 6-10 batches end-to-end.
@@ -92,7 +108,7 @@ Each module is ~1-2 batches of work. Path 06 v1 is roughly 6-10 batches end-to-e
 - **Embedding-drift detection on vector stores.** Path 02 v2 territory (we'd add it as a Lab 09 extension).
 - **Multi-tenant data isolation, GDPR/SOC2 compliance.** Production concerns; out of scope for the evaluation-and-observability path proper.
 
-## Module 1-2 status
+## Module 1-3 status
 
 | | Status |
 |---|---|
@@ -104,7 +120,11 @@ Each module is ~1-2 batches of work. Path 06 v1 is roughly 6-10 batches end-to-e
 | `online-vs-offline-evaluation.md` | ✅ shipped (batch 25) |
 | Lab 17 (LangSmith trace ingestion) | ✅ shipped (batch 25) — solution in a follow-up batch |
 | Module 2 quiz (`langsmith-ingestion.md`) | ✅ shipped (batch 25) |
-| Modules 3-7 | ⏳ future batches |
+| `opentelemetry-genai-conventions.md` | ✅ shipped (batch 26) |
+| `platform-fanout-and-portability.md` | ✅ shipped (batch 26) |
+| Lab 18 (OpenTelemetry portable tracing) | ✅ shipped (batch 26) — solution in a follow-up batch |
+| Module 3 quiz (`opentelemetry-portable.md`) | ✅ shipped (batch 26) |
+| Modules 4-7 | ⏳ future batches |
 
 ## How this path connects to what you've built
 
