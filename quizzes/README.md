@@ -29,7 +29,15 @@ The quizzes are **GitHub-first** by design — they work in any Markdown viewer 
 | 🧠 [The ReAct pattern](./foundations/react-pattern.md) | [`concepts/agents/react-pattern.md`](../concepts/agents/react-pattern.md) | 8 questions | mixed |
 | 🧠 [Tool design and selection](./foundations/tool-design-and-selection.md) | [`concepts/tools/tool-design.md`](../concepts/tools/tool-design.md) + [`tool-selection.md`](../concepts/tools/tool-selection.md) + [Lab 02](../labs/02-tool-design-and-selection/) | 8 questions | mixed |
 
+### Evaluation & Observability (Path 06)
+
+| Quiz | Source | Length | Difficulty |
+|---|---|---|---|
+| 🧠 [LangSmith trace ingestion](./evaluation/langsmith-ingestion.md) | [`langsmith-tracing-shape.md`](../concepts/evaluation/langsmith-tracing-shape.md) + [`online-vs-offline-evaluation.md`](../concepts/evaluation/online-vs-offline-evaluation.md) + [Lab 17](../labs/17-langsmith-trace-ingestion/) | 8 questions | mixed |
+
 More quizzes will land as new content does. Each new concept page or lab should ship with its quiz in the same batch.
+
+Note: this table reflects quizzes from the listed paths only. Other paths (Path 02 / Path 03) have shipped quizzes in their respective subdirectories under `quizzes/`; a future hygiene pass will surface them here.
 
 ---
 
@@ -78,9 +86,9 @@ Below the front-matter, each question renders as:
 
 The question text.
 
-A. First option  ⏎
-B. Second option  ⏎
-C. Third option  ⏎
+A. First option
+B. Second option
+C. Third option
 D. Fourth option
 
 <details>
@@ -93,8 +101,6 @@ D. Fourth option
 → Review: `[{page} § "{section}"]({page}#{anchor})`
 </details>
 ```
-
-> **Note on option rendering:** each of A, B, C ends with **two trailing spaces** (shown as `⏎` in the example for visibility). This forces a `<br />` between options so they render vertically on GitHub. Without the trailing spaces, GitHub-flavored Markdown collapses the four lines into a single wrapped paragraph. The last option (D) does not get trailing spaces — the blank line below it ends the paragraph naturally.
 
 This rendering is deterministic from the YAML, which means a contributor (or a future build step) can regenerate the body from the front-matter without losing fidelity.
 

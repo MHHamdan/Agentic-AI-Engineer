@@ -1,6 +1,6 @@
 # Path 06 — Evaluation & Observability
 
-> 🔴 Advanced · ⏱ 18-25 hours (Module 1 only — full path estimated ~50h when complete) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · 🚧 Path 06 in progress (Module 1 — opening)
+> 🔴 Advanced · ⏱ 18-25 hours (Modules 1-2 shipped — full path estimated ~50h when complete) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · 🚧 Path 06 in progress (Modules 1-2 shipped; Modules 3-7 in future batches)
 
 The production layer. Path 02's Lab 09 and Path 03's Lab 16 give you the evaluation *mechanism* — metric implementations, hand-curated fixtures, the aggregate-then-slice-then-per-agent discipline. Path 06 connects that mechanism to the operational reality: live trace ingestion, distributed-tracing correlation across parallel sub-agents, drift detection on metric distributions, alerting on regressions, agent-as-judge calibration against human ground truth, cost attribution across users and tasks and tenants.
 
@@ -52,13 +52,29 @@ The framing. Why production observability is a distinct concern from the from-sc
 
 - [Observability layers (`mmd`)](../../diagrams/observability-layers.mmd) — flowchart of the instrumentation → ingestion → processing → consumption flow, mapped onto agent execution.
 
-**No labs in this module.** Module 2 brings the first lab.
+Module 1 is concept-only; Module 2 (below) brings the first lab.
 
-### Modules 2-7 — planned, not yet built
+### Module 2 — LangSmith trace ingestion (batch 25)
 
-These modules will be added in future batches. The plan is sketched here so you can see where Module 1 leads:
+The first Path 06 lab. Takes a Lab 14-style LangGraph supervisor agent (slim version), instruments it with LangSmith's three tracing modes (`@traceable`, env-var auto-trace, `tracing_v2_enabled`), wires two `agentevals` evaluators (deterministic + LLM-judged), runs an offline experiment against a tiny Dataset, and closes with a stretch that bridges Lab 16's from-scratch `routing_accuracy` to the platform-native evaluator format.
 
-- **Module 2 — Trace ingestion with LangSmith.** Instrument a Lab 10/12-style agent end-to-end. Ingest traces. Basic query/explore in the LangSmith UI. First lab.
+**Two concept pages**:
+
+- [📖 LangSmith tracing shape](../../concepts/evaluation/langsmith-tracing-shape.md) — ~12 min. The LangSmith data model (Runs, traces, projects). Three tracing methods ranked by automation: env-var auto-trace for LangChain/LangGraph, `@traceable` for custom Python functions, `tracing_v2_enabled` for project scoping. The messages-view vs timeline-view distinction in the UI. Tags + metadata for filtering. Trade-offs vs OpenTelemetry-native (Module 3 territory).
+- [📖 Online vs offline evaluation](../../concepts/evaluation/online-vs-offline-evaluation.md) — ~10 min. The dataset-vs-live-stream distinction; why both matter; the closed loop via annotation queues. `agentevals` package overview with all three evaluator families (`trajectory.match`, `trajectory.llm`, `graph_trajectory`). How Lab 16's seven from-scratch metrics map onto agentevals — three direct, three custom-evaluator, one set-level.
+
+**One lab**:
+
+- [🧪 Lab 17 — LangSmith trace ingestion](../../labs/17-langsmith-trace-ingestion/) — 33 cells, ~80-100 min. Instruments a Lab 14 supervisor agent; runs both deterministic and LLM-judged evaluators; runs one offline experiment; closes with a custom evaluator reusing Lab 16's `routing_accuracy`. Cost per run: ~$0.05-0.20.
+
+**One quiz**:
+
+- [🧠 LangSmith trace ingestion](../../quizzes/evaluation/langsmith-ingestion.md) — 8 single-select questions covering Module 1 framing + Module 2 LangSmith specifics. Passing: 6/8.
+
+### Modules 3-7 — planned, not yet built
+
+These modules will be added in future batches. The plan is sketched here so you can see where Modules 1-2 lead:
+
 - **Module 3 — OpenTelemetry as the portable layer.** Same agent, OTel-native instrumentation. Fanout to LangSmith + a generic OTel collector. The vendor-neutral path.
 - **Module 4 — Online evaluation.** Register evaluators against a live trace stream. Tail-based sampling. Alert on metric regressions.
 - **Module 5 — Drift detection + agent-as-judge calibration.** Periodic human-calibrated judge. Distribution-drift detection (KS-test, PSI, rolling windows).
@@ -76,16 +92,19 @@ Each module is ~1-2 batches of work. Path 06 v1 is roughly 6-10 batches end-to-e
 - **Embedding-drift detection on vector stores.** Path 02 v2 territory (we'd add it as a Lab 09 extension).
 - **Multi-tenant data isolation, GDPR/SOC2 compliance.** Production concerns; out of scope for the evaluation-and-observability path proper.
 
-## Module 1 status
+## Module 1-2 status
 
 | | Status |
 |---|---|
 | Path landing page (this file) | ✅ shipped (batch 24) |
 | `from-harness-to-production.md` | ✅ shipped (batch 24) |
 | `observability-three-pillars.md` | ✅ shipped (batch 24) |
-| Module 1 diagram | ✅ shipped (batch 24) |
-| Module 1 quiz | ⏳ landing alongside Module 2 lab |
-| Modules 2-7 | ⏳ future batches |
+| Module 1 diagram (`observability-layers.mmd`) | ✅ shipped (batch 24) |
+| `langsmith-tracing-shape.md` | ✅ shipped (batch 25) |
+| `online-vs-offline-evaluation.md` | ✅ shipped (batch 25) |
+| Lab 17 (LangSmith trace ingestion) | ✅ shipped (batch 25) — solution in a follow-up batch |
+| Module 2 quiz (`langsmith-ingestion.md`) | ✅ shipped (batch 25) |
+| Modules 3-7 | ⏳ future batches |
 
 ## How this path connects to what you've built
 

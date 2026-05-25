@@ -183,7 +183,7 @@ This repo is built incrementally. Some paths will reach full coverage before oth
 | 03 Multi-Agent Systems | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
 | 04 Tool Protocols (MCP + A2A) | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
 | 05 Context Engineering | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 06 Evaluation & Observability | ☑ | ◔ | ☐ | ☐ | ☐ | ☐ |
+| 06 Evaluation & Observability | ☑ | ◑ | ◔ | ☐ | ☐ | ☐ |
 | 07 Production & Safety | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
 | 08 Mathematical Foundations | ☐ | n/a | n/a | n/a | n/a | n/a |
 | 09 Capstones | ☐ | n/a | n/a | n/a | n/a | ☐ |
