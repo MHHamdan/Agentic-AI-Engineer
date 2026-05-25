@@ -34,6 +34,7 @@ The quizzes are **GitHub-first** by design — they work in any Markdown viewer 
 | Quiz | Source | Length | Difficulty |
 |---|---|---|---|
 | 🧠 [LangSmith trace ingestion](./evaluation/langsmith-ingestion.md) | [`langsmith-tracing-shape.md`](../concepts/evaluation/langsmith-tracing-shape.md) + [`online-vs-offline-evaluation.md`](../concepts/evaluation/online-vs-offline-evaluation.md) + [Lab 17](../labs/17-langsmith-trace-ingestion/) | 8 questions | mixed |
+| 🧠 [OpenTelemetry portable tracing](./evaluation/opentelemetry-portable.md) | [`opentelemetry-genai-conventions.md`](../concepts/evaluation/opentelemetry-genai-conventions.md) + [`platform-fanout-and-portability.md`](../concepts/evaluation/platform-fanout-and-portability.md) + [Lab 18](../labs/18-opentelemetry-portable-tracing/) | 8 questions | mixed |
 
 More quizzes will land as new content does. Each new concept page or lab should ship with its quiz in the same batch.
 

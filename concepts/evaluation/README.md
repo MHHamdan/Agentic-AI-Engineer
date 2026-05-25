@@ -17,7 +17,7 @@ The pages here are a four-step progression from "what is RAG evaluation" to "wha
 
 These four pages are prerequisites for [Lab 09: Evaluating agentic RAG](../../labs/09-evaluating-agentic-rag/).
 
-## Path 06 — Production evaluation & observability (Modules 1-2 shipped)
+## Path 06 — Production evaluation & observability (Modules 1-3 shipped)
 
 The pages above (Path 02's RAG-evaluation primer) cover offline evaluation against hand-curated fixture sets. Path 06 extends that mechanism to production: live trace ingestion, drift detection, agent-as-judge calibration, distributed-tracing correlation across parallel sub-agents.
 
@@ -39,7 +39,18 @@ Lab applying these: [🧪 Lab 17 — LangSmith trace ingestion](../../labs/17-la
 
 Quiz: [🧠 LangSmith trace ingestion](../../quizzes/evaluation/langsmith-ingestion.md) — 8 questions covering Modules 1-2.
 
-These four pages open [Path 06 — Evaluation & Observability](../../learning-paths/06-evaluation-observability/). The path is incremental; Modules 1-2 ship framing + first lab; Modules 3-7 add platform-specific deep-dives in future batches.
+### Module 3 — OpenTelemetry portable layer (batch 26)
+
+| Page | Read time | Covers |
+|------|-----------|--------|
+| 📖 [opentelemetry-genai-conventions.md](./opentelemetry-genai-conventions.md) | ~14 min | The six layers of GenAI conventions (events, exceptions, metrics, model spans, agent spans, client spans). Core attributes that stabilized (`gen_ai.system`, `gen_ai.request.model`, token usage, tool/agent attributes). The v1.37 transition from per-message events to aggregated `gen_ai.input.messages`/`output.messages` attributes. `OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental` for new code. Span-kind discipline (CLIENT for LLM calls, INTERNAL for tools/agents). Auto-instrumentation libraries (`OpenAIInstrumentor`, OpenLLMetry covering 8+ frameworks). |
+| 📖 [platform-fanout-and-portability.md](./platform-fanout-and-portability.md) | ~10 min | The fanout pattern: one TracerProvider, multiple SpanProcessors, multiple exporters. Three configurations (dev/staging/production). Platform landscape: 6 agent-native platforms + 4 APM tools that ingest OTel. The lock-in cost reframed (instrumentation locks you in, not the platform). Decision boundary for picking Lab 17 vs Lab 18 paths. A concrete migration story across team scale stages. |
+
+Lab applying these: [🧪 Lab 18 — OpenTelemetry portable tracing](../../labs/18-opentelemetry-portable-tracing/).
+
+Quiz: [🧠 OpenTelemetry portable tracing](../../quizzes/evaluation/opentelemetry-portable.md) — 8 questions covering Module 3 + Lab 17 vs Lab 18 trade-offs.
+
+These six pages open [Path 06 — Evaluation & Observability](../../learning-paths/06-evaluation-observability/). The path is incremental; Modules 1-3 ship framing + LangSmith-native + OTel-portable; Modules 4-7 build on top of either path in future batches.
 
 ## Pending pages (future Path 06 modules)
 
