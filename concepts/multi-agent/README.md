@@ -29,11 +29,10 @@
 - [📖 LangGraph multi-agent: the primitives](./langgraph-multi-agent.md) — ~15 min. Maps LangGraph's five multi-agent primitives (`StateGraph` + `TypedDict` state, `Command(goto=..., update=..., graph=...)`, `Send(node, state)`, sub-graphs, checkpointer) onto from-scratch concepts from Labs 10-13. Each primitive carries a "what you gain / what you trade away" comparison. The three multi-agent topologies LangGraph names (supervisor, swarm, hierarchical). What carries over unchanged from from-scratch: prompts, worker contracts, citation discipline.
 - [📖 When frameworks earn complexity](./when-frameworks-earn-complexity.md) — ~10 min. The boundary discussion. Five things from-scratch pays for; five things the framework pays for; a decision table for when each fits. The upstream `langgraph-supervisor` deprecation as evidence that high-level multi-agent helpers age poorly because the underlying patterns evolve faster than the helpers.
 
-## Patterns (future batches)
+## Multi-agent evaluation (batch 22 — Module 6)
 
-These pages will land in future Path 03 batches, each paired with a lab:
-
-- 📖 *Multi-agent evaluation* (planned, Module 6) — Trajectory-level metrics, handoff-success rate, plan-quality metrics, replan rate, groundedness; the Lab 09 harness extended for multi-agent.
+- [📖 Multi-agent evaluation](./multi-agent-evaluation.md) — ~13 min. The framing for evaluating multi-agent systems. Trajectory metrics (the path) vs outcome metrics (the answer); why neither alone is sufficient. The replay model (deterministic, cheap, diagnostic, CI-friendly). The trace fixture as the eval contract. Per-agent vs end-to-end evaluation. What this misses (long-running, adversarial, multi-turn, agent-as-judge calibration, production tooling).
+- [📖 Trajectory-level metrics](./trajectory-level-metrics.md) — ~12 min. The implementation companion. Seven metrics — five trajectory (handoff success rate, routing accuracy, plan validity, plan coverage, replan rate) and two outcome (citation preservation across handoffs, groundedness) — with Python signatures and per-metric "what this reveals / what this hides" lines. The aggregation-and-slicing discipline carried from Lab 09. The headline metric pattern by system type.
 
 ## Production and evaluation (Path 06)
 
@@ -53,3 +52,4 @@ Production-grade multi-agent observability, evaluation, and orchestration are sc
 - [🧪 Lab 13 — Multi-agent RAG from scratch](../../labs/13-multi-agent-rag-from-scratch/) — composes Path 02's retrieval pipeline with Lab 10's supervisor pattern.
 - [🧪 Lab 14 — LangGraph supervisor bridge](../../labs/14-langgraph-supervisor-bridge/) — rebuilds Lab 10 in LangGraph. Limited but useful framework value-add.
 - [🧪 Lab 15 — LangGraph plan-and-execute bridge](../../labs/15-langgraph-plan-execute-bridge/) — rebuilds Lab 12 in LangGraph using `Send`. Strong framework value-add for dynamic parallel dispatch.
+- [🧪 Lab 16 — Multi-agent evaluation harness from scratch](../../labs/16-multi-agent-evaluation-from-scratch/) — implements the seven metrics from the concept pages against a hand-curated `trace_set.jsonl` of 15 traces replayed from Labs 10/11/12. Closes Path 03 v1.

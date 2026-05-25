@@ -48,20 +48,21 @@
 
 # Labs solutions are now authored:
 #   Labs 01, 02, 03, 05, 06, 07, 08, 09 — solutions in batch 14.
-#   Labs 10, 11, 12, 13 — solutions in batch 21 (originally planned for batch 19
-#                          but did not land on main until batch 21).
+#   Labs 10, 11, 12, 13 — solutions in batch 19.
 # Lab 04 is not yet authored and has no forward-reference to track.
 # Lab 14 (Path 03 Module 5) solution will land in a follow-up batch.
 # Lab 15 (Path 03 Module 5) solution will land in a follow-up batch.
 ^.*/labs/14-langgraph-supervisor-bridge/solution/.*$
 ^.*/labs/15-langgraph-plan-execute-bridge/solution/.*$
+# Lab 16 (Path 03 Module 6) solution will land in a follow-up batch.
+^.*/labs/16-multi-agent-evaluation-from-scratch/solution/.*$
 
 # Multi-agent concept pages — future Path 03 batches will author these.
 # Note: agent-debate-and-critics.md + generator-critic-pattern.md authored in batch 16
 # (the agent-debate.md forward-ref from batch 15 is resolved by these — note the name change).
 # Note: plan-and-execute.md (multi-agent) + planner-executor-pattern.md authored in batch 17.
 # Note: multi-agent-rag.md + retriever-as-worker.md authored in batch 18.
-^.*/concepts/multi-agent/multi-agent-evaluation\.md$
+# Note: multi-agent-evaluation.md + trajectory-level-metrics.md authored in batch 22.
 
 # Tools subfolders (per-framework pages not yet authored)
 # Note: tools/langgraph/ now has authored content (snapshot-v1.0.md, README); lines removed.

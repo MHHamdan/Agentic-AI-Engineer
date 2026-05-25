@@ -1,6 +1,6 @@
 # 03 · Multi-Agent Systems
 
-> 🟡 Intermediate · ⏱ 21–28 hours (Modules 1-5) · 📍 Start here once you've completed Path 01 (recommended: also Path 02 for Module 4) · 🚧 Path 03 in progress (foundations, supervisor-worker, generator-critic, plan-and-execute, multi-agent RAG, framework bridge)
+> 🟡 Intermediate · ⏱ 23–30 hours (Modules 1-6) · 📍 Start here once you've completed Path 01 (recommended: also Path 02 for Modules 4 and 6) · ✅ Path 03 v1 complete (foundations, supervisor-worker, generator-critic, plan-and-execute, multi-agent RAG, framework bridge, evaluation)
 
 ## Who this is for
 
@@ -8,7 +8,7 @@ You've finished Foundations: you can build an agent loop from scratch (Lab 01), 
 
 This path takes you from "I can build *one* agent" to "I can wire *several* agents together to do something none of them could do alone — and I know the difference between when that's a genuine win and when it's expensive theater."
 
-By the end of Path 03 Modules 1-4 you should be able to:
+By the end of Path 03 Modules 1-6 you should be able to:
 
 - Decide honestly when a task wants a multi-agent system and when it doesn't.
 - Reason about coordination cost — every handoff is an extra LLM call, with latency, tokens, and failure-mode implications.
@@ -31,6 +31,12 @@ By the end of Path 03 Modules 1-4 you should be able to:
 - Recognize the four multi-agent-RAG-specific failure modes (citation drift, retrieval skip, retrieval over-call, chunk drift) and the mitigation each requires.
 - Preserve citations across the retrieval → supervisor → synthesis handoff without trusting the LLM to track them by hand.
 - Decide honestly when multi-agent RAG beats single-agent RAG (when deciding-to-retrieve is non-trivial, when multiple retrievals must be composed, when precision justifies a critic) — and when it doesn't.
+- Rebuild from-scratch multi-agent patterns in LangGraph (`StateGraph`, `Command`, `Send`, sub-graphs, checkpointer) and run line-by-line comparisons against the from-scratch baselines — the pedagogical payoff of having both implementations.
+- Explain when framework adoption earns its complexity (durable checkpointer, observable execution via streaming, `Send`-based dynamic parallel dispatch, reducer-based parallel-update semantics) and when it doesn't.
+- Implement seven trajectory and outcome metrics from scratch — handoff success rate, routing accuracy, plan validity, plan coverage, replan rate, citation preservation, groundedness — and explain what each reveals and what each hides.
+- Apply the aggregate-then-slice-then-per-agent discipline carried from Lab 09 to multi-agent trajectories; localize a failing aggregate to a specific failure category and a specific agent.
+- Reason about the replay-vs-live evaluation trade-off, the rule-based-vs-LLM-as-judge trade-off, and the per-agent-vs-end-to-end trade-off.
+- Recognize that the from-scratch eval harness is the conceptual foundation; production tooling (LangSmith / Phoenix / Galileo / Vertex AI) layers on top.
 
 ## Prerequisites
 
@@ -165,6 +171,23 @@ The framework comparison module. Rebuilds Lab 10 (supervisor-worker) and Lab 12 
 
 - [🧠 Framework bridge](../../quizzes/multi-agent/framework-bridge.md) — 8 single-select questions covering `Command` semantics, `Send` vs `ThreadPoolExecutor`, the `langgraph-supervisor` deprecation reasoning, what the checkpointer adds, supervisor vs swarm trade-offs, reducer-on-parallel-update-fields, when migration isn't worth it, and what the framework comparison actually demonstrates.
 
+### Module 6 — Multi-agent evaluation (batch 22)
+
+The evaluation module. Closes Path 03 v1. Extends Lab 09's RAG-evaluation harness pattern (hand-curated fixtures + rule-based tier + LLM-as-judge tier + category slicing) for multi-agent trajectories. Same discipline, different unit of analysis — a recorded trajectory instead of a single query/answer pair.
+
+**Two concept pages:**
+
+- [📖 Multi-agent evaluation](../../concepts/multi-agent/multi-agent-evaluation.md) — ~13 min. The framing. Trajectory metrics (the path) vs outcome metrics (the answer); why neither alone is sufficient. The replay model (deterministic, cheap, diagnostic, CI-friendly). The trace fixture as the eval contract. Per-agent vs end-to-end evaluation. What this misses (long-running, adversarial, multi-turn, agent-as-judge calibration, production tooling).
+- [📖 Trajectory-level metrics](../../concepts/multi-agent/trajectory-level-metrics.md) — ~12 min. The implementation companion. Seven metrics — five trajectory (handoff success rate, routing accuracy, plan validity, plan coverage, replan rate) and two outcome (citation preservation across handoffs, groundedness) — with Python signatures and per-metric "what this reveals / what this hides" lines. The aggregation-and-slicing discipline from Lab 09. The headline metric pattern by system type (IR tasks, automation tasks, refinement tasks).
+
+**One lab:**
+
+- [🧪 Lab 16 — Multi-agent evaluation harness from scratch](../../labs/16-multi-agent-evaluation-from-scratch/) — ~100-130 min. Build the from-scratch evaluation harness for the seven metrics. Consumes `trace_set.jsonl` — 15 hand-curated traces (5 each from Labs 10/11/12, across 5 failure categories). Implements each metric as a standalone function. Demonstrates the aggregate-then-slice-then-per-agent diagnostic discipline. Optional LLM-as-judge variant for plan validity. Closes with the synthesis: what the harness reveals, what it hides, what production tooling (LangSmith / Phoenix / Vertex AI) adds on top.
+
+**One quiz:**
+
+- [🧠 Multi-agent evaluation](../../quizzes/multi-agent/multi-agent-evaluation.md) — 8 single-select questions covering: outcome-only vs trajectory-plus-outcome evaluation, the replay model's trade-offs, semantic handoff drift, plan validity vs plan coverage, hand-curated vs synthetic fixtures, category slicing as discipline, per-agent vs end-to-end usage, and URL canonicalization for citation preservation.
+
 ## What's not in this batch (anti-scope)
 
 These are explicitly out of scope for Modules 1-5 — they're scoped for future Path 03 batches or other paths entirely:
@@ -179,14 +202,17 @@ These are explicitly out of scope for Modules 1-5 — they're scoped for future 
 - **New retrieval techniques.** Lab 13 *composes* the retrieval from Labs 06-08; it doesn't invent new retrieval. Distributed retrieval, vector DB integrations (Qdrant, Pinecone, Weaviate), and federated multi-corpus search are out of scope.
 - **Tool-protocol coverage.** MCP and A2A are [Path 04](../04-tool-protocols-mcp-a2a/) territory. They're how agents (and their tools) interoperate across processes / vendors; not the same problem as in-process multi-agent coordination.
 - **Distributed execution / persistent plan state.** Lab 12 uses thread-based concurrency for IO-bound LLM calls. Distributed execution across processes / machines and durable plan state across restarts are out of scope.
-- **Production observability + evaluation of multi-agent systems.** Same pattern as Path 02: build the mechanism first, evaluate it later (Path 06 territory; Module 6 brings trajectory-level metrics into Path 03).
+- **Production observability + evaluation of multi-agent systems.** Module 6 (this batch) brings trajectory-level metrics into Path 03 as a from-scratch harness. Production tooling (LangSmith, Phoenix, Galileo, Vertex AI's evaluation service) is Path 06 territory.
 
 ## What comes next
 
-After Module 5 (this batch) lands, the planned Path 03 expansion is:
+Path 03 v1 closes with this batch. Modules 1-6 cover foundations, the four multi-agent patterns (supervisor-worker, generator-critic, plan-and-execute, multi-agent RAG), the framework bridge, and evaluation. The path is structurally complete.
 
-- **Module 6 — Multi-agent evaluation.** Trajectory-level metrics, handoff-success rate, citation-preservation rate, plan-quality metrics, replan rate, groundedness; the harness pattern from Lab 09 extended for multi-agent.
-- **Solutions for Labs 14 and 15.** Reference implementations in the same pattern as the Labs 01-13 solutions (batches 14 and 19).
+The planned follow-ups:
+
+- **Solutions for Labs 14, 15, and 16.** Reference implementations in the same pattern as the Labs 01-13 solutions (batches 14 and 21).
+- **Path 06 — Evaluation & Observability.** Production-grade evaluation infrastructure. LangSmith depth, OpenTelemetry-based trace ingestion, drift detection, agent-as-judge calibration against human ground truth, online evaluation. Lab 16's from-scratch harness is the conceptual foundation; Path 06 layers tooling on top.
+- **Path 03 v2 (possible).** Extensions identified during v1: multi-turn (threaded) evaluation, Lab 13 (multi-agent RAG) framework-bridge variant, Lab 11 (critic) framework-bridge variant, adversarial / red-team evaluation patterns.
 
 Each future batch follows the same shape as v1: concept pages first, lab from-scratch, quiz; framework comparisons come after the from-scratch version is solid.
 
@@ -209,5 +235,9 @@ The papers and projects that shaped how this path is taught:
 - **Lewis et al. 2020 (RAG)** — ["Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"](https://arxiv.org/abs/2005.11401). The original RAG paper. Useful as the baseline single-agent pattern Module 4 extends.
 - **Asai et al. 2023 (Self-RAG)** — ["Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"](https://arxiv.org/abs/2310.11511). Training-time approach to retrieval-aware models; conceptually adjacent to multi-agent RAG but a different design problem.
 - **Yan et al. 2024 (CRAG)** — ["Corrective Retrieval Augmented Generation"](https://arxiv.org/abs/2401.15884). Retrieval evaluator + fallback design; the pattern multi-agent RAG with critic-on-retrieval approximates.
+- **Zheng et al. 2023** — ["Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena"](https://arxiv.org/abs/2306.05685), NeurIPS. The canonical paper on LLM-as-judge biases (position, verbosity, self-enhancement); required reading before deploying LLM-as-judge for trajectory or outcome scoring (Module 6).
+- **El Filali & Bedar 2026** — ["Towards More Standardized AI Evaluation: From Models to Agents"](https://arxiv.org/abs/2602.18029). Argues the model-to-agent evaluation shift: from "how good is the model" to "can we trust the system under change." Frames Module 6's why.
+- **McKinsey QuantumBlack 2026** — ["Evaluations for the Agentic World"](https://medium.com/quantumblack/evaluations-for-the-agentic-world-c3c150f0dd5a). Industry framing of multi-agent metric vocabulary (handoffs-per-task, duplicate-work-rate, deadlock detection); useful complement to Module 6's from-scratch implementations.
+- **LangChain `agentevals`** — [github.com/langchain-ai/agentevals](https://github.com/langchain-ai/agentevals). Production-reference trajectory evaluators; the message-list trace format LangGraph produces. Path 06 will cover the integration; Module 6 is the conceptual prerequisite.
 
 These are starting points, not a reading list. The papers are dense and the field moves fast — verify any specific claim against [`tools/frameworks/snapshot-v1.0.md`](../../tools/frameworks/snapshot-v1.0.md) if it exists, or the framework's own docs if it doesn't.
