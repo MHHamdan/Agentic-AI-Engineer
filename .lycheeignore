@@ -48,7 +48,8 @@
 
 # Labs solutions are now authored:
 #   Labs 01, 02, 03, 05, 06, 07, 08, 09 — solutions in batch 14.
-#   Labs 10, 11, 12, 13 — solutions in batch 19.
+#   Labs 10, 11, 12, 13 — solutions in batch 21 (originally planned for batch 19
+#                          but did not land on main until batch 21).
 # Lab 04 is not yet authored and has no forward-reference to track.
 # Lab 14 (Path 03 Module 5) solution will land in a follow-up batch.
 # Lab 15 (Path 03 Module 5) solution will land in a follow-up batch.
