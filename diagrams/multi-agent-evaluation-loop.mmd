@@ -1,0 +1,98 @@
+%% Lab 16: Multi-agent evaluation loop
+%% Read the diagram as a flow from recorded traces through metric implementations
+%% to the diagnostic outputs that drive iteration decisions.
+
+flowchart TD
+    %% ─── Sources ───
+    subgraph SOURCES[Source labs - traces replayed from]
+        L10[Lab 10<br/>supervisor-worker]
+        L11[Lab 11<br/>generator-critic]
+        L12[Lab 12<br/>plan-and-execute]
+    end
+
+    %% ─── Trace fixture ───
+    subgraph FIXTURE[Trace fixture - hand-curated]
+        TS[trace_set.jsonl<br/>15 traces · 5 categories]
+        CATS[Categories<br/>happy_path · citation_drift<br/>tool_failure · replan_needed<br/>step_cap_hit]
+    end
+
+    %% ─── Validation ───
+    PYD[Pydantic StrictModel<br/>extra=forbid<br/>fail loud on typo]
+
+    %% ─── Metrics ───
+    subgraph TRAJ[Trajectory metrics - 5 from scratch]
+        M1[handoff_success_rate<br/>structural envelope check]
+        M2[routing_accuracy<br/>LCS vs expected_handoffs]
+        M3[plan_validity<br/>Lab 12 only]
+        M4[plan_coverage<br/>Lab 12 only]
+        M5[replan_rate<br/>set-level metric]
+    end
+
+    subgraph OUTCOME[Outcome metrics - 2 from scratch]
+        M6[citation_preservation<br/>w/ URL canonicalization]
+        M7[groundedness<br/>rule-based lexical overlap]
+    end
+
+    %% ─── Aggregation ───
+    DF[Per-trace DataFrame<br/>traces × metrics]
+    AGG[Aggregate<br/>misleading on its own]
+    SLICE[Slice by category<br/>the diagnostic discipline]
+    PA[Per-agent breakdown<br/>error_rate per node]
+
+    %% ─── Optional LLM-as-judge ───
+    LLMJ[LLM-as-judge<br/>plan validity refinement<br/>optional · ~0.005]
+
+    %% ─── Synthesis ───
+    SYN[Synthesis<br/>what metrics reveal<br/>what they hide]
+
+    %% ─── Production layer (not built) ───
+    PROD[Production tooling<br/>LangSmith / Phoenix / Vertex AI<br/>Path 06]
+
+    %% ─── Flows ───
+    L10 --> TS
+    L11 --> TS
+    L12 --> TS
+    TS --> PYD
+    CATS -.annotates.-> TS
+    PYD --> M1
+    PYD --> M2
+    PYD --> M3
+    PYD --> M4
+    PYD --> M5
+    PYD --> M6
+    PYD --> M7
+
+    M1 --> DF
+    M2 --> DF
+    M3 --> DF
+    M4 --> DF
+    M5 --> DF
+    M6 --> DF
+    M7 --> DF
+
+    DF --> AGG
+    AGG --> SLICE
+    SLICE --> PA
+    PA --> SYN
+
+    M3 -.optional refinement.-> LLMJ
+    LLMJ -.calibrate.-> SYN
+
+    SYN -.foundation for.-> PROD
+
+    %% ─── Styling ───
+    classDef source fill:#e1f0ff,stroke:#2a7ab8,color:#000
+    classDef fixture fill:#fff3cd,stroke:#856404,color:#000
+    classDef validation fill:#e2d6f3,stroke:#553580,color:#000
+    classDef metric fill:#d4edda,stroke:#155724,color:#000
+    classDef aggregate fill:#f8d7da,stroke:#721c24,color:#000
+    classDef optional fill:#f4f4f4,stroke:#777,color:#000,stroke-dasharray: 5 5
+    classDef future fill:#cce5ff,stroke:#004085,color:#000,stroke-dasharray: 5 5
+
+    class L10,L11,L12 source
+    class TS,CATS fixture
+    class PYD validation
+    class M1,M2,M3,M4,M5,M6,M7 metric
+    class DF,AGG,SLICE,PA,SYN aggregate
+    class LLMJ optional
+    class PROD future
