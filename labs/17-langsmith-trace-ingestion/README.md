@@ -10,18 +10,28 @@ This is the first Path 06 lab. Path 06 v1 has 6 labs total (Modules 2-7); this b
 
 ```mermaid
 flowchart TD
-    A[Lab 14 supervisor agent<br/>inline minimal version] --> B[Set LANGSMITH_TRACING=true]
-    B --> C[Auto-traced LangGraph nodes]
-    A --> D[@traceable on helpers]
+    A["Lab 14 supervisor agent<br/>inline minimal version"] --> B["Set LANGSMITH_TRACING=true"]
+    B --> C["Auto-traced LangGraph nodes"]
+    A --> D["@traceable on helpers"]
     D --> C
-    C --> E[LangSmith UI<br/>messages view + timeline view]
-    E --> F[Convert trace via<br/>extract_langgraph_trajectory_from_thread]
-    F --> G[graph_trajectory_strict_match<br/>deterministic]
-    F --> H[create_trajectory_llm_as_judge<br/>LLM-judged]
-    G --> I[client.evaluate against a 3-example Dataset]
+    C --> E["LangSmith UI<br/>messages view + timeline view"]
+    E --> F["Convert trace via<br/>extract_langgraph_trajectory_from_thread"]
+    F --> G["graph_trajectory_strict_match<br/>deterministic"]
+    F --> H["create_trajectory_llm_as_judge<br/>LLM-judged"]
+    G --> I["client.evaluate against a 3-example Dataset"]
     H --> I
-    I --> J[Compare scores across runs]
-    J --> K[Stretch: custom routing_accuracy<br/>via Lab 16 algorithm]
+    I --> J["Compare scores across runs"]
+    J --> K["Stretch: custom routing_accuracy<br/>via Lab 16 algorithm"]
+
+    classDef build fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
+    classDef trace fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef eval fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
+    classDef result fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px,color:#4A148C;
+
+    class A build;
+    class B,C,D,E,F trace;
+    class G,H,I eval;
+    class J,K result;
 ```
 
 No new from-scratch agent code — the lab uses Lab 14's pattern inline (one supervisor, one researcher, one writer) and focuses on the *instrumentation* layer. You'll touch ~30 lines of LangSmith / agentevals code and produce 3-5 traces in the LangSmith UI.
