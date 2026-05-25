@@ -1,6 +1,6 @@
 # 03 · Multi-Agent Systems
 
-> 🟡 Intermediate · ⏱ 10–14 hours (Modules 1-2) · 📍 Start here once you've completed Path 01 · 🚧 Path 03 in progress (foundations, supervisor-worker, generator-critic)
+> 🟡 Intermediate · ⏱ 14–19 hours (Modules 1-3) · 📍 Start here once you've completed Path 01 · 🚧 Path 03 in progress (foundations, supervisor-worker, generator-critic, plan-and-execute)
 
 ## Who this is for
 
@@ -8,7 +8,7 @@ You've finished Foundations: you can build an agent loop from scratch (Lab 01), 
 
 This path takes you from "I can build *one* agent" to "I can wire *several* agents together to do something none of them could do alone — and I know the difference between when that's a genuine win and when it's expensive theater."
 
-By the end of Path 03 Modules 1-2 you should be able to:
+By the end of Path 03 Modules 1-3 you should be able to:
 
 - Decide honestly when a task wants a multi-agent system and when it doesn't.
 - Reason about coordination cost — every handoff is an extra LLM call, with latency, tokens, and failure-mode implications.
@@ -21,6 +21,11 @@ By the end of Path 03 Modules 1-2 you should be able to:
 - Diagnose sycophancy with the obvious-bad-draft test and apply the four critic-prompt rules to prevent it.
 - Bound refinement with `MAX_REFINEMENT_CYCLES` and handle the cap honestly (surface partial results, not forced approvals).
 - Recognize the four debate-specific failure modes (sycophancy, infinite agreement, runaway disagreement, critique drift) and the mitigation each requires.
+- Implement the **plan-and-execute pattern**: a planner agent emits a structured `Plan` (typed `PlanStep` list with explicit `depends_on` and `parallel_group` fields); the supervisor resolves dependencies and dispatches steps to a bounded executor pool.
+- Apply the five planner-prompt rules (atomic steps, explicit dependencies, honest parallel groups, self-contained descriptions, bounded plans) and explain why each prevents a specific failure mode.
+- Wire bounded executor-pool concurrency (`ThreadPoolExecutor(max_workers=3)`) and reason about parallelism as a wall-clock optimization rather than a cost or quality optimization.
+- Handle replanning with `MAX_REPLANS = 2` — invoke the planner with failure context, finalize honestly when the cap fires.
+- Recognize the four plan-and-execute-specific failure modes (plan brittleness, execution drift, replanning thrash, plan-execution gap) and the mitigation each requires.
 
 ## Prerequisites
 
@@ -38,7 +43,7 @@ Path 02 (Agentic RAG) is **not** a prerequisite for Path 03. The paths are indep
 
 ## How this path is structured
 
-Path 03 v1 opens with Module 1 (foundations and the supervisor-worker pattern); Module 2 extends it with iterative refinement via generator-critic. Future batches add plan-and-execute, multi-agent evaluation, the framework-bridge lab, and multi-agent RAG.
+Path 03 v1 opens with Module 1 (foundations and the supervisor-worker pattern); Module 2 extends it with iterative refinement via generator-critic; Module 3 adds plan-and-execute with bounded parallel executor pool. Future batches add multi-agent evaluation, the framework-bridge lab, and multi-agent RAG.
 
 ```mermaid
 flowchart LR
@@ -50,13 +55,17 @@ flowchart LR
     D --> E[📖 Generator-critic pattern]
     E --> L11[🧪 Lab 11: Generator-critic from scratch]
     L11 --> Q2[🧠 Agent debate and critics quiz]
+    Q2 --> F[📖 Plan-and-execute]
+    F --> G[📖 Planner-executor pattern]
+    G --> L12[🧪 Lab 12: Plan-and-execute from scratch]
+    L12 --> Q3[🧠 Plan-and-execute quiz]
 
     classDef concept fill:#e8f0fe,stroke:#1a73e8
     classDef lab fill:#fef7e0,stroke:#f9ab00
     classDef quiz fill:#e6f4ea,stroke:#137333
-    class A,B,C,D,E concept
-    class L10,L11 lab
-    class Q1,Q2 quiz
+    class A,B,C,D,E,F,G concept
+    class L10,L11,L12 lab
+    class Q1,Q2,Q3 quiz
 ```
 
 ## Modules
@@ -92,24 +101,39 @@ flowchart LR
 
 - [🧠 Agent debate and critics](../../quizzes/multi-agent/agent-debate-and-critics.md) — 8 single-select questions on when generator-critic earns its place, sycophancy detection, critic prompt design, bounded refinement, and self-critique vs. separate-critic tradeoffs.
 
+### Module 3 — Plan-and-execute (batch 17)
+
+**Two concept pages:**
+
+- [📖 Plan-and-execute](../../concepts/multi-agent/plan-and-execute.md) — ~10 min. The framing: when plan-first beats supervisor-worker and ReAct. Plan-first vs. interleaved planning. The parallelism trade-off (wall-clock optimization, not a cost or quality optimization). The four plan-and-execute-specific failure modes (plan brittleness, execution drift, replanning thrash, plan-execution gap).
+- [📖 The planner-executor pattern](../../concepts/multi-agent/planner-executor-pattern.md) — ~10 min. The specific pattern Lab 12 implements. `Plan` and `PlanStep` Pydantic schemas with `depends_on` + `parallel_group` fields. The five planner-prompt design rules. Executor pool concurrency (`ThreadPoolExecutor`, `MAX_PARALLEL_EXECUTORS = 3`). Replanning policy (`MAX_REPLANS = 2`). Four-cap composition with Lab 10/11's caps.
+
+**One lab:**
+
+- [🧪 Lab 12 — Plan-and-execute from scratch](../../labs/12-plan-and-execute-from-scratch/) — ~120-150 min. Build a planner-executor system with bounded parallel execution and bounded replanning. Reuses Lab 10's `web_search` + `fetch_page` at the executor level. New components: `PlanStep` and `Plan` schemas (Lab 02's `StrictModel` pattern), planner agent emitting JSON-validated plans, executor agent running one step at a time, dependency-resolving dispatcher with `concurrent.futures.ThreadPoolExecutor`, replanning hook with failure-context handoff. Includes the four-failure-mode walkthrough and a stretch comparison of plan-and-execute vs. ReAct on the same task.
+
+**One quiz:**
+
+- [🧠 Plan-and-execute](../../quizzes/multi-agent/plan-and-execute.md) — 8 single-select questions on when plan-and-execute beats supervisor-worker / ReAct, plan brittleness, parallel groups honesty, replanning policy, dependencies vs. parallel groups, plan-execution gap, and how the pattern composes with Lab 10's machinery.
+
 ## What's not in this batch (anti-scope)
 
-These are explicitly out of scope for Modules 1-2 — they're scoped for future Path 03 batches or other paths entirely:
+These are explicitly out of scope for Modules 1-3 — they're scoped for future Path 03 batches or other paths entirely:
 
-- **Frameworks.** No CrewAI, no AutoGen, no LangGraph multi-agent helpers (`langgraph.prebuilt.create_supervisor`, `AutoGen.GroupChat`, `crewai.Crew`). The headline labs use only the Path 01 agent loop. Framework-bridge batches come later — the same way Path 02 saved its framework-bridge lab for later.
-- **Plan-and-execute, swarm, tree-of-thoughts.** These are different multi-agent patterns with their own tradeoffs. Future Path 03 batches will cover each in turn, with the same "from scratch first, framework second" discipline.
+- **Frameworks.** No CrewAI, no AutoGen, no LangGraph multi-agent helpers (`langgraph.prebuilt.create_supervisor`, `AutoGen.GroupChat`, `crewai.Crew`, `langgraph.types.Send`). The headline labs use only the Path 01 agent loop. Framework-bridge batches come later — the same way Path 02 saved its framework-bridge lab for later.
+- **Swarm, tree-of-thoughts, MCTS-style plan search.** These are different multi-agent patterns or different search strategies. Future Path 03 batches may cover swarm; tree search over plans is out of scope for the educational track.
 - **Tool-protocol coverage.** MCP and A2A are [Path 04](../04-tool-protocols-mcp-a2a/) territory. They're how agents (and their tools) interoperate across processes / vendors; not the same problem as in-process multi-agent coordination.
-- **Multi-agent RAG.** A later Path 03 batch will combine Lab 06-08 retrieval with the supervisor-worker and generator-critic patterns.
+- **Multi-agent RAG.** A later Path 03 batch will combine Lab 06-08 retrieval with the supervisor-worker, generator-critic, and planner-executor patterns.
+- **Distributed execution / persistent plan state.** Lab 12 uses thread-based concurrency for IO-bound LLM calls. Distributed execution across processes / machines and durable plan state across restarts are out of scope.
 - **Production observability + evaluation of multi-agent systems.** Same pattern as Path 02: build the mechanism first, evaluate it later (Path 06 territory).
 
 ## What comes next
 
-After Module 2 (this batch) lands, the planned Path 03 expansion is:
+After Module 3 (this batch) lands, the planned Path 03 expansion is:
 
-- **Module 3 — Plan-and-execute.** A planner agent emits a structured plan; an executor agent (or pool of them) carries it out. When this beats supervisor-worker and when it doesn't.
-- **Module 4 — Multi-agent RAG.** Composing Lab 06-08 retrieval with the supervisor + generator-critic patterns. A retriever-worker + synthesizer-worker + critic + supervisor-as-coordinator.
-- **Module 5 — Framework bridge.** Re-implement Labs 10-11 in LangGraph's multi-agent primitives (`Send`, `Command`, sub-graphs); compare line-by-line; honest discussion of when the framework earns its complexity.
-- **Module 6 — Multi-agent evaluation.** Trajectory-level metrics, handoff-success rate, citation-preservation rate; the harness pattern from Lab 09 extended for multi-agent.
+- **Module 4 — Multi-agent RAG.** Composing Lab 06-08 retrieval with the supervisor-worker, generator-critic, and planner-executor patterns. A retriever-worker + synthesizer-worker + critic + supervisor-as-coordinator, with the planner deciding the overall research strategy.
+- **Module 5 — Framework bridge.** Re-implement Labs 10-12 in LangGraph's multi-agent primitives (`Send`, `Command`, sub-graphs); compare line-by-line; honest discussion of when the framework earns its complexity.
+- **Module 6 — Multi-agent evaluation.** Trajectory-level metrics, handoff-success rate, citation-preservation rate, plan-quality metrics, replan rate; the harness pattern from Lab 09 extended for multi-agent.
 
 Each future batch follows the same shape as v1: concept pages first, lab from-scratch, quiz, then the framework comparison only after the from-scratch version is solid.
 
@@ -126,5 +150,8 @@ The papers and projects that shaped how this path is taught:
 - **Madaan et al. 2023** — ["Self-Refine: Iterative Refinement with Self-Feedback"](https://arxiv.org/abs/2303.17651). The canonical paper on iterative-refinement-via-critique. Reports gains across diverse tasks; the empirical baseline for generator-critic claims.
 - **Sharma et al. 2023** — ["Towards Understanding Sycophancy in Language Models"](https://arxiv.org/abs/2310.13548). The canonical sycophancy paper. Required reading for anyone building critics.
 - **Saunders et al. 2022** — ["Self-critiquing models for assisting human evaluators"](https://arxiv.org/abs/2206.05802). Foundational work on critique-quality; the critic-as-eval-assistant framing.
+- **Wang et al. 2023 (Plan-and-Solve)** — ["Plan-and-Solve Prompting"](https://arxiv.org/abs/2305.04091). The prompting-level baseline for plan-then-execute; useful for understanding the pattern's pedigree before it generalized to multi-agent.
+- **Yao et al. 2023 (ReAct)** — ["ReAct: Synergizing Reasoning and Acting"](https://arxiv.org/abs/2210.03629). The interleaved-planning alternative to plan-first; required reading for understanding when plan-and-execute is the wrong call.
+- **Xu et al. 2024 (AgentBench)** — ["AgentBench: Evaluating LLMs as Agents"](https://arxiv.org/abs/2308.03688). Empirical benchmarks across agentic patterns; useful for understanding where plan-and-execute outperforms ReAct and vice versa.
 
 These are starting points, not a reading list. The papers are dense and the field moves fast — verify any specific claim against [`tools/frameworks/snapshot-v1.0.md`](../../tools/frameworks/snapshot-v1.0.md) if it exists, or the framework's own docs if it doesn't.
