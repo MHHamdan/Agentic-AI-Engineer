@@ -105,7 +105,7 @@ At gpt-4o-mini rates, the full lab end-to-end is well under $0.05 to run. Wall-c
 
 ## Solution
 
-A reference implementation will land in `solution/lab.ipynb` in a follow-up solutions batch, paired with `solution/README.md` describing the implementation choices worth flagging. Two choices to flag up front:
+A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) with notes in [`solution/README.md`](./solution/README.md). 17 cells vs the lab's 33 — the failure-mode walks, the production-readiness recap, and the structured-trace appendix are removed since you've already worked through them. Two choices flagged there:
 
 - **The supervisor's worker tools use Pydantic schemas with `ConfigDict(extra="forbid")`** — same `StrictModel` pattern from Lab 02. This isn't decorative: in strict tool-calling mode the supervisor can't pass extra fields, which keeps the handoff envelope tight.
 - **Workers are plain functions, not classes.** A worker is a function from sub-task to structured result; the agent loop is an implementation detail of that function. Resisting the urge to make workers into objects with `.run()` methods keeps the seam between "tool" and "worker" cleanly thin.
@@ -113,5 +113,5 @@ A reference implementation will land in `solution/lab.ipynb` in a follow-up solu
 ## Next
 
 - After completing the lab, take the [multi-agent fundamentals quiz](../../quizzes/multi-agent/multi-agent-fundamentals.md).
-- Path 03 v1 closes with this batch. Future modules: agent debate, plan-and-execute, framework bridge, multi-agent RAG.
-- If you came from Path 02 and want to see how multi-agent extends RAG, the multi-agent RAG batch (future) will combine Lab 10's pattern with Lab 06-08's retrieval stack.
+- Path 03 continues with Lab 11 (generator-critic), Lab 12 (plan-and-execute), Lab 13 (multi-agent RAG) — all now shipped — and Module 5's framework bridge in [Lab 14](../14-langgraph-supervisor-bridge/) + [Lab 15](../15-langgraph-plan-execute-bridge/).
+- If you came from Path 02 and want to see how multi-agent extends RAG, [Lab 13](../13-multi-agent-rag-from-scratch/) combines Lab 10's pattern with Lab 06-08's retrieval stack.

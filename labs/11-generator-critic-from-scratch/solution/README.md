@@ -2,7 +2,7 @@
 
 The polished final implementation of [Lab 11: Generator-critic from scratch](../README.md).
 
-A supervisor coordinates Lab 10's researcher and writer workers, plus a new critic worker. The supervisor's loop adds a bounded refinement cycle: writer → critic → if-approve-finalize-else-refine-with-issues. `MAX_REFINEMENT_CYCLES = 3` bounds the loop and surfaces plainly at the cap. No frameworks.
+A supervisor coordinates Lab 10's researcher and writer workers, plus a new critic worker. The supervisor's loop adds a bounded refinement cycle: writer → critic → if-approve-finalize-else-refine-with-issues. `MAX_REFINEMENT_CYCLES = 3` bounds the loop and surfaces honestly at the cap. No frameworks.
 
 > 📖 The concept pages that frame this implementation:
 > [`agent-debate-and-critics`](../../../concepts/multi-agent/agent-debate-and-critics.md),
@@ -18,7 +18,7 @@ The headline path from the parent lab:
 - Critic worker: takes `(brief, draft)`, returns `{status: "ok"}` or `{status: "needs_revision", issues: [{kind, detail}]}` with five enumerated `kind` values.
 - Updated supervisor (`SUPERVISOR_MAX_STEPS = 10`, raised from Lab 10's 6) with three worker-call tools: `call_researcher`, `call_writer`, `call_critic`.
 - Bounded refinement loop inside the supervisor: when critic says `needs_revision`, the supervisor re-calls the writer with the issues attached, up to `MAX_REFINEMENT_CYCLES = 3` times.
-- Explicit cap surfacing: when the cycle cap fires, the supervisor returns the last draft with `{status: "ok_with_unresolved_issues", ...}` — not a forced approval.
+- Honest cap surfacing: when the cycle cap fires, the supervisor returns the last draft with `{status: "ok_with_unresolved_issues", ...}` — not a forced approval.
 - One end-to-end demonstration run.
 
 **Not in this solution** (deliberately): the sycophancy diagnostic (the "deliberately bad draft" cell from the parent), the four-failure-mode walkthrough, and the self-critique stretch section. Those are exploratory cells in the learning notebook; the solution is the canonical mechanism.
@@ -37,7 +37,7 @@ The headline path from the parent lab:
 
 **5. Refinement uses bounded loop with structural revision context.** When the critic flags issues, the supervisor doesn't ask the writer to "try again, be better." It passes the structured issues list back: `"REVISION REQUESTED — address each of these issues: [{kind: missing_citation, detail: ...}, ...]"`. The writer's prompt is tight enough to respond to each issue individually rather than rewriting everything.
 
-**6. The cap fires plainly, not silently.** When `cycles == MAX_REFINEMENT_CYCLES` and the critic still says `needs_revision`, the supervisor returns the last draft with `status = "ok_with_unresolved_issues"`. This is a distinct status from `ok`. Downstream code (eval harnesses, production gates) can react to it. Silently coercing it to `ok` would be the most dangerous failure mode — the system claims success when it shouldn't.
+**6. The cap fires honestly, not silently.** When `cycles == MAX_REFINEMENT_CYCLES` and the critic still says `needs_revision`, the supervisor returns the last draft with `status = "ok_with_unresolved_issues"`. This is a distinct status from `ok`. Downstream code (eval harnesses, production gates) can react to it. Silently coercing it to `ok` would be the most dangerous failure mode — the system claims success when it shouldn't.
 
 ## Common variations that also work
 

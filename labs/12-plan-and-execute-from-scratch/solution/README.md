@@ -55,7 +55,7 @@ Five things that pass syntax but fail eval:
 
 **1. The planner emits free-text JSON that doesn't validate.** Common at first — the model adds preamble, wraps in markdown fences, or hallucinates a field. The `_strip_code_fences` helper handles common markdown wrapping; the retry loop in `planner_agent` surfaces specific schema mismatches back to the planner. Without the retry loop, occasional planner failures become hard errors.
 
-**2. Parallel groups that aren't practical.** The planner puts step B in `parallel_group="A"` alongside step C, but B's `depends_on` includes C. The graph validator catches this, but if you skip validation, the dispatcher serializes them by accident (B has to wait for C even within the parallel batch) and you get cosmetic parallelism with no wall-clock benefit. Always run `validate_graph` before dispatching.
+**2. Parallel groups that aren't honest.** The planner puts step B in `parallel_group="A"` alongside step C, but B's `depends_on` includes C. The graph validator catches this, but if you skip validation, the dispatcher serializes them by accident (B has to wait for C even within the parallel batch) and you get cosmetic parallelism with no wall-clock benefit. Always run `validate_graph` before dispatching.
 
 **3. Race conditions on shared state.** Without the `threading.Lock` around the `completed` dict, you occasionally see a step claim its dependencies aren't ready when they are (the reading thread snapshotted the dict before the writing thread committed). Symptom: same plan, intermittent execution-cap fires. Always use the lock.
 

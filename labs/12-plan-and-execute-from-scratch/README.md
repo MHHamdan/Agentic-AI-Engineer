@@ -137,7 +137,7 @@ Total: 8-15 LLM calls, ~$0.05-$0.10 at gpt-4o-mini rates. Wall-clock dominated b
 
 ## Solution
 
-A reference implementation will land in `solution/lab.ipynb` in a follow-up solutions batch, paired with `solution/README.md`. Three implementation choices worth flagging up front:
+A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) with notes in [`solution/README.md`](./solution/README.md). 21 cells vs the lab's 40 — the four-failure-mode walkthrough, the plan-and-execute vs ReAct stretch, and the structured-trace appendix are removed since you've already worked through them; the planner/executor/dispatcher/replanner cycle reads end-to-end. Three implementation choices flagged there:
 
 - **The dispatcher is plain Python, not LLM-driven.** Once the plan exists, dependency resolution and dispatch are mechanical. Wrapping them in an LLM call would add cost and a new failure surface (the LLM mis-resolving dependencies) for no quality gain.
 - **The executor receives only `(step, dependency_outputs)`, not the whole plan.** Same discipline as Lab 11's stateless critic. The executor can't see steps it doesn't depend on; this prevents the executor from "helpfully" anticipating future steps.
@@ -146,5 +146,5 @@ A reference implementation will land in `solution/lab.ipynb` in a follow-up solu
 ## Next
 
 - After completing the lab, take the [plan-and-execute quiz](../../quizzes/multi-agent/plan-and-execute.md).
-- Path 03 continues with Module 4 (multi-agent RAG) in a future batch.
-- If you've also done Path 02, the multi-agent RAG batch will compose Lab 06-08's retrieval pipeline with the supervisor + critic + planner-executor patterns from Labs 10-12.
+- Path 03 continues with [Lab 13 (multi-agent RAG)](../13-multi-agent-rag-from-scratch/) and then Module 5's framework bridge in [Lab 14](../14-langgraph-supervisor-bridge/) + [Lab 15](../15-langgraph-plan-execute-bridge/) — Lab 15 specifically re-implements this lab's plan-and-execute pattern using LangGraph's `Send` primitive for parallel dispatch.
+- If you've also done Path 02, [Lab 13](../13-multi-agent-rag-from-scratch/) composes Lab 06-08's retrieval pipeline with the supervisor + critic + planner-executor patterns from Labs 10-12.
