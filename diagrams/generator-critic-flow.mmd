@@ -1,17 +1,4 @@
-%% Generator-critic pattern: Lab 11's refinement loop.
-%%
-%% Extends supervisor-worker-flow.mmd from Lab 10 with one new worker,
-%% the critic, and a bounded refinement cycle. Same diagrammatic
-%% vocabulary as supervisor-worker-flow.mmd:
-%%   - user and terminal nodes at the edges
-%%   - agent subgraphs in the center, each agent equals one Lab 01 loop
-%%   - solid edges for primary flow; dotted edges for failure modes
-%%   - structured payloads labeled on the edges
-%%
-%% The refinement cycle is:
-%%   writer -> critic -> if needs_revision -> writer again with issues
-%% bounded by MAX_REFINEMENT_CYCLES = 3 in the supervisor.
-
+```mermaid
 flowchart LR
     U(["User"])
     Final(["Final answer"])
@@ -57,21 +44,19 @@ flowchart LR
     S2 -->|"call researcher with question"| R1
     R2 -->|"findings and citations"| S2
 
-    S2 -->|"call writer with findings, citations, revision issues"| W1
+    S2 -->|"call writer with findings and citations"| W1
     W2 -->|"status and answer"| S3
 
-    S3 -->|"call critic with draft, original findings, citations"| C1
+    S3 -->|"call critic with draft and original findings"| C1
     C2 -->|"status ok"| S4
-    C2 -. "needs revision and issues" .-> S2
+    C2 -.->|"needs revision and issues"| S2
 
     S4 --> Final
 
-    %% Failure-mode edges: dotted
-    C2 -. "sycophancy: always ok, bad output undetected" .-> S4
-    S3 -. "refinement cap reached, finalize and surface issues" .-> S4
-    C2 -. "runaway disagreement, new issues each round" .-> S2
+    C2 -.->|"sycophancy risk"| S4
+    S3 -.->|"refinement cap reached"| S4
+    C2 -.->|"runaway disagreement"| S2
 
-    %% Styling: matches supervisor-worker-flow.mmd
     classDef user fill:#e8eaf6,stroke:#3949ab,stroke-width:2px,color:#1a237e
     classDef supervisor fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,color:#e65100
     classDef worker fill:#e0f2f1,stroke:#00695c,stroke-width:1px,color:#004d40
@@ -83,3 +68,4 @@ flowchart LR
     class R1,R2,W1,W2 worker
     class C1,C2 critic
     class Final terminal
+```
