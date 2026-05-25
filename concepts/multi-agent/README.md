@@ -3,19 +3,23 @@
 > Section index for `concepts/multi-agent/`.
 > Multi-agent fundamentals and patterns. Foundations for [Path 03](../../learning-paths/03-multi-agent-systems/).
 
-## Foundations (this batch — v1 opening)
+## Foundations (batch 15 — v1 opening)
 
 - [📖 What is a multi-agent system?](./what-is-a-multi-agent-system.md) — ~10 min. The honest framing: when multi-agent is the right call, when it's the wrong one, why coordination cost is the central tradeoff.
 - [📖 The supervisor-worker pattern](./supervisor-worker-pattern.md) — ~10 min. The simplest useful multi-agent shape. One coordinator agent routes work to specialist workers and synthesizes their results.
 - [📖 Handoffs and shared state](./handoffs-and-shared-state.md) — ~9 min. The two architectures (message-passing vs. shared-state), the three handoff-hygiene rules, and where things go wrong.
 
+## Iterative refinement (batch 16 — Module 2)
+
+- [📖 Agent debate and critics](./agent-debate-and-critics.md) — ~10 min. The framing of iterative-refinement-via-critique. Self-critique vs. separate-critic vs. multi-agent debate. The four debate-specific failure modes (sycophancy, infinite agreement, runaway disagreement, critique drift).
+- [📖 The generator-critic pattern](./generator-critic-pattern.md) — ~10 min. The specific pattern Lab 11 implements. Critic prompt design rules. Bounded refinement. Sycophancy detection and mitigation.
+
 ## Patterns (future batches)
 
 These pages will land in future Path 03 batches, each paired with a lab:
 
-- 📖 *Agent debate and critic patterns* (planned) — A generator + critic loop for iterative refinement. Failure modes specific to debate (sycophancy, infinite agreement, runaway disagreement).
 - 📖 *Plan-and-execute* (planned) — A planner agent emits a structured plan; one or more executor agents carry it out. When this beats supervisor-worker and when it doesn't.
-- 📖 *Multi-agent RAG* (planned) — Composing Path 02 retrieval with the supervisor-worker pattern.
+- 📖 *Multi-agent RAG* (planned) — Composing Path 02 retrieval with the supervisor-worker and generator-critic patterns.
 
 ## Production and evaluation (Path 06)
 
