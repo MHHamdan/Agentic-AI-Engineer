@@ -1,0 +1,128 @@
+%% Multi-agent RAG pattern: Lab 13's retriever-as-worker flow.
+%%
+%% Composes Lab 06-08's retrieval pipeline with Lab 10's supervisor-
+%% worker pattern. The supervisor decides when retrieval is needed
+%% (the four retrieval-decision rules); the retriever wraps the
+%% pipeline as a single worker returning a structured chunks envelope;
+%% the synthesizer composes the final answer with chunk_id citations.
+%%
+%% Same diagrammatic vocabulary as the three prior multi-agent
+%% diagrams (supervisor-worker, generator-critic, plan-and-execute):
+%%   - user / terminal nodes at the edges
+%%   - agent subgraphs in the center (each agent = one Lab 01 loop)
+%%   - solid edges for primary flow; dotted edges for failure modes
+%%   - structured payloads labeled on the edges
+%%
+%% Dotted edges show the four multi-agent-RAG-specific failure modes
+%% (citation drift, retrieval skip, retrieval over-call, chunk drift).
+%% Optional critic-on-synthesis is shown but not the headline path.
+
+flowchart LR
+    U(["👤 User query"])
+    Final(["📝 Final answer
+    with [chunk_id] citations"])
+
+    subgraph Supervisor["🎯 Supervisor agent"]
+        direction TB
+        S1["Read corpus description
+        + 4 retrieval-decision rules"]
+        S2["Decide: retrieve or skip?"]
+        S3["Route to worker
+        (or finalize directly)"]
+        S1 --> S2
+        S2 --> S3
+    end
+
+    subgraph Retriever["🔍 Retriever worker (wraps Lab 06-08 pipeline)"]
+        direction TB
+        R1["Dense embed query
+        (MiniLM)"]
+        R2["BM25 lexical search"]
+        R3["RRF merge
+        (k=60)"]
+        R4["Cross-encoder rerank
+        (ms-marco-MiniLM)"]
+        R5["Apply relevance floor
+        (MIN_RERANK_SCORE = -2.0)"]
+        R1 --> R3
+        R2 --> R3
+        R3 --> R4
+        R4 --> R5
+    end
+
+    Envelope(["📦 Chunks envelope
+    {status, chunks: [{id, text,
+    source, title, score}],
+    pipeline}"])
+
+    subgraph Synthesizer["✍️ Synthesizer worker"]
+        direction TB
+        SY1["Read chunks verbatim
+        (no paraphrase, no filter)"]
+        SY2["Compose answer with
+        inline [chunk_id] citations"]
+        SY3["Render citation list:
+        [chunk_id] source — title"]
+        SY1 --> SY2
+        SY2 --> SY3
+    end
+
+    subgraph CriticOpt["🔎 Critic (Lab 11, optional stretch)"]
+        direction TB
+        C1["Check every claim
+        against chunks"]
+        C2["Flag: unsupported,
+        wrong attribution,
+        missing citation"]
+        C1 --> C2
+    end
+
+    U -->|"query: str"| S1
+
+    S3 ==>|"retrieve (corpus-grounded)"| R1
+    S3 -.->|"skip (stable-knowledge)
+    direct answer with disclaimer"| Final
+
+    R5 ==>|"verbatim envelope"| Envelope
+    Envelope ==>|"chunks passed VERBATIM
+    by supervisor (no reformat)"| SY1
+    SY3 ==>|"answer + citations"| Final
+
+    %% Optional critic loop
+    SY3 -.->|"draft for review"| C1
+    C2 -.->|"needs_revision
+    (≤ MAX_REFINEMENT_CYCLES=3)"| SY1
+
+    %% Failure-mode edges (dotted): the four multi-agent-RAG failure modes
+    S3 -.->|"retrieval skip:
+    confidently wrong answer
+    on corpus-grounded query"| Final
+    S3 -.->|"retrieval over-call:
+    retrieves on stable-knowledge query
+    (wasteful but not wrong)"| R1
+    Envelope -.->|"citation drift:
+    supervisor paraphrases or
+    re-numbers chunks before
+    passing them on"| SY1
+    SY3 -.->|"chunk drift:
+    synthesizer paraphrases
+    beyond what chunks support
+    (mitigated by Lab 11 critic)"| Final
+
+    %% Styling — extends supervisor-worker / generator-critic /
+    %% plan-and-execute diagrams
+    classDef user fill:#e8eaf6,stroke:#3949ab,stroke-width:2px,color:#1a237e
+    classDef supervisor fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,color:#e65100
+    classDef retriever fill:#e0f2f1,stroke:#00695c,stroke-width:1px,color:#004d40
+    classDef synthesizer fill:#f3e5f5,stroke:#6a1b9a,stroke-width:1px,color:#4a148c
+    classDef critic fill:#e1bee7,stroke:#8e24aa,stroke-width:1px,color:#4a148c
+    classDef envelope fill:#fffde7,stroke:#f9a825,stroke-width:2px,color:#f57f17
+    classDef terminal fill:#f1f8e9,stroke:#558b2f,stroke-width:2px,color:#33691e
+
+    class U user
+    class S1,S2,S3 supervisor
+    class R1,R2,R3,R4,R5 retriever
+    class SY1,SY2,SY3 synthesizer
+    class C1,C2 critic
+    class Envelope envelope
+    class Final terminal
