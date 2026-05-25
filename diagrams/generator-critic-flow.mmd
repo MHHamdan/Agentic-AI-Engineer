@@ -1,73 +1,77 @@
 %% Generator-critic pattern: Lab 11's refinement loop.
 %%
-%% Extends supervisor-worker-flow.mmd (Lab 10) with one new worker
-%% (the critic) and a bounded refinement cycle. Same diagrammatic
+%% Extends supervisor-worker-flow.mmd from Lab 10 with one new worker,
+%% the critic, and a bounded refinement cycle. Same diagrammatic
 %% vocabulary as supervisor-worker-flow.mmd:
-%%   - user / terminal nodes at the edges
-%%   - agent subgraphs in the center (each agent = one Lab 01 loop)
+%%   - user and terminal nodes at the edges
+%%   - agent subgraphs in the center, each agent equals one Lab 01 loop
 %%   - solid edges for primary flow; dotted edges for failure modes
 %%   - structured payloads labeled on the edges
 %%
-%% The refinement cycle is the loop:
-%%   writer → critic → (if needs_revision) → writer again with issues
+%% The refinement cycle is:
+%%   writer -> critic -> if needs_revision -> writer again with issues
 %% bounded by MAX_REFINEMENT_CYCLES = 3 in the supervisor.
 
 flowchart LR
-    U(["👤 User"])
-    Final(["📝 Final answer"])
+    U(["User"])
+    Final(["Final answer"])
 
-    subgraph Supervisor["🎯 Supervisor agent loop (cap: 10 steps, 3 refinements)"]
+    subgraph Supervisor["Supervisor agent loop: cap 10 steps, 3 refinements"]
         direction TB
         S1["Receive task"]
-        S2["Decide: which worker?"]
+        S2["Decide which worker"]
         S3["Check critic verdict"]
-        S4["Synthesize / finalize"]
+        S4["Synthesize or finalize"]
+
         S1 --> S2
         S2 --> S3
         S3 --> S4
     end
 
-    subgraph Researcher["🔍 Researcher worker"]
+    subgraph Researcher["Researcher worker"]
         direction TB
         R1["web_search + fetch_page"]
         R2["Summarize findings"]
+
         R1 --> R2
     end
 
-    subgraph Writer["✍️ Writer worker"]
+    subgraph Writer["Writer worker"]
         direction TB
-        W1["Compose / revise prose"]
-        W2["Address revision_issues"]
+        W1["Compose or revise prose"]
+        W2["Address revision issues"]
+
         W1 --> W2
     end
 
-    subgraph Critic["🔬 Critic worker (stateless)"]
+    subgraph Critic["Critic worker: stateless"]
         direction TB
         C1["Apply 5-check rubric"]
         C2["Bound issues to 3"]
+
         C1 --> C2
     end
 
     U -->|"task: str"| S1
 
-    S2 ==>|"call_researcher(question)"| R1
-    R2 ==>|"{findings, citations}"| S2
+    S2 -->|"call researcher with question"| R1
+    R2 -->|"findings and citations"| S2
 
-    S2 ==>|"call_writer(findings, citations, revision_issues)"| W1
-    W2 ==>|"{status, answer}"| S3
+    S2 -->|"call writer with findings, citations, revision issues"| W1
+    W2 -->|"status and answer"| S3
 
-    S3 ==>|"call_critic(draft, ORIGINAL findings, citations)"| C1
-    C2 ==>|"{status: ok}"| S4
-    C2 -.->|"{status: needs_revision, issues}"| S2
+    S3 -->|"call critic with draft, original findings, citations"| C1
+    C2 -->|"status ok"| S4
+    C2 -. "needs revision and issues" .-> S2
 
     S4 --> Final
 
-    %% Failure-mode edges (dotted): the four debate failure modes
-    C2 -.->|"sycophancy: always ok → undetected bad output"| S4
-    S3 -.->|"refinement cap reached → finalize + surface issues"| S4
-    C2 -.->|"runaway disagreement: new issues each round"| S2
+    %% Failure-mode edges: dotted
+    C2 -. "sycophancy: always ok, bad output undetected" .-> S4
+    S3 -. "refinement cap reached, finalize and surface issues" .-> S4
+    C2 -. "runaway disagreement, new issues each round" .-> S2
 
-    %% Styling — matches supervisor-worker-flow.mmd
+    %% Styling: matches supervisor-worker-flow.mmd
     classDef user fill:#e8eaf6,stroke:#3949ab,stroke-width:2px,color:#1a237e
     classDef supervisor fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,color:#e65100
     classDef worker fill:#e0f2f1,stroke:#00695c,stroke-width:1px,color:#004d40
