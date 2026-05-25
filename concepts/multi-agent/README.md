@@ -24,6 +24,11 @@
 - [📖 Multi-agent RAG](./multi-agent-rag.md) — ~10 min. The integrative framing. What changes from single-agent RAG (Lab 06-08): retrieval becomes a coordinated concern, not a single always-on tool call. Three architectural patterns (retriever-as-worker, planner-driven research, critic-on-retrieval) with tradeoffs. When multi-agent RAG earns its place. The four multi-agent-RAG-specific failure modes (citation drift, retrieval skip, retrieval over-call, chunk drift). When self-RAG / CRAG are the right pattern instead.
 - [📖 The retriever-as-worker pattern](./retriever-as-worker.md) — ~10 min. The specific pattern Lab 13 implements. The retriever-worker contract (structured chunks envelope). The four retrieval-decision rules. Citation preservation discipline (the canonical multi-agent-RAG bug). Composing with Lab 11's critic on synthesis. Composing with Lab 12's planner for compound queries.
 
+## Framework bridge (batch 20 — Module 5)
+
+- [📖 LangGraph multi-agent: the primitives](./langgraph-multi-agent.md) — ~15 min. Maps LangGraph's five multi-agent primitives (`StateGraph` + `TypedDict` state, `Command(goto=..., update=..., graph=...)`, `Send(node, state)`, sub-graphs, checkpointer) onto from-scratch concepts from Labs 10-13. Each primitive carries a "what you gain / what you trade away" comparison. The three multi-agent topologies LangGraph names (supervisor, swarm, hierarchical). What carries over unchanged from from-scratch: prompts, worker contracts, citation discipline.
+- [📖 When frameworks earn complexity](./when-frameworks-earn-complexity.md) — ~10 min. The boundary discussion. Five things from-scratch pays for; five things the framework pays for; a decision table for when each fits. The upstream `langgraph-supervisor` deprecation as evidence that high-level multi-agent helpers age poorly because the underlying patterns evolve faster than the helpers.
+
 ## Patterns (future batches)
 
 These pages will land in future Path 03 batches, each paired with a lab:
@@ -42,4 +47,9 @@ Production-grade multi-agent observability, evaluation, and orchestration are sc
 
 ## Implementation
 
-- [🧪 Lab 10 — Supervisor-worker from scratch](../../labs/10-supervisor-worker-from-scratch/) — the headline lab that implements the supervisor-worker pattern using only the Path 01 agent-loop machinery. No frameworks.
+- [🧪 Lab 10 — Supervisor-worker from scratch](../../labs/10-supervisor-worker-from-scratch/) — implements the supervisor-worker pattern using only the Path 01 agent-loop machinery. No frameworks.
+- [🧪 Lab 11 — Generator-critic from scratch](../../labs/11-generator-critic-from-scratch/) — extends Lab 10's supervisor with a critic worker and a bounded refinement loop.
+- [🧪 Lab 12 — Plan-and-execute from scratch](../../labs/12-plan-and-execute-from-scratch/) — planner + bounded parallel executor pool + replanning. The from-scratch concurrency dispatcher.
+- [🧪 Lab 13 — Multi-agent RAG from scratch](../../labs/13-multi-agent-rag-from-scratch/) — composes Path 02's retrieval pipeline with Lab 10's supervisor pattern.
+- [🧪 Lab 14 — LangGraph supervisor bridge](../../labs/14-langgraph-supervisor-bridge/) — rebuilds Lab 10 in LangGraph. Limited but useful framework value-add.
+- [🧪 Lab 15 — LangGraph plan-and-execute bridge](../../labs/15-langgraph-plan-execute-bridge/) — rebuilds Lab 12 in LangGraph using `Send`. Strong framework value-add for dynamic parallel dispatch.

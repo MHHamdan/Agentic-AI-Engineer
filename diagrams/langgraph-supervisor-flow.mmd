@@ -1,0 +1,58 @@
+%% LangGraph multi-agent flows — Lab 14 supervisor pattern and Lab 15 Send dispatch.
+%%
+%% Two top-down diagrams. Subgraph blocks group:
+%%   - User request
+%%   - Supervisor / planner
+%%   - Workers / executors
+%%   - State updates
+%%   - Final response
+%% Short labels for GitHub rendering.
+
+%% ─────────────────────────────────────────────────────────────────────────────
+%% Diagram 1: Lab 14 — Supervisor pattern (manual supervisor-via-tools)
+%% ─────────────────────────────────────────────────────────────────────────────
+flowchart TD
+
+  subgraph req["User request"]
+    U([User task])
+  end
+
+  subgraph sup["Supervisor"]
+    S[supervisor_node]
+    S_LLM{{call_researcher<br/>or call_writer?}}
+  end
+
+  subgraph workers["Workers"]
+    R[researcher node<br/>create_agent loop]
+    W[writer node<br/>single LLM call]
+  end
+
+  subgraph state["State updates"]
+    State1[/messages append/]
+    State2[/findings + citations/]
+    State3[/final_answer/]
+  end
+
+  subgraph out["Final response"]
+    F([Cited prose])
+  end
+
+  U --> S
+  S --> S_LLM
+  S_LLM -- call_researcher --> R
+  S_LLM -- call_writer --> W
+  S_LLM -- no tool call --> F
+
+  R -. updates .-> State2
+  R --> S
+  W -. updates .-> State3
+  W --> S
+
+  S -. updates .-> State1
+
+  classDef llm fill:#e8f4f8,stroke:#2563eb,color:#1e293b
+  classDef state fill:#fef3c7,stroke:#d97706,color:#78350f
+  classDef endpoint fill:#dcfce7,stroke:#16a34a,color:#14532d
+  class S,R,W llm
+  class State1,State2,State3 state
+  class U,F endpoint
