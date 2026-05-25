@@ -39,12 +39,27 @@
 # Note: learning-paths/01-foundations/ now has authored content; line for it removed.
 # Note: learning-paths/02-agentic-rag/ now has authored content (Path 02 first batch).
 # Note: learning-paths/03-multi-agent-systems/ now has authored content (Path 03 v1 opening, batch 15).
+# Note: learning-paths/06-evaluation-observability/ now has authored content (Path 06 Module 1 opening, batch 24).
 ^.*/learning-paths/04-tool-protocols-mcp-a2a/?$
 ^.*/learning-paths/05-context-engineering/?$
-^.*/learning-paths/06-evaluation-observability/?$
 ^.*/learning-paths/07-production-and-safety/?$
 ^.*/learning-paths/08-mathematical-foundations/?$
 ^.*/learning-paths/09-capstones/?$
+
+# Path 06 future Modules 2-7 content — not yet authored.
+# Module 2 (LangSmith trace ingestion lab) will land in a follow-up batch.
+^.*/labs/17-langsmith-trace-ingestion/.*$
+# Module 4 (online evaluation) concept page.
+^.*/concepts/evaluation/online-evaluation\.md$
+# Module 5 (drift detection + agent-as-judge calibration) concept pages.
+^.*/concepts/evaluation/drift-detection\.md$
+^.*/concepts/evaluation/agent-as-judge-calibration\.md$
+# Module 6 (cost attribution).
+^.*/concepts/evaluation/cost-attribution\.md$
+# Module 7 (multi-turn evaluation).
+^.*/concepts/evaluation/multi-turn-evaluation\.md$
+# Evaluation-frameworks deep-dive (Module 3+ territory).
+^.*/concepts/evaluation/evaluation-frameworks-deep-dive\.md$
 
 # Labs solutions are now authored:
 #   Labs 01, 02, 03, 05, 06, 07, 08, 09 — solutions in batch 14.
