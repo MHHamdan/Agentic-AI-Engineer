@@ -96,13 +96,20 @@ Quiz: [🧠 Multi-turn (threaded) evaluation](../../quizzes/evaluation/multi-tur
 
 ---
 
-These fourteen pages open [Path 06 — Evaluation & Observability](../../learning-paths/06-evaluation-observability/). The path documents the full production-readiness stack for agentic AI evaluation and observability across seven modules end-to-end: framing → instrumentation × 2 → online evaluation → drift detection + calibration → cost attribution + adaptive sampling → multi-turn evaluation. **Path 06 v1 is complete.**
+### Path 06 v2 — Frameworks deep dive (batch 36)
+
+| Page | Read time | Covers |
+|------|-----------|--------|
+| 📖 [evaluation-frameworks-deep-dive.md](./evaluation-frameworks-deep-dive.md) | ~25 min | A practical selection guide across 9 major LLM evaluation/observability frameworks: LangSmith, Braintrust, Langfuse, Arize Phoenix, Laminar, MLflow GenAI evaluation, DeepEval/Confident AI, RAGAS, TruLens. Eleven-dimension comparison table; code-level snippets for the five canonical operations (logging a trace, creating an evaluator, attaching scores, dataset evaluation, online evaluation); decision guide with one "choose X if" rule per tool; Path 06 module mapping; recipes/projects mapping; migration paths. Explicit anti-scope (no "best tool overall" conclusion; no benchmark claims without sources; no pricing claims without time-bounding). Verified mid-2026 from 8 industry comparison posts; pricing/version data carries publication dates.
+
+---
+
+These fifteen pages open [Path 06 — Evaluation & Observability](../../learning-paths/06-evaluation-observability/). The path documents the full production-readiness stack for agentic AI evaluation and observability across seven modules end-to-end: framing → instrumentation × 2 → online evaluation → drift detection + calibration → cost attribution + adaptive sampling → multi-turn evaluation. **Path 06 v1 is complete.** Path 06 v2 has shipped Recipes (Batch 33), Patterns (Batch 34), Projects (Batch 35), and the Frameworks Deep Dive (Batch 36).
 
 ## Pending pages (Path 06 v2)
 
 The following are planned for v2 but not yet authored:
 
-- `evaluation-frameworks-deep-dive.md` — LangSmith vs Braintrust vs Langfuse vs Phoenix vs Laminar; concrete code; migration paths.
 - Embedding-space drift detection (the RAG-input-side complement to Module 5's score-side drift).
 - Adversarial red-teaming at scale (DeepTeam-style orchestration).
 

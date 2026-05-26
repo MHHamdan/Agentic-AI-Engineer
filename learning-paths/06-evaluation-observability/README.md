@@ -1,6 +1,6 @@
 # Path 06 — Evaluation & Observability
 
-> 🔴 Advanced · ⏱ 26-35 hours v1 + ~70 min Recipes + ~45 min Patterns + ~3 hrs Projects (reading; multi-day builds separately) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · ✅ Path 06 v1 complete (Modules 1-7 shipped) · 🚧 Path 06 v2 in progress (Recipes shipped batch 33; Patterns shipped batch 34; Projects shipped batch 35)
+> 🔴 Advanced · ⏱ 26-35 hours v1 + ~70 min Recipes + ~45 min Patterns + ~3 hrs Projects + ~25 min Frameworks Deep Dive (reading; multi-day builds separately) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · ✅ Path 06 v1 complete (Modules 1-7 shipped) · 🚧 Path 06 v2 in progress (Recipes shipped batch 33; Patterns shipped batch 34; Projects shipped batch 35; Frameworks Deep Dive shipped batch 36)
 
 The production layer. Path 02's Lab 09 and Path 03's Lab 16 give you the evaluation *mechanism* — metric implementations, hand-curated fixtures, the aggregate-then-slice-then-per-agent discipline. Path 06 connects that mechanism to the operational reality: live trace ingestion, distributed-tracing correlation across parallel sub-agents, drift detection on metric distributions, alerting on regressions, agent-as-judge calibration against human ground truth, cost attribution across users and tasks and tenants.
 
@@ -176,9 +176,9 @@ The full operational picture: instrument → score → monitor for drift → cal
 
 ---
 
-## 🚀 Path 06 v2 — Production Recipes, Patterns, and Projects
+## 🚀 Path 06 v2 — Production Recipes, Patterns, Projects, and Frameworks Deep Dive
 
-The v1 modules document the **building blocks** (one module per concept; one lab per module). The v2 layer documents the **compositions** (end-to-end deployment shapes — recipes), the **cross-cutting mechanisms** (reusable building blocks — patterns), and the **buildable capstones** (multi-day production deployments — projects).
+The v1 modules document the **building blocks** (one module per concept; one lab per module). The v2 layer documents the **compositions** (end-to-end deployment shapes — recipes), the **cross-cutting mechanisms** (reusable building blocks — patterns), the **buildable capstones** (multi-day production deployments — projects), and the **selection guide** for picking among the proliferating eval/observability frameworks (deep dive).
 
 ### Recipes (Batch 33) — end-to-end deployment compositions
 
@@ -218,9 +218,16 @@ Plus the [projects index](./projects/README.md) with the pick-a-project decision
 
 **What the projects give you that the recipes don't**: projects are buildable. Each ships a milestone sequence (4-7 ordered milestones with "done when" checks), an integration-layer table (which lab / recipe / pattern each milestone builds on), an acceptance rubric (testable PR-review criteria), and a failure-modes section (mistakes that derail teams). Projects are the path's exit door — the artifacts that turn the path's content into shipped production systems.
 
+### Frameworks deep dive (Batch 36) — selection guide across 9 evaluation/observability platforms
+
+A practical selection guide for production evaluation and observability tools. Compares LangSmith, Braintrust, Langfuse, Arize Phoenix, Laminar, MLflow GenAI evaluation, DeepEval/Confident AI, RAGAS, and TruLens across 11 dimensions; code-level snippets for the five canonical operations; decision guide; explicit migration paths.
+
+📖 [`evaluation-frameworks-deep-dive.md`](../../concepts/evaluation/evaluation-frameworks-deep-dive.md) (~25 min, ✅ shipped batch 36)
+
+This is the concept page the recipes and projects have been pointing at as the "which-tool-fits-our-stack" reference. The page is deliberately tool-agnostic at the recommendation layer — Recipe 1 uses LangSmith, Project 2 uses Phoenix/Langfuse/Laminar, Project 3 uses LangSmith + an OTel backend — and the deep dive helps teams pick the right tool in each slot.
+
 ### Other Path 06 v2 directions (future batches)
 
-- **`evaluation-frameworks-deep-dive.md`** — LangSmith vs Braintrust vs Langfuse vs Phoenix vs Laminar at code level.
 - **Embedding-space drift detection** — the RAG-input-side complement to Module 5's score-side drift.
 - **Adversarial red-teaming at scale** — DeepTeam-style orchestration.
 
@@ -284,6 +291,8 @@ Plus the [projects index](./projects/README.md) with the pick-a-project decision
 | `projects/03-hybrid-production-stack.md` | ✅ shipped (batch 35) |
 | `projects/_template.md` | ✅ shipped (batch 35) |
 | **Path 06 v2 — Projects** | **✅ first batch shipped (batch 35)** |
+| `concepts/evaluation/evaluation-frameworks-deep-dive.md` | ✅ shipped (batch 36) |
+| **Path 06 v2 — Frameworks Deep Dive** | **✅ shipped (batch 36)** |
 
 ## How this path connects to what you've built
 
