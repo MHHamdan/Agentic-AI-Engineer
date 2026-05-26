@@ -1,6 +1,6 @@
 # Path 06 — Evaluation & Observability
 
-> 🔴 Advanced · ⏱ 26-35 hours (Path 06 v1 complete — all 7 modules shipped) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · ✅ Path 06 v1 complete (Modules 1-7 shipped; recipes/patterns/projects remain for v2)
+> 🔴 Advanced · ⏱ 26-35 hours v1 + ~70 min Recipes · 📍 Start here once you've completed at least one of {Path 02, Path 03} · ✅ Path 06 v1 complete (Modules 1-7 shipped) · 🚧 Path 06 v2 in progress (Recipes shipped batch 33; patterns/projects to come)
 
 The production layer. Path 02's Lab 09 and Path 03's Lab 16 give you the evaluation *mechanism* — metric implementations, hand-curated fixtures, the aggregate-then-slice-then-per-agent discipline. Path 06 connects that mechanism to the operational reality: live trace ingestion, distributed-tracing correlation across parallel sub-agents, drift detection on metric distributions, alerting on regressions, agent-as-judge calibration against human ground truth, cost attribution across users and tasks and tenants.
 
@@ -174,11 +174,28 @@ With Module 7 shipped, **Path 06 v1 is structurally complete**. All seven module
 
 The full operational picture: instrument → score → monitor for drift → calibrate to humans → attribute cost → sample by cost → evaluate at the conversation level. Each module earns its place; none is redundant.
 
-**What remains for Path 06 v2**:
-- **Recipes** — opinionated end-to-end production setups (LangSmith-native recipe; OpenTelemetry recipe; multi-tool integration recipes).
+---
+
+## 🚀 Path 06 v2 — Production Recipes (Batch 33)
+
+The v1 modules document the **building blocks** (one module per concept; one lab per module). The v2 recipes document the **compositions** — given a team's existing stack, which modules apply, in what order, with what hand-off discipline.
+
+### The three recipes shipped in this batch
+
+| # | Recipe | Best for | Modules used |
+|---|--------|----------|--------------|
+| 1 | [LangSmith-native](./recipes/01-langsmith-native.md) | Teams already on LangChain/LangGraph; want fastest zero-to-production; OK with vendor coupling | M1, M2, M4 (LangSmith), M5, M7 |
+| 2 | [OpenTelemetry-native](./recipes/02-opentelemetry-native.md) | Teams with existing observability stack; want vendor-neutral telemetry | M1, M3, M4 (Collector), M5, M6, M7 |
+| 3 | [Hybrid LangSmith + OpenTelemetry](./recipes/03-hybrid-langsmith-and-otel.md) | Production teams needing both LLM-eval UX **and** vendor-neutral telemetry — the most realistic mid-2026 production shape | **All seven** + explicit hand-off discipline |
+
+Plus the [recipes index](./recipes/README.md) with the choose-your-recipe decision tree, and the [`_template.md`](./recipes/_template.md) for adding future recipes (Langfuse-native, MLflow-native, etc.) using the same shape.
+
+**What the recipes give you that the v1 modules don't**: each recipe maps Path 06 modules to concrete production actions for a specific deployment shape, contrasts lab-shape vs production-shape per module, documents the hand-off points between artifacts (who emits / who consumes / where it lives), and includes a cost envelope at three traffic scales (10K / 100K / 1M traces/month). Recipe 3's hand-off discipline section is the central artifact for hybrid deployments — production teams adopting hybrid stacks need explicit ownership boundaries documented somewhere, and the recipe is that somewhere.
+
+### Other Path 06 v2 directions (future batches)
+
 - **Patterns** — cross-cutting patterns (cost-aware retrieval; drift-triggered retraining; judge-ensemble patterns).
 - **Projects** — capstone projects that integrate all six labs into a single production-deployable agent observability stack.
-- **Lab solutions** — reference solutions for Labs 17-22 (catchup batch).
 - **`evaluation-frameworks-deep-dive.md`** — LangSmith vs Braintrust vs Langfuse vs Phoenix vs Laminar at code level.
 - **Embedding-space drift detection** — the RAG-input-side complement to Module 5's score-side drift.
 - **Adversarial red-teaming at scale** — DeepTeam-style orchestration.
@@ -225,6 +242,12 @@ The full operational picture: instrument → score → monitor for drift → cal
 | Lab 22 (Multi-turn evaluation) | ✅ shipped (batch 30) — solution shipped (batch 31) |
 | Module 7 quiz (`multi-turn.md`) | ✅ shipped (batch 30) |
 | **Path 06 v1** | **✅ complete (Modules 1-7 shipped)** |
+| `recipes/README.md` (recipes index) | ✅ shipped (batch 33) |
+| `recipes/01-langsmith-native.md` | ✅ shipped (batch 33) |
+| `recipes/02-opentelemetry-native.md` | ✅ shipped (batch 33) |
+| `recipes/03-hybrid-langsmith-and-otel.md` | ✅ shipped (batch 33) |
+| `recipes/_template.md` | ✅ shipped (batch 33) |
+| **Path 06 v2 — Recipes** | **✅ first batch shipped (batch 33)** |
 
 ## How this path connects to what you've built
 
