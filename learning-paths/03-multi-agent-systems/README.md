@@ -1,6 +1,6 @@
 # 03 · Multi-Agent Systems
 
-> 🟡 Intermediate · ⏱ 23–30 hours (Modules 1-6) + ~45 min Patterns (Batch 39) · 📍 Start here once you've completed Path 01 (recommended: also Path 02 for Modules 4 and 6) · ✅ Path 03 v1 complete + fully solutioned (foundations, supervisor-worker, generator-critic, plan-and-execute, multi-agent RAG, framework bridge, evaluation; every lab has a reference solution in its `solution/` subdirectory) · 🚧 Path 03 v2 in progress (production patterns shipped batch 39)
+> 🟡 Intermediate · ⏱ 23–30 hours (Modules 1-6) + ~90 min Patterns (Batches 39 + 41) · 📍 Start here once you've completed Path 01 (recommended: also Path 02 for Modules 4 and 6) · ✅ Path 03 v1 complete + fully solutioned (foundations, supervisor-worker, generator-critic, plan-and-execute, multi-agent RAG, framework bridge, evaluation; every lab has a reference solution in its `solution/` subdirectory) · 🚧 Path 03 v2 in progress (six production patterns shipped batches 39 + 41)
 
 ## Who this is for
 
@@ -188,21 +188,30 @@ The evaluation module. Closes Path 03 v1. Extends Lab 09's RAG-evaluation harnes
 
 - [🧠 Multi-agent evaluation](../../quizzes/multi-agent/multi-agent-evaluation.md) — 8 single-select questions covering: outcome-only vs trajectory-plus-outcome evaluation, the replay model's trade-offs, semantic handoff drift, plan validity vs plan coverage, hand-curated vs synthetic fixtures, category slicing as discipline, per-agent vs end-to-end usage, and URL canonicalization for citation preservation.
 
-## 🚀 Path 03 v2 — Production patterns (Batch 39)
+## 🚀 Path 03 v2 — Production patterns (Batches 39 + 41)
 
-Path 03 v1 documents the **topologies** — supervisor-worker, generator-critic, plan-and-execute, multi-agent RAG, framework bridge, evaluation. Path 03 v2 starts here with the **operational mechanisms inside those topologies** — the cross-cutting patterns that production multi-agent deployments need once the topology choice is settled. Same v1 → v2 split as Path 06: topologies first, mechanisms second.
+Path 03 v1 documents the **topologies** — supervisor-worker, generator-critic, plan-and-execute, multi-agent RAG, framework bridge, evaluation. Path 03 v2 starts with the **operational mechanisms inside those topologies** — the cross-cutting patterns that production multi-agent deployments need once the topology choice is settled. Same v1 → v2 split as Path 06: topologies first, mechanisms second.
 
-This batch ships the three patterns the 2026 production literature is converging on: explicit handoff contracts at every agent-to-agent boundary; principled shared-state boundaries that say what crosses the boundary and what stays private; an escalation and fallback ladder that turns agent disagreement and tool failure from failure modes into routing signals.
+The current six-pattern set covers the prevention/reaction stack the 2026 production literature is converging on. Batch 39 shipped the foundation trio (boundary, state, escalation); Batch 41 shipped the operational trio (budget, retry, provenance). All six plug into the same `StateGraph` and compose with each other.
 
-📁 [`patterns/`](./patterns/) directory (✅ shipped batch 39):
+📁 [`patterns/`](./patterns/) directory:
 
-- 📖 [Patterns README](./patterns/README.md) (~10 min) — the directory landing page; distinguishes patterns from concepts, labs, reference solutions, and the top-level architecture-patterns directory; includes a pick-a-pattern decision aid; explains how the three patterns plug into Path 03 v1 modules.
+**Batch 39 — Foundation patterns** (✅ shipped batch 39):
+
+- 📖 [Patterns README](./patterns/README.md) (~10 min) — the directory landing page; distinguishes patterns from concepts, labs, reference solutions, and the top-level architecture-patterns directory; includes a pick-a-pattern decision aid; explains how the six patterns plug into Path 03 v1 modules.
 - 📖 [Pattern 1 — Handoff contracts](./patterns/01-handoff-contracts.md) (~15 min) — the structured-brief schema (objective + output schema + tool guidance + clear task boundaries) at every agent-to-agent boundary; Pydantic / TypedDict implementation sketch; the provenance invariant (every fact has a citation); connection to Labs 10, 13, 14, 16.
 - 📖 [Pattern 2 — Shared-state boundaries](./patterns/02-shared-state-boundaries.md) (~15 min) — the four-kind decision rule (task / evidence / decisions go in shared state; private agent state does not); the 15× token-burn over-sharing case and the planning-drift under-sharing case; the append-only convention for evidence and decisions; LangGraph `StateGraph` reducer semantics as the production substrate.
 - 📖 [Pattern 3 — Escalation and fallback](./patterns/03-escalation-and-fallback.md) (~15 min) — the five-tier escalation ladder (T0 continue with degraded confidence → T1 retry → T2 critic → T3 HITL pre-approval → T4 safe fallback) mapped to four triggers (critic disagreement, failed tool call, missing evidence, timeout / loop risk); reuses Path 06 Pattern 2's severity classifier and routing infrastructure.
-- 📐 [`_template.md`](./patterns/_template.md) — the shape for future Path 03 patterns. Eight-section structure: Intent · When to use · When NOT to use · The mechanism · Implementation sketch · How this combines with Path 03 modules · Tradeoffs and what this misses · References.
 
-Production grounding for the patterns comes from mid-2026 sources: the niteagent May 2026 "P2 prompt pattern" production-survival framing, the dev.to April 2026 "handoff as first-class span" post, the clickittech February 2026 four-mechanism conflict-resolution taxonomy, Anna Jey's April 2026 three-mode HITL framework, Galileo's April 2026 EU AI Act mapping, AffinityBots' December 2025 five-message-type taxonomy, and the Anthropic 2024 "Building effective agents" essay.
+**Batch 41 — Operational patterns** (✅ shipped batch 41):
+
+- 📖 [Pattern 4 — Per-agent cost budgeting](./patterns/04-per-agent-cost-budgeting.md) (~15 min) — four budget dimensions per agent (tokens, tool calls, cost, wall-clock); default seeds by role (supervisor / researcher / writer / critic / executor); three exhaustion behaviors (hard-stop with partial / Pattern 3 escalation / supervisor-approved extension); four OTel-aligned telemetry attributes; the $47k 11-day infinite-loop case this prevents.
+- 📖 [Pattern 5 — Retry policies](./patterns/05-retry-policies.md) (~15 min) — three retry layers (LLM-call exp backoff with jitter / tool-call idempotency-gated / agent-loop prompt-adjusted); retryable-vs-non-retryable failure taxonomy; state-level circuit breakers (not per-node — the "LLM happily retries 1,000 times" failure mode requires cross-node breakers); composes with Pattern 3 as the layer that runs before escalation.
+- 📖 [Pattern 6 — Cross-agent provenance](./patterns/06-cross-agent-provenance.md) (~15 min) — the four-entity graph (sources → evidence → claims → outputs) with FK lineage; five inference types (direct_quote / paraphrase / summarized / inferred / synthesized); structural validation of the "every claim has citations" invariant from Pattern 1; stale-evidence invalidation via TTL; SQuAI's +0.088 / 12% faithfulness improvement is what this delivers structurally.
+
+📐 [`_template.md`](./patterns/_template.md) — the shape for future Path 03 patterns. Eight-section structure: Intent · When to use · When NOT to use · The mechanism · Implementation sketch · How this combines with Path 03 modules · Tradeoffs and what this misses · References.
+
+Production grounding for the patterns comes from mid-2026 sources: niteagent's May 2026 "P2 prompt pattern" framing and "$47k 11-day loop" case; dev.to's April 2026 "handoff as first-class span" post; clickittech's February 2026 four-mechanism conflict-resolution taxonomy; Anna Jey's April 2026 three-mode HITL framework; Galileo's April 2026 EU AI Act mapping; digitalapplied's April-May 2026 token-budget framework; Fastio's February 2026 retry-pattern guide; Composio's December 2025 idempotency-key conventions; FutureAGI's May 2026 five-strategy fallback framework; LifeTidesHub's May 2026 retry-storm post-mortem; SQuAI (arxiv:2510.15682); MASS-RAG (arxiv:2604.18509); Vinod Rane's March 2026 LangGraph agentic-RAG guide.
 
 ## What's not in this batch (anti-scope)
 
@@ -226,7 +235,7 @@ Path 03 v1 closes with Module 6 — fully solutioned (every lab in `labs/10-*` t
 
 The planned next steps, in rough order:
 
-- **Path 03 v2 additional patterns** (future batches). The Batch 39 set is the smallest useful one; the next candidates are patterns for per-agent cost budgeting, retry policies with exponential backoff, role-scope leakage detection, and cross-agent provenance tracking.
+- **Path 03 v2 additional patterns** (future batches). Batch 41 shipped three of the four next-candidate patterns named after Batch 39 (per-agent cost budgeting, retry policies, cross-agent provenance). The remaining named candidate is role-scope leakage detection (deferred from Batch 41 as outside the smallest-useful scope); future batches may also add patterns emerging from the 2026 production literature.
 - **Lab 13 (multi-agent RAG) framework-bridge variant.** A LangGraph implementation paralleling Lab 14's supervisor-bridge and Lab 15's plan-and-execute bridge — the "from scratch then framework" structure carried to Module 4.
 - **Lab 11 (critic) framework-bridge variant.** Same shape, for Module 2.
 - **Multi-turn (threaded) multi-agent evaluation.** Lab 16 evaluates single-task trajectories; production conversational systems also need to evaluate across conversation turns. This pairs naturally with Path 06's Module 7 (multi-turn evaluation) — the multi-agent dimension is the addition.
