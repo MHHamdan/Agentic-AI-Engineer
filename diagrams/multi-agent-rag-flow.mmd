@@ -1,4 +1,4 @@
-flowchart LR
+flowchart TD
     U(["User query"])
     Final(["Final answer<br/>with [chunk_id] citations"])
 
@@ -11,7 +11,7 @@ flowchart LR
         S2 --> S3
     end
 
-    subgraph Retriever["Retriever worker<br/>(wraps Lab 06-08 pipeline)"]
+    subgraph Retriever["Retriever worker (wraps Lab 06-08 pipeline)"]
         direction TB
         R1["Dense embed query<br/>(MiniLM)"]
         R2["BM25 lexical search"]
@@ -30,7 +30,7 @@ flowchart LR
         direction TB
         SY1["Read chunks verbatim<br/>(no paraphrase, no filter)"]
         SY2["Compose answer with<br/>inline [chunk_id] citations"]
-        SY3["Render citation list:<br/>[chunk_id] source - title"]
+        SY3["Render citation list<br/>[chunk_id] source - title"]
         SY1 --> SY2
         SY2 --> SY3
     end
@@ -38,12 +38,11 @@ flowchart LR
     subgraph CriticOpt["Critic (Lab 11, optional stretch)"]
         direction TB
         C1["Check every claim<br/>against chunks"]
-        C2["Flag: unsupported,<br/>wrong attribution,<br/>missing citation"]
+        C2["Flag unsupported claims,<br/>wrong attribution,<br/>missing citation"]
         C1 --> C2
     end
 
     U -->|"query: str"| S1
-
     S3 ==>|"retrieve (corpus-grounded)"| R1
     S3 -.->|"skip (stable-knowledge)<br/>direct answer with disclaimer"| Final
 
@@ -56,8 +55,8 @@ flowchart LR
 
     S3 -.->|"retrieval skip:<br/>confidently wrong answer<br/>on corpus-grounded query"| Final
     S3 -.->|"retrieval over-call:<br/>retrieves on stable-knowledge query<br/>(wasteful but not wrong)"| R1
-    Envelope -.->|"citation drift:<br/>supervisor paraphrases or<br/>re-numbers chunks before<br/>passing them on"| SY1
-    SY3 -.->|"chunk drift:<br/>synthesizer paraphrases<br/>beyond what chunks support<br/>(mitigated by Lab 11 critic)"| Final
+    Envelope -.->|"citation drift:<br/>supervisor paraphrases or re-numbers<br/>chunks before passing them on"| SY1
+    SY3 -.->|"chunk drift:<br/>synthesizer paraphrases beyond what<br/>chunks support (mitigated by critic)"| Final
 
     classDef user fill:#e8eaf6,stroke:#3949ab,stroke-width:2px,color:#1a237e;
     classDef supervisor fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,color:#e65100;
