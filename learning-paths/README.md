@@ -28,7 +28,7 @@ Paths overlap deliberately. The Multi-Agent path reuses concept pages from Found
 | 03 | [Multi-Agent Systems](./03-multi-agent-systems/) | Engineers orchestrating cooperating agents | 🟡 Intermediate | 8–12 h |
 | 04 | [Tool Protocols (MCP + A2A)](./04-tool-protocols-mcp-a2a/) | Engineers wiring agents to tools and other agents | 🟡 Intermediate | 6–10 h |
 | 05 | [Context Engineering](./05-context-engineering/) | Engineers fighting context-window problems | 🟡 Intermediate | 4–8 h |
-| 06 | [Evaluation & Observability](./06-evaluation-observability/) | Engineers shipping agents they need to measure | 🔴 Advanced | 8–12 h |
+| 06 | [Evaluation & Observability](./06-evaluation-observability/) | Engineers shipping agents they need to measure | 🔴 Advanced | 26–35 h (✅ v1 complete) |
 | 07 | [Production & Safety](./07-production-and-safety/) | Engineers taking agents to production | 🔴 Advanced | 10–15 h |
 | 08 | [Mathematical Foundations](./08-mathematical-foundations/) | Anyone who wants the theory behind the engineering | 🟢 → 🔴 (mixed) | 6–10 h |
 | 09 | [Capstones](./09-capstones/) | Anyone ready to build something portfolio-worthy | 🔴 Advanced | 15–40 h per project |

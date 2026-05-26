@@ -38,6 +38,7 @@ The quizzes are **GitHub-first** by design — they work in any Markdown viewer 
 | 🧠 [Online evaluation and tail-based sampling](./evaluation/online-evaluation.md) | [`online-evaluator-registration.md`](../concepts/evaluation/online-evaluator-registration.md) + [`tail-based-sampling.md`](../concepts/evaluation/tail-based-sampling.md) + [Lab 19](../labs/19-online-evaluation-and-sampling/) | 8 questions | mixed |
 | 🧠 [Drift detection and agent-as-judge calibration](./evaluation/drift-and-calibration.md) | [`drift-detection.md`](../concepts/evaluation/drift-detection.md) + [`agent-as-judge-calibration.md`](../concepts/evaluation/agent-as-judge-calibration.md) + [Lab 20](../labs/20-drift-detection-and-calibration/) | 8 questions | mixed |
 | 🧠 [Cost attribution and adaptive sampling](./evaluation/cost-and-sampling.md) | [`cost-attribution.md`](../concepts/evaluation/cost-attribution.md) + [`adaptive-sampling.md`](../concepts/evaluation/adaptive-sampling.md) + [Lab 21](../labs/21-cost-attribution-and-adaptive-sampling/) | 8 questions | mixed |
+| 🧠 [Multi-turn (threaded) evaluation](./evaluation/multi-turn.md) | [`multi-turn-evaluation.md`](../concepts/evaluation/multi-turn-evaluation.md) + [`conversation-simulation.md`](../concepts/evaluation/conversation-simulation.md) + [Lab 22](../labs/22-multi-turn-evaluation/) | 8 questions | mixed |
 
 More quizzes will land as new content does. Each new concept page or lab should ship with its quiz in the same batch.
 
