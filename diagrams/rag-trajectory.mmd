@@ -1,43 +1,86 @@
 flowchart TD
-    Q[/"User question"/] --> SEARCH["search_corpus<br/>(snippets + scores)"]
+    Q(["User question"])
 
-    SEARCH --> CHECK{Results status?}
-    CHECK -->|empty<br/>(no chunk above floor)| REFINE["Refine query<br/>(repeated-action detector<br/>blocks identical retry)"]
-    REFINE --> SEARCH
-    CHECK -->|ok, but snippets<br/>look irrelevant| REFINE
-    CHECK -->|ok, relevant<br/>snippets| TRIAGE["Model picks 1-2<br/>candidate chunks"]
-    CHECK -->|ok, snippets<br/>answer directly| DIRECT["Synthesize<br/>from snippets"]
+    subgraph SearchStage["1. Search corpus"]
+        direction TB
+        SEARCH["search_corpus<br/>(snippets + scores)"]
+        CHECK{"Results status?"}
+        SEARCH --> CHECK
+    end
 
-    DIRECT --> CITELESS[/"Answer<br/>(citations empty —<br/>no chunks read in full)"/]
+    subgraph Refinement["2. Query refinement"]
+        direction TB
+        REFINE["Refine query<br/>(repeated-action detector<br/>blocks identical retry)"]
+        RETRY{"Retry allowed?"}
+        REFINE --> RETRY
+    end
 
-    TRIAGE --> READ["read_chunk<br/>(one chunk_id)"]
+    subgraph EvidenceStage["3. Evidence selection and reading"]
+        direction TB
+        TRIAGE["Model picks<br/>1-2 candidate chunks"]
+        READ["read_chunk<br/>(one chunk_id)"]
+        RRESULT{"Read status?"}
+        NEXT["Pick next<br/>candidate chunk"]
+        MORE{"More candidates?"}
+        GROUND["Track grounded evidence<br/>(chunk_id, doc_id, title)"]
+        ENOUGH{"Enough evidence?"}
 
-    READ --> RRESULT{Result status?}
-    RRESULT -->|ok| GROUND["Read content<br/>track citation<br/>(chunk_id, doc_id, title)"]
-    RRESULT -->|not_found| NEXT["Pick next<br/>candidate chunk"]
-    NEXT --> READ
-    RRESULT -->|all candidates<br/>tried| REFINE
+        TRIAGE --> READ
+        READ --> RRESULT
+        RRESULT -->|"ok"| GROUND
+        RRESULT -->|"not_found"| NEXT
+        NEXT --> MORE
+        MORE -->|"yes"| READ
+        GROUND --> ENOUGH
+    end
 
-    GROUND --> ENOUGH{Enough<br/>evidence?}
-    ENOUGH -->|no, need more<br/>from another doc| REFINE
-    ENOUGH -->|no, but same doc<br/>has more chunks| TRIAGE
-    ENOUGH -->|yes| SYNTH["Synthesize answer<br/>citations come from<br/>read-confirmed log"]
+    subgraph AnswerStage["4. Answer synthesis"]
+        direction TB
+        DIRECT["Synthesize<br/>from snippets"]
+        CITELESS(["Answer<br/>without full-chunk citations"])
+        SYNTH["Synthesize answer<br/>from read-confirmed evidence"]
+        FINAL(["Answer +<br/>chunk-level citations"])
 
-    SYNTH --> FINAL[/"Answer +<br/>chunk-level citations"/]
+        DIRECT --> CITELESS
+        SYNTH --> FINAL
+    end
 
-    %% Step cap escape
-    SEARCH -. step cap .-> GRACEFUL["Graceful exit:<br/>'I couldn't find this<br/>in the corpus'<br/>+ what was read"]
-    READ -. step cap .-> GRACEFUL
+    subgraph EscapeStage["5. Graceful escape"]
+        direction TB
+        GRACEFUL["Graceful exit<br/>I could not find this in the corpus<br/>+ what was read"]
+    end
+
+    Q --> SEARCH
+
+    CHECK -->|"empty<br/>no chunk above floor"| REFINE
+    CHECK -->|"ok, but snippets<br/>look irrelevant"| REFINE
+    CHECK -->|"ok, snippets<br/>answer directly"| DIRECT
+    CHECK -->|"ok, relevant<br/>snippets"| TRIAGE
+
+    RETRY -->|"yes"| SEARCH
+    RETRY -->|"no"| GRACEFUL
+
+    MORE -->|"no"| REFINE
+
+    ENOUGH -->|"yes"| SYNTH
+    ENOUGH -->|"no, need another doc"| REFINE
+    ENOUGH -->|"no, same doc has more chunks"| TRIAGE
+
     GRACEFUL --> FINAL
 
-    classDef tool fill:#dfd,stroke:#080,stroke-width:1px;
-    classDef decision fill:#ffd,stroke:#a80,stroke-width:1px;
-    classDef action fill:#def,stroke:#446,stroke-width:1px;
-    classDef terminal fill:#eee,stroke:#666,stroke-width:1px;
-    classDef escape fill:#fed,stroke:#a40,stroke-width:1px,stroke-dasharray:4 4;
+    SEARCH -.->|"step cap"| GRACEFUL
+    READ -.->|"step cap"| GRACEFUL
+
+    classDef tool fill:#dfd,stroke:#080,stroke-width:1px,color:#064e3b;
+    classDef decision fill:#ffd,stroke:#a80,stroke-width:1px,color:#713f12;
+    classDef action fill:#def,stroke:#446,stroke-width:1px,color:#1e3a8a;
+    classDef terminal fill:#eee,stroke:#666,stroke-width:1px,color:#111827;
+    classDef escape fill:#fed,stroke:#a40,stroke-width:1px,stroke-dasharray:4 4,color:#7c2d12;
+    classDef group fill:#fffef2,stroke:#d6d3a4,stroke-width:1px,color:#111827;
 
     class SEARCH,READ tool;
-    class CHECK,RRESULT,ENOUGH decision;
+    class CHECK,RRESULT,ENOUGH,RETRY,MORE decision;
     class TRIAGE,GROUND,NEXT,REFINE,SYNTH,DIRECT action;
     class Q,FINAL,CITELESS terminal;
     class GRACEFUL escape;
+    class SearchStage,Refinement,EvidenceStage,AnswerStage,EscapeStage group;
