@@ -1,6 +1,6 @@
 # Path 06 — Evaluation & Observability
 
-> 🔴 Advanced · ⏱ 26-35 hours v1 + ~70 min Recipes · 📍 Start here once you've completed at least one of {Path 02, Path 03} · ✅ Path 06 v1 complete (Modules 1-7 shipped) · 🚧 Path 06 v2 in progress (Recipes shipped batch 33; patterns/projects to come)
+> 🔴 Advanced · ⏱ 26-35 hours v1 + ~70 min Recipes + ~45 min Patterns · 📍 Start here once you've completed at least one of {Path 02, Path 03} · ✅ Path 06 v1 complete (Modules 1-7 shipped) · 🚧 Path 06 v2 in progress (Recipes shipped batch 33; Patterns shipped batch 34)
 
 The production layer. Path 02's Lab 09 and Path 03's Lab 16 give you the evaluation *mechanism* — metric implementations, hand-curated fixtures, the aggregate-then-slice-then-per-agent discipline. Path 06 connects that mechanism to the operational reality: live trace ingestion, distributed-tracing correlation across parallel sub-agents, drift detection on metric distributions, alerting on regressions, agent-as-judge calibration against human ground truth, cost attribution across users and tasks and tenants.
 
@@ -176,11 +176,11 @@ The full operational picture: instrument → score → monitor for drift → cal
 
 ---
 
-## 🚀 Path 06 v2 — Production Recipes (Batch 33)
+## 🚀 Path 06 v2 — Production Recipes and Patterns
 
-The v1 modules document the **building blocks** (one module per concept; one lab per module). The v2 recipes document the **compositions** — given a team's existing stack, which modules apply, in what order, with what hand-off discipline.
+The v1 modules document the **building blocks** (one module per concept; one lab per module). The v2 layer documents the **compositions** (end-to-end deployment shapes — recipes) and the **cross-cutting mechanisms** (reusable building blocks that apply inside any recipe — patterns).
 
-### The three recipes shipped in this batch
+### Recipes (Batch 33) — end-to-end deployment compositions
 
 | # | Recipe | Best for | Modules used |
 |---|--------|----------|--------------|
@@ -188,13 +188,26 @@ The v1 modules document the **building blocks** (one module per concept; one lab
 | 2 | [OpenTelemetry-native](./recipes/02-opentelemetry-native.md) | Teams with existing observability stack; want vendor-neutral telemetry | M1, M3, M4 (Collector), M5, M6, M7 |
 | 3 | [Hybrid LangSmith + OpenTelemetry](./recipes/03-hybrid-langsmith-and-otel.md) | Production teams needing both LLM-eval UX **and** vendor-neutral telemetry — the most realistic mid-2026 production shape | **All seven** + explicit hand-off discipline |
 
-Plus the [recipes index](./recipes/README.md) with the choose-your-recipe decision tree, and the [`_template.md`](./recipes/_template.md) for adding future recipes (Langfuse-native, MLflow-native, etc.) using the same shape.
+Plus the [recipes index](./recipes/README.md) with the choose-your-recipe decision tree, and the [`_template.md`](./recipes/_template.md) for adding future recipes (Langfuse-native, MLflow-native, etc.).
 
 **What the recipes give you that the v1 modules don't**: each recipe maps Path 06 modules to concrete production actions for a specific deployment shape, contrasts lab-shape vs production-shape per module, documents the hand-off points between artifacts (who emits / who consumes / where it lives), and includes a cost envelope at three traffic scales (10K / 100K / 1M traces/month). Recipe 3's hand-off discipline section is the central artifact for hybrid deployments — production teams adopting hybrid stacks need explicit ownership boundaries documented somewhere, and the recipe is that somewhere.
 
+### Patterns (Batch 34) — reusable cross-cutting mechanisms
+
+If recipes are end-to-end compositions, **patterns are the mechanisms inside them**. A team running the Hybrid recipe doesn't just install LangSmith + OTel — they also need a retrieval policy that respects cost budgets per tenant, a drift workflow that routes signals to human reviewers, and an evaluator combination strategy that handles judge disagreements. Those mechanisms are the patterns.
+
+| # | Pattern | Solves | Module anchor |
+|---|---------|--------|---------------|
+| 1 | [Cost-aware retrieval](./patterns/01-cost-aware-retrieval.md) | Retrieval cost explodes when k, reranking, and agentic loops fire on every query — including queries that don't need them | M6 cost attribution · adaptive sampling |
+| 2 | [Drift-triggered review](./patterns/02-drift-triggered-review.md) | Auto-retrain on drift is the wrong default; drift signals route traces to a human review queue, not trigger blind retraining | M5 drift detection · judge calibration |
+| 3 | [Judge ensemble](./patterns/03-judge-ensemble.md) | A single LLM judge has family-specific biases; high-stakes evals need multi-judge combination strategies | M4 online evaluation · M5 judge calibration |
+
+Plus the [patterns index](./patterns/README.md) with the pick-a-pattern decision tree, and the [`_template.md`](./patterns/_template.md) for adding future patterns.
+
+**What the patterns give you that the recipes don't**: each pattern is a focused mechanism (~15 min vs recipes' 20-25 min) that plugs into all three recipes. Patterns make the cross-cutting concerns explicit — cost, drift workflow, judge combination — so teams adopting any recipe inherit the operational discipline rather than reinventing it per deployment.
+
 ### Other Path 06 v2 directions (future batches)
 
-- **Patterns** — cross-cutting patterns (cost-aware retrieval; drift-triggered retraining; judge-ensemble patterns).
 - **Projects** — capstone projects that integrate all six labs into a single production-deployable agent observability stack.
 - **`evaluation-frameworks-deep-dive.md`** — LangSmith vs Braintrust vs Langfuse vs Phoenix vs Laminar at code level.
 - **Embedding-space drift detection** — the RAG-input-side complement to Module 5's score-side drift.
@@ -248,6 +261,12 @@ Plus the [recipes index](./recipes/README.md) with the choose-your-recipe decisi
 | `recipes/03-hybrid-langsmith-and-otel.md` | ✅ shipped (batch 33) |
 | `recipes/_template.md` | ✅ shipped (batch 33) |
 | **Path 06 v2 — Recipes** | **✅ first batch shipped (batch 33)** |
+| `patterns/README.md` (patterns index) | ✅ shipped (batch 34) |
+| `patterns/01-cost-aware-retrieval.md` | ✅ shipped (batch 34) |
+| `patterns/02-drift-triggered-review.md` | ✅ shipped (batch 34) |
+| `patterns/03-judge-ensemble.md` | ✅ shipped (batch 34) |
+| `patterns/_template.md` | ✅ shipped (batch 34) |
+| **Path 06 v2 — Patterns** | **✅ first batch shipped (batch 34)** |
 
 ## How this path connects to what you've built
 
