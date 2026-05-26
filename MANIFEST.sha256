@@ -1,5 +1,6 @@
-38dcaf1eaec919f2194de904dfd43714b94030608427800f6694231a38a3e89c  CHANGELOG.md
-466a2fcbfd82425f1b7d9c46d53125455bbe60d63da1a69da42b2839b4e9db36  labs/14-langgraph-supervisor-bridge/README.md
-e3672dda4994ac8328dcf44e25c1dc3ccdc5c88931516740167b3eaf3f89fdee  labs/15-langgraph-plan-execute-bridge/README.md
-cc7754a8b8f77e2ca762bdef370fb96bae2e2c4da1ee5cd55ce5cb5e2921adc2  labs/16-multi-agent-evaluation-from-scratch/README.md
-0850c11bde645c93986bd84384d1331fda6fbf7d5da126880fe3c1f95ef25f7e  learning-paths/03-multi-agent-systems/README.md
+6649c387000a9890086df49e2bc244dc845dd11651d119cf2982ae27931a2dbb  CHANGELOG.md
+ad2541acb1288ba2eb0807d507390946c72dee28844570f51eeea84e2d1fe970  learning-paths/03-multi-agent-systems/README.md
+6b880d56b23a642394cacab196ba716a35be6925a900dae0fc54b2e70eafcc9f  learning-paths/03-multi-agent-systems/patterns/04-per-agent-cost-budgeting.md
+f64ca6927c0bc871ad1129668c627307b6d330bccad673dac566a4bf2556050b  learning-paths/03-multi-agent-systems/patterns/05-retry-policies.md
+6cda004f36b6fca6c6e64c2d1e4d4cf17fad16efb99a63620651434bdbb02fc6  learning-paths/03-multi-agent-systems/patterns/06-cross-agent-provenance.md
+afe84b1cc6d442ee7f339603c20d4a6d5a0e741ddd996f1d5d201632979bf59c  learning-paths/03-multi-agent-systems/patterns/README.md
