@@ -1,54 +1,67 @@
-flowchart LR
-    U(["👤 User"])
-    Final(["📝 Final answer"])
+flowchart TD
+    U(["User"])
+    Final(["Final answer"])
 
-    subgraph Supervisor["🎯 Supervisor agent loop"]
+    subgraph Supervisor["Supervisor agent loop"]
         direction TB
         S1["Receive task"]
-        S2["Decide: which worker?"]
-        S3["Synthesize"]
+        S2{"Which worker<br/>is needed?"}
+        S3["Review worker result"]
+        S4["Synthesize final response"]
+
         S1 --> S2
-        S2 --> S3
+        S3 --> S2
+        S2 -->|"ready to finalize"| S4
     end
 
-    subgraph Researcher["🔍 Researcher worker (own loop)"]
+    subgraph Researcher["Researcher worker<br/>(own loop with tools)"]
         direction TB
         R1["web_search"]
         R2["fetch_page"]
-        R3["Summarize findings"]
+        R3["Summarize findings<br/>with citations"]
+
         R1 --> R2
         R2 --> R3
     end
 
-    subgraph Writer["✍️ Writer worker (no tools)"]
+    subgraph Writer["Writer worker<br/>(no tools)"]
         direction TB
         W1["Compose prose"]
-        W2["Inline citations"]
+        W2["Add inline citations"]
+
         W1 --> W2
+    end
+
+    subgraph Recovery["Failure / recovery handling"]
+        direction TB
+        F1["Research step cap<br/>surface partial findings"]
+        F2["Writer needs more research<br/>re-route to researcher"]
     end
 
     U -->|"task: str"| S1
 
-    S2 -.->|"call_researcher(question)"| R1
-    R3 -.->|"{status, findings, citations}"| S2
+    S2 -->|"call_researcher(question)"| R1
+    R3 -->|"{status, findings, citations}"| S3
 
-    S2 ==>|"call_writer(findings, citations)"| W1
-    W2 ==>|"{status, answer}"| S3
+    S2 -->|"call_writer(findings, citations)"| W1
+    W2 -->|"{status, answer}"| S3
 
-    S3 --> Final
+    S4 --> Final
 
-    %% Failure-mode edges (dotted) — these are the paths the supervisor
-    %% takes when worker results indicate problems
-    R3 -.->|"status: step_cap → supervisor surfaces partial"| S2
-    W2 -.->|"status: needs_more_research → supervisor re-routes"| S2
+    R3 -.->|"status: step_cap"| F1
+    F1 -.->|"partial findings + caveat"| S3
 
-    %% Styling
-    classDef user fill:#e8eaf6,stroke:#3949ab,stroke-width:2px,color:#1a237e
-    classDef supervisor fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,color:#e65100
-    classDef worker fill:#e0f2f1,stroke:#00695c,stroke-width:1px,color:#004d40
-    classDef terminal fill:#f1f8e9,stroke:#558b2f,stroke-width:2px,color:#33691e
+    W2 -.->|"status: needs_more_research"| F2
+    F2 -.->|"new research question"| R1
 
-    class U user
-    class S1,S2,S3 supervisor
-    class R1,R2,R3,W1,W2 worker
-    class Final terminal
+    classDef user fill:#e8eaf6,stroke:#3949ab,stroke-width:2px,color:#1a237e;
+    classDef supervisor fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,color:#e65100;
+    classDef worker fill:#e0f2f1,stroke:#00695c,stroke-width:1px,color:#004d40;
+    classDef recovery fill:#fff8e1,stroke:#f57c00,stroke-width:1px,stroke-dasharray:4 4,color:#7c2d12;
+    classDef terminal fill:#f1f8e9,stroke:#558b2f,stroke-width:2px,color:#33691e;
+
+    class U user;
+    class S1,S2,S3,S4 supervisor;
+    class R1,R2,R3,W1,W2 worker;
+    class F1,F2 recovery;
+    class Final terminal;
