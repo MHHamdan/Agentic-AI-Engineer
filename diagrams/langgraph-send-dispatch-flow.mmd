@@ -1,77 +1,75 @@
-%% LangGraph plan-and-execute with Send — Lab 15 dispatch pattern.
-%%
-%% Top-down flow. Subgraph blocks for: request, planner, dispatcher (the Send
-%% primitive), parallel executors, state merge via reducer, replanner decision,
-%% final response. Short labels for GitHub rendering.
 flowchart TD
+    U(["User task"])
 
-  subgraph req["User request"]
-    U([User task])
-  end
+    subgraph Planning["Planner"]
+        direction TB
+        P["planner_node<br/>emits Plan JSON"]
+        V{"validate_graph<br/>passes?"}
+        P --> V
+    end
 
-  subgraph planning["Planner"]
-    P[planner_node<br/>emits Plan JSON]
-    V{validate_graph<br/>passes?}
-  end
+    subgraph Dispatch["Dispatcher: Send"]
+        direction TB
+        D["dispatcher_node"]
+        Fanout{{"list of Send<br/>per ready step"}}
+        D --> Fanout
+    end
 
-  subgraph dispatch["Dispatcher — Send"]
-    D[dispatcher_node]
-    D_FANOUT{{list of Send<br/>per ready step}}
-  end
+    subgraph Executors["Parallel executors"]
+        direction TB
+        E1["executor 1"]
+        E2["executor 2"]
+        E3["executor N"]
+    end
 
-  subgraph executors["Parallel executors"]
-    E1[executor #1]
-    E2[executor #2]
-    E3[executor #N]
-  end
+    subgraph StateMerge["State merge via reducer"]
+        direction TB
+        Merge["completed state<br/>Annotated dict<br/>+ reducer"]
+    end
 
-  subgraph state["State merge via reducer"]
-    Merge[/completed:<br/>Annotated dict<br/>+ reducer/]
-  end
+    subgraph Replanner["Replanner"]
+        direction TB
+        RP{"Failures?<br/>Replans left?"}
+        SIG{"Same plan<br/>signature?"}
+        RP --> SIG
+    end
 
-  subgraph replan["Replanner"]
-    RP{Failures?<br/>Replans left?}
-    SIG{Same plan<br/>signature?}
-  end
+    subgraph Synthesizer["Synthesizer"]
+        direction TB
+        SY["synthesize_node<br/>compose final answer"]
+    end
 
-  subgraph synth["Synthesizer"]
-    SY[synthesize_node<br/>compose final answer]
-  end
+    F(["Cited prose<br/>or partial_after_cap"])
 
-  subgraph out["Final response"]
-    F([Cited prose<br/>or partial_after_cap])
-  end
+    U --> P
+    V -->|"yes"| D
+    V -.->|"no, retry"| P
 
-  U --> P
-  P --> V
-  V -- yes --> D
-  V -- no, retry --> P
+    Fanout --> E1
+    Fanout --> E2
+    Fanout --> E3
 
-  D --> D_FANOUT
-  D_FANOUT --> E1
-  D_FANOUT --> E2
-  D_FANOUT --> E3
+    E1 --> Merge
+    E2 --> Merge
+    E3 --> Merge
 
-  E1 --> Merge
-  E2 --> Merge
-  E3 --> Merge
+    Merge --> RP
+    RP -->|"all done"| SY
+    RP -->|"cap hit"| SY
+    RP -->|"failures present"| SIG
+    SIG -->|"yes, escalate"| SY
+    SIG -.->|"no, replan"| P
 
-  Merge --> RP
-  RP -- all done --> SY
-  RP -- cap hit --> SY
-  RP -- failures present --> SIG
-  SIG -- yes, escalate --> SY
-  SIG -- no, replan --> P
+    SY --> F
 
-  SY --> F
+    classDef llm fill:#e8f4f8,stroke:#2563eb,stroke-width:2px,color:#1e293b;
+    classDef send fill:#fce7f3,stroke:#be185d,stroke-width:2px,color:#831843;
+    classDef state fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef decision fill:#f3e8ff,stroke:#7c3aed,stroke-width:2px,color:#4c1d95;
+    classDef endpoint fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
 
-  classDef llm fill:#e8f4f8,stroke:#2563eb,color:#1e293b
-  classDef send fill:#fce7f3,stroke:#be185d,color:#831843
-  classDef state fill:#fef3c7,stroke:#d97706,color:#78350f
-  classDef decision fill:#f3e8ff,stroke:#7c3aed,color:#4c1d95
-  classDef endpoint fill:#dcfce7,stroke:#16a34a,color:#14532d
-  class P,SY llm
-  class D,D_FANOUT,E1,E2,E3 send
-  class Merge state
-  class V,RP,SIG decision
-  class U,F endpoint
+    class P,SY llm;
+    class D,Fanout,E1,E2,E3 send;
+    class Merge state;
+    class V,RP,SIG decision;
+    class U,F endpoint;
