@@ -202,27 +202,27 @@ The full operational picture: instrument → score → monitor for drift → cal
 | Module 1 diagram (`observability-layers.mmd`) | ✅ shipped (batch 24) |
 | `langsmith-tracing-shape.md` | ✅ shipped (batch 25) |
 | `online-vs-offline-evaluation.md` | ✅ shipped (batch 25) |
-| Lab 17 (LangSmith trace ingestion) | ✅ shipped (batch 25) — solution in a follow-up batch |
+| Lab 17 (LangSmith trace ingestion) | ✅ shipped (batch 25) — solution shipped (batch 31) |
 | Module 2 quiz (`langsmith-ingestion.md`) | ✅ shipped (batch 25) |
 | `opentelemetry-genai-conventions.md` | ✅ shipped (batch 26) |
 | `platform-fanout-and-portability.md` | ✅ shipped (batch 26) |
-| Lab 18 (OpenTelemetry portable tracing) | ✅ shipped (batch 26) — solution in a follow-up batch |
+| Lab 18 (OpenTelemetry portable tracing) | ✅ shipped (batch 26) — solution shipped (batch 31) |
 | Module 3 quiz (`opentelemetry-portable.md`) | ✅ shipped (batch 26) |
 | `online-evaluator-registration.md` | ✅ shipped (batch 27) |
 | `tail-based-sampling.md` | ✅ shipped (batch 27) |
-| Lab 19 (Online evaluation and sampling) | ✅ shipped (batch 27) — solution in a follow-up batch |
+| Lab 19 (Online evaluation and sampling) | ✅ shipped (batch 27) — solution shipped (batch 31) |
 | Module 4 quiz (`online-evaluation.md`) | ✅ shipped (batch 27) |
 | `drift-detection.md` | ✅ shipped (batch 28) |
 | `agent-as-judge-calibration.md` | ✅ shipped (batch 28) |
-| Lab 20 (Drift detection and calibration) | ✅ shipped (batch 28) — solution in a follow-up batch |
+| Lab 20 (Drift detection and calibration) | ✅ shipped (batch 28) — solution shipped (batch 31) |
 | Module 5 quiz (`drift-and-calibration.md`) | ✅ shipped (batch 28) |
 | `cost-attribution.md` | ✅ shipped (batch 29) |
 | `adaptive-sampling.md` | ✅ shipped (batch 29) |
-| Lab 21 (Cost attribution and adaptive sampling) | ✅ shipped (batch 29) — solution in a follow-up batch |
+| Lab 21 (Cost attribution and adaptive sampling) | ✅ shipped (batch 29) — solution shipped (batch 31) |
 | Module 6 quiz (`cost-and-sampling.md`) | ✅ shipped (batch 29) |
 | `multi-turn-evaluation.md` | ✅ shipped (batch 30) |
 | `conversation-simulation.md` | ✅ shipped (batch 30) |
-| Lab 22 (Multi-turn evaluation) | ✅ shipped (batch 30) — solution in a follow-up batch |
+| Lab 22 (Multi-turn evaluation) | ✅ shipped (batch 30) — solution shipped (batch 31) |
 | Module 7 quiz (`multi-turn.md`) | ✅ shipped (batch 30) |
 | **Path 06 v1** | **✅ complete (Modules 1-7 shipped)** |
 
