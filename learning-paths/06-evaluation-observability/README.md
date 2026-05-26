@@ -1,6 +1,6 @@
 # Path 06 — Evaluation & Observability
 
-> 🔴 Advanced · ⏱ 26-35 hours v1 + ~70 min Recipes + ~45 min Patterns + ~3 hrs Projects + ~25 min Frameworks Deep Dive (reading; multi-day builds separately) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · ✅ Path 06 v1 complete (Modules 1-7 shipped) · 🚧 Path 06 v2 in progress (Recipes shipped batch 33; Patterns shipped batch 34; Projects shipped batch 35; Frameworks Deep Dive shipped batch 36)
+> 🔴 Advanced · ⏱ 26-35 hours v1 + ~70 min Recipes + ~45 min Patterns + ~3 hrs Projects + ~25 min Frameworks Deep Dive + ~22 min Embedding-Space Drift + ~100 min Lab 23 (reading; multi-day builds separately) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · ✅ Path 06 v1 complete (Modules 1-7 shipped) · 🚧 Path 06 v2 in progress (Recipes shipped batch 33; Patterns shipped batch 34; Projects shipped batch 35; Frameworks Deep Dive shipped batch 36; Embedding-space drift shipped batch 37)
 
 The production layer. Path 02's Lab 09 and Path 03's Lab 16 give you the evaluation *mechanism* — metric implementations, hand-curated fixtures, the aggregate-then-slice-then-per-agent discipline. Path 06 connects that mechanism to the operational reality: live trace ingestion, distributed-tracing correlation across parallel sub-agents, drift detection on metric distributions, alerting on regressions, agent-as-judge calibration against human ground truth, cost attribution across users and tasks and tenants.
 
@@ -176,9 +176,9 @@ The full operational picture: instrument → score → monitor for drift → cal
 
 ---
 
-## 🚀 Path 06 v2 — Production Recipes, Patterns, Projects, and Frameworks Deep Dive
+## 🚀 Path 06 v2 — Production Recipes, Patterns, Projects, Frameworks Deep Dive, and Embedding-Space Drift Detection
 
-The v1 modules document the **building blocks** (one module per concept; one lab per module). The v2 layer documents the **compositions** (end-to-end deployment shapes — recipes), the **cross-cutting mechanisms** (reusable building blocks — patterns), the **buildable capstones** (multi-day production deployments — projects), and the **selection guide** for picking among the proliferating eval/observability frameworks (deep dive).
+The v1 modules document the **building blocks** (one module per concept; one lab per module). The v2 layer documents the **compositions** (end-to-end deployment shapes — recipes), the **cross-cutting mechanisms** (reusable building blocks — patterns), the **buildable capstones** (multi-day production deployments — projects), the **selection guide** for picking among the proliferating eval/observability frameworks (deep dive), and the **RAG-input-side drift layer** that complements Module 5's score-side detection (embedding-space drift).
 
 ### Recipes (Batch 33) — end-to-end deployment compositions
 
@@ -226,9 +226,18 @@ A practical selection guide for production evaluation and observability tools. C
 
 This is the concept page the recipes and projects have been pointing at as the "which-tool-fits-our-stack" reference. The page is deliberately tool-agnostic at the recommendation layer — Recipe 1 uses LangSmith, Project 2 uses Phoenix/Langfuse/Laminar, Project 3 uses LangSmith + an OTel backend — and the deep dive helps teams pick the right tool in each slot.
 
+### Embedding-space drift detection (Batch 37) — the RAG-input-side complement to Module 5
+
+The RAG-input-side complement to Module 5's score-side drift detection. Where Module 5 detects drift in **evaluator scores** (a lagging indicator on the output side), this layer detects drift in **embeddings, query distributions, retrieved documents, topic mix, and semantic clusters** (the leading indicator on the input side). The two compose into a causal-chain monitor.
+
+📖 [`embedding-space-drift-detection.md`](../../concepts/evaluation/embedding-space-drift-detection.md) (~22 min, ✅ shipped batch 37)
+🧪 [Lab 23 — Embedding-space drift detection](../../labs/23-embedding-space-drift-detection/) (~90-110 min, fully synthetic, no API keys)
+🧠 [Quiz — Embedding-space drift](../../quizzes/evaluation/embedding-space-drift.md) (8 questions)
+
+The concept page covers five drift types (with partial corpus refresh as the most common production cause per Decompressed.io March 2026), six detection methods (centroid, cosine distribution, NN overlap, cluster population, UMAP/t-SNE as diagnostic, domain classifier), and the production workflow that routes drift events into Pattern 2's three-tier severity classifier. Lab 23 implements all four core detectors from scratch in pure numpy and runs them against four controlled drift scenarios — purely synthetic for reproducibility, with the explicit invariant that the detection code transfers to real embeddings unchanged.
+
 ### Other Path 06 v2 directions (future batches)
 
-- **Embedding-space drift detection** — the RAG-input-side complement to Module 5's score-side drift.
 - **Adversarial red-teaming at scale** — DeepTeam-style orchestration.
 
 ## What's not in this path (anti-scope)
@@ -293,6 +302,10 @@ This is the concept page the recipes and projects have been pointing at as the "
 | **Path 06 v2 — Projects** | **✅ first batch shipped (batch 35)** |
 | `concepts/evaluation/evaluation-frameworks-deep-dive.md` | ✅ shipped (batch 36) |
 | **Path 06 v2 — Frameworks Deep Dive** | **✅ shipped (batch 36)** |
+| `concepts/evaluation/embedding-space-drift-detection.md` | ✅ shipped (batch 37) |
+| `labs/23-embedding-space-drift-detection/` | ✅ shipped (batch 37) |
+| `quizzes/evaluation/embedding-space-drift.md` | ✅ shipped (batch 37) |
+| **Path 06 v2 — Embedding-Space Drift** | **✅ shipped (batch 37)** |
 
 ## How this path connects to what you've built
 

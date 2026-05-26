@@ -102,15 +102,24 @@ Quiz: [🧠 Multi-turn (threaded) evaluation](../../quizzes/evaluation/multi-tur
 |------|-----------|--------|
 | 📖 [evaluation-frameworks-deep-dive.md](./evaluation-frameworks-deep-dive.md) | ~25 min | A practical selection guide across 9 major LLM evaluation/observability frameworks: LangSmith, Braintrust, Langfuse, Arize Phoenix, Laminar, MLflow GenAI evaluation, DeepEval/Confident AI, RAGAS, TruLens. Eleven-dimension comparison table; code-level snippets for the five canonical operations (logging a trace, creating an evaluator, attaching scores, dataset evaluation, online evaluation); decision guide with one "choose X if" rule per tool; Path 06 module mapping; recipes/projects mapping; migration paths. Explicit anti-scope (no "best tool overall" conclusion; no benchmark claims without sources; no pricing claims without time-bounding). Verified mid-2026 from 8 industry comparison posts; pricing/version data carries publication dates.
 
+### Path 06 v2 — Embedding-space drift detection (batch 37)
+
+| Page | Read time | Covers |
+|------|-----------|--------|
+| 📖 [embedding-space-drift-detection.md](./embedding-space-drift-detection.md) | ~22 min | The RAG-input-side complement to Module 5's score-side drift. Definition of embedding-space drift and why score-side detection alone is a lagging indicator. Five drift types: query distribution, document corpus, retrieval-result, topic/cluster, embedding model/version (with partial corpus refresh as the most common production cause per Decompressed.io March 2026). Six detection methods: centroid shift, cosine-distance distribution KS, NN overlap (with the same-doc contract), cluster-population chi-square, UMAP/t-SNE as diagnostic only, domain classifier as a good cross-type default. PSI/KS/Wasserstein adapted to embedding-derived scalar features. Production workflow: baseline window, rolling comparison, 2σ-rolling-mean alert, three-tier severity routing (Pattern 2), human-on-the-loop refresh decision. Path 06 connections to Modules 3, 5, 6 + Patterns 1, 2 + Projects 2, 3. Anti-scope: not auto-retraining, not proof of quality degradation, not a vector-DB tutorial.
+
+Lab applying these: [🧪 Lab 23 — Embedding-space drift detection](../../labs/23-embedding-space-drift-detection/).
+
+Quiz: [🧠 Embedding-space drift](../../quizzes/evaluation/embedding-space-drift.md) — 8 questions covering concepts (2), detection methods (3), production workflow (2), and anti-scope (1).
+
 ---
 
-These fifteen pages open [Path 06 — Evaluation & Observability](../../learning-paths/06-evaluation-observability/). The path documents the full production-readiness stack for agentic AI evaluation and observability across seven modules end-to-end: framing → instrumentation × 2 → online evaluation → drift detection + calibration → cost attribution + adaptive sampling → multi-turn evaluation. **Path 06 v1 is complete.** Path 06 v2 has shipped Recipes (Batch 33), Patterns (Batch 34), Projects (Batch 35), and the Frameworks Deep Dive (Batch 36).
+These sixteen pages open [Path 06 — Evaluation & Observability](../../learning-paths/06-evaluation-observability/). The path documents the full production-readiness stack for agentic AI evaluation and observability across seven modules end-to-end: framing → instrumentation × 2 → online evaluation → drift detection + calibration → cost attribution + adaptive sampling → multi-turn evaluation. **Path 06 v1 is complete.** Path 06 v2 has shipped Recipes (Batch 33), Patterns (Batch 34), Projects (Batch 35), the Frameworks Deep Dive (Batch 36), and Embedding-space drift detection (Batch 37).
 
 ## Pending pages (Path 06 v2)
 
 The following are planned for v2 but not yet authored:
 
-- Embedding-space drift detection (the RAG-input-side complement to Module 5's score-side drift).
 - Adversarial red-teaming at scale (DeepTeam-style orchestration).
 
 ## Where this is used
