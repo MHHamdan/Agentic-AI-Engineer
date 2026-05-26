@@ -1,6 +1,6 @@
 # Path 06 — Evaluation & Observability
 
-> 🔴 Advanced · ⏱ 18-25 hours (Modules 1-4 shipped — full path estimated ~50h when complete) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · 🚧 Path 06 in progress (Modules 1-4 shipped; Modules 5-7 in future batches)
+> 🔴 Advanced · ⏱ 18-25 hours (Modules 1-5 shipped — full path estimated ~50h when complete) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · 🚧 Path 06 in progress (Modules 1-5 shipped; Modules 6-7 in future batches)
 
 The production layer. Path 02's Lab 09 and Path 03's Lab 16 give you the evaluation *mechanism* — metric implementations, hand-curated fixtures, the aggregate-then-slice-then-per-agent discipline. Path 06 connects that mechanism to the operational reality: live trace ingestion, distributed-tracing correlation across parallel sub-agents, drift detection on metric distributions, alerting on regressions, agent-as-judge calibration against human ground truth, cost attribution across users and tasks and tenants.
 
@@ -105,12 +105,28 @@ Third Path 06 lab. The production-runtime layer that sits on top of Modules 2 an
 
 - [🧠 Online evaluation and tail-based sampling](../../quizzes/evaluation/online-evaluation.md) — 8 single-select questions covering Rules (3), tail sampling (3), and the decision boundary (2). Passing: 6/8.
 
-### Modules 5-7 — planned, not yet built
+### Module 5 — Drift detection + agent-as-judge calibration (batch 28)
 
-These modules will be added in future batches. The plan is sketched here so you can see where Modules 1-4 lead:
+Fourth Path 06 lab. The trust-loop closer that sits on top of Module 4: detect when evaluator scores drift over time (KS-test, PSI, Wasserstein, rolling-window monitoring); calibrate LLM-as-judge against periodic human ground truth (Cohen's kappa, five named biases and their mitigations). Without these, drift detection on uncalibrated scores produces alerts you can't act on; with them, the Path 06 trust stack is complete.
 
-- **Module 5 — Drift detection + agent-as-judge calibration.** Periodic human-calibrated judge. Distribution-drift detection (KS-test, PSI, rolling windows). Builds on Module 4's online-evaluator scores as the input stream.
-- **Module 6 — Cost attribution + sampling at scale.** Multi-dimensional cost (per-user, per-task, per-tenant) via OTel baggage. OTel Collector deep-dive. Adaptive sampling.
+**Two concept pages**:
+
+- [📖 Drift detection](../../concepts/evaluation/drift-detection.md) — ~14 min. The three flavors of LLM drift in 2026: prompt drift, model drift (the GPT-4 Turbo silent-update example), eval-score drift. Why classical ML drift detection doesn't fully map (LLM scores are aggregations, not features). The four canonical statistical tests (KS-test, PSI, Wasserstein, chi-square) with decision-table for picking the right one. Rolling-window pattern with baseline/reference/current windows. The alerting problem and two-tier thresholds + persistence requirements. Monitoring without labels via proxy signals. Tool landscape (Evidently, NannyML, whylogs, Phoenix, FutureAGI).
+- [📖 Agent-as-judge calibration](../../concepts/evaluation/agent-as-judge-calibration.md) — ~13 min. The five named biases (position, verbosity, self-preference, format, calibration drift) with documented magnitudes from 2025-2026 follow-on work. Mitigations that survive production: permutation averaging for position bias, length-controlled rubrics for verbosity, cross-family judging for self-preference. Cohen's kappa as the agreement metric with Landis & Koch interpretation ranges. The calibration loop: gold set + cadence + kappa-over-time. The 90/10 production split (~59.8% of production AI teams use this). When NOT to use LLM-as-judge. The Path 06 trust stack assembly.
+
+**One lab**:
+
+- [🧪 Lab 20 — Drift detection and agent-as-judge calibration](../../labs/20-drift-detection-and-calibration/) — 34 cells, ~90-110 min. Two halves. Half A simulates 30 days of eval scores with three drift patterns (gradual, abrupt, shape-only) and detects each with KS-test, PSI (hand-coded), and Wasserstein. Rolling-window detector on a 1000-sample stream catches a mid-stream drift event with ~50-sample latency. Half B runs a simulated LLM-as-judge against a 10-example human gold set, measures verbosity bias (κ=0.000 baseline), applies length-controlled mitigation (κ=1.000 after), then visualizes 12 weeks of judge runs with an injected drift event at week 6 detected at week 9. Cost: ~$0 (all local computation).
+
+**One quiz**:
+
+- [🧠 Drift detection and agent-as-judge calibration](../../quizzes/evaluation/drift-and-calibration.md) — 8 single-select questions covering the three drift flavors, statistical-test selection, the five named biases, kappa interpretation, the 90/10 split, and the trust-stack assembly. Passing: 6/8.
+
+### Modules 6-7 — planned, not yet built
+
+These modules will be added in future batches. The plan is sketched here so you can see where Modules 1-5 lead:
+
+- **Module 6 — Cost attribution + sampling at scale.** Multi-dimensional cost (per-user, per-task, per-tenant) via OTel baggage propagation. OTel Collector deep-dive. Adaptive sampling decisions tied to cost thresholds.
 - **Module 7 — Multi-turn (threaded) evaluation.** Extending Lab 16's metric set for conversation-level trajectories.
 
 Each module is ~1-2 batches of work. Path 06 v1 is roughly 6-10 batches end-to-end.
@@ -124,7 +140,7 @@ Each module is ~1-2 batches of work. Path 06 v1 is roughly 6-10 batches end-to-e
 - **Embedding-drift detection on vector stores.** Path 02 v2 territory (we'd add it as a Lab 09 extension).
 - **Multi-tenant data isolation, GDPR/SOC2 compliance.** Production concerns; out of scope for the evaluation-and-observability path proper.
 
-## Module 1-4 status
+## Module 1-5 status
 
 | | Status |
 |---|---|
@@ -144,7 +160,11 @@ Each module is ~1-2 batches of work. Path 06 v1 is roughly 6-10 batches end-to-e
 | `tail-based-sampling.md` | ✅ shipped (batch 27) |
 | Lab 19 (Online evaluation and sampling) | ✅ shipped (batch 27) — solution in a follow-up batch |
 | Module 4 quiz (`online-evaluation.md`) | ✅ shipped (batch 27) |
-| Modules 5-7 | ⏳ future batches |
+| `drift-detection.md` | ✅ shipped (batch 28) |
+| `agent-as-judge-calibration.md` | ✅ shipped (batch 28) |
+| Lab 20 (Drift detection and calibration) | ✅ shipped (batch 28) — solution in a follow-up batch |
+| Module 5 quiz (`drift-and-calibration.md`) | ✅ shipped (batch 28) |
+| Modules 6-7 | ⏳ future batches |
 
 ## How this path connects to what you've built
 
