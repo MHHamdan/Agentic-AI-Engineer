@@ -1,52 +1,55 @@
 flowchart TD
     Q(["Query string<br/>(from agent or user)"])
 
-    subgraph Retrieval["1. Parallel retrieval"]
+    subgraph Retrieval["1. Retrieval stage"]
         direction TB
+        SPLIT{{"Send query to retrievers"}}
 
-        SPLIT{{"Split query<br/>to retrievers"}}
+        DENSE["Dense retrieval<br/>bi-encoder + numpy dot product<br/>(n_chunks, 384) index"]
+        DTOP["Dense top-30<br/>by cosine similarity"]
 
-        subgraph RetrieverPair["Dense + lexical retrieval"]
-            direction LR
-            DENSE["Dense retrieval<br/>bi-encoder + numpy dot product<br/>over (n_chunks, 384) index"]
-            BM25["BM25 retrieval<br/>rank-bm25 over tokenized corpus<br/>k1 = 1.5, b = 0.75"]
-        end
-
-        subgraph TopCandidates["Initial candidates"]
-            direction LR
-            DTOP["Dense top-30<br/>by cosine similarity"]
-            BTOP["BM25 top-30<br/>by BM25 score"]
-        end
+        BM25["BM25 retrieval<br/>rank-bm25 over tokenized corpus<br/>k1 = 1.5, b = 0.75"]
+        BTOP["BM25 top-30<br/>by BM25 score"]
 
         SPLIT --> DENSE
-        SPLIT --> BM25
         DENSE --> DTOP
+
+        SPLIT --> BM25
         BM25 --> BTOP
     end
 
     subgraph Fusion["2. Rank fusion"]
         direction TB
-        RRF["Reciprocal Rank Fusion<br/>score = sum 1 / (60 + rank)<br/>across both retrievers"]
-        FUSED["Unified top-30 candidates<br/>score scales unified by rank fusion"]
+        RRF["Reciprocal Rank Fusion<br/>score = sum 1 / (60 + rank)<br/>across dense + BM25 results"]
+        FUSED["Unified top-30 candidates<br/>scores normalized by rank fusion"]
+
+        DTOP --> RRF
+        BTOP --> RRF
         RRF --> FUSED
     end
 
     subgraph Diversification["3. Optional diversification"]
         direction TB
         MMRCHECK{"Diversify results?"}
-        MMR["MMR rerank<br/>lambda = 0.7 default<br/>maximize relevance while reducing redundancy"]
+
+        MMR["MMR rerank<br/>lambda = 0.7<br/>balance relevance and redundancy"]
+
         RERANK_IN["Top-30 candidates<br/>diversified only when MMR is enabled"]
 
-        MMRCHECK -->|"use_mmr = true<br/>redundancy-prone query"| MMR
-        MMRCHECK -->|"use_mmr = false<br/>default path"| RERANK_IN
+        MMRCHECK -->|"yes<br/>use_mmr = true"| MMR
         MMR --> RERANK_IN
+
+        MMRCHECK -->|"no<br/>default path"| RERANK_IN
     end
 
     subgraph Reranking["4. Cross-encoder reranking"]
         direction TB
         RERANK["Cross-encoder rerank<br/>ms-marco-MiniLM-L-6-v2<br/>about 30 query-chunk pairs<br/>output: raw logits"]
+
         FLOOR{"Any score above<br/>MIN_SIMILARITY?"}
+
         EMPTY(["status: empty<br/>no chunks crossed<br/>rerank floor"])
+
         TOPK["Select top-k<br/>by rerank score<br/>default k = 5"]
 
         RERANK --> FLOOR
@@ -57,30 +60,32 @@ flowchart TD
     subgraph Output["5. Output envelope"]
         direction TB
         ENVELOPE["Build result envelope<br/>chunk_id, doc_id, title,<br/>snippet, score,<br/>retrieval_signals"]
+
         OUT(["status: ok<br/>results: chunk envelopes<br/>same contract as Lab 06"])
 
         TOPK --> ENVELOPE
         ENVELOPE --> OUT
     end
 
-    subgraph Latency["Latency notes<br/>(CPU laptop)"]
+    subgraph Latency["6. Latency notes<br/>(CPU laptop)"]
         direction TB
-        L1["Dense: about 10-50 ms"]
-        L2["BM25: about 1-5 ms"]
-        L3["RRF: about 1 ms"]
-        L4["MMR: about 5-20 ms"]
-        L5["Cross-encoder: about 300-1500 ms<br/>dominant cost"]
+        L1["Dense retrieval<br/>about 10-50 ms"]
+        L2["BM25 retrieval<br/>about 1-5 ms"]
+        L3["RRF fusion<br/>about 1 ms"]
+        L4["MMR rerank<br/>about 5-20 ms"]
+        L5["Cross-encoder rerank<br/>about 300-1500 ms<br/>dominant cost"]
+
+        L1 --> L2
+        L2 --> L3
+        L3 --> L4
+        L4 --> L5
     end
 
     Q --> SPLIT
-
-    DTOP --> RRF
-    BTOP --> RRF
-
     FUSED --> MMRCHECK
     RERANK_IN --> RERANK
-
-    Reranking -.-> Latency
+    OUT -.-> Latency
+    EMPTY -.-> Latency
 
     classDef retriever fill:#dfd,stroke:#080,stroke-width:1px,color:#064e3b;
     classDef fusion fill:#cef,stroke:#247,stroke-width:1px,color:#12355b;
