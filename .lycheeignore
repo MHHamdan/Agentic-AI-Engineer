@@ -52,8 +52,7 @@
 # Note: opentelemetry-genai-conventions.md, platform-fanout-and-portability.md, and Lab 18 authored in batch 26.
 # Note: online-evaluator-registration.md, tail-based-sampling.md, and Lab 19 authored in batch 27.
 # Note: drift-detection.md, agent-as-judge-calibration.md, and Lab 20 authored in batch 28.
-# Module 6 (cost attribution).
-^.*/concepts/evaluation/cost-attribution\.md$
+# Note: cost-attribution.md, adaptive-sampling.md, and Lab 21 authored in batch 29.
 # Module 7 (multi-turn evaluation).
 ^.*/concepts/evaluation/multi-turn-evaluation\.md$
 # Evaluation-frameworks deep-dive (Module 3+ territory).
