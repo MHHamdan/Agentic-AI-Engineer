@@ -48,11 +48,7 @@ flowchart LR
 ```
 ````
 
-For diagrams reused in multiple pages, embed the SVG instead:
-
-```markdown
-![Agent loop](../diagrams/rendered/agent-loop.svg)
-```
+For diagrams reused in multiple pages, embed a pre-rendered SVG instead. Use standard image-embed syntax — `![Diagram label]` followed by a parenthesised path like `./rendered/agent-loop.svg`. The `rendered/` directory is generated on demand via the render command below; in most pages, the inline mermaid block above is the simpler choice.
 
 The page also links to the `.mmd` source so contributors can find the editable version. Use a quoted source line at the top or bottom of the page, naming the relative path in inline code (no link target needed — the file lives in this folder and is easy to find).
 
