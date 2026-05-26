@@ -1,6 +1,6 @@
 # Path 06 — Evaluation & Observability
 
-> 🔴 Advanced · ⏱ 18-25 hours (Modules 1-3 shipped — full path estimated ~50h when complete) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · 🚧 Path 06 in progress (Modules 1-3 shipped; Modules 4-7 in future batches)
+> 🔴 Advanced · ⏱ 18-25 hours (Modules 1-4 shipped — full path estimated ~50h when complete) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · 🚧 Path 06 in progress (Modules 1-4 shipped; Modules 5-7 in future batches)
 
 The production layer. Path 02's Lab 09 and Path 03's Lab 16 give you the evaluation *mechanism* — metric implementations, hand-curated fixtures, the aggregate-then-slice-then-per-agent discipline. Path 06 connects that mechanism to the operational reality: live trace ingestion, distributed-tracing correlation across parallel sub-agents, drift detection on metric distributions, alerting on regressions, agent-as-judge calibration against human ground truth, cost attribution across users and tasks and tenants.
 
@@ -88,13 +88,29 @@ The vendor-neutral counterpart to Module 2. Same Lab 14 supervisor agent; instru
 
 - [🧠 OpenTelemetry portable tracing](../../quizzes/evaluation/opentelemetry-portable.md) — 8 single-select questions covering the GenAI conventions (3), fanout patterns (2), and Lab 17 vs Lab 18 trade-offs (3). Passing: 6/8.
 
-### Modules 4-7 — planned, not yet built
+### Module 4 — Online evaluation + tail-based sampling (batch 27)
 
-These modules will be added in future batches. The plan is sketched here so you can see where Modules 1-3 lead:
+Third Path 06 lab. The production-runtime layer that sits on top of Modules 2 and 3: register evaluators against the live trace stream (platform-side via LangSmith Rules or code-side via SDK polling); sample intelligently at the Collector layer with the `tail_sampling` processor; close the production-to-fixture loop via annotation queues.
 
-- **Module 4 — Online evaluation.** Register evaluators against a live trace stream. Tail-based sampling. Alert on metric regressions.
-- **Module 5 — Drift detection + agent-as-judge calibration.** Periodic human-calibrated judge. Distribution-drift detection (KS-test, PSI, rolling windows).
-- **Module 6 — Cost attribution + tail-based sampling at scale.** Multi-dimensional cost (per-user, per-task, per-tenant). Production-scale sampling decisions. OTel Collector deep-dive.
+**Two concept pages**:
+
+- [📖 Online evaluator registration](../../concepts/evaluation/online-evaluator-registration.md) — ~13 min. The shift from offline (Lab 09 / 16) to online: stored fixture → live stream. LangSmith Automations as the canonical mechanism: `(filter, sample_rate, action)` triples. Six action types (annotation queue / dataset / webhook / online evaluator / custom code / alert) with their canonical execution order. The cross-rule polling gotcha. The Python SDK polling pattern as the code-side equivalent: `list_runs` + iterate + `create_feedback`. Reference-free evaluators (structural-property checks, LLM-as-judge with criteria-only prompts, heuristic confidence proxies). LangSmith Engine (May 2026) as the AI layer on top.
+- [📖 Tail-based sampling](../../concepts/evaluation/tail-based-sampling.md) — ~12 min. Head-vs-tail distinction: cheap-and-blind vs informed-but-buffered. Where tail sampling lives (the OTel Collector, not the application). Six policy types (`status_code`, `latency`, `numeric_attribute`, `string_attribute`, `probabilistic`, `boolean_attribute`, `composite`). First-match-wins evaluation order. A representative 5-policy production stack. The load-balancing constraint (all spans of a trace must reach the same Collector — fixed via two-tier `loadbalancingexporter` topology). Memory budget arithmetic. The complementary relationship with LangSmith Rules.
+
+**One lab**:
+
+- [🧪 Lab 19 — Online evaluation and tail-based sampling](../../labs/19-online-evaluation-and-sampling/) — 26 cells, ~80-100 min. Two halves: Half A wires LangSmith SDK polling (synthetic trace generation via `client.create_run`, reference-free `citation_preservation` evaluator, `create_feedback` feedback round-trip, UI Rule equivalence walkthrough, cost arithmetic). Half B walks through a real `otel-collector-config.yaml` with a 5-policy stack and simulates the policy logic in Python on 1,000 synthetic trace summaries. Closes with the synthesis on when each pattern earns its place. Cost: ~$0.005 (the lab is mostly free; one optional LLM-as-judge variant is the only cost source).
+
+**One quiz**:
+
+- [🧠 Online evaluation and tail-based sampling](../../quizzes/evaluation/online-evaluation.md) — 8 single-select questions covering Rules (3), tail sampling (3), and the decision boundary (2). Passing: 6/8.
+
+### Modules 5-7 — planned, not yet built
+
+These modules will be added in future batches. The plan is sketched here so you can see where Modules 1-4 lead:
+
+- **Module 5 — Drift detection + agent-as-judge calibration.** Periodic human-calibrated judge. Distribution-drift detection (KS-test, PSI, rolling windows). Builds on Module 4's online-evaluator scores as the input stream.
+- **Module 6 — Cost attribution + sampling at scale.** Multi-dimensional cost (per-user, per-task, per-tenant) via OTel baggage. OTel Collector deep-dive. Adaptive sampling.
 - **Module 7 — Multi-turn (threaded) evaluation.** Extending Lab 16's metric set for conversation-level trajectories.
 
 Each module is ~1-2 batches of work. Path 06 v1 is roughly 6-10 batches end-to-end.
@@ -108,7 +124,7 @@ Each module is ~1-2 batches of work. Path 06 v1 is roughly 6-10 batches end-to-e
 - **Embedding-drift detection on vector stores.** Path 02 v2 territory (we'd add it as a Lab 09 extension).
 - **Multi-tenant data isolation, GDPR/SOC2 compliance.** Production concerns; out of scope for the evaluation-and-observability path proper.
 
-## Module 1-3 status
+## Module 1-4 status
 
 | | Status |
 |---|---|
@@ -124,7 +140,11 @@ Each module is ~1-2 batches of work. Path 06 v1 is roughly 6-10 batches end-to-e
 | `platform-fanout-and-portability.md` | ✅ shipped (batch 26) |
 | Lab 18 (OpenTelemetry portable tracing) | ✅ shipped (batch 26) — solution in a follow-up batch |
 | Module 3 quiz (`opentelemetry-portable.md`) | ✅ shipped (batch 26) |
-| Modules 4-7 | ⏳ future batches |
+| `online-evaluator-registration.md` | ✅ shipped (batch 27) |
+| `tail-based-sampling.md` | ✅ shipped (batch 27) |
+| Lab 19 (Online evaluation and sampling) | ✅ shipped (batch 27) — solution in a follow-up batch |
+| Module 4 quiz (`online-evaluation.md`) | ✅ shipped (batch 27) |
+| Modules 5-7 | ⏳ future batches |
 
 ## How this path connects to what you've built
 
