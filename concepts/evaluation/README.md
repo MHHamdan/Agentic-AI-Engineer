@@ -17,7 +17,7 @@ The pages here are a four-step progression from "what is RAG evaluation" to "wha
 
 These four pages are prerequisites for [Lab 09: Evaluating agentic RAG](../../labs/09-evaluating-agentic-rag/).
 
-## Path 06 — Production evaluation & observability (Modules 1-3 shipped)
+## Path 06 — Production evaluation & observability (Modules 1-4 shipped)
 
 The pages above (Path 02's RAG-evaluation primer) cover offline evaluation against hand-curated fixture sets. Path 06 extends that mechanism to production: live trace ingestion, drift detection, agent-as-judge calibration, distributed-tracing correlation across parallel sub-agents.
 
@@ -50,7 +50,18 @@ Lab applying these: [🧪 Lab 18 — OpenTelemetry portable tracing](../../labs/
 
 Quiz: [🧠 OpenTelemetry portable tracing](../../quizzes/evaluation/opentelemetry-portable.md) — 8 questions covering Module 3 + Lab 17 vs Lab 18 trade-offs.
 
-These six pages open [Path 06 — Evaluation & Observability](../../learning-paths/06-evaluation-observability/). The path is incremental; Modules 1-3 ship framing + LangSmith-native + OTel-portable; Modules 4-7 build on top of either path in future batches.
+### Module 4 — Online evaluation + tail-based sampling (batch 27)
+
+| Page | Read time | Covers |
+|------|-----------|--------|
+| 📖 [online-evaluator-registration.md](./online-evaluator-registration.md) | ~13 min | The shift from offline (Lab 09/16) to online: stored fixture → live trace stream. LangSmith Automations as the canonical mechanism: `(filter, sample_rate, action)` triples with six action types (annotation queue, dataset, webhook, online evaluator, custom code, alert) and their canonical execution order. The cross-rule polling gotcha. The Python SDK polling pattern as the code-side equivalent: `list_runs` + iterate + `create_feedback`. Reference-free evaluators (structural-property checks, LLM-as-judge with criteria-only prompts). LangSmith Engine (May 2026) as the AI layer on top. |
+| 📖 [tail-based-sampling.md](./tail-based-sampling.md) | ~12 min | Head-vs-tail distinction: cheap-and-blind vs informed-but-buffered. Where tail sampling lives (the OTel Collector, not the application). Six policy types (`status_code`, `latency`, `numeric_attribute`, `string_attribute`, `probabilistic`, `boolean_attribute`, `composite`). First-match-wins evaluation order. A representative 5-policy production stack with the cost-reduction arithmetic. The load-balancing constraint and the two-tier `loadbalancingexporter` topology that solves it. Memory budget arithmetic (`num_traces ≈ traces/sec × decision_wait × safety_margin`). When tail sampling earns its place vs LangSmith Rules. |
+
+Lab applying these: [🧪 Lab 19 — Online evaluation and tail-based sampling](../../labs/19-online-evaluation-and-sampling/).
+
+Quiz: [🧠 Online evaluation and tail-based sampling](../../quizzes/evaluation/online-evaluation.md) — 8 questions covering Rules (3), tail sampling (3), and the decision boundary (2).
+
+These eight pages open [Path 06 — Evaluation & Observability](../../learning-paths/06-evaluation-observability/). The path is incremental; Modules 1-4 ship framing + LangSmith-native + OTel-portable + online-evaluation-and-sampling; Modules 5-7 add drift detection, cost attribution, and multi-turn evaluation in future batches.
 
 ## Pending pages (future Path 06 modules)
 
