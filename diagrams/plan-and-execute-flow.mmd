@@ -1,20 +1,3 @@
-%% Plan-and-execute pattern: Lab 12's planner-executor flow.
-%%
-%% Extends supervisor-worker-flow.mmd (Lab 10) and
-%% generator-critic-flow.mmd (Lab 11) with the planner agent, the
-%% structured Plan artifact, the dependency-resolving dispatcher, the
-%% bounded executor pool, and the bounded replanning cycle.
-%%
-%% Same diagrammatic vocabulary as the two prior multi-agent diagrams:
-%%   - user / terminal nodes at the edges
-%%   - agent subgraphs in the center (each agent = one Lab 01 loop)
-%%   - solid edges for primary flow; dotted edges for failure modes
-%%   - structured payloads labeled on the edges
-%%
-%% The execution pool is bounded (MAX_PARALLEL_EXECUTORS = 3); the
-%% replanning cycle is bounded (MAX_REPLANS = 2). Dotted edges show the
-%% four plan-and-execute-specific failure modes.
-
 flowchart LR
     U(["👤 User"])
     Final(["📝 Final answer"])
