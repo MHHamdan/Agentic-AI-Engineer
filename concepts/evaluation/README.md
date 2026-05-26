@@ -17,7 +17,7 @@ The pages here are a four-step progression from "what is RAG evaluation" to "wha
 
 These four pages are prerequisites for [Lab 09: Evaluating agentic RAG](../../labs/09-evaluating-agentic-rag/).
 
-## Path 06 — Production evaluation & observability (Modules 1-6 shipped)
+## Path 06 — Production evaluation & observability (✅ v1 complete — all 7 modules shipped)
 
 The pages above (Path 02's RAG-evaluation primer) cover offline evaluation against hand-curated fixture sets. Path 06 extends that mechanism to production: live trace ingestion, drift detection, agent-as-judge calibration, distributed-tracing correlation across parallel sub-agents.
 
@@ -83,14 +83,28 @@ Lab applying these: [🧪 Lab 21 — Cost attribution and adaptive sampling](../
 
 Quiz: [🧠 Cost attribution and adaptive sampling](../../quizzes/evaluation/cost-and-sampling.md) — 8 questions covering attribution mechanism (3), sampling mechanism (3), and the production decision boundary (2).
 
-These twelve pages open [Path 06 — Evaluation & Observability](../../learning-paths/06-evaluation-observability/). The path is incremental; Modules 1-6 ship the full production-operations story (framing + instrumentation × 2 + online-evaluation + drift-and-calibration + cost-attribution-and-sampling); Module 7 (multi-turn evaluation) closes Path 06 v1 in a future batch.
+### Module 7 — Multi-turn (threaded) evaluation (batch 30)
 
-## Pending pages (future Path 06 modules)
+| Page | Read time | Covers |
+|------|-----------|--------|
+| 📖 [multi-turn-evaluation.md](./multi-turn-evaluation.md) | ~14 min | The single-turn-trap (every individual turn passes; the conversation as a whole fails). The three shifts from 2024 → 2026 that moved multi-turn from optional to required. The four canonical conversation-level metrics (Conversation Completeness, Knowledge Retention, Role Adherence, Turn Relevancy) with operational definitions. The conversation-level vs turn-level vs trajectory distinction with O(n × k) framing. Threads as first-party concept (LangSmith October 2025). The LangChain Deep Agents five-pattern framework. Span-attached scores for CI/production parity. |
+| 📖 [conversation-simulation.md](./conversation-simulation.md) | ~11 min | Why simulation: the alternative is weeks of hand-curated test conversations. The three persona archetypes (cooperative, distracted, adversarial) with system-prompt sketches and the failure modes each catches. The 50/30/20 traffic distribution and the cooperative-only trap. The production tools landscape (DeepEval `ConversationSimulator`, MLflow, LivePerson). The sliding-window pattern with the cross-window-contradiction trade-off. The persona-consistency problem and three mitigations. The Sim2Real gap — why simulation supplements rather than replaces production-trace evaluation. |
 
-The following are planned but not yet authored:
+Lab applying these: [🧪 Lab 22 — Multi-turn (threaded) evaluation](../../labs/22-multi-turn-evaluation/).
 
-- `multi-turn-evaluation.md` — trajectory metrics across conversation turns; LangChain Oct 2025 thread-level evals (Module 7).
+Quiz: [🧠 Multi-turn (threaded) evaluation](../../quizzes/evaluation/multi-turn.md) — 8 questions covering conversation metrics (3), trajectory + simulator (3), and the production decision boundary (2).
+
+---
+
+These fourteen pages open [Path 06 — Evaluation & Observability](../../learning-paths/06-evaluation-observability/). The path documents the full production-readiness stack for agentic AI evaluation and observability across seven modules end-to-end: framing → instrumentation × 2 → online evaluation → drift detection + calibration → cost attribution + adaptive sampling → multi-turn evaluation. **Path 06 v1 is complete.**
+
+## Pending pages (Path 06 v2)
+
+The following are planned for v2 but not yet authored:
+
 - `evaluation-frameworks-deep-dive.md` — LangSmith vs Braintrust vs Langfuse vs Phoenix vs Laminar; concrete code; migration paths.
+- Embedding-space drift detection (the RAG-input-side complement to Module 5's score-side drift).
+- Adversarial red-teaming at scale (DeepTeam-style orchestration).
 
 ## Where this is used
 

@@ -1,6 +1,6 @@
 # Path 06 — Evaluation & Observability
 
-> 🔴 Advanced · ⏱ 22-30 hours (Modules 1-6 shipped — full path estimated ~50h when complete) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · 🚧 Path 06 in progress (Modules 1-6 shipped; Module 7 in a future batch)
+> 🔴 Advanced · ⏱ 26-35 hours (Path 06 v1 complete — all 7 modules shipped) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · ✅ Path 06 v1 complete (Modules 1-7 shipped; recipes/patterns/projects remain for v2)
 
 The production layer. Path 02's Lab 09 and Path 03's Lab 16 give you the evaluation *mechanism* — metric implementations, hand-curated fixtures, the aggregate-then-slice-then-per-agent discipline. Path 06 connects that mechanism to the operational reality: live trace ingestion, distributed-tracing correlation across parallel sub-agents, drift detection on metric distributions, alerting on regressions, agent-as-judge calibration against human ground truth, cost attribution across users and tasks and tenants.
 
@@ -139,13 +139,49 @@ Fifth Path 06 lab. The production-operations closer that ties the prior modules 
 
 - [🧠 Cost attribution and adaptive sampling](../../quizzes/evaluation/cost-and-sampling.md) — 8 single-select questions covering the day-one instrumentation rule, the four token layers, baggage-vs-span-attributes, cost-driven policy types, the two-tier topology constraint, the external control loop, the 4KB baggage limit, and the three-layer enforcement ladder. Passing: 6/8.
 
-### Module 7 — planned, not yet built
+### Module 7 — Multi-turn (threaded) evaluation (batch 30)
 
-This module will be added in a future batch. The plan is sketched here so you can see where Modules 1-6 lead:
+Sixth and final Path 06 lab. The trajectory specialization that closes Path 06 v1: extend the prior modules' single-trace evaluation patterns to conversation-level (threaded) trajectories. Implements three of the four canonical conversation-level metrics from scratch; builds a minimal `ConversationSimulator` with cooperative / distracted / adversarial personas; demonstrates the single-turn-trap (every individual turn passing while the conversation as a whole fails).
 
-- **Module 7 — Multi-turn (threaded) evaluation.** Extending Lab 16's metric set for conversation-level trajectories.
+**Two concept pages**:
 
-Module 7 is ~1-2 batches of work and closes Path 06 v1.
+- [📖 Multi-turn (threaded) evaluation](../../concepts/evaluation/multi-turn-evaluation.md) — ~14 min. The single-turn-trap framing (the voice-AI insurance team at 92% faithfulness with chronic "going in circles" complaints). The three shifts from 2024 → 2026 that moved multi-turn from optional to required. The four canonical conversation-level metrics with operational definitions: Conversation Completeness (the single most important), Knowledge Retention, Role Adherence, Turn Relevancy. The conversation-level vs turn-level vs trajectory distinction (three units of evaluation answering three different questions). The O(n × k) framing for trajectory evaluation. Threads as first-party concept (LangSmith's October 2025 release; the pattern that spread across the tool landscape). The LangChain Deep Agents five-pattern framework for production agent evaluation. The span-attached-scores operational pattern that lets CI and production use the same metric definitions.
+- [📖 Conversation simulation](../../concepts/evaluation/conversation-simulation.md) — ~11 min. Why hand-curated test suites don't scale and what simulators solve. The three persona archetypes (cooperative, distracted, adversarial) with system-prompt sketches and the failure modes each catches. The 50/30/20 traffic-distribution argument and the cooperative-only trap as the silent killer of simulation suites. The production tools landscape (DeepEval `ConversationSimulator`, MLflow `ConversationSimulator`, LivePerson enterprise tool). The sliding-window pattern for long conversations (with the cross-window-contradiction trade-off). The persona-consistency problem (LLMs simulating users drift toward generic-helpful behavior past turn 10-12) and three mitigations. The Sim2Real gap and why simulation supplements rather than replaces production-trace evaluation.
+
+**One lab**:
+
+- [🧪 Lab 22 — Multi-turn (threaded) evaluation](../../labs/22-multi-turn-evaluation/) — 29 cells, ~75-95 min. **Half A** implements three of the four canonical conversation-level metrics from scratch (Conversation Completeness with intent extraction + per-intent satisfaction check; Knowledge Retention with fact extraction + re-ask detection; Role Adherence with YAML role-spec + per-turn LLM-as-judge); applies them to three hand-crafted conversations where every individual turn passes a single-turn check but each conversation fails differently (Completeness fail; Retention fail; Adherence fail). **Half B** builds a minimal `ConversationSimulator` class, defines three personas (cooperative, distracted, adversarial), runs them against a small scheduling agent, and scores the resulting conversations. Synthesis assembles the full Path 06 v1 production-readiness stack. Cost: ~$0.02 (uses `gpt-4o-mini` at temperature=0.1 with bounded LLM-as-judge calls; gracefully handles no-API-key mode — all 12 code cells execute, only the call sites skip).
+
+**One quiz**:
+
+- [🧠 Multi-turn (threaded) evaluation](../../quizzes/evaluation/multi-turn.md) — 8 single-select questions covering the single-turn-trap diagnosis, Conversation Completeness as the primary metric, the three-units-of-evaluation distinction, the O(n × k) trajectory complexity, persona archetypes, the cooperative-only trap, the sliding-window pattern, and the Sim2Real gap. Passing: 6/8.
+
+---
+
+## ✅ Path 06 v1 complete
+
+With Module 7 shipped, **Path 06 v1 is structurally complete**. All seven modules ship the full production-readiness stack for agentic AI evaluation and observability:
+
+| Module | Lab | What it ships |
+|---|---|---|
+| 1 — Framing | (concepts only) | The observability three-pillars; what changes for agents |
+| 2 — LangSmith trace ingestion | Lab 17 | Vendor-native instrumentation patterns |
+| 3 — OpenTelemetry portable layer | Lab 18 | Vendor-neutral instrumentation; fanout to multiple backends |
+| 4 — Online evaluation + tail sampling | Lab 19 | Register evaluators on the live trace stream; tail-based sampling at the Collector |
+| 5 — Drift detection + judge calibration | Lab 20 | KS-test / PSI / Wasserstein for score-stream drift; Cohen's kappa for judge calibration |
+| 6 — Cost attribution + adaptive sampling | Lab 21 | OTel baggage for cost identity propagation; cost-driven sampling policies |
+| 7 — Multi-turn (threaded) evaluation | Lab 22 | Conversation-level metrics; persona-driven simulation |
+
+The full operational picture: instrument → score → monitor for drift → calibrate to humans → attribute cost → sample by cost → evaluate at the conversation level. Each module earns its place; none is redundant.
+
+**What remains for Path 06 v2**:
+- **Recipes** — opinionated end-to-end production setups (LangSmith-native recipe; OpenTelemetry recipe; multi-tool integration recipes).
+- **Patterns** — cross-cutting patterns (cost-aware retrieval; drift-triggered retraining; judge-ensemble patterns).
+- **Projects** — capstone projects that integrate all six labs into a single production-deployable agent observability stack.
+- **Lab solutions** — reference solutions for Labs 17-22 (catchup batch).
+- **`evaluation-frameworks-deep-dive.md`** — LangSmith vs Braintrust vs Langfuse vs Phoenix vs Laminar at code level.
+- **Embedding-space drift detection** — the RAG-input-side complement to Module 5's score-side drift.
+- **Adversarial red-teaming at scale** — DeepTeam-style orchestration.
 
 ## What's not in this path (anti-scope)
 
@@ -156,7 +192,7 @@ Module 7 is ~1-2 batches of work and closes Path 06 v1.
 - **Embedding-drift detection on vector stores.** Path 02 v2 territory (we'd add it as a Lab 09 extension).
 - **Multi-tenant data isolation, GDPR/SOC2 compliance.** Production concerns; out of scope for the evaluation-and-observability path proper.
 
-## Module 1-6 status
+## Module 1-7 status
 
 | | Status |
 |---|---|
@@ -184,7 +220,11 @@ Module 7 is ~1-2 batches of work and closes Path 06 v1.
 | `adaptive-sampling.md` | ✅ shipped (batch 29) |
 | Lab 21 (Cost attribution and adaptive sampling) | ✅ shipped (batch 29) — solution in a follow-up batch |
 | Module 6 quiz (`cost-and-sampling.md`) | ✅ shipped (batch 29) |
-| Module 7 | ⏳ future batch |
+| `multi-turn-evaluation.md` | ✅ shipped (batch 30) |
+| `conversation-simulation.md` | ✅ shipped (batch 30) |
+| Lab 22 (Multi-turn evaluation) | ✅ shipped (batch 30) — solution in a follow-up batch |
+| Module 7 quiz (`multi-turn.md`) | ✅ shipped (batch 30) |
+| **Path 06 v1** | **✅ complete (Modules 1-7 shipped)** |
 
 ## How this path connects to what you've built
 

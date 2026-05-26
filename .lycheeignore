@@ -53,9 +53,8 @@
 # Note: online-evaluator-registration.md, tail-based-sampling.md, and Lab 19 authored in batch 27.
 # Note: drift-detection.md, agent-as-judge-calibration.md, and Lab 20 authored in batch 28.
 # Note: cost-attribution.md, adaptive-sampling.md, and Lab 21 authored in batch 29.
-# Module 7 (multi-turn evaluation).
-^.*/concepts/evaluation/multi-turn-evaluation\.md$
-# Evaluation-frameworks deep-dive (Module 3+ territory).
+# Note: multi-turn-evaluation.md, conversation-simulation.md, and Lab 22 authored in batch 30 (Path 06 v1 complete).
+# Evaluation-frameworks deep-dive (Path 06 v2 territory).
 ^.*/concepts/evaluation/evaluation-frameworks-deep-dive\.md$
 
 # Labs solutions are now authored:
