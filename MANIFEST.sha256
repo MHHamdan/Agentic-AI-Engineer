@@ -1,7 +1,5 @@
-39b3c78c2d8572280ad19c012833830ab2069e8036a18b711c0c4f6ebc76e06a  CHANGELOG.md
-13a1021d553a26e61901fd46f5af697c9e470f647f341f8e90b141de1cac7717  learning-paths/03-multi-agent-systems/README.md
-9c362d1693ec3d737b7ea33648641584a8eeecd66074c621a8d2cf6f7bb4724a  learning-paths/03-multi-agent-systems/patterns/01-handoff-contracts.md
-b4416b2fc472ba823b6d14bd613a17611d78edaca9fc7fea0fbd72d30984932b  learning-paths/03-multi-agent-systems/patterns/02-shared-state-boundaries.md
-74c3c0e9f6c58606b593c0f3131caabb1b31e50241ee12f051e30db777c262bb  learning-paths/03-multi-agent-systems/patterns/03-escalation-and-fallback.md
-b35a682c9936d8e1c954a9dcdae32704deb09841bed8f920e5121959137b8260  learning-paths/03-multi-agent-systems/patterns/README.md
-131de57adf7a5d2831be459d93d679cd5cf8844d7f3ad19439a6273700b6d4fa  learning-paths/03-multi-agent-systems/patterns/_template.md
+38dcaf1eaec919f2194de904dfd43714b94030608427800f6694231a38a3e89c  CHANGELOG.md
+466a2fcbfd82425f1b7d9c46d53125455bbe60d63da1a69da42b2839b4e9db36  labs/14-langgraph-supervisor-bridge/README.md
+e3672dda4994ac8328dcf44e25c1dc3ccdc5c88931516740167b3eaf3f89fdee  labs/15-langgraph-plan-execute-bridge/README.md
+cc7754a8b8f77e2ca762bdef370fb96bae2e2c4da1ee5cd55ce5cb5e2921adc2  labs/16-multi-agent-evaluation-from-scratch/README.md
+0850c11bde645c93986bd84384d1331fda6fbf7d5da126880fe3c1f95ef25f7e  learning-paths/03-multi-agent-systems/README.md

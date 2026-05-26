@@ -142,7 +142,7 @@ Wall-clock dominated by `fetch_page` (live web). Typical end-to-end: 10-15 secon
 
 ## Solution
 
-A reference implementation will land in `solution/lab.ipynb` in a follow-up batch. Two design decisions worth flagging up front:
+A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) with notes in [`solution/README.md`](./solution/README.md). 21 cells vs the lab's 33 — the per-step failure-mode walks and the production-readiness recap are condensed; the supervisor + researcher + writer graph reads end-to-end. Two design decisions worth flagging up front:
 
 - **The supervisor is a manual node, not `create_supervisor()`.** Per the upstream recommendation. This keeps the supervisor's logic visible and editable.
 - **The state schema is a `TypedDict` extending `MessagesState`.** Per the `create_agent` constraint (Pydantic state isn't supported there). The extra fields (`findings`, `citations`, `brief_status`) live alongside the inherited `messages` field.
@@ -151,4 +151,3 @@ A reference implementation will land in `solution/lab.ipynb` in a follow-up batc
 
 - After completing the lab, take the [framework bridge quiz](../../quizzes/multi-agent/framework-bridge.md).
 - [Lab 15](../15-langgraph-plan-execute-bridge/) rebuilds Lab 12's plan-and-execute in LangGraph using the `Send` primitive — the stronger framework value case.
-- The follow-up solutions batch will provide reference implementations for both Lab 14 and Lab 15.

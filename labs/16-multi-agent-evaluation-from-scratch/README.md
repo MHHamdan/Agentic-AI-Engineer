@@ -116,7 +116,7 @@ Wall-clock: 100-130 minutes including reading both concept pages and working thr
 
 ## Solution
 
-A reference implementation will land in `solution/lab.ipynb` in a follow-up batch. Two design choices worth flagging up front:
+A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) with notes in [`solution/README.md`](./solution/README.md). 19 cells vs the lab's 32 — the per-metric design discussions and the synthesis section are condensed; the seven-metric harness reads end-to-end against `trace_set.jsonl`. Two design choices worth flagging up front:
 
 - **The harness is one Python module, not one notebook.** Each metric is a standalone pure function (no globals, no shared state). The notebook calls into them. This keeps the metrics testable in isolation — you can move them to a `harness.py` file later without rewriting them.
 - **The trace model uses pydantic `StrictModel` with `extra="forbid"`.** Same discipline as Lab 02 and the rest of Path 03. Trace fixtures are structured data; the validator catches typos and field-drift early. The cost is that adding a new field to the trace shape requires updating both the model and every fixture.
@@ -127,7 +127,6 @@ Path 03 v1 is complete after this lab.
 
 The natural follow-ups:
 
-- **Solutions for Labs 14, 15, and 16.** Reference implementations in the same pattern as the earlier solutions batches.
 - **Path 06 — Evaluation & Observability.** Production-grade evaluation: LangSmith depth, OpenTelemetry, drift detection, agent-as-judge calibration, online evaluation. The from-scratch harness from Lab 16 is the conceptual foundation.
 - **Path 03 v2** — possible future extensions: Lab 13 (multi-agent RAG) framework-bridge variant, multi-turn evaluation, Lab 11 (critic) framework-bridge variant.
 

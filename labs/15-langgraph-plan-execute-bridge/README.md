@@ -123,7 +123,7 @@ Total: 6-12 LLM calls per task, ~$0.04-$0.08 at gpt-4o-mini rates. Wall-clock do
 
 ## Solution
 
-A reference implementation will land in `solution/lab.ipynb` in a follow-up batch. Two design decisions worth flagging up front:
+A reference implementation lives in [`solution/lab.ipynb`](./solution/lab.ipynb) with notes in [`solution/README.md`](./solution/README.md). 25 cells vs the lab's 32 — the dispatcher transformation walkthrough and the wall-clock parallel-vs-sequential comparison are condensed; the planner → dispatch → executors → replanner → synthesize path reads end-to-end. Two design decisions worth flagging up front:
 
 - **The dispatcher is the only thing that materially changes shape.** Everything else from Lab 12 (planner, validator, executor, synthesizer) ports nearly verbatim. The framework value lives in the dispatcher transformation.
 - **The replanner becomes a graph edge, not a Python loop.** This is cleaner topologically but moves the replan-state bookkeeping into the state schema. The plan-signature dedup from Lab 12 lives in a state field; the `Command(goto="planner")` decision uses it.
@@ -132,4 +132,3 @@ A reference implementation will land in `solution/lab.ipynb` in a follow-up batc
 
 - After completing the lab, take the [framework bridge quiz](../../quizzes/multi-agent/framework-bridge.md).
 - This concludes Path 03's framework-bridge module. The next planned module (Module 6) extends Lab 09's evaluation harness for multi-agent: trajectory-level metrics, plan-quality scores, replan rate, citation preservation rate.
-- A follow-up solutions batch will provide reference implementations for Labs 14 and 15.

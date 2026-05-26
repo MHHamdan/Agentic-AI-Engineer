@@ -1,6 +1,6 @@
 # 03 · Multi-Agent Systems
 
-> 🟡 Intermediate · ⏱ 23–30 hours (Modules 1-6) + ~45 min Patterns (Batch 39) · 📍 Start here once you've completed Path 01 (recommended: also Path 02 for Modules 4 and 6) · ✅ Path 03 v1 complete (foundations, supervisor-worker, generator-critic, plan-and-execute, multi-agent RAG, framework bridge, evaluation) · 🚧 Path 03 v2 in progress (production patterns shipped batch 39)
+> 🟡 Intermediate · ⏱ 23–30 hours (Modules 1-6) + ~45 min Patterns (Batch 39) · 📍 Start here once you've completed Path 01 (recommended: also Path 02 for Modules 4 and 6) · ✅ Path 03 v1 complete + fully solutioned (foundations, supervisor-worker, generator-critic, plan-and-execute, multi-agent RAG, framework bridge, evaluation; every lab has a reference solution in its `solution/` subdirectory) · 🚧 Path 03 v2 in progress (production patterns shipped batch 39)
 
 ## Who this is for
 
@@ -222,11 +222,10 @@ These are explicitly out of scope for Modules 1-5 — they're scoped for future 
 
 ## What comes next
 
-Path 03 v1 closes with Module 6. Path 03 v2 has started with the production patterns directory shipped in Batch 39 — three reusable mechanisms (handoff contracts, shared-state boundaries, escalation and fallback) that plug into all six v1 modules. Path 06 v2 completion has freed the build queue for Path 03 v2 continuation.
+Path 03 v1 closes with Module 6 — fully solutioned (every lab in `labs/10-*` through `labs/16-*` has a reference implementation in its `solution/` subdirectory; solutions for Labs 10-13 shipped in Batch 19, solutions for Labs 14-16 shipped in Batch 23). Path 03 v2 has started with the production patterns directory shipped in Batch 39 — three reusable mechanisms (handoff contracts, shared-state boundaries, escalation and fallback) that plug into all six v1 modules. Path 06 v2 completion has freed the build queue for Path 03 v2 continuation.
 
 The planned next steps, in rough order:
 
-- **Solutions for Labs 14, 15, and 16.** Reference implementations in the same pattern as the Labs 01-13 solutions (batches 14 and 21). Still pending.
 - **Path 03 v2 additional patterns** (future batches). The Batch 39 set is the smallest useful one; the next candidates are patterns for per-agent cost budgeting, retry policies with exponential backoff, role-scope leakage detection, and cross-agent provenance tracking.
 - **Lab 13 (multi-agent RAG) framework-bridge variant.** A LangGraph implementation paralleling Lab 14's supervisor-bridge and Lab 15's plan-and-execute bridge — the "from scratch then framework" structure carried to Module 4.
 - **Lab 11 (critic) framework-bridge variant.** Same shape, for Module 2.
