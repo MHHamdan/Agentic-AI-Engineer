@@ -46,14 +46,12 @@
 ^.*/learning-paths/08-mathematical-foundations/?$
 ^.*/learning-paths/09-capstones/?$
 
-# Path 06 future Modules 5-7 content — not yet authored.
+# Path 06 future Modules 6-7 content — not yet authored.
 # Note: Lab 17 (Module 2 trace ingestion) authored in batch 25.
 # Note: langsmith-tracing-shape.md and online-vs-offline-evaluation.md authored in batch 25.
 # Note: opentelemetry-genai-conventions.md, platform-fanout-and-portability.md, and Lab 18 authored in batch 26.
 # Note: online-evaluator-registration.md, tail-based-sampling.md, and Lab 19 authored in batch 27.
-# Module 5 (drift detection + agent-as-judge calibration) concept pages.
-^.*/concepts/evaluation/drift-detection\.md$
-^.*/concepts/evaluation/agent-as-judge-calibration\.md$
+# Note: drift-detection.md, agent-as-judge-calibration.md, and Lab 20 authored in batch 28.
 # Module 6 (cost attribution).
 ^.*/concepts/evaluation/cost-attribution\.md$
 # Module 7 (multi-turn evaluation).

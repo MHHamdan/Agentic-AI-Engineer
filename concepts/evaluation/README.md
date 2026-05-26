@@ -17,7 +17,7 @@ The pages here are a four-step progression from "what is RAG evaluation" to "wha
 
 These four pages are prerequisites for [Lab 09: Evaluating agentic RAG](../../labs/09-evaluating-agentic-rag/).
 
-## Path 06 — Production evaluation & observability (Modules 1-4 shipped)
+## Path 06 — Production evaluation & observability (Modules 1-5 shipped)
 
 The pages above (Path 02's RAG-evaluation primer) cover offline evaluation against hand-curated fixture sets. Path 06 extends that mechanism to production: live trace ingestion, drift detection, agent-as-judge calibration, distributed-tracing correlation across parallel sub-agents.
 
@@ -61,14 +61,23 @@ Lab applying these: [🧪 Lab 19 — Online evaluation and tail-based sampling](
 
 Quiz: [🧠 Online evaluation and tail-based sampling](../../quizzes/evaluation/online-evaluation.md) — 8 questions covering Rules (3), tail sampling (3), and the decision boundary (2).
 
-These eight pages open [Path 06 — Evaluation & Observability](../../learning-paths/06-evaluation-observability/). The path is incremental; Modules 1-4 ship framing + LangSmith-native + OTel-portable + online-evaluation-and-sampling; Modules 5-7 add drift detection, cost attribution, and multi-turn evaluation in future batches.
+### Module 5 — Drift detection + agent-as-judge calibration (batch 28)
+
+| Page | Read time | Covers |
+|------|-----------|--------|
+| 📖 [drift-detection.md](./drift-detection.md) | ~14 min | The three flavors of LLM drift in 2026 (prompt drift, model drift with the GPT-4 Turbo silent-update story, eval-score drift). Why classical ML drift detection doesn't fully map. The four canonical statistical tests (KS-test, PSI, Wasserstein, chi-square) with a decision table. Rolling-window pattern with baseline/reference/current windows. Two-tier alerting thresholds + persistence requirements. Monitoring without labels via proxy signals (confidence distributions, abstain rates, output length histograms). Tool landscape: Evidently, NannyML, whylogs, Phoenix, FutureAGI. |
+| 📖 [agent-as-judge-calibration.md](./agent-as-judge-calibration.md) | ~13 min | The Zheng et al. 2023 problem statement three years later. Five named LLM-judge biases (position, verbosity, self-preference, format, calibration drift) with documented magnitudes and mitigations that survive production. Cohen's kappa with Landis & Koch interpretation ranges. The calibration loop: gold set + cadence + kappa-over-time. The 90/10 production split (~59.8% of teams). When NOT to use LLM-as-judge. The Path 06 trust stack assembly. |
+
+Lab applying these: [🧪 Lab 20 — Drift detection and agent-as-judge calibration](../../labs/20-drift-detection-and-calibration/).
+
+Quiz: [🧠 Drift detection and agent-as-judge calibration](../../quizzes/evaluation/drift-and-calibration.md) — 8 questions covering drift flavors (3), calibration mechanism (3), and the trust-stack decision boundary (2).
+
+These ten pages open [Path 06 — Evaluation & Observability](../../learning-paths/06-evaluation-observability/). The path is incremental; Modules 1-5 ship the full production-trust story (framing + instrumentation × 2 + online-evaluation + drift-and-calibration); Modules 6-7 add cost attribution and multi-turn evaluation in future batches.
 
 ## Pending pages (future Path 06 modules)
 
 The following are planned but not yet authored:
 
-- `drift-detection.md` — KS-test, PSI, rolling-window comparisons for metric distributions (Module 5).
-- `agent-as-judge-calibration.md` — periodic human-calibrated judge; Zheng et al. 2023 biases in production (Module 5).
 - `cost-attribution.md` — per-user / per-task / per-tenant cost via tagging + propagation (Module 6).
 - `multi-turn-evaluation.md` — trajectory metrics across conversation turns; LangChain Oct 2025 thread-level evals (Module 7).
 - `evaluation-frameworks-deep-dive.md` — LangSmith vs Braintrust vs Langfuse vs Phoenix vs Laminar; concrete code; migration paths.
