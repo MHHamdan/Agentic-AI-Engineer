@@ -1,6 +1,6 @@
 # Path 06 — Evaluation & Observability
 
-> 🔴 Advanced · ⏱ 18-25 hours (Modules 1-5 shipped — full path estimated ~50h when complete) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · 🚧 Path 06 in progress (Modules 1-5 shipped; Modules 6-7 in future batches)
+> 🔴 Advanced · ⏱ 22-30 hours (Modules 1-6 shipped — full path estimated ~50h when complete) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · 🚧 Path 06 in progress (Modules 1-6 shipped; Module 7 in a future batch)
 
 The production layer. Path 02's Lab 09 and Path 03's Lab 16 give you the evaluation *mechanism* — metric implementations, hand-curated fixtures, the aggregate-then-slice-then-per-agent discipline. Path 06 connects that mechanism to the operational reality: live trace ingestion, distributed-tracing correlation across parallel sub-agents, drift detection on metric distributions, alerting on regressions, agent-as-judge calibration against human ground truth, cost attribution across users and tasks and tenants.
 
@@ -122,14 +122,30 @@ Fourth Path 06 lab. The trust-loop closer that sits on top of Module 4: detect w
 
 - [🧠 Drift detection and agent-as-judge calibration](../../quizzes/evaluation/drift-and-calibration.md) — 8 single-select questions covering the three drift flavors, statistical-test selection, the five named biases, kappa interpretation, the 90/10 split, and the trust-stack assembly. Passing: 6/8.
 
-### Modules 6-7 — planned, not yet built
+### Module 6 — Cost attribution + adaptive sampling (batch 29)
 
-These modules will be added in future batches. The plan is sketched here so you can see where Modules 1-5 lead:
+Fifth Path 06 lab. The production-operations closer that ties the prior modules to unit economics: attribute cost to tenants/users/tasks via OTel baggage propagation; then adapt sampling decisions based on per-tenant burn rate. With Module 6 shipped, the Path 06 production stack covers all five operational layers — instrumentation, online evaluation, drift detection, calibration, and cost attribution + adaptive sampling.
 
-- **Module 6 — Cost attribution + sampling at scale.** Multi-dimensional cost (per-user, per-task, per-tenant) via OTel baggage propagation. OTel Collector deep-dive. Adaptive sampling decisions tied to cost thresholds.
+**Two concept pages**:
+
+- [📖 Cost attribution](../../concepts/evaluation/cost-attribution.md) — ~14 min. The three attribution dimensions (per-tenant for unit economics, per-user for cohort analysis, per-task for engineering optimization) and what product question each answers. The four token layers (prompt, tool, memory, response) with their distinct optimization levers. The day-one instrumentation rule with the documented ~5x retrofit cost. OTel baggage as the propagation primitive: the W3C 4KB limit, the IDs-only / no-PII / no-secrets discipline, the allowlist pattern. The "set baggage early, set span attributes redundantly" pattern. The three-layer enforcement ladder (dashboards → alerts → rate-limit tightening) with the 2x/5x baseline thresholds and the "auto-throttled real customer's legitimate burst" failure mode that argues for incremental rollout.
+- [📖 Adaptive sampling](../../concepts/evaluation/adaptive-sampling.md) — ~12 min. Cost-driven policies in the tail_sampling processor: `numeric_attribute` on `gen_ai.cost.total_usd`; `string_attribute` on tenant.tier. The probabilistic-within-tail pattern. The external control loop: two strategies (sampling-rate-inversely-proportional and adaptive-thresholds-on-policy-triggers) with concrete code. Push mechanisms: file-watching, OPAMP (GA in 2026), remote-config endpoint. The two-tier Collector topology (`loadbalancingexporter` first tier routing by trace_id → `tailsamplingprocessor` second tier) and why it's required at scale. Buffer sizing formula `num_traces = traces_per_sec × decision_wait × 1.2`. The decision_wait of 30s for agents specifically.
+
+**One lab**:
+
+- [🧪 Lab 21 — Cost attribution and adaptive sampling](../../labs/21-cost-attribution-and-adaptive-sampling/) — 32 cells, ~80-100 min. Real OTel SDK with ConsoleSpanExporter so spans print inline. **Half A** instruments a planner → tool-caller → synthesizer agent with baggage set at request entry; demonstrates baggage propagating to every downstream span without explicit argument passing; tracks the four token layers as separate span attributes; rolls up cost over 200 synthetic traces showing the canonical "one tenant burns 65% of spend" pattern. **Half B** loads a production-realistic Collector YAML with composite policies (errors → latency → high-cost → enterprise-tier → probabilistic); simulates the policy evaluation in Python; implements an external `AdaptiveSamplingController` that computes per-tenant sampling rates via quadratic falloff; walks through the two-tier Collector topology with both YAMLs. Synthesis demonstrates 88% ingestion-cost reduction at 1M traces/mo with 12% retention. Cost: ~$0 (all local SDK + computation).
+
+**One quiz**:
+
+- [🧠 Cost attribution and adaptive sampling](../../quizzes/evaluation/cost-and-sampling.md) — 8 single-select questions covering the day-one instrumentation rule, the four token layers, baggage-vs-span-attributes, cost-driven policy types, the two-tier topology constraint, the external control loop, the 4KB baggage limit, and the three-layer enforcement ladder. Passing: 6/8.
+
+### Module 7 — planned, not yet built
+
+This module will be added in a future batch. The plan is sketched here so you can see where Modules 1-6 lead:
+
 - **Module 7 — Multi-turn (threaded) evaluation.** Extending Lab 16's metric set for conversation-level trajectories.
 
-Each module is ~1-2 batches of work. Path 06 v1 is roughly 6-10 batches end-to-end.
+Module 7 is ~1-2 batches of work and closes Path 06 v1.
 
 ## What's not in this path (anti-scope)
 
@@ -140,7 +156,7 @@ Each module is ~1-2 batches of work. Path 06 v1 is roughly 6-10 batches end-to-e
 - **Embedding-drift detection on vector stores.** Path 02 v2 territory (we'd add it as a Lab 09 extension).
 - **Multi-tenant data isolation, GDPR/SOC2 compliance.** Production concerns; out of scope for the evaluation-and-observability path proper.
 
-## Module 1-5 status
+## Module 1-6 status
 
 | | Status |
 |---|---|
@@ -164,7 +180,11 @@ Each module is ~1-2 batches of work. Path 06 v1 is roughly 6-10 batches end-to-e
 | `agent-as-judge-calibration.md` | ✅ shipped (batch 28) |
 | Lab 20 (Drift detection and calibration) | ✅ shipped (batch 28) — solution in a follow-up batch |
 | Module 5 quiz (`drift-and-calibration.md`) | ✅ shipped (batch 28) |
-| Modules 6-7 | ⏳ future batches |
+| `cost-attribution.md` | ✅ shipped (batch 29) |
+| `adaptive-sampling.md` | ✅ shipped (batch 29) |
+| Lab 21 (Cost attribution and adaptive sampling) | ✅ shipped (batch 29) — solution in a follow-up batch |
+| Module 6 quiz (`cost-and-sampling.md`) | ✅ shipped (batch 29) |
+| Module 7 | ⏳ future batch |
 
 ## How this path connects to what you've built
 

@@ -17,7 +17,7 @@ The pages here are a four-step progression from "what is RAG evaluation" to "wha
 
 These four pages are prerequisites for [Lab 09: Evaluating agentic RAG](../../labs/09-evaluating-agentic-rag/).
 
-## Path 06 — Production evaluation & observability (Modules 1-5 shipped)
+## Path 06 — Production evaluation & observability (Modules 1-6 shipped)
 
 The pages above (Path 02's RAG-evaluation primer) cover offline evaluation against hand-curated fixture sets. Path 06 extends that mechanism to production: live trace ingestion, drift detection, agent-as-judge calibration, distributed-tracing correlation across parallel sub-agents.
 
@@ -72,13 +72,23 @@ Lab applying these: [🧪 Lab 20 — Drift detection and agent-as-judge calibrat
 
 Quiz: [🧠 Drift detection and agent-as-judge calibration](../../quizzes/evaluation/drift-and-calibration.md) — 8 questions covering drift flavors (3), calibration mechanism (3), and the trust-stack decision boundary (2).
 
-These ten pages open [Path 06 — Evaluation & Observability](../../learning-paths/06-evaluation-observability/). The path is incremental; Modules 1-5 ship the full production-trust story (framing + instrumentation × 2 + online-evaluation + drift-and-calibration); Modules 6-7 add cost attribution and multi-turn evaluation in future batches.
+### Module 6 — Cost attribution + adaptive sampling (batch 29)
+
+| Page | Read time | Covers |
+|------|-----------|--------|
+| 📖 [cost-attribution.md](./cost-attribution.md) | ~14 min | The three attribution dimensions (per-tenant, per-user, per-task) and what product question each answers. The four token layers (prompt, tool, memory, response) with distinct optimization levers. The day-one instrumentation rule and the documented ~5x retrofit cost. OTel baggage as the propagation primitive: Python API (`baggage.set_baggage`, `context.attach`), the W3C 4KB total limit, the IDs-only/no-PII/no-secrets/allowlist discipline. The "set baggage early, set span attributes redundantly" pattern. The three-layer enforcement ladder (dashboards → alerts → rate-limit tightening) with 2x/5x baseline thresholds and the incremental-rollout argument. |
+| 📖 [adaptive-sampling.md](./adaptive-sampling.md) | ~12 min | Cost-driven policies (`numeric_attribute` on `gen_ai.cost.total_usd`; `string_attribute` on `tenant.tier`). The probabilistic-within-tail pattern. The external control loop with two strategies (rate-inversely-proportional and adaptive-thresholds-on-triggers) and three push mechanisms (file-watching, OPAMP GA in 2026, remote-config endpoint). The two-tier Collector topology (`loadbalancingexporter` + `tailsamplingprocessor`) with the half-trace failure mode that argues for it. Buffer sizing: `num_traces ≈ traces_per_sec × decision_wait × 1.2`. The decision_wait of 30s for agents. |
+
+Lab applying these: [🧪 Lab 21 — Cost attribution and adaptive sampling](../../labs/21-cost-attribution-and-adaptive-sampling/).
+
+Quiz: [🧠 Cost attribution and adaptive sampling](../../quizzes/evaluation/cost-and-sampling.md) — 8 questions covering attribution mechanism (3), sampling mechanism (3), and the production decision boundary (2).
+
+These twelve pages open [Path 06 — Evaluation & Observability](../../learning-paths/06-evaluation-observability/). The path is incremental; Modules 1-6 ship the full production-operations story (framing + instrumentation × 2 + online-evaluation + drift-and-calibration + cost-attribution-and-sampling); Module 7 (multi-turn evaluation) closes Path 06 v1 in a future batch.
 
 ## Pending pages (future Path 06 modules)
 
 The following are planned but not yet authored:
 
-- `cost-attribution.md` — per-user / per-task / per-tenant cost via tagging + propagation (Module 6).
 - `multi-turn-evaluation.md` — trajectory metrics across conversation turns; LangChain Oct 2025 thread-level evals (Module 7).
 - `evaluation-frameworks-deep-dive.md` — LangSmith vs Braintrust vs Langfuse vs Phoenix vs Laminar; concrete code; migration paths.
 
