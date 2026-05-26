@@ -1,8 +1,8 @@
 flowchart TD
-    U(["👤 User"])
-    Final(["📝 Final answer"])
+    U(["User"])
+    Final(["Final answer"])
 
-    subgraph Planner["📋 Planner agent"]
+    subgraph Planner["Planner agent"]
         direction TB
         P1["Read task + tool registry"]
         P2["Emit JSON Plan"]
@@ -11,55 +11,84 @@ flowchart TD
         P2 --> P3
     end
 
-    PlanArtifact(["📄 Plan artifact<br/>{steps, depends_on, parallel_group}"])
+    PlanArtifact(["Plan artifact<br/>{steps, depends_on, parallel_group}"])
 
-    subgraph Supervisor["🎯 Supervisor + dispatcher (Python, not LLM)"]
+    subgraph Supervisor["Supervisor + dispatcher<br/>(Python, not LLM)"]
         direction TB
         S1["Compute ready steps<br/>(deps satisfied)"]
         S2["Group by parallel_group"]
-        S3["Submit to pool<br/>(max 3 concurrent)"]
-        S4["Collect results<br/>(action-hash dedup)"]
-        S5["All done?<br/>Replan?<br/>Surface?"]
+        S3["Submit to bounded pool<br/>(max 3 concurrent)"]
+        S4["Collect executor results<br/>(action-hash dedup)"]
+        S5{"All done?"}
+        S6{"Need replan?"}
+
         S1 --> S2
         S2 --> S3
-        S3 --> S4
         S4 --> S5
+        S5 -->|"yes"| S_OK["Ready for synthesis"]
+        S5 -->|"no"| S6
+        S6 -->|"yes"| S_REPLAN["Replan request"]
+        S6 -->|"no"| S_PARTIAL["Surface partial result"]
     end
 
-    subgraph Pool["⚙️ Executor pool (bounded, stateless)"]
+    subgraph Pool["Executor pool<br/>(bounded, stateless)"]
         direction TB
-        E1["Executor 1:<br/>run step"]
-        E2["Executor 2:<br/>run step"]
-        E3["Executor 3:<br/>run step"]
+        Fanout{{"Parallel dispatch"}}
+
+        subgraph Workers["Concurrent workers"]
+            direction LR
+            E1["Executor 1<br/>run step"]
+            E2["Executor 2<br/>run step"]
+            E3["Executor 3<br/>run step"]
+        end
+
+        Join{{"Join results"}}
+
+        Fanout --> E1
+        Fanout --> E2
+        Fanout --> E3
+        E1 --> Join
+        E2 --> Join
+        E3 --> Join
     end
 
-    subgraph Synthesizer["✍️ Synthesizer"]
+    subgraph Synthesizer["Synthesizer"]
         direction TB
         SY1["Compose final answer"]
         SY2["Preserve citations"]
         SY1 --> SY2
     end
 
+    subgraph FailureModes["Failure modes handled explicitly"]
+        direction TB
+        F1["Plan brittleness<br/>planner guessed wrong"]
+        F2["Execution drift<br/>wrong_tool error"]
+        F3["Replanning thrash<br/>MAX_REPLANS = 2<br/>+ plan-signature dedup"]
+        F4["Plan-execution gap<br/>unknown tools rejected<br/>during validation"]
+        F5["Cap reached<br/>surface partial honestly"]
+    end
+
     U -->|"task: str"| P1
-    P3 ==>|"Plan validated"| PlanArtifact
+
+    P3 ==>|"plan validated"| PlanArtifact
     PlanArtifact ==>|"steps[]"| S1
 
-    S3 ==>|"step + dep_outputs"| E1
-    S3 ==>|"step + dep_outputs"| E2
-    S3 ==>|"step + dep_outputs"| E3
+    S3 ==>|"ready steps"| Fanout
+    Join ==>|"{status, tool, args, result}"| S4
 
-    E1 ==>|"{status, tool, args, result}"| S4
-    E2 ==>|"{status, tool, args, result}"| S4
-    E3 ==>|"{status, tool, args, result}"| S4
+    S_OK ==>|"all ok"| SY1
+    S_PARTIAL -.->|"partial_after_cap"| SY1
+    S_REPLAN -.->|"retry with feedback"| P1
 
-    S5 ==>|"all ok"| SY1
     SY2 --> Final
 
-    P2 -.->|"plan brittleness:<br/>planner guessed wrong"| S5
-    E1 -.->|"execution drift:<br/>wrong_tool error"| S5
-    S5 -.->|"replanning thrash:<br/>MAX_REPLANS = 2<br/>+ plan-signature dedup"| P1
-    P3 -.->|"plan-execution gap:<br/>validation rejects unknown tools,<br/>retry planner"| P1
-    S5 -.->|"MAX_REPLANS reached:<br/>surface partial honestly"| SY1
+    P2 -.-> F1
+    E1 -.-> F2
+    E2 -.-> F2
+    E3 -.-> F2
+    S_REPLAN -.-> F3
+    P3 -.-> F4
+    S_PARTIAL -.-> F5
 
     classDef user fill:#e8eaf6,stroke:#3949ab,stroke-width:2px,color:#1a237e;
     classDef planner fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1;
@@ -68,11 +97,13 @@ flowchart TD
     classDef synthesizer fill:#f3e5f5,stroke:#6a1b9a,stroke-width:1px,color:#4a148c;
     classDef artifact fill:#fffde7,stroke:#f9a825,stroke-width:2px,color:#f57f17;
     classDef terminal fill:#f1f8e9,stroke:#558b2f,stroke-width:2px,color:#33691e;
+    classDef failure fill:#eeeeee,stroke:#757575,stroke-width:1px,color:#263238;
 
     class U user;
     class P1,P2,P3 planner;
-    class S1,S2,S3,S4,S5 supervisor;
-    class E1,E2,E3 executor;
+    class S1,S2,S3,S4,S5,S6,S_OK,S_REPLAN,S_PARTIAL supervisor;
+    class Fanout,E1,E2,E3,Join executor;
     class SY1,SY2 synthesizer;
     class PlanArtifact artifact;
     class Final terminal;
+    class F1,F2,F3,F4,F5 failure;
