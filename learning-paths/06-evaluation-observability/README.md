@@ -1,6 +1,6 @@
 # Path 06 — Evaluation & Observability
 
-> 🔴 Advanced · ⏱ 26-35 hours v1 + ~70 min Recipes + ~45 min Patterns + ~3 hrs Projects + ~25 min Frameworks Deep Dive + ~22 min Embedding-Space Drift + ~100 min Lab 23 (reading; multi-day builds separately) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · ✅ Path 06 v1 complete (Modules 1-7 shipped) · 🚧 Path 06 v2 in progress (Recipes shipped batch 33; Patterns shipped batch 34; Projects shipped batch 35; Frameworks Deep Dive shipped batch 36; Embedding-space drift shipped batch 37)
+> 🔴 Advanced · ⏱ 26-35 hours v1 + ~70 min Recipes + ~45 min Patterns + ~3 hrs Projects + ~25 min Frameworks Deep Dive + ~22 min Embedding-Space Drift + ~100 min Lab 23 + ~25 min Adversarial Red-Teaming + ~100 min Lab 24 (reading; multi-day builds separately) · 📍 Start here once you've completed at least one of {Path 02, Path 03} · ✅ Path 06 v1 complete (Modules 1-7 shipped) · ✅ Path 06 v2 complete (Recipes shipped batch 33; Patterns shipped batch 34; Projects shipped batch 35; Frameworks Deep Dive shipped batch 36; Embedding-space drift shipped batch 37; Adversarial red-teaming shipped batch 38)
 
 The production layer. Path 02's Lab 09 and Path 03's Lab 16 give you the evaluation *mechanism* — metric implementations, hand-curated fixtures, the aggregate-then-slice-then-per-agent discipline. Path 06 connects that mechanism to the operational reality: live trace ingestion, distributed-tracing correlation across parallel sub-agents, drift detection on metric distributions, alerting on regressions, agent-as-judge calibration against human ground truth, cost attribution across users and tasks and tenants.
 
@@ -176,9 +176,11 @@ The full operational picture: instrument → score → monitor for drift → cal
 
 ---
 
-## 🚀 Path 06 v2 — Production Recipes, Patterns, Projects, Frameworks Deep Dive, and Embedding-Space Drift Detection
+## 🚀 Path 06 v2 — Production Recipes, Patterns, Projects, Frameworks Deep Dive, Embedding-Space Drift Detection, and Adversarial Red-Teaming at Scale
 
-The v1 modules document the **building blocks** (one module per concept; one lab per module). The v2 layer documents the **compositions** (end-to-end deployment shapes — recipes), the **cross-cutting mechanisms** (reusable building blocks — patterns), the **buildable capstones** (multi-day production deployments — projects), the **selection guide** for picking among the proliferating eval/observability frameworks (deep dive), and the **RAG-input-side drift layer** that complements Module 5's score-side detection (embedding-space drift).
+The v1 modules document the **building blocks** (one module per concept; one lab per module). The v2 layer documents the **compositions** (end-to-end deployment shapes — recipes), the **cross-cutting mechanisms** (reusable building blocks — patterns), the **buildable capstones** (multi-day production deployments — projects), the **selection guide** for picking among the proliferating eval/observability frameworks (deep dive), the **RAG-input-side drift layer** that complements Module 5's score-side detection (embedding-space drift), and the **safety/stress-testing layer** that answers the orthogonal question of how the system fails on adversarial inputs (adversarial red-teaming at scale).
+
+**Path 06 v2 is now complete** with this batch. All six v2 directions shipped: Recipes (Batch 33), Patterns (Batch 34), Projects (Batch 35), Frameworks Deep Dive (Batch 36), Embedding-Space Drift (Batch 37), Adversarial Red-Teaming (Batch 38).
 
 ### Recipes (Batch 33) — end-to-end deployment compositions
 
@@ -236,17 +238,28 @@ The RAG-input-side complement to Module 5's score-side drift detection. Where Mo
 
 The concept page covers five drift types (with partial corpus refresh as the most common production cause per Decompressed.io March 2026), six detection methods (centroid, cosine distribution, NN overlap, cluster population, UMAP/t-SNE as diagnostic, domain classifier), and the production workflow that routes drift events into Pattern 2's three-tier severity classifier. Lab 23 implements all four core detectors from scratch in pure numpy and runs them against four controlled drift scenarios — purely synthetic for reproducibility, with the explicit invariant that the detection code transfers to real embeddings unchanged.
 
-### Other Path 06 v2 directions (future batches)
+### Adversarial red-teaming at scale (Batch 38) — the safety/stress-testing layer
 
-- **Adversarial red-teaming at scale** — DeepTeam-style orchestration.
+The orthogonal question to the rest of Path 06: where Modules 1-7 ask "is the system performing well on the queries users actually send?", this layer asks "does the system fail safely on queries adversaries will send?". The two questions need the same orchestration substrate — eval datasets, judge ensembles, severity routing, regression sets, OTel propagation — but cover orthogonal question spaces.
+
+📖 [`adversarial-red-teaming-at-scale.md`](../../concepts/evaluation/adversarial-red-teaming-at-scale.md) (~25 min, ✅ shipped batch 38)
+🧪 [Lab 24 — Adversarial red-teaming at scale](../../labs/24-adversarial-red-teaming-at-scale/) (~90-110 min, fully synthetic benign stand-ins, no API keys)
+🧠 [Quiz — Adversarial red-teaming](../../quizzes/evaluation/adversarial-red-teaming.md) (8 questions)
+
+The concept page covers eight failure categories aligned to OWASP Top 10 v2025 (prompt injection, tool misuse, retrieval poisoning, citation laundering, multi-turn manipulation, policy boundary probing, hidden objective conflicts, evaluator-gaming), the canonical six-step workflow (seed → variant → run-at-scale → judge-ensemble score → disagreement-routing → regression-promotion), explicit connections to Pattern 3 judge ensemble and Project 3 hybrid stack, and the mid-2026 OSS tool landscape (DeepTeam, Promptfoo, PyRIT, Garak) with their coverage-framework alignment (OWASP Top 10 + OWASP_ASI_2026 + NIST AI RMF Measure 2.6 + MITRE ATLAS + ISO/IEC 42001 + EU AI Act). The lab implements the six-step workflow against a benign synthetic agent — all toy policies and toy attacks, no real exploit content per the repo's `SECURITY.md` policy.
+
+This batch closes Path 06 v2. Six v2 directions complete: Recipes (Batch 33), Patterns (Batch 34), Projects (Batch 35), Frameworks Deep Dive (Batch 36), Embedding-space drift (Batch 37), Adversarial red-teaming (Batch 38).
+
+### Path 06 v3 (future)
+
+Path 06 v3 directions for future consideration: MLOps-grade lineage tracking, multi-region deployment, compliance-evidence pipelines.
 
 ## What's not in this path (anti-scope)
 
 - **General software observability.** Datadog / New Relic / Grafana / Prometheus are mature; this path doesn't reteach them. We assume you can read a flame graph; we focus on what's different about agent traces.
 - **Vendor selection guidance.** Path 06 covers LangSmith (because it's the LangChain-native default), OpenTelemetry (because it's the portable layer), and references Langfuse / Phoenix / Laminar / Braintrust by name with concrete trade-offs. The path doesn't pick a winner; it gives you the criteria to pick for your situation.
-- **Red-teaming and adversarial evaluation.** Different discipline. [Path 07 (Production & Safety)](../07-production-and-safety/) covers it.
-- **Capacity planning, autoscaling, deployment.** Also Path 07 territory.
-- **Embedding-drift detection on vector stores.** Path 02 v2 territory (we'd add it as a Lab 09 extension).
+- **Safety-policy authorship.** Adversarial red-teaming as evaluation/observability is in Path 06 v2 (Batch 38) — the workflow, the judge ensemble, the regression promotion. But **deciding what counts as a harm in your domain** (the safety policy itself, content-moderation taxonomies, refusal-criteria specs) is a different discipline. [Path 07 (Production & Safety)](../07-production-and-safety/), when authored, will cover the policy-authorship dimension.
+- **Capacity planning, autoscaling, deployment.** Path 07 territory.
 - **Multi-tenant data isolation, GDPR/SOC2 compliance.** Production concerns; out of scope for the evaluation-and-observability path proper.
 
 ## Module 1-7 status
@@ -306,6 +319,11 @@ The concept page covers five drift types (with partial corpus refresh as the mos
 | `labs/23-embedding-space-drift-detection/` | ✅ shipped (batch 37) |
 | `quizzes/evaluation/embedding-space-drift.md` | ✅ shipped (batch 37) |
 | **Path 06 v2 — Embedding-Space Drift** | **✅ shipped (batch 37)** |
+| `concepts/evaluation/adversarial-red-teaming-at-scale.md` | ✅ shipped (batch 38) |
+| `labs/24-adversarial-red-teaming-at-scale/` | ✅ shipped (batch 38) |
+| `quizzes/evaluation/adversarial-red-teaming.md` | ✅ shipped (batch 38) |
+| **Path 06 v2 — Adversarial Red-Teaming** | **✅ shipped (batch 38)** |
+| **Path 06 v2 — complete** | **✅ all six v2 directions shipped** |
 
 ## How this path connects to what you've built
 

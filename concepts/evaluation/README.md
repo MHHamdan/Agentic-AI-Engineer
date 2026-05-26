@@ -112,15 +112,23 @@ Lab applying these: [🧪 Lab 23 — Embedding-space drift detection](../../labs
 
 Quiz: [🧠 Embedding-space drift](../../quizzes/evaluation/embedding-space-drift.md) — 8 questions covering concepts (2), detection methods (3), production workflow (2), and anti-scope (1).
 
+### Path 06 v2 — Adversarial red-teaming at scale (batch 38)
+
+| Page | Read time | Covers |
+|------|-----------|--------|
+| 📖 [adversarial-red-teaming-at-scale.md](./adversarial-red-teaming-at-scale.md) | ~25 min | The safety/stress-testing dimension of evaluation that complements the natural-traffic monitoring of Modules 1-7. Eight failure categories aligned to OWASP Top 10 v2025 (prompt injection, tool misuse, retrieval poisoning, citation laundering, multi-turn manipulation, policy boundary probing, hidden objective conflicts, evaluator-gaming). The canonical six-step workflow: seed → generate variants → run at scale → score with judge ensemble → route disagreements → promote confirmed failures into regression tests. Path 06 connections to Modules 4/5/7 + Pattern 3 + Project 3. The mid-2026 OSS tool landscape (DeepTeam, Promptfoo, PyRIT, Garak) with coverage-framework alignment (OWASP Top 10 + OWASP_ASI_2026 + NIST AI RMF Measure 2.6 + MITRE ATLAS + ISO/IEC 42001 + EU AI Act). Explicit anti-scope: not a jailbreak recipe, not guidance for bypassing safety systems, not automatic blocking without review, not a substitute for domain-specific safety policy.
+
+Lab applying these: [🧪 Lab 24 — Adversarial red-teaming at scale](../../labs/24-adversarial-red-teaming-at-scale/).
+
+Quiz: [🧠 Adversarial red-teaming](../../quizzes/evaluation/adversarial-red-teaming.md) — 8 questions covering the orthogonal-question framing (1), failure-category taxonomy (1), the six-step workflow + Pattern 3 integration (2), the human-approval gate (1), the tool landscape (1), OWASP-to-regulatory mapping (1), and the explicit anti-scope (1).
+
 ---
 
-These sixteen pages open [Path 06 — Evaluation & Observability](../../learning-paths/06-evaluation-observability/). The path documents the full production-readiness stack for agentic AI evaluation and observability across seven modules end-to-end: framing → instrumentation × 2 → online evaluation → drift detection + calibration → cost attribution + adaptive sampling → multi-turn evaluation. **Path 06 v1 is complete.** Path 06 v2 has shipped Recipes (Batch 33), Patterns (Batch 34), Projects (Batch 35), the Frameworks Deep Dive (Batch 36), and Embedding-space drift detection (Batch 37).
+These seventeen pages open [Path 06 — Evaluation & Observability](../../learning-paths/06-evaluation-observability/). The path documents the full production-readiness stack for agentic AI evaluation and observability across seven modules end-to-end: framing → instrumentation × 2 → online evaluation → drift detection + calibration → cost attribution + adaptive sampling → multi-turn evaluation. **Path 06 v1 is complete.** Path 06 v2 is now complete: Recipes (Batch 33), Patterns (Batch 34), Projects (Batch 35), Frameworks Deep Dive (Batch 36), Embedding-space drift detection (Batch 37), and Adversarial red-teaming at scale (Batch 38).
 
-## Pending pages (Path 06 v2)
+## Path 06 v3 (future)
 
-The following are planned for v2 but not yet authored:
-
-- Adversarial red-teaming at scale (DeepTeam-style orchestration).
+Path 06 v3 directions for future consideration: MLOps-grade lineage tracking, multi-region deployment, compliance-evidence pipelines.
 
 ## Where this is used
 

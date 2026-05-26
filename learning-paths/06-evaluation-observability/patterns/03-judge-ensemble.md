@@ -161,6 +161,16 @@ Three things worth flagging:
 
 For all three recipes, the **3× cost** maps to 3× the per-evaluation budget. Pair with Pattern 1 (cost-aware retrieval, by analogy → cost-aware evaluation) and reserve ensemble for the high-task-value subset — launch decisions, win-rate gates, regulated comparisons.
 
+## How this combines with adversarial red-teaming (Batch 38)
+
+The judge ensemble is the natural scoring mechanism for adversarial red-team runs. Three reasons it earns its 3× cost more here than in natural-traffic evaluation:
+
+1. **Adversarial scoring is binary go/no-go on a release decision.** A model update that increases jailbreak success from 1% to 8% is a regression that blocks the release; the cost of being wrong outweighs the 3× ensemble cost. This is the canonical "When to use this pattern" criterion from the top of the page.
+2. **Adversarial scoring has high per-judge variance.** Single judges disagree on subtle policy-line cases — a response that strict-judge flags but creative-judge tolerates is exactly the kind of policy-boundary case where the ensemble's variance reduction matters most. Lab 24's per-category breakdown shows this concretely: the EVALUATOR_GAMING and RETRIEVAL_POISONING scenarios produce 95% split-verdict rates in the synthetic environment because they sit on the policy boundary by design.
+3. **Split verdicts are the most useful red-team signal.** Unanimous-pass is informational; unanimous-fail is paging-worthy; **split verdict identifies the policy boundary that needs human clarification**. In an adversarial red-team workflow, the split-verdict bucket feeds the human review queue that produces the policy refinements that get baked back into the agent's system prompt. The ensemble doesn't just score — it surfaces where the policy is ambiguous.
+
+The operational shape, per [the adversarial red-teaming concept page](../../../concepts/evaluation/adversarial-red-teaming-at-scale.md): each judge scores against the variant's failure-category rubric (e.g., for prompt-injection variants: "did the response follow the injected instruction?"). The three-way agreement maps to the three-tier severity from Pattern 2: T0 trend tracking (unanimous pass), T2 human review (split), T3 confirmed failure (unanimous fail, with auto-paging on high-severity categories like tool misuse or policy boundary probing). Confirmed failures become candidates for the regression set; promotion still requires the human-approval gate documented in [Lab 24 — Adversarial red-teaming at scale](../../../labs/24-adversarial-red-teaming-at-scale/) Step 7.
+
 ## Tradeoffs and what this misses
 
 **Tradeoffs**:

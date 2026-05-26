@@ -60,6 +60,7 @@ The quizzes are **GitHub-first** by design — they work in any Markdown viewer 
 | 🧠 [Cost attribution and adaptive sampling](./evaluation/cost-and-sampling.md) | [`cost-attribution.md`](../concepts/evaluation/cost-attribution.md) + [`adaptive-sampling.md`](../concepts/evaluation/adaptive-sampling.md) + [Lab 21](../labs/21-cost-attribution-and-adaptive-sampling/) | 8 questions | mixed |
 | 🧠 [Multi-turn (threaded) evaluation](./evaluation/multi-turn.md) | [`multi-turn-evaluation.md`](../concepts/evaluation/multi-turn-evaluation.md) + [`conversation-simulation.md`](../concepts/evaluation/conversation-simulation.md) + [Lab 22](../labs/22-multi-turn-evaluation/) | 8 questions | mixed |
 | 🧠 [Embedding-space drift](./evaluation/embedding-space-drift.md) | [`embedding-space-drift-detection.md`](../concepts/evaluation/embedding-space-drift-detection.md) + [Lab 23](../labs/23-embedding-space-drift-detection/) | 8 questions | mixed |
+| 🧠 [Adversarial red-teaming](./evaluation/adversarial-red-teaming.md) | [`adversarial-red-teaming-at-scale.md`](../concepts/evaluation/adversarial-red-teaming-at-scale.md) + [`patterns/03-judge-ensemble.md`](../learning-paths/06-evaluation-observability/patterns/03-judge-ensemble.md) + [Lab 24](../labs/24-adversarial-red-teaming-at-scale/) | 8 questions | mixed |
 
 More quizzes will land as new content does. Each new concept page or lab should ship with its quiz in the same batch.
 
