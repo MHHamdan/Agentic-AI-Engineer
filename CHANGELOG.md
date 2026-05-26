@@ -43,6 +43,59 @@ When a tool ships a breaking change (e.g., `langgraph.prebuilt` → `langchain.a
 
 ## [Unreleased]
 
+### Changed
+
+- **🧹 Path 03 solution coverage audit and reconciliation (Batch 40).** Documentation hygiene only — no new content, no notebook changes, no `.lycheeignore` modification. Reconciles seven stale "Lab 14/15/16 solutions pending" claims that survived in lab READMEs + Path 03 path README despite all three solutions actually shipping in Batch 23.
+
+  **Audit finding**: every Path 03 lab (Labs 10-16) has had a working `solution/README.md` + `solution/lab.ipynb` since Batch 23. Lab 14's solution is 21 cells (12 md + 7 code, 21 KB; vs the parent lab's 33 cells); Lab 15's solution is 25 cells (14 md + 11 code, 31 KB; vs 32-cell parent); Lab 16's solution is 19 cells (12 md + 7 code, 19 KB; vs 32-cell parent). All three solution notebooks are parse-clean with 0 outputs and 0 execution_count cells — verified at audit time. The `.lycheeignore` file's "Labs 14, 15, 16 — solutions in batch 23" entry on line 62 has been truthful since Batch 23 shipped; the lab and path READMEs simply weren't updated to match the actual state.
+
+  Root cause of the drift: Labs 14, 15, 16 READMEs were authored in Batches 20 and 22 (before solutions); solutions shipped in Batch 23; nobody went back and updated the prose. The Batch 39 entry then carried the stale framing forward — its "What comes next" list included "Lab 14/15/16 solutions still pending" as a Batch 40 candidate. Batch 40 reconciles all of that.
+
+  - `labs/14-langgraph-supervisor-bridge/README.md` — Modified. The "## Solution" section's "A reference implementation will land in `solution/lab.ipynb` in a follow-up batch." line is replaced with the Lab 10/11/12/13 convention — a "lives in" pointer to `solution/lab.ipynb` with notes in `solution/README.md`, framed as "21 cells vs the lab's 33 — the per-step failure-mode walks and the production-readiness recap are condensed; the supervisor + researcher + writer graph reads end-to-end." Removes the stale "The follow-up solutions batch will provide reference implementations for both Lab 14 and Lab 15." trailing line.
+
+  - `labs/15-langgraph-plan-execute-bridge/README.md` — Modified. Same shape: a "lives in" pointer to `solution/lab.ipynb` with notes in `solution/README.md`, framed as "25 cells vs the lab's 32 — the dispatcher transformation walkthrough and the wall-clock parallel-vs-sequential comparison are condensed; the planner → dispatch → executors → replanner → synthesize path reads end-to-end." Removes the stale "A follow-up solutions batch will provide reference implementations for Labs 14 and 15." trailing line from the Next section.
+
+  - `labs/16-multi-agent-evaluation-from-scratch/README.md` — Modified. Same shape for the Solution section: a "lives in" pointer to `solution/lab.ipynb` with notes in `solution/README.md`, framed as "19 cells vs the lab's 32 — the per-metric design discussions and the synthesis section are condensed; the seven-metric harness reads end-to-end against `trace_set.jsonl`." Removes the "Solutions for Labs 14, 15, and 16. Reference implementations in the same pattern as the earlier solutions batches." entry from the "## Next" section's natural-follow-ups list — Path 06 and the Path 03 v2 extensions remain.
+
+  - `learning-paths/03-multi-agent-systems/README.md` — Modified. The subtitle gains "+ fully solutioned" framing: "✅ Path 03 v1 complete + fully solutioned (foundations, supervisor-worker, generator-critic, plan-and-execute, multi-agent RAG, framework bridge, evaluation; every lab has a reference solution in its `solution/` subdirectory)". The "What comes next" section gets a parenthetical acknowledgment of the fully-solutioned status: "Path 03 v1 closes with Module 6 — fully solutioned (every lab in `labs/10-*` through `labs/16-*` has a reference implementation in its `solution/` subdirectory; solutions for Labs 10-13 shipped in Batch 19, solutions for Labs 14-16 shipped in Batch 23)." The "Solutions for Labs 14, 15, and 16. Reference implementations in the same pattern as the Labs 01-13 solutions (batches 14 and 21). Still pending." bullet is removed from the planned-next-steps list — the remaining bullets (additional patterns, Lab 11/13 framework-bridge variants, multi-turn multi-agent evaluation, projects, frameworks deep dive) carry forward unchanged.
+
+  - `CHANGELOG.md` — Modified. Batch 40 entry prepended above Batch 39 (this entry).
+
+  **What this batch deliberately does NOT do**:
+  - Does NOT modify any solution notebook. All three (Lab 14, 15, 16) are correct and were not touched.
+  - Does NOT modify `.lycheeignore`. Line 62 ("Labs 14, 15, 16 — solutions in batch 23") has been truthful all along; the file is correct.
+  - Does NOT modify Lab 10/11/12/13 READMEs. Their existing "lives in" Solution sections are correct.
+  - Does NOT modify `concepts/multi-agent/README.md`. No solution-status claims live there.
+  - Does NOT create any new file. Pure hygiene reconciliation: 5 modifications across 4 READMEs + CHANGELOG.
+  - Does NOT retroactively fix the stale references inside the Batch 39 CHANGELOG entry. That entry stays as-shipped; this Batch 40 entry supersedes its forward-work claims about pending solutions.
+
+  **Pre-flight (all green)**:
+  - ruff: All checks passed (tenth markdown+notebook-touching batch in a row with zero issues; markdown-only batch — trivially clean)
+  - 44/44 notebooks parse-clean, 0 outputs, 0 execution_count cells (unchanged from Batch 39; no notebooks touched)
+  - Word discipline: zero net delta across the 5 changed files
+  - Full link sweep: same 3 known link-parser false positives carried since Batch 21.1; 0 new broken
+  - Per-file link check on all 5 changed files: every internal cross-reference resolves
+  - Solution-link verification: the new `./solution/lab.ipynb` and `./solution/README.md` links in Labs 14/15/16 README each resolve to a real on-disk file
+  - CHANGELOG ordering: Batch 40 prepended above Batch 39
+  - Roundtrip: extract zip → identical to staging (zero diffs); MANIFEST verified all 5 files
+
+  **Reconciliation verification checklist** (the user-requested audit checklist):
+  - [x] 44 notebooks parse-clean
+  - [x] 0 notebook outputs
+  - [x] ruff clean
+  - [x] internal links resolve (per-file + full-sweep)
+  - [x] no new genuine broken links
+  - [x] all three solution directories confirmed on-disk with real content (Lab 14: 21 cells / 21 KB; Lab 15: 25 cells / 31 KB; Lab 16: 19 cells / 19 KB)
+  - [x] all seven stale "pending" / "follow-up batch" claims removed
+  - [x] no solution notebooks modified
+  - [x] no `.lycheeignore` change
+
+  Branch: `fix/path-03-batch-40-solution-coverage-audit`. PR-first workflow.
+
+  **Path 03 v1 status after Batch 40**: structurally complete and fully solutioned (unchanged from actual reality since Batch 23 — this batch just makes the documentation match). All 7 labs (10-16) have working `solution/lab.ipynb` + `solution/README.md`.
+
+  **Lesson captured**: when shipping a batch that completes a backlog item that was forward-referenced elsewhere, sweep for and update every forward-reference at the same time. Batch 23 shipped the three solutions but left the lab READMEs and path README claiming they were pending. Five batches later (Batches 24 through 39), the stale claims persisted. Future batches that complete forward-referenced work should include a `grep -rn "pending\|follow-up batch\|will land"` sweep across all files mentioning the completed work, and reconcile the prose in the same commit. Added to standard pre-flight.
+
 ### Added
 
 - **🚀 Path 03 v2 first batch — Production multi-agent patterns (Batch 39).** Opens Path 03 v2 after Path 06 v2 completion. Mirrors the Path 06 v1 → v2 transition exactly: v1 ships topologies and labs (supervisor-worker, generator-critic, plan-and-execute, multi-agent RAG, framework bridge, multi-agent evaluation); v2 starts here with the cross-cutting operational mechanisms that production multi-agent deployments need once the topology choice is settled.
