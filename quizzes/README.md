@@ -29,6 +29,26 @@ The quizzes are **GitHub-first** by design — they work in any Markdown viewer 
 | 🧠 [The ReAct pattern](./foundations/react-pattern.md) | [`concepts/agents/react-pattern.md`](../concepts/agents/react-pattern.md) | 8 questions | mixed |
 | 🧠 [Tool design and selection](./foundations/tool-design-and-selection.md) | [`concepts/tools/tool-design.md`](../concepts/tools/tool-design.md) + [`tool-selection.md`](../concepts/tools/tool-selection.md) + [Lab 02](../labs/02-tool-design-and-selection/) | 8 questions | mixed |
 
+### Agentic RAG (Path 02)
+
+| Quiz | Source | Length | Difficulty |
+|---|---|---|---|
+| 🧠 [RAG fundamentals](./agentic-rag/rag-fundamentals.md) | [`concepts/rag/what-is-rag.md`](../concepts/rag/what-is-rag.md) + [`retrieval-as-a-tool.md`](../concepts/rag/retrieval-as-a-tool.md) + [`chunking-and-indexing.md`](../concepts/rag/chunking-and-indexing.md) + [Lab 06](../labs/06-agentic-rag-from-scratch/) | 8 questions | mixed |
+| 🧠 [Retrieval strategies, hybrid search, and reranking](./agentic-rag/retrieval-strategies.md) | [`concepts/rag/retrieval-strategies.md`](../concepts/rag/retrieval-strategies.md) + [`hybrid-search.md`](../concepts/rag/hybrid-search.md) + [`reranking.md`](../concepts/rag/reranking.md) + [Lab 07](../labs/07-retrieval-strategies-and-reranking/) | 8 questions | mixed |
+| 🧠 [Contextual retrieval, query rewriting, and retrieval failure modes](./agentic-rag/contextual-retrieval-and-query-rewriting.md) | [`concepts/rag/contextual-retrieval.md`](../concepts/rag/contextual-retrieval.md) + [`query-rewriting.md`](../concepts/rag/query-rewriting.md) + [`retrieval-failure-modes.md`](../concepts/rag/retrieval-failure-modes.md) + [Lab 08](../labs/08-contextual-retrieval-and-query-rewriting/) | 8 questions | mixed |
+| 🧠 [RAG evaluation: metrics, eval sets, and answer quality](./agentic-rag/rag-evaluation.md) | [`concepts/evaluation/what-is-rag-evaluation.md`](../concepts/evaluation/what-is-rag-evaluation.md) + [`eval-set-construction.md`](../concepts/evaluation/eval-set-construction.md) + [`retrieval-metrics.md`](../concepts/evaluation/retrieval-metrics.md) + [`answer-quality-metrics.md`](../concepts/evaluation/answer-quality-metrics.md) + [Lab 09](../labs/09-evaluating-agentic-rag/) | 8 questions | mixed |
+
+### Multi-Agent Systems (Path 03)
+
+| Quiz | Source | Length | Difficulty |
+|---|---|---|---|
+| 🧠 [Multi-agent fundamentals: supervisor-worker, handoffs](./multi-agent/multi-agent-fundamentals.md) | [`concepts/multi-agent/what-is-a-multi-agent-system.md`](../concepts/multi-agent/what-is-a-multi-agent-system.md) + [`supervisor-worker-pattern.md`](../concepts/multi-agent/supervisor-worker-pattern.md) + [`handoffs-and-shared-state.md`](../concepts/multi-agent/handoffs-and-shared-state.md) + [Lab 10](../labs/10-supervisor-worker-from-scratch/) | 8 questions | mixed |
+| 🧠 [Agent debate and critics](./multi-agent/agent-debate-and-critics.md) | [`concepts/multi-agent/agent-debate-and-critics.md`](../concepts/multi-agent/agent-debate-and-critics.md) + [`generator-critic-pattern.md`](../concepts/multi-agent/generator-critic-pattern.md) + [Lab 11](../labs/11-generator-critic-from-scratch/) | 8 questions | mixed |
+| 🧠 [Plan-and-execute](./multi-agent/plan-and-execute.md) | [`concepts/multi-agent/plan-and-execute.md`](../concepts/multi-agent/plan-and-execute.md) + [`planner-executor-pattern.md`](../concepts/multi-agent/planner-executor-pattern.md) + [Lab 12](../labs/12-plan-and-execute-from-scratch/) | 8 questions | mixed |
+| 🧠 [Multi-agent RAG](./multi-agent/multi-agent-rag.md) | [`concepts/multi-agent/multi-agent-rag.md`](../concepts/multi-agent/multi-agent-rag.md) + [`retriever-as-worker.md`](../concepts/multi-agent/retriever-as-worker.md) + [Lab 13](../labs/13-multi-agent-rag-from-scratch/) | 8 questions | mixed |
+| 🧠 [Framework bridge: LangGraph multi-agent primitives](./multi-agent/framework-bridge.md) | [`concepts/multi-agent/langgraph-multi-agent.md`](../concepts/multi-agent/langgraph-multi-agent.md) + [`when-frameworks-earn-complexity.md`](../concepts/multi-agent/when-frameworks-earn-complexity.md) + [Lab 14](../labs/14-langgraph-supervisor-bridge/) + [Lab 15](../labs/15-langgraph-plan-execute-bridge/) | 8 questions | mixed |
+| 🧠 [Multi-agent evaluation](./multi-agent/multi-agent-evaluation.md) | [`learning-paths/03-multi-agent-systems/`](../learning-paths/03-multi-agent-systems/) + [Lab 16](../labs/16-multi-agent-evaluation-from-scratch/) | 8 questions | mixed |
+
 ### Evaluation & Observability (Path 06)
 
 | Quiz | Source | Length | Difficulty |
@@ -41,8 +61,6 @@ The quizzes are **GitHub-first** by design — they work in any Markdown viewer 
 | 🧠 [Multi-turn (threaded) evaluation](./evaluation/multi-turn.md) | [`multi-turn-evaluation.md`](../concepts/evaluation/multi-turn-evaluation.md) + [`conversation-simulation.md`](../concepts/evaluation/conversation-simulation.md) + [Lab 22](../labs/22-multi-turn-evaluation/) | 8 questions | mixed |
 
 More quizzes will land as new content does. Each new concept page or lab should ship with its quiz in the same batch.
-
-Note: this table reflects quizzes from the listed paths only. Other paths (Path 02 / Path 03) have shipped quizzes in their respective subdirectories under `quizzes/`; a future hygiene pass will surface them here.
 
 ---
 
