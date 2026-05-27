@@ -21,19 +21,19 @@ Paths overlap deliberately. The Multi-Agent path reuses concept pages from Found
 
 ## The nine paths at a glance
 
-| # | Path | Who it's for | Difficulty | Estimated time¹ |
+| # | Path | Who it's for | Difficulty | Status |
 |---|---|---|---|---|
-| 01 | [Foundations](./01-foundations/) | Engineers building their first real agent | 🟢 Beginner-friendly | 8–12 h |
-| 02 | [Agentic RAG](./02-agentic-rag/) | Anyone building retrieval-heavy agents | 🟡 Intermediate | 8–12 h |
-| 03 | [Multi-Agent Systems](./03-multi-agent-systems/) | Engineers orchestrating cooperating agents | 🟡 Intermediate | 8–12 h |
-| 04 | [Tool Protocols (MCP + A2A)](./04-tool-protocols-mcp-a2a/) | Engineers wiring agents to tools and other agents | 🟡 Intermediate | 6–10 h |
-| 05 | [Context Engineering](./05-context-engineering/) | Engineers fighting context-window problems | 🟡 Intermediate | 4–8 h |
-| 06 | [Evaluation & Observability](./06-evaluation-observability/) | Engineers shipping agents they need to measure | 🔴 Advanced | 26–35 h (✅ v1 complete) |
-| 07 | [Production & Safety](./07-production-and-safety/) | Engineers taking agents to production | 🔴 Advanced | 10–15 h |
-| 08 | [Mathematical Foundations](./08-mathematical-foundations/) | Anyone who wants the theory behind the engineering | 🟢 → 🔴 (mixed) | 6–10 h |
-| 09 | [Capstones](./09-capstones/) | Anyone ready to build something portfolio-worthy | 🔴 Advanced | 15–40 h per project |
+| 01 | [Foundations](./01-foundations/) | Engineers building their first real agent | 🟢 Beginner-friendly | ✅ Content shipped |
+| 02 | [Agentic RAG](./02-agentic-rag/) | Anyone building retrieval-heavy agents | 🟡 Intermediate | ✅ Content shipped |
+| 03 | [Multi-Agent Systems](./03-multi-agent-systems/) | Engineers orchestrating cooperating agents | 🟡 Intermediate | ✅ v1 complete + v2 patterns (6) shipped |
+| 04 | [Tool Protocols (MCP + A2A)](./04-tool-protocols-mcp-a2a/) | Engineers wiring agents to tools and other agents | 🟡 Intermediate | 📋 Scaffold (Batch 42); modules planned |
+| 05 | [Context Engineering](./05-context-engineering/) | Engineers fighting context-window problems | 🟡 Intermediate | 📋 Scaffold (Batch 42); modules planned |
+| 06 | [Evaluation & Observability](./06-evaluation-observability/) | Engineers shipping agents they need to measure | 🔴 Advanced | ✅ v1 + v2 complete (recipes, patterns, projects, frameworks deep dive, embedding drift, adversarial red-teaming) |
+| 07 | [Production & Safety](./07-production-and-safety/) | Engineers taking agents to production | 🔴 Advanced | 📋 Scaffold (Batch 42); `production/` + `security/` playbooks already authored |
+| 08 | [Mathematical Foundations](./08-mathematical-foundations/) | Anyone who wants the theory behind the engineering | 🟢 → 🔴 (mixed) | 📋 Scaffold (Batch 42); 4 of 13 math pages authored |
+| 09 | [Capstones](./09-capstones/) | Anyone ready to build something portfolio-worthy | 🔴 Advanced | 📋 Scaffold (Batch 42); 8 projects catalogued |
 
-¹ Time estimates assume a working DS/ML or SWE background and exclude API call latency. Treat them as orders of magnitude, not commitments. The paths will firm up these numbers as content lands and we see real completion data.
+¹ Status indicators: ✅ shipped (content authored) · 📋 scaffold (landing README documents planned structure and existing related artifacts). Every link in this table resolves to a real, authored README. The paths will firm up these numbers as content lands and we see real completion data.
 
 ---
 
@@ -178,17 +178,17 @@ This repo is built incrementally. Some paths will reach full coverage before oth
 
 | Path | Scaffold | Concepts | Labs | Recipes | Patterns | Projects |
 |---|---|---|---|---|---|---|
-| 01 Foundations | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 02 Agentic RAG | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 03 Multi-Agent Systems | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 04 Tool Protocols (MCP + A2A) | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 05 Context Engineering | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 06 Evaluation & Observability | ☑ | ● | ● | ☐ | ☐ | ☐ |
-| 07 Production & Safety | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 08 Mathematical Foundations | ☐ | n/a | n/a | n/a | n/a | n/a |
-| 09 Capstones | ☐ | n/a | n/a | n/a | n/a | ☐ |
+| 01 Foundations | ☑ | ● | ● | ☐ | ☐ | ☐ |
+| 02 Agentic RAG | ☑ | ● | ● | ☐ | ☐ | ☐ |
+| 03 Multi-Agent Systems | ☑ | ● | ● | ☐ | ● | ☐ |
+| 04 Tool Protocols (MCP + A2A) | ☑ | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 05 Context Engineering | ☑ | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 06 Evaluation & Observability | ☑ | ● | ● | ● | ● | ● |
+| 07 Production & Safety | ☑ | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 08 Mathematical Foundations | ☑ | ● (4 of 13) | n/a | n/a | n/a | n/a |
+| 09 Capstones | ☑ | n/a | n/a | n/a | n/a | ☐ |
 
-Checkbox status is updated at each release. If you want to help fill in a row, [`CONTRIBUTING.md`](../CONTRIBUTING.md) walks you through the workflow for each content type.
+Checkbox status is updated at each release. **All nine paths now have authored landing READMEs as of Batch 42.** Paths 04, 05, 07, 08, 09 are scaffolds — the path README documents the planned structure and links to the existing repo artifacts each path will build on. Paths 01, 02, 03 (v1 + v2 patterns), 06 (v1 + v2) have substantial content; Path 08 has 4 of 13 math pages authored. If you want to help fill in a row, [`CONTRIBUTING.md`](../CONTRIBUTING.md) walks you through the workflow for each content type.
 
 ---
 
