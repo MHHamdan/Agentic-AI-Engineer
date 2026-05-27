@@ -18,7 +18,11 @@ $$
 s_{t+1} \;=\; s_t \,\cup\, \{\tau_t,\, a_t,\, o_t\},
 $$
 
-terminating when $$\text{stop}_t = \text{True}$ or $t = T_{\max}$$ .
+terminating when
+
+$$
+\text{stop}_t = \text{True}$ or $t = T_{\max}.
+$$
 
 The symbols, in order:
 
