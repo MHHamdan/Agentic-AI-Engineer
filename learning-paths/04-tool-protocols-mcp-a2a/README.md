@@ -1,8 +1,8 @@
 # Path 04 — Tool Protocols (MCP + A2A)
 
-> 🟡 Intermediate · ⏱ 6–10 hours (planned) · 📍 Start here once you've completed Path 01 · 📋 **Scaffold — content forthcoming**
+> 🟡 Intermediate · ⏱ 6–10 hours (planned, ~2 hours shipped via Modules 1+2) · 📍 Start here once you've completed Path 01 · 🚧 **In progress — Modules 1+2 shipped (Batch 43); Modules 3-7 planned**
 
-> ⚠️ **This path is a scaffold.** The structure, prerequisites, and learning outcomes are locked. The actual concept pages, labs, and module content land in future batches. The "What you can read right now" section below points at real, existing artifacts in the repo that cover adjacent material — those links work today.
+> ✅ **Modules 1+2 are live.** Two concept pages ([MCP foundations](../../concepts/tools/mcp-foundations.md) + [Building an MCP server](../../concepts/tools/building-an-mcp-server.md)), one lab ([Lab 25 — MCP server from scratch](../../labs/25-mcp-server-from-scratch/)), and one [quiz](../../quizzes/foundations/mcp-foundations-and-server.md) ship with this batch. Modules 3-7 are still planned — the "What you can read right now" section below lists every shipped artifact plus the existing adjacent material those future modules will build on.
 
 ## Who this path is for
 
@@ -31,36 +31,47 @@ The planned module breakdown:
 
 | Module | Topic | Status |
 |---|---|---|
-| 1 | **MCP foundations** — protocol spec, JSON-RPC 2.0 wire format, client-server lifecycle, transports (stdio vs Streamable HTTP) | 📋 Planned |
-| 2 | **Building an MCP server** — FastMCP / TypeScript SDK; exposing tools, resources, prompts; OAuth 2.1 authentication | 📋 Planned |
+| 1 | **[MCP foundations](../../concepts/tools/mcp-foundations.md)** — protocol spec, JSON-RPC 2.0 wire format, client-server lifecycle, transports (stdio vs Streamable HTTP) | ✅ Shipped (Batch 43) |
+| 2 | **[Building an MCP server](../../concepts/tools/building-an-mcp-server.md)** — FastMCP 3.0, decorator-based registration, type-hint-driven schemas, MCP Inspector workflow, deployment patterns. Lab: [Lab 25 — MCP server from scratch](../../labs/25-mcp-server-from-scratch/). Quiz: [MCP foundations and server](../../quizzes/foundations/mcp-foundations-and-server.md) | ✅ Shipped (Batch 43) |
 | 3 | **Building an MCP client** — consuming external servers from your agent; tool discovery via Server Cards (2026 H2 spec); error handling | 📋 Planned |
 | 4 | **MCP security and the tool-layer threat model** — the arxiv:2601.10955 resource-amplification attack; safe-default tool exposure; rate limits and idempotency at the server | 📋 Planned |
 | 5 | **A2A foundations** — protocol spec, agent capability discovery, task delegation, result sharing | 📋 Planned |
 | 6 | **Building an A2A endpoint** — exposing your agent for delegation; capability descriptors; multi-agent task graphs | 📋 Planned |
 | 7 | **MCP + A2A together** — the hybrid 40-60% workflow-velocity improvement pattern per a2a-mcp.org March 2026; CRM-and-knowledge-base-via-MCP + technical-delegation-via-A2A | 📋 Planned |
 
-Each module will follow the Path 01/03/06 shape: concept page(s) + lab + quiz, with reference solutions where labs apply.
+Each module follows the Path 01/03/06 shape: concept page(s) + lab + quiz, with reference solutions where labs apply. Modules 1+2 demonstrate this shape; Modules 3-7 will follow the same pattern.
 
 ## What you can read right now
 
-The repo already has substantive material that maps to this path. None of it is a duplicate of what Path 04 will eventually ship — these are adjacent artifacts that will be cross-referenced from the modules above when they land:
+The repo already has substantive material that maps to this path. Modules 1+2 are now live; the artifacts below include both the newly-shipped Module 1+2 content and the adjacent existing material future modules will build on:
+
+**Shipped — Modules 1+2** (Batch 43):
+- 📖 [MCP foundations](../../concepts/tools/mcp-foundations.md) — Module 1 concept page (~14 min). Protocol architecture, the three primitives (tools/resources/prompts), JSON-RPC 2.0 wire format, host/client/server topology, the five-phase session lifecycle, OAuth 2.1 authentication, what MCP is *not*.
+- 📖 [Building an MCP server](../../concepts/tools/building-an-mcp-server.md) — Module 2 concept page (~13 min). FastMCP 3.0 workflow, the three decorators (`@mcp.tool`, `@mcp.resource`, `@mcp.prompt`), type-hint-driven JSON Schema inference, MCP Inspector debugging workflow, the Python client (`fastmcp.Client`), stdio vs Streamable HTTP deployment, common mistakes.
+- 🧪 [Lab 25 — MCP server from scratch](../../labs/25-mcp-server-from-scratch/) — 90-110 min intermediate lab. Build a notes server with 3 tools + 2 resources + 1 prompt; test with MCP Inspector + Python client; walk through 4 schema-inference failure modes; deploy over Streamable HTTP with token-based auth.
+- 🧠 [MCP foundations and server quiz](../../quizzes/foundations/mcp-foundations-and-server.md) — 8 single-select questions covering both concept pages and the lab; pass at 6/8.
 
 **Architecture-pattern entries** (the catalog of agent topologies; the top-level patterns directory):
-- [Top-level `patterns/` catalog](../../patterns/) — Patterns 11 (MCP integration) and 12 (A2A federation) are the architecture-level views; this path will build the implementation-level companion content
+- [Top-level `patterns/` catalog](../../patterns/) — Patterns 11 (MCP integration) and 12 (A2A federation) are the architecture-level views; this path builds the implementation-level companion content
 - The full pattern catalog has 12 entries spanning single-agent through swarm; the MCP/A2A entries sit alongside the topologies Path 03 implements
 
-**Existing cross-references that will become module deep-links**:
+**Existing cross-references that now resolve as module deep-links**:
 - [Path 03 Multi-Agent Systems](../03-multi-agent-systems/) — Path 03 covers in-process multi-agent coordination; Path 04 covers cross-process and cross-vendor coordination. The two are complementary, not alternatives
-- [Lab 10 supervisor-worker](../../labs/10-supervisor-worker-from-scratch/), [Lab 11 generator-critic](../../labs/11-generator-critic-from-scratch/), [Lab 12 plan-and-execute](../../labs/12-plan-and-execute-from-scratch/), [Lab 13 multi-agent RAG](../../labs/13-multi-agent-rag-from-scratch/) — each lab's anti-scope section currently says *"MCP / A2A coverage — Path 04"*; those forward references will resolve to Path 04's modules
+- [Lab 10 supervisor-worker](../../labs/10-supervisor-worker-from-scratch/), [Lab 11 generator-critic](../../labs/11-generator-critic-from-scratch/), [Lab 12 plan-and-execute](../../labs/12-plan-and-execute-from-scratch/), [Lab 13 multi-agent RAG](../../labs/13-multi-agent-rag-from-scratch/) — each lab's anti-scope section currently says *"MCP / A2A coverage — Path 04"*; those forward references now resolve to Modules 1+2 (and will resolve to Modules 3-7 as they ship)
+- [Path 03 Pattern 5 — Retry policies](../03-multi-agent-systems/patterns/05-retry-policies.md) — the idempotency-key conventions Module 2 references for side-effectful MCP tools
 
 **Security context** (for Module 4's threat model):
 - [`security/README.md`](../../security/README.md) — defense-in-depth principles, OWASP Top 10 for LLM Applications, prompt-injection threat model. Path 04 Module 4 will extend with the MCP-specific tool-layer attacks
 - [Path 06 v2 Adversarial Red-Teaming concept](../../concepts/evaluation/adversarial-red-teaming-at-scale.md) — the indirect-prompt-injection threat model that MCP tool outputs can carry into the agent
 
-**Foundational reading** (start here before the path lands):
-- The official MCP specification at modelcontextprotocol.io
-- The MCP GitHub organization at github.com/modelcontextprotocol
-- Google's A2A specification at google-a2a.github.io/A2A
+**Observability context** (for Module 2's OTel hook):
+- [`concepts/evaluation/opentelemetry-genai-conventions.md`](../../concepts/evaluation/opentelemetry-genai-conventions.md) — what FastMCP 3.0's OTel integration plugs into; Module 2 references this for observability of MCP server tool calls
+
+**Foundational reading** (background for the modules):
+- The official MCP specification at [modelcontextprotocol.io](https://modelcontextprotocol.io)
+- The [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk) and [FastMCP framework](https://github.com/prefecthq/fastmcp)
+- The [MCP Inspector](https://github.com/modelcontextprotocol/inspector) (used in Lab 25)
+- Google's A2A specification at [google-a2a.github.io/A2A](https://google-a2a.github.io/A2A)
 - Anthropic's [Building effective agents](https://www.anthropic.com/research/building-effective-agents) (2024) — orchestrator-worker pattern that A2A formalizes
 
 ## What's not in this path (anti-scope)
@@ -75,13 +86,17 @@ When Path 04 ships, these are explicitly out of scope:
 
 ## What comes next
 
+Modules 1+2 (MCP foundations + Building an MCP server) shipped in Batch 43 — the suggested first-batch pairing this scaffold proposed. The natural next priorities:
+
+- **Module 3 (Building an MCP client)** — pairs with Module 2 structurally; reuses Lab 25's notes server as a client target
+- **Module 4 (MCP security and the tool-layer threat model)** — the [arxiv:2601.10955](https://arxiv.org/abs/2601.10955) attack walked through against a real server like Lab 25's
+- **Modules 5-7 (A2A foundations + endpoint + composition)** — the agent-to-agent half of the path
+
 Contributions are welcome. The way to help build Path 04:
 
 1. **Open an issue or discussion** describing which module you want to contribute to (concept page, lab, or both).
 2. **Read [`CONTRIBUTING.md`](../../CONTRIBUTING.md)** — the source-citation rules and the per-content-type templates are non-negotiable.
 3. **Pick one module's scope, not the whole path.** The Path 01/03/06 model is one module per batch with concept + lab + quiz.
-
-The natural first batch for Path 04 would be Module 1 (MCP foundations) + Module 2 (Building an MCP server) shipped together — the architectural-pair shape that Path 03 v1 used for Module 1 supervisor-worker.
 
 ## References
 
