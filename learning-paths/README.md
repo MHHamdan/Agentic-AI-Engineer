@@ -26,7 +26,7 @@ Paths overlap deliberately. The Multi-Agent path reuses concept pages from Found
 | 01 | [Foundations](./01-foundations/) | Engineers building their first real agent | 🟢 Beginner-friendly | ✅ Content shipped |
 | 02 | [Agentic RAG](./02-agentic-rag/) | Anyone building retrieval-heavy agents | 🟡 Intermediate | ✅ Content shipped |
 | 03 | [Multi-Agent Systems](./03-multi-agent-systems/) | Engineers orchestrating cooperating agents | 🟡 Intermediate | ✅ v1 complete + v2 patterns (6) shipped |
-| 04 | [Tool Protocols (MCP + A2A)](./04-tool-protocols-mcp-a2a/) | Engineers wiring agents to tools and other agents | 🟡 Intermediate | 🚧 Modules 1+2 shipped (Batch 43); Modules 3-7 planned |
+| 04 | [Tool Protocols (MCP + A2A)](./04-tool-protocols-mcp-a2a/) | Engineers wiring agents to tools and other agents | 🟡 Intermediate | 🚧 Modules 1+2+3 shipped (Batch 46); Modules 4-7 planned |
 | 05 | [Context Engineering](./05-context-engineering/) | Engineers fighting context-window problems | 🟡 Intermediate | 📋 Scaffold (Batch 42); modules planned |
 | 06 | [Evaluation & Observability](./06-evaluation-observability/) | Engineers shipping agents they need to measure | 🔴 Advanced | ✅ v1 + v2 complete (recipes, patterns, projects, frameworks deep dive, embedding drift, adversarial red-teaming) |
 | 07 | [Production & Safety](./07-production-and-safety/) | Engineers taking agents to production | 🔴 Advanced | 📋 Scaffold (Batch 42); `production/` + `security/` playbooks already authored |
@@ -181,14 +181,14 @@ This repo is built incrementally. Some paths will reach full coverage before oth
 | 01 Foundations | ☑ | ● | ● | ☐ | ☐ | ☐ |
 | 02 Agentic RAG | ☑ | ● | ● | ☐ | ☐ | ☐ |
 | 03 Multi-Agent Systems | ☑ | ● | ● | ☐ | ● | ☐ |
-| 04 Tool Protocols (MCP + A2A) | ☑ | ● (2 of ~10) | ● (1 of ~5) | ☐ | ☐ | ☐ |
+| 04 Tool Protocols (MCP + A2A) | ☑ | ● (3 of ~10) | ● (2 of ~5) | ☐ | ☐ | ☐ |
 | 05 Context Engineering | ☑ | ☐ | ☐ | ☐ | ☐ | ☐ |
 | 06 Evaluation & Observability | ☑ | ● | ● | ● | ● | ● |
 | 07 Production & Safety | ☑ | ☐ | ☐ | ☐ | ☐ | ☐ |
 | 08 Mathematical Foundations | ☑ | ● (4 of 13) | n/a | n/a | n/a | n/a |
 | 09 Capstones | ☑ | n/a | n/a | n/a | n/a | ☐ |
 
-Checkbox status is updated at each release. **All nine paths now have authored landing READMEs as of Batch 42; Path 04 has its first concept pages and lab as of Batch 43.** Paths 05, 07, 08, 09 remain scaffolds — the path README documents the planned structure and links to the existing repo artifacts each path will build on. Paths 01, 02, 03 (v1 + v2 patterns), 06 (v1 + v2) have substantial content; Path 04 has Modules 1+2 shipped; Path 08 has 4 of 13 math pages authored. If you want to help fill in a row, [`CONTRIBUTING.md`](../CONTRIBUTING.md) walks you through the workflow for each content type.
+Checkbox status is updated at each release. **All nine paths now have authored landing READMEs as of Batch 42; Path 04 has its first three modules shipped (concept pages + labs + quizzes) as of Batch 46; the top-level [`patterns/`](../patterns/) catalog has 6 of 12 pages authored (Patterns 01, 03, 06, 10, 11, 12) as of Batch 45.** Paths 05, 07, 08, 09 remain scaffolds — the path README documents the planned structure and links to the existing repo artifacts each path will build on. Paths 01, 02, 03 (v1 + v2 patterns), 06 (v1 + v2) have substantial content; Path 04 has Modules 1+2+3 shipped; Path 08 has 4 of 13 math pages authored. If you want to help fill in a row, [`CONTRIBUTING.md`](../CONTRIBUTING.md) walks you through the workflow for each content type.
 
 ---
 

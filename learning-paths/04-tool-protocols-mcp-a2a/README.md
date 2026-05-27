@@ -1,8 +1,8 @@
 # Path 04 — Tool Protocols (MCP + A2A)
 
-> 🟡 Intermediate · ⏱ 6–10 hours (planned, ~2 hours shipped via Modules 1+2) · 📍 Start here once you've completed Path 01 · 🚧 **In progress — Modules 1+2 shipped (Batch 43); Modules 3-7 planned**
+> 🟡 Intermediate · ⏱ 6–10 hours (planned, ~3 hours shipped via Modules 1+2+3) · 📍 Start here once you've completed Path 01 · 🚧 **In progress — Modules 1+2+3 shipped (Batch 46); Modules 4-7 planned**
 
-> ✅ **Modules 1+2 are live.** Two concept pages ([MCP foundations](../../concepts/tools/mcp-foundations.md) + [Building an MCP server](../../concepts/tools/building-an-mcp-server.md)), one lab ([Lab 25 — MCP server from scratch](../../labs/25-mcp-server-from-scratch/)), and one [quiz](../../quizzes/foundations/mcp-foundations-and-server.md) ship with this batch. Modules 3-7 are still planned — the "What you can read right now" section below lists every shipped artifact plus the existing adjacent material those future modules will build on.
+> ✅ **Modules 1+2+3 are live.** Three concept pages ([MCP foundations](../../concepts/tools/mcp-foundations.md) + [Building an MCP server](../../concepts/tools/building-an-mcp-server.md) + [Building an MCP client](../../concepts/tools/building-an-mcp-client.md)), two labs ([Lab 25 — MCP server from scratch](../../labs/25-mcp-server-from-scratch/) + [Lab 26 — MCP client from scratch](../../labs/26-mcp-client-from-scratch/)), and two quizzes ([MCP foundations and server](../../quizzes/foundations/mcp-foundations-and-server.md) + [MCP client and discovery](../../quizzes/foundations/mcp-client-and-discovery.md)) ship as of Batch 46. Modules 4-7 are still planned — the "What you can read right now" section below lists every shipped artifact plus the existing adjacent material those future modules will build on.
 
 ## Who this path is for
 
@@ -33,7 +33,7 @@ The planned module breakdown:
 |---|---|---|
 | 1 | **[MCP foundations](../../concepts/tools/mcp-foundations.md)** — protocol spec, JSON-RPC 2.0 wire format, client-server lifecycle, transports (stdio vs Streamable HTTP) | ✅ Shipped (Batch 43) |
 | 2 | **[Building an MCP server](../../concepts/tools/building-an-mcp-server.md)** — FastMCP 3.0, decorator-based registration, type-hint-driven schemas, MCP Inspector workflow, deployment patterns. Lab: [Lab 25 — MCP server from scratch](../../labs/25-mcp-server-from-scratch/). Quiz: [MCP foundations and server](../../quizzes/foundations/mcp-foundations-and-server.md) | ✅ Shipped (Batch 43) |
-| 3 | **Building an MCP client** — consuming external servers from your agent; tool discovery via Server Cards (2026 H2 spec); error handling | 📋 Planned |
+| 3 | **[Building an MCP client](../../concepts/tools/building-an-mcp-client.md)** — consuming external servers from your agent; multi-server orchestration with collision-free routing; production defenses (timeout, schema-drift, circuit-breaker, retry-on-auth, response-size limits); MCP Registry + Server Cards discovery; FastMCP 3.1 code mode. Lab: [Lab 26 — MCP client from scratch](../../labs/26-mcp-client-from-scratch/). Quiz: [MCP client and discovery](../../quizzes/foundations/mcp-client-and-discovery.md) | ✅ Shipped (Batch 46) |
 | 4 | **MCP security and the tool-layer threat model** — the arxiv:2601.10955 resource-amplification attack; safe-default tool exposure; rate limits and idempotency at the server | 📋 Planned |
 | 5 | **A2A foundations** — protocol spec, agent capability discovery, task delegation, result sharing | 📋 Planned |
 | 6 | **Building an A2A endpoint** — exposing your agent for delegation; capability descriptors; multi-agent task graphs | 📋 Planned |
@@ -45,15 +45,19 @@ Each module follows the Path 01/03/06 shape: concept page(s) + lab + quiz, with 
 
 The repo already has substantive material that maps to this path. Modules 1+2 are now live; the artifacts below include both the newly-shipped Module 1+2 content and the adjacent existing material future modules will build on:
 
-**Shipped — Modules 1+2** (Batch 43):
+**Shipped — Modules 1+2+3** (Batches 43 + 46):
 - 📖 [MCP foundations](../../concepts/tools/mcp-foundations.md) — Module 1 concept page (~14 min). Protocol architecture, the three primitives (tools/resources/prompts), JSON-RPC 2.0 wire format, host/client/server topology, the five-phase session lifecycle, OAuth 2.1 authentication, what MCP is *not*.
 - 📖 [Building an MCP server](../../concepts/tools/building-an-mcp-server.md) — Module 2 concept page (~13 min). FastMCP 3.0 workflow, the three decorators (`@mcp.tool`, `@mcp.resource`, `@mcp.prompt`), type-hint-driven JSON Schema inference, MCP Inspector debugging workflow, the Python client (`fastmcp.Client`), stdio vs Streamable HTTP deployment, common mistakes.
+- 📖 [Building an MCP client](../../concepts/tools/building-an-mcp-client.md) — Module 3 concept page (~13 min). Multi-server orchestration with collision-free routing via server-name prefixes; the five production defenses (per-tool timeout, schema-cache TTL, circuit-breaker, retry-on-auth-error, response-size limits); discovery patterns (config file → MCP Registry → Server Cards); the FastMCP 3.1 code-mode escape hatch for token-bloat (15K → 2-3K per request per Apigene April 2026).
 - 🧪 [Lab 25 — MCP server from scratch](../../labs/25-mcp-server-from-scratch/) — 90-110 min intermediate lab. Build a notes server with 3 tools + 2 resources + 1 prompt; test with MCP Inspector + Python client; walk through 4 schema-inference failure modes; deploy over Streamable HTTP with token-based auth.
-- 🧠 [MCP foundations and server quiz](../../quizzes/foundations/mcp-foundations-and-server.md) — 8 single-select questions covering both concept pages and the lab; pass at 6/8.
+- 🧪 [Lab 26 — MCP client from scratch](../../labs/26-mcp-client-from-scratch/) — 90-110 min intermediate lab. Build a `MultiServerMcpClient` with collision-free routing across two servers; layer the five production defenses; wire into a Pattern 01 agent loop with a real Anthropic API call; measure tool-schema token cost; observe why FastMCP 3.1 code mode exists.
+- 🧠 [MCP foundations and server quiz](../../quizzes/foundations/mcp-foundations-and-server.md) — 8 single-select questions covering Modules 1+2 + Lab 25; pass at 6/8.
+- 🧠 [MCP client and discovery quiz](../../quizzes/foundations/mcp-client-and-discovery.md) — 8 single-select questions covering Module 3 + Lab 26; pass at 6/8.
 
 **Architecture-pattern entries** (the catalog of agent topologies; the top-level patterns directory):
-- [Top-level `patterns/` catalog](../../patterns/) — Patterns 11 (MCP integration) and 12 (A2A federation) are the architecture-level views; this path builds the implementation-level companion content
-- The full pattern catalog has 12 entries spanning single-agent through swarm; the MCP/A2A entries sit alongside the topologies Path 03 implements
+- [Pattern 11 — MCP integration](../../patterns/11-mcp-integration.md) — the architecture-level companion to Modules 1+2; cross-process tool access via MCP. Authored in Batch 44 alongside Pattern 12.
+- [Pattern 12 — A2A federation](../../patterns/12-a2a-federation.md) — the architecture-level companion to future Modules 5-7; cross-agent task delegation via the Agent-to-Agent protocol. Authored in Batch 44.
+- [Top-level `patterns/` catalog](../../patterns/) — the full pattern catalog has 12 entries spanning single-agent through swarm; Patterns 01, 11, 12 authored as of Batch 44
 
 **Existing cross-references that now resolve as module deep-links**:
 - [Path 03 Multi-Agent Systems](../03-multi-agent-systems/) — Path 03 covers in-process multi-agent coordination; Path 04 covers cross-process and cross-vendor coordination. The two are complementary, not alternatives
@@ -86,10 +90,9 @@ When Path 04 ships, these are explicitly out of scope:
 
 ## What comes next
 
-Modules 1+2 (MCP foundations + Building an MCP server) shipped in Batch 43 — the suggested first-batch pairing this scaffold proposed. The natural next priorities:
+Modules 1+2+3 (MCP foundations + server + client) shipped across Batches 43 and 46 — the full MCP author-and-consume pair. The natural next priorities:
 
-- **Module 3 (Building an MCP client)** — pairs with Module 2 structurally; reuses Lab 25's notes server as a client target
-- **Module 4 (MCP security and the tool-layer threat model)** — the [arxiv:2601.10955](https://arxiv.org/abs/2601.10955) attack walked through against a real server like Lab 25's
+- **Module 4 (MCP security and the tool-layer threat model)** — the [arxiv:2601.10955](https://arxiv.org/abs/2601.10955) attack walked through against the Lab 25 server / Lab 26 client setup; tool-description injection mitigations; the security-hardening layer on top of the three shipped modules
 - **Modules 5-7 (A2A foundations + endpoint + composition)** — the agent-to-agent half of the path
 
 Contributions are welcome. The way to help build Path 04:
