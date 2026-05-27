@@ -21,20 +21,20 @@ Full template is in [`CONTRIBUTING.md`](../CONTRIBUTING.md).
 
 ## Catalog
 
-| # | Pattern | What it solves |
-|---|---|---|
-| 01 | Single-agent tool use | One LLM + a few tools, no orchestration |
-| 02 | Router | Send each request to a specialized handler |
-| 03 | Supervisor + workers | One coordinator delegates to several specialists |
-| 04 | Hierarchical teams | Supervisors of supervisors for large problems |
-| 05 | Swarm hand-off | Peer agents hand off control without a central coordinator |
-| 06 | Plan-and-execute | Generate a plan, then execute steps |
-| 07 | Reflection / self-correction | Critique and revise outputs in a loop |
-| 08 | Agentic RAG | Retrieval as a tool the agent chooses to use |
-| 09 | Deep research | Iterative search, synthesis, and citation |
-| 10 | Human-in-the-loop | Pause for human approval at decision points |
-| 11 | MCP integration | Standard protocol for tools and data |
-| 12 | A2A federation | Standard protocol between agents |
+| # | Pattern | What it solves | Status |
+|---|---|---|---|
+| 01 | [Single-agent tool use](./01-single-agent-tool-use.md) | One LLM + a few tools, no orchestration | ✅ Authored (Batch 44) |
+| 02 | Router | Send each request to a specialized handler | 📋 Planned |
+| 03 | [Supervisor + workers](./03-supervisor-workers.md) | One coordinator delegates to several specialists | ✅ Authored (Batch 45) |
+| 04 | Hierarchical teams | Supervisors of supervisors for large problems | 📋 Planned |
+| 05 | Swarm hand-off | Peer agents hand off control without a central coordinator | 📋 Planned |
+| 06 | [Plan-and-execute](./06-plan-and-execute.md) | Generate a plan, then execute steps | ✅ Authored (Batch 45) |
+| 07 | Reflection / self-correction | Critique and revise outputs in a loop | 📋 Planned |
+| 08 | Agentic RAG | Retrieval as a tool the agent chooses to use | 📋 Planned |
+| 09 | Deep research | Iterative search, synthesis, and citation | 📋 Planned |
+| 10 | [Human-in-the-loop](./10-human-in-the-loop.md) | Pause for human approval at decision points | ✅ Authored (Batch 45) |
+| 11 | [MCP integration](./11-mcp-integration.md) | Standard protocol for tools and data | ✅ Authored (Batch 44) |
+| 12 | [A2A federation](./12-a2a-federation.md) | Standard protocol between agents | ✅ Authored (Batch 44) |
 
 ## Picking a pattern
 
@@ -42,17 +42,17 @@ A first-pass decision aid:
 
 | If you're solving... | Start with pattern |
 |---|---|
-| A single, scoped task with a few tools | 01 Single-agent |
+| A single, scoped task with a few tools | [01 Single-agent](./01-single-agent-tool-use.md) |
 | Multiple distinct task types | 02 Router |
-| One complex task that decomposes cleanly | 03 Supervisor or 06 Plan-and-execute |
+| One complex task that decomposes cleanly | [03 Supervisor](./03-supervisor-workers.md) or [06 Plan-and-execute](./06-plan-and-execute.md) |
 | A complex task with hierarchical subproblems | 04 Hierarchical |
 | Loosely-coupled specialists that pass work peer-to-peer | 05 Swarm |
 | A task where the first answer is usually wrong | 07 Reflection |
 | Anything retrieval-heavy | 08 Agentic RAG |
 | A research / synthesis task | 09 Deep research |
-| Anything with high stakes or compliance | 10 Human-in-the-loop |
-| Multi-source tool access | 11 MCP |
-| Multi-agent across orgs or codebases | 12 A2A |
+| Anything with high stakes or compliance | [10 Human-in-the-loop](./10-human-in-the-loop.md) |
+| Multi-source tool access | [11 MCP](./11-mcp-integration.md) |
+| Multi-agent across orgs or codebases | [12 A2A](./12-a2a-federation.md) |
 
 Patterns combine. A common production stack is *supervisor* + *agentic RAG* + *human-in-the-loop* + *MCP*. The individual pattern pages call out the most common combinations.
 

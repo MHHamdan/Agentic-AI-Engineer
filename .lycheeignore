@@ -26,10 +26,11 @@
 ^.*/concepts/context/context-budget\.md$
 
 # Pattern pages (referenced from concept pages but not yet authored)
-^.*/patterns/01-single-agent-tool-use\.md$
-^.*/patterns/03-supervisor-workers\.md$
-^.*/patterns/06-plan-and-execute\.md$
-^.*/patterns/10-human-in-the-loop\.md$
+# Note: patterns/01-single-agent-tool-use.md authored in batch 44 — line removed.
+# Note: patterns/11-mcp-integration.md authored in batch 44 — never lychee-exempted; the catalog entry didn't have outbound references to ignore.
+# Note: patterns/12-a2a-federation.md authored in batch 44 — never lychee-exempted; same reason.
+# Note: Pattern 01's Related-patterns section references Patterns 02 and 07 using prose-with-inline-code (not markdown link syntax) per the Batch 42 credibility-gap-closure convention — link-checker green ≠ user-experience green, so no new exemptions added for unshipped patterns.
+# Note: patterns/03-supervisor-workers.md, patterns/06-plan-and-execute.md, patterns/10-human-in-the-loop.md all authored in batch 45 — exemptions removed. The entire pattern-page exemption block now closes.
 
 # Math pages not yet authored
 ^.*/math-foundations/02-embeddings-similarity\.md$
