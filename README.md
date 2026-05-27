@@ -99,7 +99,7 @@ Skip the linear reading order and jump to what you actually need:
 | Build your first real agent | [Foundations Path](./learning-paths/01-foundations/) | ✅ Content shipped |
 | Build retrieval-augmented agents | [Agentic RAG Path](./learning-paths/02-agentic-rag/) | ✅ Content shipped |
 | Orchestrate multiple cooperating agents | [Multi-Agent Systems Path](./learning-paths/03-multi-agent-systems/) | ✅ v1 + v2 patterns shipped |
-| Wire agents to tools, data, and other agents | [Tool Protocols (MCP + A2A) Path](./learning-paths/04-tool-protocols-mcp-a2a/) | 🚧 Modules 1+2 shipped (Batch 43) |
+| Wire agents to tools, data, and other agents | [Tool Protocols (MCP + A2A) Path](./learning-paths/04-tool-protocols-mcp-a2a/) | 🚧 Modules 1+2+3 shipped (Batch 46) |
 | Get more out of the context window | [Context Engineering Path](./learning-paths/05-context-engineering/) | 📋 Scaffold (modules planned) |
 | Add tracing, evals, and observability | [Evaluation & Observability Path](./learning-paths/06-evaluation-observability/) | ✅ v1 + v2 complete |
 | Ship to production safely | [Production & Safety Path](./learning-paths/07-production-and-safety/) | 📋 Scaffold (modules planned) |
