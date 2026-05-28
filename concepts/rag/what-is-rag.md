@@ -25,7 +25,7 @@ The problem: that parametric knowledge has three big failure modes.
 2. **It's private-blind.** Anything not in the public training corpus (your internal docs, your customer data, your specific domain) is just not there.
 3. **It hallucinates under uncertainty.** When the model doesn't know, it doesn't say "I don't know" by default — it generates plausible-sounding output that may be wrong. This is the most-cited reason people reach for RAG.
 
-The 2020 Lewis et al. paper ([*Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*](https://arxiv.org/abs/2005.11401), NeurIPS 2020) proposed a fix: augment the model with *non-parametric memory* — a dense vector index over a document collection — that the model queries at inference time. The retrieved passages get conditioned on, and the model generates from both its parametric knowledge and the retrieved evidence.
+The 2020 Lewis et al. paper ([*Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*](https://arxiv.org/abs/2005.11401), NeurIPS 2020) proposed a fix: augment the model with *non-parametric memory* — a dense vector index over a document collection — that the model queries at inference time. The retrieved passages get conditioned on, and the model generates from both its parametric knowledge and the retrieved evidence. 
 
 The paper showed RAG models produce more specific, diverse, and factual responses than parametric-only baselines on open-domain QA benchmarks. The architecture they proposed (DPR retriever + BART generator, end-to-end trained) is mostly historical now — modern systems use pretrained embedding models and frozen LLMs — but the *pattern* the paper named is what everyone calls RAG today.
 
@@ -76,7 +76,7 @@ It fails (or degrades) for questions where:
 question → agent decides → maybe retrieve → maybe read full chunk → maybe retrieve again → synthesize → answer
 ```
 
-If this looks like Lab 03's research agent — search the web, decide what to fetch, synthesize across sources — that's exactly the point. **Agentic RAG is the same loop as Lab 03, but the corpus is bounded and yours instead of the open web.**
+If this looks like [*Lab 03's research agent*](https://github.com/MHHamdan/Agentic-AI-Engineer/blob/main/labs/03-multi-step-research-agent/lab.ipynb) — search the web, decide what to fetch, synthesize across sources — that's exactly the point. **Agentic RAG is the same loop as Lab 03, but the corpus is bounded and yours instead of the open web.**
 
 The Foundations path covered this distinction directly: search ≠ RAG because search queries a corpus you don't control. Now that we're in the corpus-you-control regime, the agent loop is the natural shape because:
 
