@@ -7,8 +7,8 @@ Threats and defenses for agentic AI systems. The attack surface of an agent is b
 | Page | Covers | Status |
 |---|---|---|
 | [`prompt-injection.md`](./prompt-injection.md) | Direct and indirect prompt injection — what works, what doesn't | ✅ Shipped (Batch 56) |
-| `tool-abuse.md` | Agents using tools in ways the designer didn't anticipate | 📋 Planned |
-| `data-exfiltration.md` | Leaking secrets via tool calls, retrieved context, or output channels | 📋 Planned |
+| [`tool-abuse.md`](./tool-abuse.md) | Agents using tools in ways the designer didn't anticipate | ✅ Shipped (Batch 57) |
+| [`data-exfiltration.md`](./data-exfiltration.md) | Leaking secrets via tool calls, retrieved context, or output channels | ✅ Shipped (Batch 57) |
 | `jailbreaks.md` | Bypassing safety constraints in the underlying LLM | 📋 Planned |
 | `guardrails.md` | Input filtering, output filtering, content classification | 📋 Planned |
 | `red-teaming.md` | Practical adversarial testing for your agent | 📋 Planned |
