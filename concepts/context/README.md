@@ -8,11 +8,11 @@
 |---|---|---|
 | [`foundations.md`](./foundations.md) | Three context zones; prompt-vs-context distinction; attention budget; 100:1 input-to-output ratio; canonical failure modes (suicide by context, context rot, re-reading) | ✅ Shipped (Batch 59) |
 | [`token-budgets.md`](./token-budgets.md) | Five-category production allocation; soft caps + hard caps; per-tenant tiers; static vs dynamic allocation; budget enforcement in the agent loop | ✅ Shipped (Batch 59) |
-| `compression-and-summarization.md` | When to compress / truncate / summarize; lossy vs lossless; recursive summarization trap | 📋 Planned (Path 05 Module 3) |
+| [`compression-and-summarization.md`](./compression-and-summarization.md) | When to compress / truncate / summarize / mask; lossy vs lossless; anchored iterative pattern; Anthropic's `compact-2026-01-12` API; agent-centric compression (ACON, Focus, RLM); the recursive summarization trap | ✅ Shipped (Batch 60) |
 | `context-drift-detection.md` | Four early-warning signals (re-reads, re-decisions, task reframing, retrieval-precision collapse); instrumenting at trace level | 📋 Planned (Path 05 Module 5) |
 | `long-context-models.md` | 1M-token tier (Claude Sonnet 4 beta, MiniMax-M1, Qwen3); pricing tier cliffs; needle-in-haystack degradation; choosing context size as a design decision | 📋 Planned (Path 05 Module 6) |
 
-The companion memory-tier work (Path 05 Module 4) lives in `concepts/memory/` when it ships.
+The companion memory-tier work (Path 05 Module 4) lives in [`../memory/`](../memory/) — shipped in Batch 60.
 
 ## How these pages compose
 
@@ -27,7 +27,7 @@ The companion memory-tier work (Path 05 Module 4) lives in `concepts/memory/` wh
 | Streaming output delivery | [`production/streaming.md`](../../production/streaming.md) |
 | Tool-output sanitization (security side of suicide-by-context) | [`security/prompt-injection.md`](../../security/prompt-injection.md) Defense 3 |
 | Retrieval mechanics (chunking, hybrid search, reranking) | [`concepts/rag/`](../rag/) |
-| Memory-tier separation (short-term, long-term, episodic) | `concepts/memory/` (planned) |
+| Memory-tier separation (short-term, long-term, episodic) | [`concepts/memory/`](../memory/) |
 
 ## Status
 
