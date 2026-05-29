@@ -4,15 +4,15 @@ The going-to-prod playbook. Everything between *"it works on my notebook"* and *
 
 ## What's covered
 
-| Page | Covers |
-|---|---|
-| `deployment.md` | Deployment patterns — FastAPI, durable execution, serverless, on-prem |
-| `observability.md` | Tracing, metrics, logs — and how to actually use them |
-| `cost-engineering.md` | Token budgets, model routing, caching, batching, prompt compression |
-| `caching-and-routing.md` | Multi-tier caching, semantic caching, model routing strategies |
-| `streaming.md` | Streaming tokens, partial tool outputs, frontend wiring |
-| `async-and-concurrency.md` | Async patterns for parallel tool calls and multi-agent fan-out |
-| `checklist.md` | Pre-launch checklist — the things you forget the first time |
+| Page | Covers | Status |
+|---|---|---|
+| [`deployment.md`](./deployment.md) | Deployment patterns — FastAPI, durable execution, serverless, on-prem | ✅ Shipped (Batch 55) |
+| `observability.md` | Tracing, metrics, logs — and how to actually use them | 📋 Planned |
+| `cost-engineering.md` | Token budgets, model routing, caching, batching, prompt compression | 📋 Planned |
+| `caching-and-routing.md` | Multi-tier caching, semantic caching, model routing strategies | 📋 Planned |
+| `streaming.md` | Streaming tokens, partial tool outputs, frontend wiring | 📋 Planned |
+| `async-and-concurrency.md` | Async patterns for parallel tool calls and multi-agent fan-out | 📋 Planned |
+| [`checklist.md`](./checklist.md) | Pre-launch checklist — the things you forget the first time | ✅ Shipped (Batch 55) |
 
 The conceptual side (what backpressure means, when to cache, what calibration achieves) lives in [`concepts/`](../concepts/). This folder is the engineering side — patterns, tradeoffs, and the things you only learn after a 3am page.
 

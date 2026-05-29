@@ -1,5 +1,6 @@
-eec9b0297099b959c02ff1ba77374a4060eff312dfe0d1ab5709d9bd1745869a  ./CHANGELOG.md
-23733abfcb48073c97ffd48ffa94a55e0971d9061b2ccd72f18b69ae74004341  ./concepts/multi-agent/README.md
-2e1376b4dad2dd4d2ba33c995540ecd952afc9b7240f3e462575785151d43b2b  ./concepts/multi-agent/multi-agent-frameworks-deep-dive.md
-6b55b468c1d09392c7d0d45cce796cf143f73883e6f5432d95f2abd7cd7e58de  ./learning-paths/03-multi-agent-systems/README.md
-05609f7acf4baa4c2076a41a514a883b1dbb7f88e4ddbdeaa2404310468d2edb  ./learning-paths/README.md
+aaea8fd91418176e468abce0d188fe35eec954275d1ba22e4e86f7804b36dccb  ./CHANGELOG.md
+9eb811fd4db0e748d37b8782c9a6e3f44eb13846e5dbf6829d4b77fd645d4fbe  ./learning-paths/07-production-and-safety/README.md
+ba9642ec155132f36faed4408b4eefa6e4a4fa7ec156000244cc18280ca4c468  ./learning-paths/README.md
+eef1945b89e58b8f5b08cd71953c6630ad79ea15641db490c853973c1b84e18a  ./production/README.md
+a2a5cedac228ae088cdbf695082d321cfcbda1939c688d3e5dcd7879dbd7656a  ./production/checklist.md
+e20c67c147052b671513c19c45e92bc3f0960d499ea0f26d4688407e0fc5fe95  ./production/deployment.md
