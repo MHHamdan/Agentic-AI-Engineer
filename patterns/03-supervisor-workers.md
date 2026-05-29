@@ -27,7 +27,7 @@ flowchart LR
     style Answer fill:#e6f6ec
 ```
 
-Each worker is itself typically a [Pattern 01](./01-single-agent-tool-use.md) agent — its own tool set, its own loop, its own bounded step count. The supervisor doesn't see inside the worker's loop; it sees only the worker's structured output. This is what makes the pattern compose: workers can themselves contain workers (hierarchical teams; future Pattern 04).
+Each worker is itself typically a [Pattern 01](./01-single-agent-tool-use.md) agent — its own tool set, its own loop, its own bounded step count. The supervisor doesn't see inside the worker's loop; it sees only the worker's structured output. This is what makes the pattern compose: workers can themselves contain workers (see [Pattern 04 — Hierarchical teams](./04-hierarchical-teams.md)).
 
 ## When to use
 
@@ -125,7 +125,7 @@ The pattern's break-even against Pattern 01 is usually around 3+ distinct specia
 ## Related patterns
 
 - **[Pattern 01 — Single-agent tool use](./01-single-agent-tool-use.md)** — what each worker typically is. The supervisor delegates to workers that are Pattern 01 agents.
-- **Pattern 04 — Hierarchical teams** (planned; `patterns/04-hierarchical-teams.md`) — Pattern 03 nested. When workers themselves benefit from worker-specialist decomposition.
+- **[Pattern 04 — Hierarchical teams](./04-hierarchical-teams.md)** — Pattern 03 nested. When workers themselves benefit from worker-specialist decomposition.
 - **[Pattern 06 — Plan-and-execute](./06-plan-and-execute.md)** — the close cousin. Plan-and-execute pre-commits to a static plan; Pattern 03 lets the supervisor adjust dynamically as worker results return.
 - **[Pattern 10 — Human-in-the-loop](./10-human-in-the-loop.md)** — composes cleanly. The supervisor's `needs_escalation` status routes to a human reviewer before continuing.
 - **[Pattern 11 — MCP integration](./11-mcp-integration.md)** — workers' tool access often goes through MCP servers. Each worker gets its own MCP client; the supervisor doesn't know or care.

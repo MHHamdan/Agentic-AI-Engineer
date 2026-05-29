@@ -144,7 +144,7 @@ The arxiv [Architecting Resilient LLM Agents](https://arxiv.org/pdf/2509.08646) 
 - **[Pattern 01 — Single-agent tool use](./01-single-agent-tool-use.md)** — the alternative when planning overhead doesn't pay off. Pattern 06 wins on multi-step tasks; Pattern 01 wins on single-step.
 - **[Pattern 03 — Supervisor + workers](./03-supervisor-workers.md)** — the close cousin. Plan-and-execute pre-commits to a static plan; supervisor-worker lets the coordinator adjust dynamically as results return.
 - **[Pattern 10 — Human-in-the-loop](./10-human-in-the-loop.md)** — composes cleanly. Pre-execution plan approval is a natural HITL gate when stakes are high.
-- **Pattern 07 — Reflection / self-correction** (planned; `patterns/07-reflection.md`) — composes by wrapping the executor: each step's output goes through a critic before being committed to `completed`.
+- **[Pattern 07 — Reflection / self-correction](./07-reflection.md)** — composes by wrapping the executor: each step's output goes through a critic before being committed to `completed`.
 
 ## References
 
