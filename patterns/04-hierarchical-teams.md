@@ -138,7 +138,7 @@ The pattern's cost curve is the routing-accuracy benefit (sharp at ~6 specialist
 ## Related patterns
 
 - **[Pattern 03 — Supervisor + workers](./03-supervisor-workers.md)** — the foundation. Pattern 04 is Pattern 03 nested one level. If you're below 6 specialists, stay flat.
-- **Pattern 02 — Router** (planned; `patterns/02-router.md`) — what you actually want when "hierarchy" is just a euphemism for "route by request type." Routers are one-of-N selection; hierarchies are M-of-N decomposition. Don't conflate.
+- **[Pattern 02 — Router](./02-router.md)** — what you actually want when "hierarchy" is just a euphemism for "route by request type." Routers are one-of-N selection; hierarchies are M-of-N decomposition. Don't conflate.
 - **[Pattern 05 — Swarm hand-off](./05-swarm-handoff.md)** — the no-coordinator alternative. When agents need to talk peer-to-peer (one specialist's output is another's input, no top-level coordinator), swarm hand-off fits better. The two patterns aren't competitors per se; production systems often have a hierarchy at the outer layer and swarm-style peer hand-off within a team.
 - **[Pattern 06 — Plan-and-execute](./06-plan-and-execute.md)** — the alternative when the *structure* of the work is predictable enough to plan upfront. Hierarchy decides dynamically per turn; plan-and-execute commits to a structure at planning time. The two patterns frequently compose: a plan-and-execute planner emits a plan whose steps are then dispatched through a hierarchy.
 - **[Pattern 07 — Reflection / self-correction](./07-reflection.md)** — composes inside a team. The writing team's editor reflecting on the drafter's output is a Pattern 07 loop nested inside a hierarchical structure.
