@@ -123,7 +123,7 @@ The cost curve compounds: longer tasks → more iterations needed → cost grows
 - **[Pattern 01 — Single-agent tool use](./01-single-agent-tool-use.md)** — what reflection wraps. The simplest composition is "Pattern 01 + Pattern 07": the agent loop runs to completion, then the critic runs on the output, then back into the loop if needed. Effective when the agent loop reliably produces almost-right answers.
 - **[Pattern 03 — Supervisor + workers](./03-supervisor-workers.md)** — what reflection composes inside. A supervisor's worker can itself be a reflection loop; the supervisor sees only the converged output, not the iteration history. This is the canonical writing-team shape: the editor worker is a reflection loop on the drafter's output.
 - **[Pattern 06 — Plan-and-execute](./06-plan-and-execute.md)** — composes by wrapping the executor. Each step's output goes through a critic before being committed to `completed` — the planner doesn't see iteration noise. Effective when the plan is fixed but each step's execution benefits from refinement.
-- **Pattern 08 — Agentic RAG** (planned; `patterns/08-agentic-rag.md`) — the natural external evaluator for reflection on factual outputs. The critic retrieves and verifies citations; the generator regenerates against the retrieval grounding.
+- **[Pattern 08 — Agentic RAG](./08-agentic-rag.md)** — the natural external evaluator for reflection on factual outputs. The critic retrieves and verifies citations; the generator regenerates against the retrieval grounding.
 - **[Pattern 10 — Human-in-the-loop](./10-human-in-the-loop.md)** — the right fallback for hop-cap-reached. When reflection can't converge, escalate to human review rather than returning the partial silently.
 
 ## References
