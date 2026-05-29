@@ -143,24 +143,47 @@ A more detailed walkthrough of every folder lives in [`docs/how-to-use-this-repo
 Nine paths, each curating content across the rest of the repo. They overlap deliberately: the *Multi-Agent* path reuses concept pages from *Foundations*, the *Production* path leans on *Evaluation*, and so on.
 
 ```mermaid
-flowchart LR
-    F[01 Foundations] --> R[02 Agentic RAG]
-    F --> M[03 Multi-Agent]
-    F --> T[04 Tool Protocols<br/>MCP + A2A]
-    R --> C[05 Context Engineering]
+flowchart TD
+    F["01 Foundations"] --> R["02 Agentic RAG"]
+    F --> M["03 Multi-Agent"]
+    F --> T["04 Tool Protocols<br/>MCP + A2A"]
+
+    R --> C["05 Context Engineering"]
     M --> C
     T --> C
-    R --> E[06 Evaluation & Observability]
+
+    R --> E["06 Evaluation & Observability"]
     M --> E
     C --> E
-    E --> P[07 Production & Safety]
-    F -.-> X[08 Math Foundations]
+
+    E --> P["07 Production & Safety"]
+    P --> CAP["09 Capstones"]
+    E --> CAP
+
+    F -.-> X["08 Math Foundations"]
     R -.-> X
     M -.-> X
-    P --> CAP[09 Capstones]
-    E --> CAP
-```
 
+    classDef foundations fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
+    classDef rag fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef multi fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px,color:#4A148C;
+    classDef tools fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
+    classDef context fill:#E0F7FA,stroke:#00838F,stroke-width:2px,color:#004D40;
+    classDef eval fill:#FFFDE7,stroke:#F9A825,stroke-width:2px,color:#F57F17;
+    classDef production fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#B71C1C;
+    classDef math fill:#ECEFF1,stroke:#455A64,stroke-width:2px,color:#263238,stroke-dasharray:5 5;
+    classDef capstone fill:#EDE7F6,stroke:#512DA8,stroke-width:3px,color:#311B92;
+
+    class F foundations;
+    class R rag;
+    class M multi;
+    class T tools;
+    class C context;
+    class E eval;
+    class P production;
+    class X math;
+    class CAP capstone;
+```
 | # | Path | Focus | Difficulty |
 |---|---|---|---|
 | 01 | Foundations | Agent loop, ReAct, tools, memory, first frameworks | 🟢 Beginner-friendly |
