@@ -26,7 +26,7 @@ Paths overlap deliberately. The Multi-Agent path reuses concept pages from Found
 | 01 | [Foundations](./01-foundations/) | Engineers building their first real agent | 🟢 Beginner-friendly | ✅ Content shipped |
 | 02 | [Agentic RAG](./02-agentic-rag/) | Anyone building retrieval-heavy agents | 🟡 Intermediate | ✅ Content shipped |
 | 03 | [Multi-Agent Systems](./03-multi-agent-systems/) | Engineers orchestrating cooperating agents | 🟡 Intermediate | ✅ v1 complete + v2 patterns (6) shipped |
-| 04 | [Tool Protocols (MCP + A2A)](./04-tool-protocols-mcp-a2a/) | Engineers wiring agents to tools and other agents | 🟡 Intermediate | 🚧 Modules 1+2+3+4+5+6 shipped (Batch 49); Module 7 planned |
+| 04 | [Tool Protocols (MCP + A2A)](./04-tool-protocols-mcp-a2a/) | Engineers wiring agents to tools and other agents | 🟡 Intermediate | ✅ All 7 modules shipped (Batches 43-50) — path complete |
 | 05 | [Context Engineering](./05-context-engineering/) | Engineers fighting context-window problems | 🟡 Intermediate | 📋 Scaffold (Batch 42); modules planned |
 | 06 | [Evaluation & Observability](./06-evaluation-observability/) | Engineers shipping agents they need to measure | 🔴 Advanced | ✅ v1 + v2 complete (recipes, patterns, projects, frameworks deep dive, embedding drift, adversarial red-teaming) |
 | 07 | [Production & Safety](./07-production-and-safety/) | Engineers taking agents to production | 🔴 Advanced | 📋 Scaffold (Batch 42); `production/` + `security/` playbooks already authored |
@@ -124,11 +124,11 @@ You have a single agent that's getting too complex. This path covers the three m
 
 ### 04 — Tool Protocols (MCP + A2A)
 
-You need agents to talk to external tools (MCP) or to each other (A2A) without writing bespoke integrations for every combination. This path covers the two protocols that matter, with code.
+You need agents to talk to external tools (MCP) or to each other (A2A) without writing bespoke integrations for every combination. This path covers the two protocols that matter, with code, plus the composition pattern that uses both together.
 
 **Prerequisite knowledge:** Foundations path complete. Familiarity with JSON-RPC and HTTP is helpful but not required.
 
-**At the end you can:** build an MCP server and client, expose tools to multiple agents, set up an A2A endpoint, and decide which protocol fits which problem.
+**At the end you can:** build an MCP server and client, expose tools to multiple agents, set up an A2A endpoint at production depth (signed cards, persistent task store, auth, streaming, observability), compose MCP with A2A in the canonical orchestrator pattern, and decide which protocol fits which problem.
 
 ### 05 — Context Engineering
 
@@ -181,14 +181,14 @@ This repo is built incrementally. Some paths will reach full coverage before oth
 | 01 Foundations | ☑ | ● | ● | ☐ | ☐ | ☐ |
 | 02 Agentic RAG | ☑ | ● | ● | ☐ | ☐ | ☐ |
 | 03 Multi-Agent Systems | ☑ | ● | ● | ☐ | ● | ☐ |
-| 04 Tool Protocols (MCP + A2A) | ☑ | ● (6 of ~10) | ● (5 of ~5) | ☐ | ☐ | ☐ |
+| 04 Tool Protocols (MCP + A2A) | ☑ | ● (7 of ~10) | ● (6 of ~5) | ☐ | ☐ | ☐ |
 | 05 Context Engineering | ☑ | ☐ | ☐ | ☐ | ☐ | ☐ |
 | 06 Evaluation & Observability | ☑ | ● | ● | ● | ● | ● |
 | 07 Production & Safety | ☑ | ☐ | ☐ | ☐ | ☐ | ☐ |
 | 08 Mathematical Foundations | ☑ | ● (4 of 13) | n/a | n/a | n/a | n/a |
 | 09 Capstones | ☑ | n/a | n/a | n/a | n/a | ☐ |
 
-Checkbox status is updated at each release. **All nine paths now have authored landing READMEs as of Batch 42; Path 04 has its first six modules shipped (the MCP build-consume-secure trio + A2A foundations + A2A production depth) as of Batch 49; the top-level [`patterns/`](../patterns/) catalog has 6 of 12 pages authored (Patterns 01, 03, 06, 10, 11, 12) as of Batch 45.** Paths 05, 07, 08, 09 remain scaffolds — the path README documents the planned structure and links to the existing repo artifacts each path will build on. Paths 01, 02, 03 (v1 + v2 patterns), 06 (v1 + v2) have substantial content; Path 04 has Modules 1+2+3+4+5+6 shipped; Path 08 has 4 of 13 math pages authored. If you want to help fill in a row, [`CONTRIBUTING.md`](../CONTRIBUTING.md) walks you through the workflow for each content type.
+Checkbox status is updated at each release. **All nine paths now have authored landing READMEs as of Batch 42; Path 04 is complete — all 7 modules shipped (the MCP build-consume-secure trio + A2A foundations + A2A production depth + MCP+A2A composition) as of Batch 50; the top-level [`patterns/`](../patterns/) catalog has 6 of 12 pages authored (Patterns 01, 03, 06, 10, 11, 12) as of Batch 45.** Paths 05, 07, 08, 09 remain scaffolds — the path README documents the planned structure and links to the existing repo artifacts each path will build on. Paths 01, 02, 03 (v1 + v2 patterns), 06 (v1 + v2) have substantial content; Path 04 is the second path complete after Path 01; Path 08 has 4 of 13 math pages authored. If you want to help fill in a row, [`CONTRIBUTING.md`](../CONTRIBUTING.md) walks you through the workflow for each content type.
 
 ---
 

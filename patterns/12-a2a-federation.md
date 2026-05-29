@@ -1,6 +1,6 @@
 # Pattern 12 — A2A federation
 
-> 🟢 Stable · ⏱ ~12 min · 📍 The architecture-level pattern. Implementation-level companions (concept pages + lab) ship as [Path 04 Modules 5-7](../learning-paths/04-tool-protocols-mcp-a2a/) in future batches; this page documents the pattern at the catalog level.
+> 🟢 Stable · ⏱ ~12 min · 📍 The architecture-level pattern. Implementation-level companions (concept pages + labs) ship as [Path 04 Modules 5-7](../learning-paths/04-tool-protocols-mcp-a2a/) — Modules 5 (A2A foundations), 6 (A2A endpoint at production depth), and 7 (MCP + A2A composition) operationalize this pattern with working code.
 
 ## Intent
 
@@ -109,7 +109,7 @@ async def delegate_to_agent(
 
 The remote-agent side — exposing an A2A endpoint — publishes a signed Agent Card at `/.well-known/agent-card.json` describing capabilities, authentication, and endpoint; implements the JSON-RPC `tasks/submit` and `tasks/{id}/stream` methods; manages the task lifecycle state machine.
 
-Path 04 Modules 5-7 (future) will build this end-to-end, including the v1.0 Signed Agent Card cryptographic verification.
+Path 04 Modules 5-7 build this end-to-end with working code; Module 6 lands the JWS-RS256 signed-card cryptographic verification.
 
 ## Real-world examples
 
@@ -148,7 +148,7 @@ Path 04 Modules 5-7 (future) will build this end-to-end, including the v1.0 Sign
 - programming-helper.com (April 2026), *[Agent to Agent Protocol 2026: Google's A2A Standard Takes Shape](https://www.programming-helper.com/tech/agent-to-agent-protocol-2026-google-a2a-standard)* — architectural considerations; capability manifest design
 
 **Adjacent repo content**:
-- 🛣 [Path 04 — Tool Protocols (MCP + A2A)](../learning-paths/04-tool-protocols-mcp-a2a/) — the learning path; Modules 5-7 will implement A2A end-to-end
+- 🛣 [Path 04 — Tool Protocols (MCP + A2A)](../learning-paths/04-tool-protocols-mcp-a2a/) — the learning path; Modules 5-7 implement A2A end-to-end (foundations + production depth + composition)
 - 🏛 [Pattern 11 — MCP integration](./11-mcp-integration.md) — the complementary tool-layer protocol
 - 📖 [MCP foundations § What MCP is not](../concepts/tools/mcp-foundations.md#what-mcp-is-not) — the MCP-is-not-A2A framing this pattern's "When NOT to use" extends
 - 🛣 [Path 03 — Multi-Agent Systems](../learning-paths/03-multi-agent-systems/) — in-process multi-agent coordination; the architectural foundation A2A operates above the boundary of
