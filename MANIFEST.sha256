@@ -1,9 +1,6 @@
-e0e6748a33a9651cbcbc8f54b148c121c42619f13c73a2e3bab223d4c65d3f32  ./CHANGELOG.md
-b8b33ac4eee90367ceec972be553098732bf3a276626f3482b0195dc70749836  ./learning-paths/07-production-and-safety/README.md
-5f6807eed95caa8cf084a4a28da5b08a42c7ca8c1077c8c93e8e7a11eebb90a6  ./learning-paths/README.md
-b013535b739c512b4d5d2c821d912ee78680c82f3e1dc5b340322b5781d419fe  ./production/README.md
-a83258587f8bd1d1448ad18067ee59b87398b24a74288e4ca6160ce3e7355622  ./production/async-and-concurrency.md
-6c6afd5ab54086433be9ae2e7a1bd8e383a0b521f64f542f9528fba5e7907356  ./production/streaming.md
-67a457d0dfa269652fb666abd0bc831c386afd2fa2bcc0b19c28615a22ec4707  ./security/README.md
-36dbda19fa0338c273034571c9c7bf6fd652d18bc8cd62578fffe9b60535b565  ./security/data-exfiltration.md
-56501fb657b6d0b3f78d5dda1f0dd4e945c84828dc304c0576ab57dec50580bd  ./security/tool-abuse.md
+34569ec2180a6ab8a8ba41ba5c6c580f7d673a75b39f1df1e0032f9ffa95aef5  ./CHANGELOG.md
+45f7d83cb3b189c6bd8bb6e3b2091efc20514ceced3c1aad3b59555a551715e7  ./learning-paths/07-production-and-safety/README.md
+271b88f45bb45f19ec18d738c693280b743b51cdf9958c957536f61476965733  ./learning-paths/README.md
+7b9f5128fd00c24bd985b707bf7c891d8a6b828f36042d88c23018840a6605af  ./security/README.md
+563f20b005de84897d47a5364c39e299197e2eca4ecb23972127fd932e1ef59a  ./security/red-teaming.md
+8b41e22482c090a8b22ab33beabcf0638c3f2c2337e1f7b037552479bab22ea4  ./security/safety-policy.md
