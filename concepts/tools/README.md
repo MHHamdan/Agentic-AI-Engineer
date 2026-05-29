@@ -18,6 +18,7 @@ This section is paired: **design first, then selection**. Design is about making
 | 📖 [MCP security threat model](./mcp-security-threat-model.md) | The five MCP attack classes (tool poisoning, response injection, rug pulls, credential sprawl, audit blind spots); protocol-level vulnerabilities (arxiv:2601.17549); empirical state (43% command-injection rate); OWASP MCP Top 10; defense-in-depth across six layers. | After the build-and-consume pair; before deploying any MCP integration to production. Path 04 Module 4. |
 | 📖 [A2A foundations](./a2a-foundations.md) | The agent-to-agent protocol; three primitives (Agent Cards, Tasks, Transport); Task lifecycle with 8 states; A2A vs MCP complementarity; v1.0 Signed Agent Cards + v1.2 spec; Linux Foundation governance (150+ orgs by April 2026); protobuf-based SDK 1.0.3 surface; framework support across Google ADK / LangGraph / CrewAI / LlamaIndex Agents / Semantic Kernel / AutoGen. | After the MCP build-consume-secure trio. Path 04 Module 5. |
 | 📖 [A2A endpoint at production depth](./a2a-endpoint-production-depth.md) | The six production concerns wrapped around Lab 28's in-memory baseline: persistence via `DatabaseTaskStore` (SQLite/PostgreSQL/MySQL); cryptographic identity via JWS-signed Agent Cards per RFC 7515 (RS256 over the RFC 9864-deprecated bare `EdDSA`); authentication via declarative `SecurityScheme` + Starlette middleware (with `.well-known/` kept public); streaming via `SendStreamingMessage` and the canonical 4-event SSE sequence; push notifications (deferred to Module 7); OpenTelemetry auto-instrumentation of `DefaultRequestHandler` + `JsonRpcDispatcher` + `EventQueue`. Three key-distribution patterns (PKI, JWKS, out-of-band); the schema-migration gotcha (SDK doesn't yet ship Alembic migrations). | After A2A foundations; when you're ready to deploy `hello-agent` for real. Path 04 Module 6. |
+| 📖 [MCP + A2A composition](./mcp-a2a-composition.md) | The asymmetric composition pattern: MCP for agent-to-tool internally, A2A for agent-to-agent externally. When the composition is the right shape vs overkill. The composed-worker code shape (`MCPClient` opened inside `execute()`); the orchestrator code shape via `A2ACardResolver` + `ClientFactory(config=ClientConfig(...))`. Push notifications with atomic registration via `SendMessageConfiguration.task_push_notification_config` + `return_immediately=True` (the deferral from Module 6 closes here); the `X-A2A-Notification-Token` shared-secret pattern; idempotency for webhook receivers. Signature verification wired into `ClientFactory.create_from_url` via the `signature_verifier` callback. Four limits composition does NOT solve: capability inference, native multi-hop tracing, cross-protocol type system, cross-protocol backpressure. Path 04 closer. | After A2A endpoint production depth; once you have hardened A2A endpoints and need to compose them. Path 04 Module 7. |
 
 ## Hands-on
 
@@ -27,6 +28,7 @@ This section is paired: **design first, then selection**. Design is about making
 - 🧪 [Lab 27: MCP security threat model](../../labs/27-mcp-security-threat-model/) — implement three canonical MCP attacks (tool poisoning, response injection, rug-pull) against an in-process toy server and three defenses; measure what each catches and what slips through.
 - 🧪 [Lab 28: A2A endpoint from scratch](../../labs/28-a2a-endpoint-from-scratch/) — build a working A2A v1.0 server with the official Python SDK 1.0.3; Agent Card discovery + AgentExecutor + TaskUpdater; subprocess-based uvicorn + real httpx client roundtrip with the `A2A-Version: 1.0` header.
 - 🧪 [Lab 29: A2A endpoint at production depth](../../labs/29-a2a-endpoint-production-depth/) — extend Lab 28's `hello_agent_server.py` with five production concerns wired together: `DatabaseTaskStore` (SQLite), JWS-RS256 signed Agent Card via `joserfc`, `APIKeyMiddleware` (Starlette), SSE streaming via `SendStreamingMessage`, OpenTelemetry tracing captured to JSON-line files for inspection (~40 spans per request).
+- 🧪 [Lab 30: MCP + A2A composition](../../labs/30-mcp-a2a-composition/) — three subprocesses (MCP server + A2A worker + webhook receiver) driven from one notebook; the composed worker opens `MCPClient` inside `execute()` so MCP stays internal; orchestrator-side discovery via `A2ACardResolver` + `ClientFactory(config=ClientConfig(streaming=False)).create(card)`; push notifications via atomic `SendMessageConfiguration(task_push_notification_config=..., return_immediately=True)` registration. Closer for Path 04.
 
 ## Quizzes
 
@@ -36,6 +38,7 @@ This section is paired: **design first, then selection**. Design is about making
 - 🧠 [`quizzes/foundations/mcp-security-threat-model.md`](../../quizzes/foundations/mcp-security-threat-model.md) — 8 questions on MCP security threat model + Lab 27.
 - 🧠 [`quizzes/foundations/a2a-foundations.md`](../../quizzes/foundations/a2a-foundations.md) — 8 questions on A2A foundations + Lab 28.
 - 🧠 [`quizzes/foundations/a2a-endpoint-production-depth.md`](../../quizzes/foundations/a2a-endpoint-production-depth.md) — 8 questions on A2A endpoint at production depth + Lab 29.
+- 🧠 [`quizzes/foundations/mcp-a2a-composition.md`](../../quizzes/foundations/mcp-a2a-composition.md) — 8 questions on MCP + A2A composition + Lab 30 (asymmetric composition, atomic push registration, `return_immediately`, idempotency, the four limits composition does NOT solve).
 
 ## Related
 
@@ -49,9 +52,10 @@ This section is paired: **design first, then selection**. Design is about making
 
 ## Forthcoming pages in this section
 
-The MCP foundations, Building an MCP server, Building an MCP client, MCP security threat model, A2A foundations, and A2A endpoint at production depth pages shipped across Batches 43, 46, 47, 48, and 49 (Path 04 Modules 1+2+3+4+5+6). Still planned for this directory:
+All seven Path 04 module pages (MCP foundations, Building an MCP server, Building an MCP client, MCP security threat model, A2A foundations, A2A endpoint at production depth, MCP + A2A composition) shipped across Batches 43, 46, 47, 48, 49, and 50. Path 04 is complete. Two production concerns remain explicitly future work and may land in future paths (Production Engineering, Evaluation & Observability):
 
-- *MCP + A2A composition* — Path 04 Module 7 (future batch); orchestrator pattern combining MCP for tools with A2A for cross-agent delegation; the natural home for push notifications and OAuth2 token flows that Lab 29 deferred.
+- *Production OAuth2 walkthrough* — Module 6 sketched `SecurityScheme`; Module 7 wired in signature verification; full integration with a real auth issuer (token issuance, JWKS distribution, token rotation) is its own substantial implementation.
+- *Distributed tracing across composition* — composition-specific `traceparent` propagation across A2A boundaries; the SDK doesn't automate this yet.
 - *Tool composition* — combining tools into pipelines, fan-out/fan-in patterns.
 - *Tool versioning* — handling schema evolution without breaking running agents.
 
