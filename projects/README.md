@@ -32,15 +32,19 @@ The initial set covers most production patterns:
 | # | Project | Status |
 |---|---|---|
 | 01 | [Personal research assistant](./beginner/01-personal-research-assistant/) | ✅ Brief shipped (Batch 62) |
-| 02 | PDF Q&A bot | 📋 Brief planned |
+| 02 | [PDF Q&A bot](./beginner/02-pdf-qa-bot/) | ✅ Brief shipped (Batch 63) |
 
 See [`./beginner/`](./beginner/) for the tier landing page.
 
 ### Intermediate
 
-- 03 Project management agent
-- 04 Data analysis agent
-- 05 Multi-server MCP agent
+| # | Project | Status |
+|---|---|---|
+| 03 | [Project management agent](./intermediate/03-project-management-agent/) | ✅ Brief shipped (Batch 63) |
+| 04 | Data analysis agent | 📋 Brief planned |
+| 05 | Multi-server MCP agent | 📋 Brief planned |
+
+See [`./intermediate/`](./intermediate/) for the tier landing page.
 
 ### Capstone
 

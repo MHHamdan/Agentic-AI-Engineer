@@ -97,16 +97,16 @@ Skip the linear reading order and jump to what you actually need:
 | If you want to... | Start here | Status |
 |---|---|---|
 | Build your first real agent | [Foundations Path](./learning-paths/01-foundations/) | ✅ Content shipped |
-| Build retrieval-augmented agents | [Agentic RAG Path](./learning-paths/02-agentic-rag/) | ✅ Content shipped |
-| Orchestrate multiple cooperating agents | [Multi-Agent Systems Path](./learning-paths/03-multi-agent-systems/) | ✅ v1 + v2 patterns shipped |
-| Wire agents to tools, data, and other agents | [Tool Protocols (MCP + A2A) Path](./learning-paths/04-tool-protocols-mcp-a2a/) | ✅ Complete — all 7 modules shipped (Batches 43-50) |
-| Get more out of the context window | [Context Engineering Path](./learning-paths/05-context-engineering/) | 📋 Scaffold (modules planned) |
+| Build retrieval-augmented agents | [Agentic RAG Path](./learning-paths/02-agentic-rag/) | ✅ v1 + v2 shipped |
+| Orchestrate multiple cooperating agents | [Multi-Agent Systems Path](./learning-paths/03-multi-agent-systems/) | ✅ v1 + v2 patterns + v3 projects + frameworks deep dive |
+| Wire agents to tools, data, and other agents | [Tool Protocols (MCP + A2A) Path](./learning-paths/04-tool-protocols-mcp-a2a/) | ✅ Complete — all 7 modules (Batches 43-50) |
+| Get more out of the context window | [Context Engineering Path](./learning-paths/05-context-engineering/) | ✅ v1 complete — 6/6 modules (Batches 59-61) |
 | Add tracing, evals, and observability | [Evaluation & Observability Path](./learning-paths/06-evaluation-observability/) | ✅ v1 + v2 complete |
-| Ship to production safely | [Production & Safety Path](./learning-paths/07-production-and-safety/) | 📋 Scaffold (modules planned) |
-| Understand the math behind it all | [Mathematical Foundations Path](./learning-paths/08-mathematical-foundations/) | 📋 Scaffold (4 of 13 pages authored) |
-| Build something portfolio-worthy | [Capstone Projects Path](./learning-paths/09-capstones/) | 📋 Scaffold (8 projects catalogued) |
+| Ship to production safely | [Production & Safety Path](./learning-paths/07-production-and-safety/) | ✅ v1 complete — 8/8 modules (Batches 55-58) |
+| Understand the math behind it all | [Mathematical Foundations Path](./learning-paths/08-mathematical-foundations/) | 🚧 Scaffold + 4 of 13 pages authored |
+| Build something portfolio-worthy | [Capstone Projects Path](./learning-paths/09-capstones/) | 🚧 v1 in progress — 4/8 project briefs (Batches 62-63) |
 
-Each path is a curated reading list across the rest of the repo — concepts, labs, recipes, patterns — not a duplicate folder of content. ✅ paths have substantial authored content; 📋 paths are scaffolds whose READMEs document the planned structure and link to the existing repo artifacts (concept pages, labs, `production/`, `security/`, `math-foundations/`, `patterns/`, `projects/`) each path will build on. Every link in this table resolves to a real, authored README.
+Each path is a curated reading list across the rest of the repo — concepts, labs, recipes, patterns — not a duplicate folder of content. ✅ paths have substantial authored content; 🚧 paths are in active development with explicit "what's shipped" and "what's planned" sections in their READMEs. Every link in this table resolves to a real, authored README.
 
 ---
 
@@ -143,47 +143,24 @@ A more detailed walkthrough of every folder lives in [`docs/how-to-use-this-repo
 Nine paths, each curating content across the rest of the repo. They overlap deliberately: the *Multi-Agent* path reuses concept pages from *Foundations*, the *Production* path leans on *Evaluation*, and so on.
 
 ```mermaid
-flowchart TD
-    F["01 Foundations"] --> R["02 Agentic RAG"]
-    F --> M["03 Multi-Agent"]
-    F --> T["04 Tool Protocols<br/>MCP + A2A"]
-
-    R --> C["05 Context Engineering"]
+flowchart LR
+    F[01 Foundations] --> R[02 Agentic RAG]
+    F --> M[03 Multi-Agent]
+    F --> T[04 Tool Protocols<br/>MCP + A2A]
+    R --> C[05 Context Engineering]
     M --> C
     T --> C
-
-    R --> E["06 Evaluation & Observability"]
+    R --> E[06 Evaluation & Observability]
     M --> E
     C --> E
-
-    E --> P["07 Production & Safety"]
-    P --> CAP["09 Capstones"]
-    E --> CAP
-
-    F -.-> X["08 Math Foundations"]
+    E --> P[07 Production & Safety]
+    F -.-> X[08 Math Foundations]
     R -.-> X
     M -.-> X
-
-    classDef foundations fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
-    classDef rag fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
-    classDef multi fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px,color:#4A148C;
-    classDef tools fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
-    classDef context fill:#E0F7FA,stroke:#00838F,stroke-width:2px,color:#004D40;
-    classDef eval fill:#FFFDE7,stroke:#F9A825,stroke-width:2px,color:#F57F17;
-    classDef production fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#B71C1C;
-    classDef math fill:#ECEFF1,stroke:#455A64,stroke-width:2px,color:#263238,stroke-dasharray:5 5;
-    classDef capstone fill:#EDE7F6,stroke:#512DA8,stroke-width:3px,color:#311B92;
-
-    class F foundations;
-    class R rag;
-    class M multi;
-    class T tools;
-    class C context;
-    class E eval;
-    class P production;
-    class X math;
-    class CAP capstone;
+    P --> CAP[09 Capstones]
+    E --> CAP
 ```
+
 | # | Path | Focus | Difficulty |
 |---|---|---|---|
 | 01 | Foundations | Agent loop, ReAct, tools, memory, first frameworks | 🟢 Beginner-friendly |
@@ -224,23 +201,25 @@ The math is here because it makes you a better engineer, not because it's a text
 4. **Where you'll see it in the code** — links into specific labs and notebooks.
 5. **Sources** — papers and references, no invented math.
 
-What's covered:
+What's covered (13 pages planned; 4 of 13 currently authored; remaining pages 🚧 in progress):
 
-- Autoregressive LM probability: $p(x_t \mid x_{<t})$ and what sampling actually does.
-- Embeddings and vector similarity — cosine, dot product, nearest-neighbor retrieval.
-- RAG as marginalization over retrieved context: $p(y \mid x) = \sum_z p(y \mid x, z)\, p(z \mid x)$.
-- Agents as policies: $\pi_\theta(a_t \mid s_t)$.
-- MDP and POMDP intuition — what state, observation, and belief mean for an agent.
-- The ReAct reasoning loop, formalized.
-- Tool selection as function selection.
-- Planning and search basics — tree search, decomposition.
-- Memory models: short-term, long-term, retrieval memory.
-- Multi-agent coordination as directed graphs.
-- Evaluation metrics: precision, recall, faithfulness, answer relevance, latency, cost.
-- Uncertainty, calibration, hallucination as out-of-support generation.
-- Context-window optimization as constrained selection.
+- Autoregressive LM probability: $p(x_t \mid x_{<t})$ and what sampling actually does (planned)
+- Embeddings and vector similarity — cosine, dot product, nearest-neighbor retrieval (planned)
+- RAG as marginalization over retrieved context: $p(y \mid x) = \sum_z p(y \mid x, z)\, p(z \mid x)$ (planned)
+- **Agents as policies**: $\pi_\theta(a_t \mid s_t)$ — ✅ authored at [`math-foundations/04-agents-as-policies.md`](./math-foundations/04-agents-as-policies.md)
+- MDP and POMDP intuition — what state, observation, and belief mean for an agent (planned)
+- **The ReAct reasoning loop, formalized** — ✅ authored at [`math-foundations/06-react-formalization.md`](./math-foundations/06-react-formalization.md)
+- Tool selection as function selection (planned)
+- Planning and search basics — tree search, decomposition (planned)
+- Memory models: short-term, long-term, retrieval memory (planned)
+- Multi-agent coordination as directed graphs (planned)
+- Evaluation metrics: precision, recall, faithfulness, answer relevance, latency, cost (planned)
+- Uncertainty, calibration, hallucination as out-of-support generation (planned)
+- Context-window optimization as constrained selection (planned)
 
-Math pages are cross-linked from the concept pages, so you can read either track first. None of them require more than undergraduate-level probability and linear algebra.
+A symbol-and-notation cheat sheet is at [`math-foundations/notation.md`](./math-foundations/notation.md) — one source of truth for $\pi$, $s$, $a$, $\theta$, $z$, and friends.
+
+Math pages are cross-linked from the concept pages, so you can read either track first. None of them require more than undergraduate-level probability and linear algebra. Authoring the remaining 9 pages is a welcomed community contribution — see [`math-foundations/README.md`](./math-foundations/README.md) for the page template.
 
 ---
 
@@ -302,6 +281,48 @@ Verified-as-of dates are refreshed during routine maintenance sweeps (tracked in
 
 ---
 
+## Current state — what's shipped, what's planned
+
+This is a community-maintained learning hub that's been iterating in public. As of the most-recent release:
+
+**Substantial-content paths (six of nine)**:
+
+- ✅ **Path 01 — Foundations**: complete
+- ✅ **Path 02 — Agentic RAG**: v1 + v2 shipped
+- ✅ **Path 03 — Multi-Agent Systems**: v1 + v2 patterns (6 patterns) + v3 projects (3 capstones) + frameworks deep dive (9 frameworks compared)
+- ✅ **Path 04 — Tool Protocols (MCP + A2A)**: all 7 modules complete
+- ✅ **Path 05 — Context Engineering**: v1 complete — 6 of 6 modules (Batches 59-61)
+- ✅ **Path 06 — Evaluation & Observability**: v1 + v2 complete
+- ✅ **Path 07 — Production & Safety**: v1 complete — 8 of 8 modules (Batches 55-58)
+
+**Paths in active development (two of nine)**:
+
+- 🚧 **Path 08 — Mathematical Foundations**: 4 of 13 pages authored
+- 🚧 **Path 09 — Capstones**: v1 in progress — 4 of 8 project briefs (Batches 62-63)
+
+**Supporting infrastructure**:
+
+- 50 lab notebooks (all pre-executed; outputs visible on GitHub)
+- 12 of 12 top-level architecture patterns authored
+- `concepts/` subdir tree (~71 files): `agents/`, `context/`, `evaluation/`, `memory/`, `multi-agent/`, `rag/`, `tools/` — multiple subdirs complete
+- `production/` (cost engineering, latency, streaming) — 5 deep-dive pages
+- `security/` (prompt injection, tool abuse, data exfiltration, safety policy, red-teaming) — 5 deep-dive pages
+
+**Currently scaffold-state — community contribution welcomed**:
+
+- `examples/` — minimal reference implementations (placeholder)
+- `recipes/` — copy-paste solutions to specific problems (placeholder)
+- `references/` — curated reading lists (placeholder; concept-page inline citations cover the gap)
+- `glossary/` — A-Z terminology (placeholder)
+- `evaluation/` — eval frameworks/datasets/scorers (the conceptual side is already in `concepts/evaluation/`)
+- `quizzes/` — knowledge checks across the curriculum (31 files; partial coverage)
+
+For each scaffold-state folder, the folder's own README documents what's planned and where related content currently lives. The curriculum is usable now; the supporting folders deepen it over time.
+
+Full release history with verification fingerprints is in [`CHANGELOG.md`](./CHANGELOG.md).
+
+---
+
 ## Diagrams
 
 Architecture and concept diagrams are written as Mermaid in [`diagrams/`](./diagrams/) with rendered SVG/PNG committed alongside the source. Inline Mermaid blocks (like the ones in this README) render natively on GitHub. The full list of diagrams currently in the repo, with descriptions, lives in [`diagrams/README.md`](./diagrams/README.md).
@@ -317,7 +338,7 @@ This is built to be a community resource, not a one-author site. Useful contribu
 - Updating a `tools/` page when a framework ships a breaking change.
 - Translating a concept page.
 - Filing issues when something is unclear, wrong, or stale.
-- Adding your project to the [showcase](./docs/community/showcase.md).
+- Adding your project to the community showcase (planned `docs/community/showcase.md`).
 
 The contribution workflow, templates for each content type, and the style guide are in [`CONTRIBUTING.md`](./CONTRIBUTING.md). Good first issues are labeled [`good-first-issue`](https://github.com/MHHamdan/Agentic-AI-Engineer/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
 
@@ -327,12 +348,14 @@ We follow a [Code of Conduct](./CODE_OF_CONDUCT.md) — please read it before po
 
 ## References and further reading
 
-Curated reading lives in [`references/`](./references/), organized by type:
+Curated reading lives in [`references/`](./references/), organized by type. The folder currently scaffolds four planned pages:
 
-- [`references/papers.md`](./references/papers.md) — foundational papers (ReAct, RAG, Toolformer, Reflexion, and so on) with citations.
-- [`references/books.md`](./references/books.md) — books that have aged well.
-- [`references/talks.md`](./references/talks.md) — conference talks worth your time.
-- [`references/community.md`](./references/community.md) — blogs, repos, and people worth following.
+- `references/papers.md` — foundational papers (ReAct, RAG, Toolformer, Reflexion, and so on) with citations (planned)
+- `references/books.md` — books that have aged well (planned)
+- `references/talks.md` — conference talks worth your time (planned)
+- `references/community.md` — blogs, repos, and people worth following (planned)
+
+In the interim, every concept and pattern page cites its sources inline. The `references/` folder is where those citations will be consolidated into curated reading lists.
 
 External references cited in this README:
 
