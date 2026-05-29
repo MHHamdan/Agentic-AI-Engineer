@@ -8,7 +8,7 @@ The going-to-prod playbook. Everything between *"it works on my notebook"* and *
 |---|---|---|
 | [`deployment.md`](./deployment.md) | Deployment patterns — FastAPI, durable execution, serverless, on-prem | ✅ Shipped (Batch 55) |
 | `observability.md` | Tracing, metrics, logs — and how to actually use them | 📋 Planned |
-| `cost-engineering.md` | Token budgets, model routing, caching, batching, prompt compression | 📋 Planned |
+| [`cost-engineering.md`](./cost-engineering.md) | Token budgets, model routing, caching, batching, prompt compression | ✅ Shipped (Batch 56) |
 | `caching-and-routing.md` | Multi-tier caching, semantic caching, model routing strategies | 📋 Planned |
 | `streaming.md` | Streaming tokens, partial tool outputs, frontend wiring | 📋 Planned |
 | `async-and-concurrency.md` | Async patterns for parallel tool calls and multi-agent fan-out | 📋 Planned |
