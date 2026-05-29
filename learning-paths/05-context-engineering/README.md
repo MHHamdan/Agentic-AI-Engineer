@@ -1,8 +1,8 @@
 # Path 05 — Context Engineering
 
-> 🟡 Intermediate · ⏱ 4–8 hours (planned) · 📍 Start here after Path 01 + one of Path 02 or Path 03 · 📋 **Scaffold — content forthcoming**
+> 🟡 Intermediate · ⏱ 4–8 hours (planned) · 📍 Start here after Path 01 + one of Path 02 or Path 03 · 🚧 **v1 in progress** — Modules 1 + 2 shipped (Batch 59); Modules 3-6 forthcoming
 
-> ⚠️ **This path is a scaffold.** The structure, prerequisites, and learning outcomes are locked. The actual concept pages, labs, and module content land in future batches. The "What you can read right now" section below points at real, existing artifacts in the repo that cover adjacent material — those links work today.
+> 🚧 **v1 in progress — 2 of 6 modules shipped.** Modules 1 (Context engineering foundations) and 2 (Token budgets per zone) shipped in Batch 59 — the opening pair the scaffold below named as the natural first batch. The foundational pages live at [`concepts/context/foundations.md`](../../concepts/context/foundations.md) and [`concepts/context/token-budgets.md`](../../concepts/context/token-budgets.md). Modules 3-6 are in the build queue. The "What you can read right now" section below points at adjacent artifacts the remaining modules will build on.
 
 ## Who this path is for
 
@@ -31,8 +31,8 @@ The planned module breakdown:
 
 | Module | Topic | Status |
 |---|---|---|
-| 1 | **Context engineering foundations** — the three zones; the prompt-vs-context distinction; why frontier-model capability ceilings shifted the bottleneck to context per logic.inc April 2026 | 📋 Planned |
-| 2 | **Token budgets per zone** — explicit allocation; soft caps and hard caps; per-tenant budget tiers (extends Path 03 Pattern 4 to the system-prompt + dynamic-context zones) | 📋 Planned |
+| 1 | **Context engineering foundations** — the three zones; the prompt-vs-context distinction; why frontier-model capability ceilings shifted the bottleneck to context per logic.inc April 2026 | ✅ Shipped (Batch 59) — [`concepts/context/foundations.md`](../../concepts/context/foundations.md) |
+| 2 | **Token budgets per zone** — explicit allocation; soft caps and hard caps; per-tenant budget tiers (extends Path 03 Pattern 4 to the system-prompt + dynamic-context zones) | ✅ Shipped (Batch 59) — [`concepts/context/token-budgets.md`](../../concepts/context/token-budgets.md) |
 | 3 | **Compression and summarization** — when to compress, when to truncate, when to summarize; lossy vs lossless; the recursive summarization trap | 📋 Planned |
 | 4 | **Memory tiers** — short-term (conversation buffer) vs long-term (vector DB) vs episodic (past traces); the Mem0 memory-injection 594→8,000-token cost progression | 📋 Planned |
 | 5 | **Context drift detection** — the four early-warning signals (re-reads, re-decisions, task reframing, retrieval-precision collapse); instrumenting at trace level | 📋 Planned |
@@ -80,7 +80,7 @@ Contributions are welcome. The way to help build Path 05:
 2. **Read [`CONTRIBUTING.md`](../../CONTRIBUTING.md)** — the source-citation rules and the per-content-type templates are non-negotiable.
 3. **Pick one module's scope, not the whole path.**
 
-The natural first batch for Path 05 would be Module 1 (foundations) + Module 2 (token budgets per zone) shipped together — they establish the vocabulary that Modules 3-6 build on.
+The first batch (Modules 1 + 2 — foundations + token budgets per zone) shipped in Batch 59 — the opening pair this scaffold's earlier draft named as the natural first batch. The natural next batch would be Module 3 (Compression and summarization) + Module 4 (Memory tiers), which together address how the budget gets *enforced* dynamically (compress when soft caps fire) and how the multi-tier memory architecture separates short-term conversation buffer from long-term vector DB from episodic past traces.
 
 ## References
 
