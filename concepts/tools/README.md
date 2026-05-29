@@ -17,6 +17,7 @@ This section is paired: **design first, then selection**. Design is about making
 | 📖 [Building an MCP client](./building-an-mcp-client.md) | Consuming external servers from your agent; multi-server orchestration with collision-free routing; the five production defenses (timeout, schema-drift, circuit-breaker, retry-on-auth, response-size limits); discovery via MCP Registry + Server Cards; FastMCP 3.1 code mode for token-bloat reduction. | After Building an MCP server; when you're ready to wire an agent to external MCP servers. Path 04 Module 3. |
 | 📖 [MCP security threat model](./mcp-security-threat-model.md) | The five MCP attack classes (tool poisoning, response injection, rug pulls, credential sprawl, audit blind spots); protocol-level vulnerabilities (arxiv:2601.17549); empirical state (43% command-injection rate); OWASP MCP Top 10; defense-in-depth across six layers. | After the build-and-consume pair; before deploying any MCP integration to production. Path 04 Module 4. |
 | 📖 [A2A foundations](./a2a-foundations.md) | The agent-to-agent protocol; three primitives (Agent Cards, Tasks, Transport); Task lifecycle with 8 states; A2A vs MCP complementarity; v1.0 Signed Agent Cards + v1.2 spec; Linux Foundation governance (150+ orgs by April 2026); protobuf-based SDK 1.0.3 surface; framework support across Google ADK / LangGraph / CrewAI / LlamaIndex Agents / Semantic Kernel / AutoGen. | After the MCP build-consume-secure trio. Path 04 Module 5. |
+| 📖 [A2A endpoint at production depth](./a2a-endpoint-production-depth.md) | The six production concerns wrapped around Lab 28's in-memory baseline: persistence via `DatabaseTaskStore` (SQLite/PostgreSQL/MySQL); cryptographic identity via JWS-signed Agent Cards per RFC 7515 (RS256 over the RFC 9864-deprecated bare `EdDSA`); authentication via declarative `SecurityScheme` + Starlette middleware (with `.well-known/` kept public); streaming via `SendStreamingMessage` and the canonical 4-event SSE sequence; push notifications (deferred to Module 7); OpenTelemetry auto-instrumentation of `DefaultRequestHandler` + `JsonRpcDispatcher` + `EventQueue`. Three key-distribution patterns (PKI, JWKS, out-of-band); the schema-migration gotcha (SDK doesn't yet ship Alembic migrations). | After A2A foundations; when you're ready to deploy `hello-agent` for real. Path 04 Module 6. |
 
 ## Hands-on
 
@@ -25,6 +26,7 @@ This section is paired: **design first, then selection**. Design is about making
 - 🧪 [Lab 26: MCP client from scratch](../../labs/26-mcp-client-from-scratch/) — build a multi-server MCP client with collision-free routing; layer the five production defenses; wire into a Pattern 01 agent loop; measure tool-schema token cost.
 - 🧪 [Lab 27: MCP security threat model](../../labs/27-mcp-security-threat-model/) — implement three canonical MCP attacks (tool poisoning, response injection, rug-pull) against an in-process toy server and three defenses; measure what each catches and what slips through.
 - 🧪 [Lab 28: A2A endpoint from scratch](../../labs/28-a2a-endpoint-from-scratch/) — build a working A2A v1.0 server with the official Python SDK 1.0.3; Agent Card discovery + AgentExecutor + TaskUpdater; subprocess-based uvicorn + real httpx client roundtrip with the `A2A-Version: 1.0` header.
+- 🧪 [Lab 29: A2A endpoint at production depth](../../labs/29-a2a-endpoint-production-depth/) — extend Lab 28's `hello_agent_server.py` with five production concerns wired together: `DatabaseTaskStore` (SQLite), JWS-RS256 signed Agent Card via `joserfc`, `APIKeyMiddleware` (Starlette), SSE streaming via `SendStreamingMessage`, OpenTelemetry tracing captured to JSON-line files for inspection (~40 spans per request).
 
 ## Quizzes
 
@@ -33,6 +35,7 @@ This section is paired: **design first, then selection**. Design is about making
 - 🧠 [`quizzes/foundations/mcp-client-and-discovery.md`](../../quizzes/foundations/mcp-client-and-discovery.md) — 8 questions on Building an MCP client + Lab 26.
 - 🧠 [`quizzes/foundations/mcp-security-threat-model.md`](../../quizzes/foundations/mcp-security-threat-model.md) — 8 questions on MCP security threat model + Lab 27.
 - 🧠 [`quizzes/foundations/a2a-foundations.md`](../../quizzes/foundations/a2a-foundations.md) — 8 questions on A2A foundations + Lab 28.
+- 🧠 [`quizzes/foundations/a2a-endpoint-production-depth.md`](../../quizzes/foundations/a2a-endpoint-production-depth.md) — 8 questions on A2A endpoint at production depth + Lab 29.
 
 ## Related
 
@@ -46,10 +49,9 @@ This section is paired: **design first, then selection**. Design is about making
 
 ## Forthcoming pages in this section
 
-The MCP foundations, Building an MCP server, Building an MCP client, MCP security threat model, and A2A foundations pages shipped across Batches 43, 46, 47, and 48 (Path 04 Modules 1+2+3+4+5). Still planned for this directory:
+The MCP foundations, Building an MCP server, Building an MCP client, MCP security threat model, A2A foundations, and A2A endpoint at production depth pages shipped across Batches 43, 46, 47, 48, and 49 (Path 04 Modules 1+2+3+4+5+6). Still planned for this directory:
 
-- *Building an A2A endpoint at production depth* — Path 04 Module 6 (future batch); Signed Agent Cards, persistent task stores, OAuth2 auth, streaming, push notifications, OpenTelemetry.
-- *MCP + A2A composition* — Path 04 Module 7 (future batch); orchestrator pattern combining MCP for tools with A2A for cross-agent delegation.
+- *MCP + A2A composition* — Path 04 Module 7 (future batch); orchestrator pattern combining MCP for tools with A2A for cross-agent delegation; the natural home for push notifications and OAuth2 token flows that Lab 29 deferred.
 - *Tool composition* — combining tools into pipelines, fan-out/fan-in patterns.
 - *Tool versioning* — handling schema evolution without breaking running agents.
 
