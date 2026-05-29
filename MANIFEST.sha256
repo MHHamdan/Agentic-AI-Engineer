@@ -1,8 +1,5 @@
-85a45a61a4c2ae47018143a21f6bf491d2b15c71996c5ff48c896562a33055e0  ./CHANGELOG.md
-4ea0073b3945ba3d8c79e13df918f5174db2f89bfec659c76b50104fd28a0f51  ./learning-paths/03-multi-agent-systems/README.md
-2917d54c6f89823c953e74d37e2a8ee283017a6626b54b882840cfa67a8843dc  ./learning-paths/03-multi-agent-systems/projects/01-customer-support-multi-agent.md
-6e07d872f1737a98a4dfb20b77532977adfc8b4d4ba2753d3d95eee69dde71f3  ./learning-paths/03-multi-agent-systems/projects/02-research-pipeline-with-deep-research.md
-70442117b9d4568777b0a7942368c462654ae3a5228792e19d6051d83e9cef83  ./learning-paths/03-multi-agent-systems/projects/03-a2a-federated-multi-agent.md
-b90515d53693f46a59b3b76807dc204a4f033f66d99a8adc2a460e92f173c3ae  ./learning-paths/03-multi-agent-systems/projects/README.md
-e8a3459f3fde89b0bedac89a5e1ff1c5aa0535847d5c9cca18e50c20dd6a3255  ./learning-paths/03-multi-agent-systems/projects/_template.md
-6764323d9a583d75e9c2ed728899d0d6b5c2003c11fc5d9b86add0302b9d6d11  ./learning-paths/README.md
+eec9b0297099b959c02ff1ba77374a4060eff312dfe0d1ab5709d9bd1745869a  ./CHANGELOG.md
+23733abfcb48073c97ffd48ffa94a55e0971d9061b2ccd72f18b69ae74004341  ./concepts/multi-agent/README.md
+2e1376b4dad2dd4d2ba33c995540ecd952afc9b7240f3e462575785151d43b2b  ./concepts/multi-agent/multi-agent-frameworks-deep-dive.md
+6b55b468c1d09392c7d0d45cce796cf143f73883e6f5432d95f2abd7cd7e58de  ./learning-paths/03-multi-agent-systems/README.md
+05609f7acf4baa4c2076a41a514a883b1dbb7f88e4ddbdeaa2404310468d2edb  ./learning-paths/README.md
