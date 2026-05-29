@@ -112,6 +112,14 @@ Each path is a curated reading list across the rest of the repo — concepts, la
 
 ## Repository structure
 
+A more detailed walkthrough of every folder lives in [`docs/how-to-use-this-repo.md`](./docs/how-to-use-this-repo.md).
+
+---
+
+## Learning paths
+
+Nine paths, each curating content across the rest of the repo. They overlap deliberately: the *Multi-Agent* path reuses concept pages from *Foundations*, the *Production* path leans on *Evaluation*, and so on.
+
 ```mermaid
 flowchart TD
     F["01 Foundations"] --> R["02 Agentic RAG"]
@@ -155,32 +163,6 @@ flowchart TD
     class CAP capstone;
 ```
 
-A more detailed walkthrough of every folder lives in [`docs/how-to-use-this-repo.md`](./docs/how-to-use-this-repo.md).
-
----
-
-## Learning paths
-
-Nine paths, each curating content across the rest of the repo. They overlap deliberately: the *Multi-Agent* path reuses concept pages from *Foundations*, the *Production* path leans on *Evaluation*, and so on.
-
-```mermaid
-flowchart LR
-    F[01 Foundations] --> R[02 Agentic RAG]
-    F --> M[03 Multi-Agent]
-    F --> T[04 Tool Protocols<br/>MCP + A2A]
-    R --> C[05 Context Engineering]
-    M --> C
-    T --> C
-    R --> E[06 Evaluation & Observability]
-    M --> E
-    C --> E
-    E --> P[07 Production & Safety]
-    F -.-> X[08 Math Foundations]
-    R -.-> X
-    M -.-> X
-    P --> CAP[09 Capstones]
-    E --> CAP
-```
 
 | # | Path | Focus | Difficulty |
 |---|---|---|---|
