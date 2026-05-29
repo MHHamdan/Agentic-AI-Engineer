@@ -126,7 +126,7 @@ The cost curve is the opposite of [Pattern 04 (Hierarchical teams)](./04-hierarc
 
 - **[Pattern 03 — Supervisor + workers](./03-supervisor-workers.md)** — the alternative when one agent should own the routing decision and the specialists shouldn't transfer to each other. Most "swarm" deployments are actually this; pick swarm only when peer transfers mid-conversation are the actual requirement.
 - **[Pattern 04 — Hierarchical teams](./04-hierarchical-teams.md)** — what you reach for when swarm's observability problem bites and the routing structure stabilizes. Hierarchy commits to a topology; swarm doesn't.
-- **Pattern 02 — Router** (planned; `patterns/02-router.md`) — the one-of-N entry point. Most swarm systems start with a router (the triage agent) before peer hand-off kicks in. The router does the first turn; swarm peers do the rest.
+- **[Pattern 02 — Router](./02-router.md)** — the one-of-N entry point. Most swarm systems start with a router (the triage agent) before peer hand-off kicks in. The router does the first turn; swarm peers do the rest.
 - **[Pattern 10 — Human-in-the-loop](./10-human-in-the-loop.md)** — wraps swarm well. Insert HITL approval points at hand-off boundaries when the transfer has high stakes (refunds, account changes). The hand-off semantics make natural approval points.
 - **[Pattern 12 — A2A federation](./12-a2a-federation.md)** — the cross-process equivalent. Swarm hand-off is in-process peer transfer; A2A federation is over-the-wire peer transfer. Same logical shape; different deployment substrate.
 
