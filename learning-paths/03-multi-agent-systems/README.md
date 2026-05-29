@@ -10,7 +10,7 @@ This path takes you from "I can build *one* agent" to "I can wire *several* agen
 
 By the end of Path 03 Modules 1-6 you should be able to:
 
-- Decide honestly when a task wants a multi-agent system and when it doesn't.
+- Decide when a task wants a multi-agent system and when it doesn't.
 - Reason about coordination cost — every handoff is an extra LLM call, with latency, tokens, and failure-mode implications.
 - Implement the **supervisor-worker pattern** from scratch using only the Lab 01 agent-loop machinery. No frameworks.
 - Distinguish **message-passing** from **shared-state** architectures and pick the right one for a given task shape.
