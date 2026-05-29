@@ -1,8 +1,8 @@
 # Path 05 — Context Engineering
 
-> 🟡 Intermediate · ⏱ 4–8 hours (planned) · 📍 Start here after Path 01 + one of Path 02 or Path 03 · 🚧 **v1 in progress** — Modules 1 + 2 shipped (Batch 59); Modules 3-6 forthcoming
+> 🟡 Intermediate · ⏱ 4–8 hours (planned) · 📍 Start here after Path 01 + one of Path 02 or Path 03 · 🚧 **v1 in progress** — Modules 1 + 2 + 3 + 4 shipped (Batches 59-60); Modules 5 + 6 forthcoming
 
-> 🚧 **v1 in progress — 2 of 6 modules shipped.** Modules 1 (Context engineering foundations) and 2 (Token budgets per zone) shipped in Batch 59 — the opening pair the scaffold below named as the natural first batch. The foundational pages live at [`concepts/context/foundations.md`](../../concepts/context/foundations.md) and [`concepts/context/token-budgets.md`](../../concepts/context/token-budgets.md). Modules 3-6 are in the build queue. The "What you can read right now" section below points at adjacent artifacts the remaining modules will build on.
+> 🚧 **v1 in progress — 4 of 6 modules shipped.** Modules 1 (Context engineering foundations) and 2 (Token budgets per zone) shipped in Batch 59 — the opening pair the scaffold below named as the natural first batch. Modules 3 (Compression and summarization) and 4 (Memory tiers) shipped in Batch 60 — the operational layer that makes the soft-cap pattern from Module 2 enforceable and extends the architecture across sessions. The foundational pages live at [`concepts/context/foundations.md`](../../concepts/context/foundations.md), [`concepts/context/token-budgets.md`](../../concepts/context/token-budgets.md), [`concepts/context/compression-and-summarization.md`](../../concepts/context/compression-and-summarization.md), and [`concepts/memory/memory-tiers.md`](../../concepts/memory/memory-tiers.md). Modules 5 + 6 are the remaining queue (drift detection + long-context model selection).
 
 ## Who this path is for
 
@@ -33,8 +33,8 @@ The planned module breakdown:
 |---|---|---|
 | 1 | **Context engineering foundations** — the three zones; the prompt-vs-context distinction; why frontier-model capability ceilings shifted the bottleneck to context per logic.inc April 2026 | ✅ Shipped (Batch 59) — [`concepts/context/foundations.md`](../../concepts/context/foundations.md) |
 | 2 | **Token budgets per zone** — explicit allocation; soft caps and hard caps; per-tenant budget tiers (extends Path 03 Pattern 4 to the system-prompt + dynamic-context zones) | ✅ Shipped (Batch 59) — [`concepts/context/token-budgets.md`](../../concepts/context/token-budgets.md) |
-| 3 | **Compression and summarization** — when to compress, when to truncate, when to summarize; lossy vs lossless; the recursive summarization trap | 📋 Planned |
-| 4 | **Memory tiers** — short-term (conversation buffer) vs long-term (vector DB) vs episodic (past traces); the Mem0 memory-injection 594→8,000-token cost progression | 📋 Planned |
+| 3 | **Compression and summarization** — when to compress, when to truncate, when to summarize; lossy vs lossless; the recursive summarization trap | ✅ Shipped (Batch 60) — [`concepts/context/compression-and-summarization.md`](../../concepts/context/compression-and-summarization.md) |
+| 4 | **Memory tiers** — short-term (conversation buffer) vs long-term (vector DB) vs episodic (past traces); the Mem0 memory-injection 594→8,000-token cost progression | ✅ Shipped (Batch 60) — [`concepts/memory/memory-tiers.md`](../../concepts/memory/memory-tiers.md) |
 | 5 | **Context drift detection** — the four early-warning signals (re-reads, re-decisions, task reframing, retrieval-precision collapse); instrumenting at trace level | 📋 Planned |
 | 6 | **Long-context models — when they help and when they don't** — the 1M-token tier (Claude Sonnet 4 beta, MiniMax-M1, Qwen3); pricing tier cliffs; the "needle in haystack" performance degradation; choosing context size as a design decision | 📋 Planned |
 
@@ -80,7 +80,7 @@ Contributions are welcome. The way to help build Path 05:
 2. **Read [`CONTRIBUTING.md`](../../CONTRIBUTING.md)** — the source-citation rules and the per-content-type templates are non-negotiable.
 3. **Pick one module's scope, not the whole path.**
 
-The first batch (Modules 1 + 2 — foundations + token budgets per zone) shipped in Batch 59 — the opening pair this scaffold's earlier draft named as the natural first batch. The natural next batch would be Module 3 (Compression and summarization) + Module 4 (Memory tiers), which together address how the budget gets *enforced* dynamically (compress when soft caps fire) and how the multi-tier memory architecture separates short-term conversation buffer from long-term vector DB from episodic past traces.
+The first batch (Modules 1 + 2 — foundations + token budgets per zone) shipped in Batch 59 — the opening pair this scaffold's earlier draft named as the natural first batch. The second batch (Modules 3 + 4 — compression and summarization + memory tiers) shipped in Batch 60, bringing Path 05 to 4 of 6 modules complete. The closing batch would be Modules 5 (Context drift detection) + 6 (Long-context models — when they help and when they don't), which would bring Path 05 v1 to 6 of 6 modules and close a three-batch arc (59 + 60 + closing). Module 5 reuses Path 06 v2's drift-detection infrastructure (Lab 23 / embedding-space drift) at the context-zone level; Module 6 closes the path by surfacing the design decision Path 05 has been deferring — when to choose a 1M-token model and absorb the cost vs invest in the tiered architecture this path describes.
 
 ## References
 
