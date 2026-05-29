@@ -1,8 +1,8 @@
 # Path 09 — Capstone Projects
 
-> 🔴 Advanced · ⏱ 15–40 hours per project · 📍 Start here after at least three of Paths 01-07 · 🚧 **v1 in progress — first project briefs shipped** (Batch 62: Beginner #01 + Capstone #07)
+> 🔴 Advanced · ⏱ 15–40 hours per project · 📍 Start here after at least three of Paths 01-07 · 🚧 **v1 in progress — 4 of 8 project briefs shipped** (Batches 62-63)
 
-> 🚧 **v1 in progress — 2 of 8 project briefs shipped.** Batch 62 opened Path 09 with the bookend pair: Beginner #01 (Personal research assistant) and Capstone #07 (Evaluated multi-agent system). The two briefs establish the project-brief template and the per-tier rubric; the remaining six briefs land in future batches. The [`projects/`](../../projects/) directory now has the `beginner/` and `capstone/` tier subdirs opened; the `intermediate/` tier will open with project #03 or #04 in a subsequent batch.
+> 🚧 **v1 in progress — 4 of 8 project briefs shipped.** Batch 62 opened Path 09 with the bookend pair (Beginner #01 + Capstone #07); Batch 63 continued with the next bookend pair (Beginner #02 + Intermediate #03), opening the [`projects/intermediate/`](../../projects/intermediate/) subdir. All three tier subdirs (`projects/beginner/`, `projects/intermediate/`, `projects/capstone/`) are now open. The four shipped briefs establish the project-brief template, the per-tier rubric pattern, and the cross-tier progression discipline; the remaining four briefs (Beginner: none remaining; Intermediate #04 + #05; Capstone #06 + #08) land in future batches.
 
 ## Who this path is for
 
@@ -36,7 +36,7 @@ For engineers who've completed Path 01 and want a first substantial build:
 | # | Project | Draws from | Status |
 |---|---|---|---|
 | 01 | **Personal research assistant** — multi-source web research with citations | Path 01 (foundations); Path 02 (light retrieval) | ✅ Brief shipped (Batch 62) — [`projects/beginner/01-personal-research-assistant/`](../../projects/beginner/01-personal-research-assistant/) |
-| 02 | **PDF Q&A bot** — chunked PDF ingestion, retrieval, citation-grounded answers | Path 01; Path 02 (canonical RAG) | 📋 Brief planned |
+| 02 | **PDF Q&A bot** — chunked PDF ingestion, retrieval, citation-grounded answers | Path 01; Path 02 (canonical RAG) | ✅ Brief shipped (Batch 63) — [`projects/beginner/02-pdf-qa-bot/`](../../projects/beginner/02-pdf-qa-bot/) |
 
 ### Intermediate tier — Build Challenges (~25-30 hours)
 
@@ -44,7 +44,7 @@ For engineers who've completed 2-3 paths and want to combine them:
 
 | # | Project | Draws from | Status |
 |---|---|---|---|
-| 03 | **Project management agent** — task decomposition, status tracking, multi-tool orchestration | Path 01; Path 03 (plan-and-execute or supervisor-worker); Path 04 (MCP for tool access) | 📋 Brief planned |
+| 03 | **Project management agent** — task decomposition, status tracking, multi-tool orchestration | Path 01; Path 03 (plan-and-execute or supervisor-worker); Path 04 (MCP for tool access) | ✅ Brief shipped (Batch 63) — [`projects/intermediate/03-project-management-agent/`](../../projects/intermediate/03-project-management-agent/) |
 | 04 | **Data analysis agent** — analyze CSVs, generate visualizations, write reports with citations | Path 01; Path 02; Path 06 (light evaluation) | 📋 Brief planned |
 | 05 | **Multi-server MCP agent** — agent that consumes 3+ MCP servers; demonstrates the MCP-everywhere architecture | Path 01; Path 04 (MCP, deeply); Path 03 (multi-agent if needed) | 📋 Brief planned |
 

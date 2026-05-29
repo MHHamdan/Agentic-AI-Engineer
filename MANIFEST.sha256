@@ -1,8 +1,9 @@
-b15c19eb01c503128f8943c426439c32f128ee22ede2e0e11af778045879a78b  ./CHANGELOG.md
-8df1b428ade2c003a536cea75caa2a898d150ddacd24391242bcb5a7a2398cb5  ./learning-paths/09-capstones/README.md
-1fbd61086923f67d7c07f1f96b31a5a65dea92d28c82f9782fab4b541aee7d54  ./learning-paths/README.md
-7f42492be4644faa60a847b7f1068d0dfd642a842664b541c4433b5190ecf7fe  ./projects/README.md
-97565250064f086c3c2fccdf181b0d07be574a459819e7e7b0706174825eded0  ./projects/beginner/01-personal-research-assistant/README.md
-0e8fd05bae3b2fc692810b5fa35ff8e422493189f7c65ea1d823b84a1762453a  ./projects/beginner/README.md
-eab3b2f5fe08ce7b03adddf8568cfd0759a166286af395efd13ca83c0d9df80a  ./projects/capstone/07-evaluated-multi-agent-system/README.md
-d48d3fb77329d5a0b0a023f194a8e758f3a6f36ab1c6fb8d62d2471f73c6a6f0  ./projects/capstone/README.md
+bc4449fdc2c439ca6ef47c3d1e48e05d5f5a485bf2769e64d907e83884798f82  ./CHANGELOG.md
+ba0c4e92ff22102f115c9f07b73b17566f9f5db76b7b94ad07b68cfaae3c69d3  ./README.md
+62bb4f2d6a838af4b85cb858ca51e3524fa699cee2f2a1da3c79a44934e6a7e9  ./docs/how-to-use-this-repo.md
+ba7402b036351ac34974ed42aff110daf74408340f1775744667cc043669fee4  ./learning-paths/09-capstones/README.md
+16614538384d43ed09aa93c69d6fea2f37dac4354d40c715921fcd2b39886521  ./learning-paths/README.md
+30b357dfe774cb33bc60827286cbc92c9288affa096e525ee508221e5c22ec36  ./projects/README.md
+fc15218c4fb421814bb6043c86c2400fd2407234c12d446ad72040eff059526f  ./projects/beginner/02-pdf-qa-bot/README.md
+d0af6f8f84f4667eacb5f4e4700d360215516ba54ef9758be50827566c45eacc  ./projects/intermediate/03-project-management-agent/README.md
+a08916d1b426d8be6ab736ae1e5f7e02c016718d6a494a96ccc0d05ca1eddb8e  ./projects/intermediate/README.md
