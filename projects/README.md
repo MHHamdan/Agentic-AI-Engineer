@@ -41,8 +41,8 @@ See [`./beginner/`](./beginner/) for the tier landing page.
 | # | Project | Status |
 |---|---|---|
 | 03 | [Project management agent](./intermediate/03-project-management-agent/) | ✅ Brief shipped (Batch 63) |
-| 04 | Data analysis agent | 📋 Brief planned |
-| 05 | Multi-server MCP agent | 📋 Brief planned |
+| 04 | [Data analysis agent](./intermediate/04-data-analysis-agent/) | ✅ Brief shipped (Batch 64) |
+| 05 | [Multi-server MCP agent](./intermediate/05-multi-server-mcp-agent/) | ✅ Brief shipped (Batch 64) |
 
 See [`./intermediate/`](./intermediate/) for the tier landing page.
 

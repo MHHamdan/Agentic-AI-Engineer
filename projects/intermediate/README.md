@@ -9,8 +9,8 @@ The intermediate tier covers Build Challenges that combine 2-3 paths and produce
 | # | Project | Time | Status |
 |---|---|---|---|
 | 03 | [Project management agent](./03-project-management-agent/) | 25-30 hours | ✅ Brief shipped (Batch 63) |
-| 04 | Data analysis agent | 25-30 hours | 📋 Brief planned |
-| 05 | Multi-server MCP agent | 25-30 hours | 📋 Brief planned |
+| 04 | [Data analysis agent](./04-data-analysis-agent/) | 25-30 hours | ✅ Brief shipped (Batch 64) |
+| 05 | [Multi-server MCP agent](./05-multi-server-mcp-agent/) | 25-30 hours | ✅ Brief shipped (Batch 64) |
 
 ## What "done" looks like at intermediate tier
 
