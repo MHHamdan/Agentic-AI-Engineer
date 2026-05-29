@@ -1,8 +1,8 @@
 # Path 07 — Production & Safety
 
-> 🔴 Advanced · ⏱ 10–15 hours (planned) · 📍 Start here after Path 06 (Evaluation & Observability) · 🚧 **v1 in progress** — Modules 1 + 8 shipped (Batch 55: deployment patterns + pre-launch checklist); Modules 2-7 forthcoming
+> 🔴 Advanced · ⏱ 10–15 hours (planned) · 📍 Start here after Path 06 (Evaluation & Observability) · 🚧 **v1 in progress** — Modules 1 + 2 + 4 + 8 shipped (Batches 55-56); Modules 3, 5, 6, 7 forthcoming
 
-> 🚧 **v1 in progress.** Modules 1 + 8 shipped in Batch 55 ([`production/deployment.md`](../../production/deployment.md) + [`production/checklist.md`](../../production/checklist.md)) — the bookend modules the original scaffold recommended as the first batch. Modules 2-7 are in the build queue. The "What you can read right now" section below points at real, existing artifacts in the repo — including the substantive [`production/`](../../production/) and [`security/`](../../security/) directories — that cover material the remaining modules will build on.
+> 🚧 **v1 in progress — 4 of 8 modules shipped.** Modules 1 + 8 shipped in Batch 55 (the bookend modules: deployment + checklist); Modules 2 + 4 shipped in Batch 56 (the cost-and-safety operational layer: [`production/cost-engineering.md`](../../production/cost-engineering.md) + [`security/prompt-injection.md`](../../security/prompt-injection.md)). Modules 3, 5, 6, 7 are in the build queue. The "What you can read right now" section below points at remaining artifacts in the repo that cover material the remaining modules will build on.
 
 ## Who this path is for
 
@@ -32,9 +32,9 @@ The planned module breakdown:
 | Module | Topic | Status |
 |---|---|---|
 | 1 | **Deployment patterns** — FastAPI + Docker, durable execution (Temporal, Inngest, LangGraph Cloud), serverless trade-offs, on-prem; stateful vs stateless agent design | ✅ Shipped (Batch 55) — [`production/deployment.md`](../../production/deployment.md) |
-| 2 | **Cost engineering at deployment scale** — extends Path 03 Pattern 4 to per-tenant tiers; model routing strategies; multi-tier and semantic caching; batching | 📋 Planned |
+| 2 | **Cost engineering at deployment scale** — extends Path 03 Pattern 4 to per-tenant tiers; model routing strategies; multi-tier and semantic caching; batching | ✅ Shipped (Batch 56) — [`production/cost-engineering.md`](../../production/cost-engineering.md) |
 | 3 | **Latency and streaming** — token streaming, partial tool outputs, frontend wiring; async patterns for parallel tool calls and multi-agent fan-out | 📋 Planned |
-| 4 | **Defense-in-depth against prompt injection** — direct and indirect injection; tool-output sanitization; the OWASP Top 10 for LLM Applications framing; defenses that work vs defenses that sound reassuring | 📋 Planned |
+| 4 | **Defense-in-depth against prompt injection** — direct and indirect injection; tool-output sanitization; the OWASP Top 10 for LLM Applications framing; defenses that work vs defenses that sound reassuring | ✅ Shipped (Batch 56) — [`security/prompt-injection.md`](../../security/prompt-injection.md) |
 | 5 | **Tool abuse and data exfiltration** — least-privilege tool access; output-channel control; the agent attack surface vs the LLM attack surface | 📋 Planned |
 | 6 | **Safety policy authorship** — the Path 06 v2 anti-scope this path closes. Domain-specific harm taxonomies; refusal-criteria specifications; the medical / legal / financial vertical patterns | 📋 Planned |
 | 7 | **Pre-launch red-team pass** — adversarial probing using Path 06 v2's adversarial-red-teaming infrastructure; the EU AI Act high-risk obligations (August 2026 enforcement deadline) | 📋 Planned |
@@ -87,7 +87,7 @@ Contributions are welcome. The way to help build Path 07:
 2. **Read [`CONTRIBUTING.md`](../../CONTRIBUTING.md)** — the source-citation rules and the security-content rules in particular are non-negotiable.
 3. **War stories make the best Path 07 content.** If you've debugged a real incident — cost runaway, prompt-injection compromise, tool-call thrashing, data exfiltration — that's the highest-leverage contribution this path can receive.
 
-The first batch (Modules 1 + 8) shipped in Batch 55 — the bookend modules that make the path actionable for anyone with a deployment deadline. The natural next batch would be Module 2 (Cost engineering at deployment scale) + Module 4 (Defense-in-depth against prompt injection), which together establish the cost-and-safety operational discipline the remaining modules build on.
+The first batch (Modules 1 + 8) shipped in Batch 55; the second batch (Modules 2 + 4 — cost engineering + prompt-injection defense) shipped in Batch 56. The natural next batch would be Module 3 (Latency and streaming) + Module 5 (Tool abuse and data exfiltration), which extend the cost-engineering layer downward (latency budget) and the security layer outward (tool abuse beyond injection-mediated attacks). Module 7 (Pre-launch red-team pass) is a separate candidate that closes the loop with Path 06 v2's Lab 24 adversarial red-teaming infrastructure.
 
 ## References
 
