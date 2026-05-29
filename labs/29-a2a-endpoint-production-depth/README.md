@@ -9,6 +9,7 @@ Push notifications are discussed in Module 6 but not implemented in Lab 29 (they
 ## What you'll build
 
 ```mermaid
+
 flowchart LR
     Dev[You] --> Notebook[Notebook cells]
 
