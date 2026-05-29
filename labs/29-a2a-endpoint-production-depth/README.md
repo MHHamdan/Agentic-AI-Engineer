@@ -7,45 +7,43 @@ Extend Lab 28's in-memory A2A server with five production concerns end-to-end: *
 Push notifications are discussed in Module 6 but not implemented in Lab 29 (they require a webhook receiver on the client side; that complexity belongs to Module 7's orchestrator-pattern lab).
 
 ## What you'll build
-
 ```mermaid
-
 flowchart LR
-    Dev[You] --> Notebook[Notebook cells]
+    Dev["You"] --> Notebook["Notebook cells"]
 
-    Notebook -- "writes" --> ServerFile[production_agent_server.py<br/>~120 lines]
-    Notebook -- "writes" --> Card[signed_card.json<br/>JWS-RS256]
-    Notebook -- "writes" --> PubKey[pub_key.json<br/>RSA public]
+    Notebook -->|"writes"| ServerFile["production_agent_server.py<br/>~120 lines"]
+    Notebook -->|"writes"| Card["signed_card.json<br/>JWS-RS256"]
+    Notebook -->|"writes"| PubKey["pub_key.json<br/>RSA public key"]
 
-    Notebook -- "subprocess.Popen" --> Server[uvicorn process<br/>:9998<br/>+ DatabaseTaskStore<br/>+ APIKeyMiddleware<br/>+ OTel SimpleSpanProcessor]
+    Notebook -->|"subprocess.Popen"| Server["uvicorn process<br/>port 9998<br/>DatabaseTaskStore<br/>APIKeyMiddleware<br/>OTel SimpleSpanProcessor"]
 
     ServerFile --> Server
 
-    Notebook -- "GET .well-known<br/>(public)" --> Server
-    Notebook -- "verify signed card<br/>(client-side JWS)" --> PubKey
-    Notebook -- "POST without X-API-Key<br/>→ 401" --> Server
-    Notebook -- "POST with X-API-Key<br/>+ A2A-Version: 1.0" --> Server
+    Notebook -->|"GET .well-known<br/>public"| Server
+    Notebook -->|"verify signed card<br/>client-side JWS"| PubKey
+    Notebook -->|"POST without X-API-Key<br/>401 Unauthorized"| Server
+    Notebook -->|"POST with X-API-Key<br/>A2A-Version: 1.0"| Server
 
-    Server -- "writes SQLite" --> SQLite[(a2a_tasks.db)]
-    Server -- "writes spans" --> Spans[a2a_spans.jsonl]
+    Server -->|"writes SQLite"| SQLite[("a2a_tasks.db")]
+    Server -->|"writes spans"| Spans["a2a_spans.jsonl"]
 
-    Notebook -- "kill + respawn" --> Server2[uvicorn process<br/>(restarted)]
-    Notebook -- "GetTask after restart" --> Server2
-    Server2 -- "reads SQLite" --> SQLite
+    Notebook -->|"kill + respawn"| Server2["uvicorn process<br/>restarted"]
+    Notebook -->|"GetTask after restart"| Server2
+    Server2 -->|"reads SQLite"| SQLite
 
-    Notebook -- "SendStreamingMessage<br/>+ httpx async stream" --> Server2
-    Server2 -- "SSE: 4 events" --> Notebook
+    Notebook -->|"SendStreamingMessage<br/>httpx async stream"| Server2
+    Server2 -->|"SSE: 4 events"| Notebook
 
-    Notebook -- "reads spans file" --> Spans
+    Notebook -->|"reads spans file"| Spans
 
-    style Dev fill:#fff4e6
-    style Notebook fill:#e6f2ff
-    style Server fill:#e6f6ec
-    style Server2 fill:#e6f6ec
-    style SQLite fill:#f4e6f7
-    style Spans fill:#f4e6f7
-    style Card fill:#ffe8d1
-    style PubKey fill:#ffe8d1
+    style Dev fill:#fff4e6,stroke:#d97706,stroke-width:1px;
+    style Notebook fill:#e6f2ff,stroke:#2563eb,stroke-width:1px;
+    style Server fill:#e6f6ec,stroke:#16a34a,stroke-width:1px;
+    style Server2 fill:#e6f6ec,stroke:#16a34a,stroke-width:1px;
+    style SQLite fill:#f4e6f7,stroke:#9333ea,stroke-width:1px;
+    style Spans fill:#f4e6f7,stroke:#9333ea,stroke-width:1px;
+    style Card fill:#ffe8d1,stroke:#ea580c,stroke-width:1px;
+    style PubKey fill:#ffe8d1,stroke:#ea580c,stroke-width:1px;
 ```
 
 The notebook drives two subprocess incarnations of the same server — once to write tasks, once (after killing the first) to read them back. The DB and spans files persist between subprocess lifetimes; the notebook inspects both directly.
