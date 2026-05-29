@@ -19,18 +19,18 @@ By the end of Path 03 Modules 1-6 you should be able to:
 - Carry citations through worker → supervisor handoffs without trusting the LLM to preserve them.
 - Add a **critic** to the supervisor's loop to enable bounded iterative refinement, without falling into sycophancy.
 - Diagnose sycophancy with the obvious-bad-draft test and apply the four critic-prompt rules to prevent it.
-- Bound refinement with `MAX_REFINEMENT_CYCLES` and handle the cap honestly (surface partial results, not forced approvals).
+- Bound refinement with `MAX_REFINEMENT_CYCLES` and handle the cap  (surface partial results, not forced approvals).
 - Recognize the four debate-specific failure modes (sycophancy, infinite agreement, runaway disagreement, critique drift) and the mitigation each requires.
 - Implement the **plan-and-execute pattern**: a planner agent emits a structured `Plan` (typed `PlanStep` list with explicit `depends_on` and `parallel_group` fields); the supervisor resolves dependencies and dispatches steps to a bounded executor pool.
 - Apply the five planner-prompt rules (atomic steps, explicit dependencies, honest parallel groups, self-contained descriptions, bounded plans) and explain why each prevents a specific failure mode.
 - Wire bounded executor-pool concurrency (`ThreadPoolExecutor(max_workers=3)`) and reason about parallelism as a wall-clock optimization rather than a cost or quality optimization.
-- Handle replanning with `MAX_REPLANS = 2` — invoke the planner with failure context, finalize honestly when the cap fires.
+- Handle replanning with `MAX_REPLANS = 2` — invoke the planner with failure context, finalize  when the cap fires.
 - Recognize the four plan-and-execute-specific failure modes (plan brittleness, execution drift, replanning thrash, plan-execution gap) and the mitigation each requires.
 - Compose Path 02's retrieval pipeline (Labs 06-08) with the supervisor-worker pattern: wrap retrieval as a single worker the supervisor can call, with structured `{status, chunks}` envelope.
 - Apply the four retrieval-decision rules (retrieve when corpus-grounded, skip for stable-knowledge, one retrieval per distinct factual question, pass chunks verbatim) and explain why each prevents a specific failure mode.
 - Recognize the four multi-agent-RAG-specific failure modes (citation drift, retrieval skip, retrieval over-call, chunk drift) and the mitigation each requires.
 - Preserve citations across the retrieval → supervisor → synthesis handoff without trusting the LLM to track them by hand.
-- Decide honestly when multi-agent RAG beats single-agent RAG (when deciding-to-retrieve is non-trivial, when multiple retrievals must be composed, when precision justifies a critic) — and when it doesn't.
+- Decide  when multi-agent RAG beats single-agent RAG (when deciding-to-retrieve is non-trivial, when multiple retrievals must be composed, when precision justifies a critic) — and when it doesn't.
 - Rebuild from-scratch multi-agent patterns in LangGraph (`StateGraph`, `Command`, `Send`, sub-graphs, checkpointer) and run line-by-line comparisons against the from-scratch baselines — the pedagogical payoff of having both implementations.
 - Explain when framework adoption earns its complexity (durable checkpointer, observable execution via streaming, `Send`-based dynamic parallel dispatch, reducer-based parallel-update semantics) and when it doesn't.
 - Implement seven trajectory and outcome metrics from scratch — handoff success rate, routing accuracy, plan validity, plan coverage, replan rate, citation preservation, groundedness — and explain what each reveals and what each hides.
