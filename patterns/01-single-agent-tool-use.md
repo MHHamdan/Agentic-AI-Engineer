@@ -118,7 +118,7 @@ The pattern's cost curve is approximately linear in tool count up to ~10, then d
 
 - **Pattern 02 — Router** (planned; `patterns/02-router.md`) — the next step when you have distinct task *types* that each want their own toolset. The router decides which downstream Pattern 01 instance handles each request.
 - **[Pattern 03 — Supervisor + workers](./03-supervisor-workers.md)** — the next step when tasks *decompose* (research → write → cite) rather than route. Supervisor delegates each sub-task to a worker that itself runs Pattern 01.
-- **Pattern 07 — Reflection / self-correction** (planned; `patterns/07-reflection.md`) — adds a critic loop on top of Pattern 01's output when the first answer is usually almost-right but needs refinement.
+- **[Pattern 07 — Reflection / self-correction](./07-reflection.md)** — adds a critic loop on top of Pattern 01's output when the first answer is usually almost-right but needs refinement.
 - **[Pattern 11 — MCP integration](./11-mcp-integration.md)** — Pattern 01 with tools served by external MCP servers instead of in-process Python functions. Same loop shape; the tool boundary moves out-of-process.
 
 ## References
