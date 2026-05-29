@@ -24,14 +24,14 @@ Full template is in [`CONTRIBUTING.md`](../CONTRIBUTING.md).
 | # | Pattern | What it solves | Status |
 |---|---|---|---|
 | 01 | [Single-agent tool use](./01-single-agent-tool-use.md) | One LLM + a few tools, no orchestration | ✅ Authored (Batch 44) |
-| 02 | Router | Send each request to a specialized handler | 📋 Planned |
+| 02 | [Router](./02-router.md) | Send each request to a specialized handler | ✅ Authored (Batch 52) |
 | 03 | [Supervisor + workers](./03-supervisor-workers.md) | One coordinator delegates to several specialists | ✅ Authored (Batch 45) |
 | 04 | [Hierarchical teams](./04-hierarchical-teams.md) | Supervisors of supervisors for large problems | ✅ Authored (Batch 51) |
 | 05 | [Swarm hand-off](./05-swarm-handoff.md) | Peer agents hand off control without a central coordinator | ✅ Authored (Batch 51) |
 | 06 | [Plan-and-execute](./06-plan-and-execute.md) | Generate a plan, then execute steps | ✅ Authored (Batch 45) |
 | 07 | [Reflection / self-correction](./07-reflection.md) | Critique and revise outputs in a loop | ✅ Authored (Batch 51) |
-| 08 | Agentic RAG | Retrieval as a tool the agent chooses to use | 📋 Planned |
-| 09 | Deep research | Iterative search, synthesis, and citation | 📋 Planned |
+| 08 | [Agentic RAG](./08-agentic-rag.md) | Retrieval as a tool the agent chooses to use | ✅ Authored (Batch 52) |
+| 09 | [Deep research](./09-deep-research.md) | Iterative search, synthesis, and citation | ✅ Authored (Batch 52) |
 | 10 | [Human-in-the-loop](./10-human-in-the-loop.md) | Pause for human approval at decision points | ✅ Authored (Batch 45) |
 | 11 | [MCP integration](./11-mcp-integration.md) | Standard protocol for tools and data | ✅ Authored (Batch 44) |
 | 12 | [A2A federation](./12-a2a-federation.md) | Standard protocol between agents | ✅ Authored (Batch 44) |
@@ -43,13 +43,13 @@ A first-pass decision aid:
 | If you're solving... | Start with pattern |
 |---|---|
 | A single, scoped task with a few tools | [01 Single-agent](./01-single-agent-tool-use.md) |
-| Multiple distinct task types | 02 Router |
+| Multiple distinct task types | [02 Router](./02-router.md) |
 | One complex task that decomposes cleanly | [03 Supervisor](./03-supervisor-workers.md) or [06 Plan-and-execute](./06-plan-and-execute.md) |
 | A complex task with hierarchical subproblems | [04 Hierarchical](./04-hierarchical-teams.md) |
 | Loosely-coupled specialists that pass work peer-to-peer | [05 Swarm](./05-swarm-handoff.md) |
 | A task where the first answer is usually wrong | [07 Reflection](./07-reflection.md) |
-| Anything retrieval-heavy | 08 Agentic RAG |
-| A research / synthesis task | 09 Deep research |
+| Anything retrieval-heavy | [08 Agentic RAG](./08-agentic-rag.md) |
+| A research / synthesis task | [09 Deep research](./09-deep-research.md) |
 | Anything with high stakes or compliance | [10 Human-in-the-loop](./10-human-in-the-loop.md) |
 | Multi-source tool access | [11 MCP](./11-mcp-integration.md) |
 | Multi-agent across orgs or codebases | [12 A2A](./12-a2a-federation.md) |

@@ -112,11 +112,11 @@ The full implementation lives in [Lab 01](../labs/01-first-agent-from-scratch/) 
 | **Complexity** | Lowest. ~60-100 lines of Python end-to-end. No state machine, no message routing, no shared memory. |
 | **Failure modes** | Tool selection errors (wrong tool picked); tool argument errors (model hallucinates a field); loop divergence (model repeats the same tool call). Mitigated by action-hash dedup and clear tool descriptions per [`concepts/tools/tool-design.md`](../concepts/tools/tool-design.md). |
 
-The pattern's cost curve is approximately linear in tool count up to ~10, then degrades non-linearly as selection signal collapses. The break-even point against the planned `patterns/02-router.md` pattern is around 8-12 tools depending on description quality.
+The pattern's cost curve is approximately linear in tool count up to ~10, then degrades non-linearly as selection signal collapses. The break-even point against [Pattern 02 (Router)](./02-router.md) is around 8-12 tools depending on description quality.
 
 ## Related patterns
 
-- **Pattern 02 — Router** (planned; `patterns/02-router.md`) — the next step when you have distinct task *types* that each want their own toolset. The router decides which downstream Pattern 01 instance handles each request.
+- **[Pattern 02 — Router](./02-router.md)** — the next step when you have distinct task *types* that each want their own toolset. The router decides which downstream Pattern 01 instance handles each request.
 - **[Pattern 03 — Supervisor + workers](./03-supervisor-workers.md)** — the next step when tasks *decompose* (research → write → cite) rather than route. Supervisor delegates each sub-task to a worker that itself runs Pattern 01.
 - **[Pattern 07 — Reflection / self-correction](./07-reflection.md)** — adds a critic loop on top of Pattern 01's output when the first answer is usually almost-right but needs refinement.
 - **[Pattern 11 — MCP integration](./11-mcp-integration.md)** — Pattern 01 with tools served by external MCP servers instead of in-process Python functions. Same loop shape; the tool boundary moves out-of-process.
