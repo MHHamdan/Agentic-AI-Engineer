@@ -10,8 +10,8 @@ The going-to-prod playbook. Everything between *"it works on my notebook"* and *
 | `observability.md` | Tracing, metrics, logs — and how to actually use them | 📋 Planned |
 | [`cost-engineering.md`](./cost-engineering.md) | Token budgets, model routing, caching, batching, prompt compression | ✅ Shipped (Batch 56) |
 | `caching-and-routing.md` | Multi-tier caching, semantic caching, model routing strategies | 📋 Planned |
-| `streaming.md` | Streaming tokens, partial tool outputs, frontend wiring | 📋 Planned |
-| `async-and-concurrency.md` | Async patterns for parallel tool calls and multi-agent fan-out | 📋 Planned |
+| [`streaming.md`](./streaming.md) | Streaming tokens, partial tool outputs, frontend wiring | ✅ Shipped (Batch 57) |
+| [`async-and-concurrency.md`](./async-and-concurrency.md) | Async patterns for parallel tool calls and multi-agent fan-out | ✅ Shipped (Batch 57) |
 | [`checklist.md`](./checklist.md) | Pre-launch checklist — the things you forget the first time | ✅ Shipped (Batch 55) |
 
 The conceptual side (what backpressure means, when to cache, what calibration achieves) lives in [`concepts/`](../concepts/). This folder is the engineering side — patterns, tradeoffs, and the things you only learn after a 3am page.
