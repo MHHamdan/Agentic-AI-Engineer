@@ -1,13 +1,19 @@
+```yaml
 cff-version: 1.2.0
-message: "If you use this material in research, teaching, or technical writing, please cite it as below."
-title: "Agentic AI Engineer: An open learning hub for building real agentic AI systems"
+message: "If you use this material in research, teaching, technical writing, or software development, please cite it as below."
+
+title: "Agentic AI Engineer: An Open Learning Hub for Building Real Agentic AI Systems"
+
 abstract: >-
-  An open, community-maintained reference and curriculum for engineers building
-  agentic AI systems. Covers stable concepts (agents, RAG, multi-agent topologies,
-  context engineering, evaluation) and dated snapshots of fast-changing tooling
-  (LangGraph, MCP, A2A, LangSmith, vector databases). Organized as learning paths,
-  concept pages, labs, recipes, architecture patterns, and projects, with an
-  integrated mathematical-foundations track.
+  Agentic AI Engineer is an open learning hub and reference curriculum for
+  engineers, researchers, and practitioners building agentic AI systems. The
+  material covers stable foundations, including autonomous agents, retrieval-
+  augmented generation, multi-agent topologies, context engineering, evaluation,
+  observability, and safety, together with dated snapshots of fast-changing
+  tools and protocols such as LangGraph, the Model Context Protocol, Agent-to-
+  Agent communication, LangSmith, and vector databases. The repository is
+  organized into learning paths, concept pages, labs, recipes, architecture
+  patterns, mathematical foundations, and applied projects.
 
 type: software
 version: "0.1.0"
@@ -16,14 +22,12 @@ date-released: "2026-05-23"
 repository-code: "https://github.com/MHHamdan/Agentic-AI-Engineer"
 url: "https://github.com/MHHamdan/Agentic-AI-Engineer"
 
-# Apache-2.0 covers code, scripts, and notebooks.
-# Prose, diagrams, and other written content are separately licensed under CC-BY-4.0;
-# see LICENSE-CC-BY-4.0 for the full text.
 license: "Apache-2.0"
 
 keywords:
   - agentic-ai
   - ai-agents
+  - autonomous-agents
   - large-language-models
   - llm-agents
   - retrieval-augmented-generation
@@ -32,7 +36,7 @@ keywords:
   - langgraph
   - model-context-protocol
   - mcp
-  - agent2agent
+  - agent-to-agent
   - a2a
   - context-engineering
   - llm-evaluation
@@ -43,13 +47,21 @@ keywords:
   - python
 
 authors:
-  - name: "Agentic AI Engineer contributors"
-    # Replace this collective placeholder with named maintainers as the project grows.
-    # Example:
-    # - family-names: "Hamdan"
-    #   given-names: "Mohammed"
-    #   orcid: "https://orcid.org/0000-0000-0000-0000"
-    #   affiliation: "Independent"
+  - family-names: "Hamdan"
+    given-names: "Mohammed"
+    orcid: "https://orcid.org/0000-0002-2711-2403"
+    affiliation: "Ecole de technologie superieure (ETS), Montreal, Canada"
 
-# A preferred-citation block can be added when a companion paper or report exists.
-# For now, the software citation above is sufficient.
+preferred-citation:
+  type: software
+  title: "Agentic AI Engineer: An Open Learning Hub for Building Real Agentic AI Systems"
+  authors:
+    - family-names: "Hamdan"
+      given-names: "Mohammed"
+      orcid: "https://orcid.org/0000-0002-2711-2403"
+      affiliation: "Ecole de technologie superieure (ETS), Montreal, Canada"
+  version: "0.1.0"
+  date-released: "2026-05-23"
+  repository-code: "https://github.com/MHHamdan/Agentic-AI-Engineer"
+  url: "https://github.com/MHHamdan/Agentic-AI-Engineer"
+```
