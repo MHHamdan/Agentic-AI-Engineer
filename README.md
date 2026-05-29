@@ -112,26 +112,47 @@ Each path is a curated reading list across the rest of the repo — concepts, la
 
 ## Repository structure
 
-```
-agentic-ai-engineer/
-├── docs/              Start-here pages, FAQ, community pages
-├── learning-paths/    Curated journeys (links into the rest of the repo)
-├── concepts/          Short explainers — what something is and when to use it
-├── math-foundations/  Engineer-useful math with citations
-├── labs/              Hands-on guided exercises (notebooks + READMEs)
-├── recipes/           Copy-paste solutions to common problems
-├── patterns/          Architecture patterns with diagrams and tradeoffs
-├── projects/          Build Challenges and Capstone Projects
-├── examples/          Minimal reference implementations
-├── tools/             Versioned snapshots of fast-moving frameworks
-├── evaluation/        Eval frameworks, datasets, scorers
-├── production/        Deployment, cost, latency, streaming, concurrency
-├── security/          Threats, defenses, red-teaming
-├── diagrams/          Mermaid sources + rendered images
-├── references/        Papers, books, talks, community resources
-├── glossary/          A–Z terminology
-├── setup/             Environment setup
-└── assets/            Working artifacts (not user-facing curriculum)
+```mermaid
+flowchart TD
+    F["01 Foundations"] --> R["02 Agentic RAG"]
+    F --> M["03 Multi-Agent"]
+    F --> T["04 Tool Protocols<br/>MCP + A2A"]
+
+    R --> C["05 Context Engineering"]
+    M --> C
+    T --> C
+
+    R --> E["06 Evaluation & Observability"]
+    M --> E
+    C --> E
+
+    E --> P["07 Production & Safety"]
+    P --> CAP["09 Capstones"]
+    E --> CAP
+
+    F -.-> X["08 Math Foundations"]
+    R -.-> X
+    M -.-> X
+
+    classDef foundations fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
+    classDef rag fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef multi fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px,color:#4A148C;
+    classDef tools fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
+    classDef context fill:#E0F7FA,stroke:#00838F,stroke-width:2px,color:#004D40;
+    classDef eval fill:#FFFDE7,stroke:#F9A825,stroke-width:2px,color:#F57F17;
+    classDef production fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#B71C1C;
+    classDef math fill:#ECEFF1,stroke:#455A64,stroke-width:2px,color:#263238,stroke-dasharray:5 5;
+    classDef capstone fill:#EDE7F6,stroke:#512DA8,stroke-width:3px,color:#311B92;
+
+    class F foundations;
+    class R rag;
+    class M multi;
+    class T tools;
+    class C context;
+    class E eval;
+    class P production;
+    class X math;
+    class CAP capstone;
 ```
 
 A more detailed walkthrough of every folder lives in [`docs/how-to-use-this-repo.md`](./docs/how-to-use-this-repo.md).
