@@ -162,3 +162,5 @@ _site/
 # ───────────────────────────────────────────────────────────────────────────
 assets/slides-ocr/_working/
 assets/slides-ocr/*.raw
+
+CHANGELOG.md
