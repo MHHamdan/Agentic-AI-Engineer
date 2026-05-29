@@ -1,6 +1,6 @@
-34569ec2180a6ab8a8ba41ba5c6c580f7d673a75b39f1df1e0032f9ffa95aef5  ./CHANGELOG.md
-45f7d83cb3b189c6bd8bb6e3b2091efc20514ceced3c1aad3b59555a551715e7  ./learning-paths/07-production-and-safety/README.md
-271b88f45bb45f19ec18d738c693280b743b51cdf9958c957536f61476965733  ./learning-paths/README.md
-7b9f5128fd00c24bd985b707bf7c891d8a6b828f36042d88c23018840a6605af  ./security/README.md
-563f20b005de84897d47a5364c39e299197e2eca4ecb23972127fd932e1ef59a  ./security/red-teaming.md
-8b41e22482c090a8b22ab33beabcf0638c3f2c2337e1f7b037552479bab22ea4  ./security/safety-policy.md
+1f88bc0d978a11b29c77d3f753e42334c891883d7b3f2e6e7255f4eb2f8b0e48  ./CHANGELOG.md
+c5ee502e35fe4d9ec353034e14559d549501fe286461926816652b9a1e6800cd  ./concepts/context/README.md
+44913541408f7e45de95d3b3167a93f4a7fdd27e16e0b6237ba21d5b0ec2bf65  ./concepts/context/foundations.md
+87f3f79e19af9696ee59866cb5d3d3d4e92576f1682e84d216752e899a2b90ee  ./concepts/context/token-budgets.md
+d9162fe8585ca002f37eaf93b40139ab82a24aba9110b3934248648be45a776f  ./learning-paths/05-context-engineering/README.md
+49ea2f9e942e1a6762738d613648019e296c546d5a22a728e693e36e14390d9f  ./learning-paths/README.md
