@@ -25,7 +25,7 @@ Paths overlap deliberately. The Multi-Agent path reuses concept pages from Found
 |---|---|---|---|---|
 | 01 | [Foundations](./01-foundations/) | Engineers building their first real agent | 🟢 Beginner-friendly | ✅ Content shipped |
 | 02 | [Agentic RAG](./02-agentic-rag/) | Anyone building retrieval-heavy agents | 🟡 Intermediate | ✅ Content shipped |
-| 03 | [Multi-Agent Systems](./03-multi-agent-systems/) | Engineers orchestrating cooperating agents | 🟡 Intermediate | ✅ v1 complete + v2 patterns (6) shipped |
+| 03 | [Multi-Agent Systems](./03-multi-agent-systems/) | Engineers orchestrating cooperating agents | 🟡 Intermediate / 🔴 Advanced (v3) | ✅ v1 complete + v2 patterns (6) + v3 capstones (3) |
 | 04 | [Tool Protocols (MCP + A2A)](./04-tool-protocols-mcp-a2a/) | Engineers wiring agents to tools and other agents | 🟡 Intermediate | ✅ All 7 modules shipped (Batches 43-50) — path complete |
 | 05 | [Context Engineering](./05-context-engineering/) | Engineers fighting context-window problems | 🟡 Intermediate | 📋 Scaffold (Batch 42); modules planned |
 | 06 | [Evaluation & Observability](./06-evaluation-observability/) | Engineers shipping agents they need to measure | 🔴 Advanced | ✅ v1 + v2 complete (recipes, patterns, projects, frameworks deep dive, embedding drift, adversarial red-teaming) |
@@ -188,7 +188,7 @@ This repo is built incrementally. Some paths will reach full coverage before oth
 | 08 Mathematical Foundations | ☑ | ● (4 of 13) | n/a | n/a | n/a | n/a |
 | 09 Capstones | ☑ | n/a | n/a | n/a | n/a | ☐ |
 
-Checkbox status is updated at each release. **All nine paths now have authored landing READMEs as of Batch 42; Path 04 is complete — all 7 modules shipped (the MCP build-consume-secure trio + A2A foundations + A2A production depth + MCP+A2A composition) as of Batch 50; the top-level [`patterns/`](../patterns/) catalog has 9 of 12 pages authored (Patterns 01, 03, 04, 05, 06, 07, 10, 11, 12) as of Batch 51.** Paths 05, 07, 08, 09 remain scaffolds — the path README documents the planned structure and links to the existing repo artifacts each path will build on. Paths 01, 02, 03 (v1 + v2 patterns), 06 (v1 + v2) have substantial content; Path 04 is the second path complete after Path 01; Path 08 has 4 of 13 math pages authored. If you want to help fill in a row, [`CONTRIBUTING.md`](../CONTRIBUTING.md) walks you through the workflow for each content type.
+Checkbox status is updated at each release. **All nine paths now have authored landing READMEs as of Batch 42; Path 04 is complete — all 7 modules shipped (the MCP build-consume-secure trio + A2A foundations + A2A production depth + MCP+A2A composition) as of Batch 50; the top-level [`patterns/`](../patterns/) catalog is complete — all 12 pages authored (Patterns 01-12) as of Batch 52; Path 03 v3 capstone projects are complete — three production-deployable projects (customer-support, research pipeline, A2A-federated) shipped as of Batch 53.** Paths 05, 07, 08, 09 remain scaffolds — the path README documents the planned structure and links to the existing repo artifacts each path will build on. Paths 01, 02, 03 (v1 + v2 patterns + v3 projects), 06 (v1 + v2) have substantial content; Path 04 is the second path complete after Path 01; Path 08 has 4 of 13 math pages authored. If you want to help fill in a row, [`CONTRIBUTING.md`](../CONTRIBUTING.md) walks you through the workflow for each content type.
 
 ---
 

@@ -1,9 +1,8 @@
-43dca203f529281450c82ebada0981ab780d134141ee32d6483719192b6ef6d6  ./CHANGELOG.md
-c8d580d5e140cc49fe4fa2623563a50d1afac8f667e62d451a1bbec9d0fa79b1  ./learning-paths/README.md
-ae4b50a4833cd9640b5fed3fba9ff32fdf4b401efd0a8ea0700bdd286a8cc36c  ./patterns/01-single-agent-tool-use.md
-7187880cd22e82cee029722f9dd58b9d4f196ae670e8902668d24396e915205b  ./patterns/03-supervisor-workers.md
-5d3ad82461cf35982d5e619e36ba43ef8996d438762ffe95c7319515615715b3  ./patterns/04-hierarchical-teams.md
-a95c76cb43ae5da597d85f600686b8c23e5bc526545f26a4ab6db9a30636544e  ./patterns/05-swarm-handoff.md
-ea3a4d6a2ffc7ccea8e8355086a8acea832b218d2a7384b9279672c6ce0cbe9c  ./patterns/06-plan-and-execute.md
-95424c722071da7ce8a2348842a71addb8d7681ca55b51c24bb0a6d6213bd98c  ./patterns/07-reflection.md
-747538f9ce0b122ae426202ed8ea03e74960920e97b70cd679c93606a390c6c6  ./patterns/README.md
+85a45a61a4c2ae47018143a21f6bf491d2b15c71996c5ff48c896562a33055e0  ./CHANGELOG.md
+4ea0073b3945ba3d8c79e13df918f5174db2f89bfec659c76b50104fd28a0f51  ./learning-paths/03-multi-agent-systems/README.md
+2917d54c6f89823c953e74d37e2a8ee283017a6626b54b882840cfa67a8843dc  ./learning-paths/03-multi-agent-systems/projects/01-customer-support-multi-agent.md
+6e07d872f1737a98a4dfb20b77532977adfc8b4d4ba2753d3d95eee69dde71f3  ./learning-paths/03-multi-agent-systems/projects/02-research-pipeline-with-deep-research.md
+70442117b9d4568777b0a7942368c462654ae3a5228792e19d6051d83e9cef83  ./learning-paths/03-multi-agent-systems/projects/03-a2a-federated-multi-agent.md
+b90515d53693f46a59b3b76807dc204a4f033f66d99a8adc2a460e92f173c3ae  ./learning-paths/03-multi-agent-systems/projects/README.md
+e8a3459f3fde89b0bedac89a5e1ff1c5aa0535847d5c9cca18e50c20dd6a3255  ./learning-paths/03-multi-agent-systems/projects/_template.md
+6764323d9a583d75e9c2ed728899d0d6b5c2003c11fc5d9b86add0302b9d6d11  ./learning-paths/README.md

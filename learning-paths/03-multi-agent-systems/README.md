@@ -1,6 +1,6 @@
 # 03 · Multi-Agent Systems
 
-> 🟡 Intermediate · ⏱ 23–30 hours (Modules 1-6) + ~90 min Patterns (Batches 39 + 41) · 📍 Start here once you've completed Path 01 (recommended: also Path 02 for Modules 4 and 6) · ✅ Path 03 v1 complete + fully solutioned (foundations, supervisor-worker, generator-critic, plan-and-execute, multi-agent RAG, framework bridge, evaluation; every lab has a reference solution in its `solution/` subdirectory) · 🚧 Path 03 v2 in progress (six production patterns shipped batches 39 + 41)
+> 🟡 Intermediate (v1) → 🔴 Advanced (v3) · ⏱ 23–30 hours (Modules 1-6) + ~90 min Patterns (Batches 39 + 41) + ~135 min Projects reading (Batch 53) + multi-day builds · 📍 Start here once you've completed Path 01 (recommended: also Path 02 for Modules 4 and 6) · ✅ Path 03 v1 complete + fully solutioned (foundations, supervisor-worker, generator-critic, plan-and-execute, multi-agent RAG, framework bridge, evaluation; every lab has a reference solution in its `solution/` subdirectory) · ✅ Path 03 v2 complete (six production patterns shipped batches 39 + 41) · ✅ Path 03 v3 complete (three production capstones shipped batch 53)
 
 ## Who this is for
 
@@ -213,6 +213,23 @@ The current six-pattern set covers the prevention/reaction stack the 2026 produc
 
 Production grounding for the patterns comes from mid-2026 sources: niteagent's May 2026 "P2 prompt pattern" framing and "$47k 11-day loop" case; dev.to's April 2026 "handoff as first-class span" post; clickittech's February 2026 four-mechanism conflict-resolution taxonomy; Anna Jey's April 2026 three-mode HITL framework; Galileo's April 2026 EU AI Act mapping; digitalapplied's April-May 2026 token-budget framework; Fastio's February 2026 retry-pattern guide; Composio's December 2025 idempotency-key conventions; FutureAGI's May 2026 five-strategy fallback framework; LifeTidesHub's May 2026 retry-storm post-mortem; SQuAI (arxiv:2510.15682); MASS-RAG (arxiv:2604.18509); Vinod Rane's March 2026 LangGraph agentic-RAG guide.
 
+## 🚀 Path 03 v3 — Production capstones (Batch 53)
+
+Path 03 v1 documents the topologies; Path 03 v2 documents the operational mechanisms. **Path 03 v3 ships the buildable capstones** — three multi-day production-deployable projects that compose v1 labs + v2 patterns + the [top-level patterns catalog](../../patterns/) + Path 04 protocol modules into realistic deployment shapes.
+
+Where patterns describe reusable mechanisms (~12-15 min reading each), projects are full builds: 35-50 min reading + 3-10 day build, with milestones, acceptance rubric, failure modes, and cost envelope. Same shape as [Path 06 v2 projects](../06-evaluation-observability/projects/).
+
+📁 [`projects/`](./projects/) directory:
+
+- 📖 [Projects README](./projects/README.md) (~12 min) — the directory landing page; the v3 ladder (concepts → labs → patterns → projects); how projects differ from the top-level `/projects/` directory; pick-a-project decision tree.
+- 📖 [Project 1 — Customer-support multi-agent](./projects/01-customer-support-multi-agent.md) (~40 min reading + 3-5 day build) — the intermediate-complexity entry point. Composes [Pattern 02 (Router)](../../patterns/02-router.md) + [Pattern 03 (Supervisor + workers)](../../patterns/03-supervisor-workers.md) + Path 03 v2 patterns 01/03/05. LangGraph + FastAPI + PostgreSQL deployment. Chat-speed interactive UX. ~$75-5,500/mo cost envelope across 10K-1M conversations.
+- 📖 [Project 2 — Research pipeline with deep research](./projects/02-research-pipeline-with-deep-research.md) (~45 min reading + 5-7 day build) — the advanced async capstone. Composes [Patterns 06 + 07 + 08 + 09](../../patterns/) + Path 03 v2 patterns 04/06. OpenAI Agents SDK / Pydantic AI / Anthropic Agent SDK flexibility. 5-30 minute wall-clock per query. Model-diversity faithfulness judge defending against the [Pattern 07 coherence trap](../../patterns/07-reflection.md). ~$360-51K/mo cost envelope across 100-10K jobs.
+- 📖 [Project 3 — A2A-federated multi-agent](./projects/03-a2a-federated-multi-agent.md) (~50 min reading + 7-10 day build) — the most advanced capstone. **Requires Path 04 completion** (all 7 modules). Composes [Pattern 11 (MCP) + Pattern 12 (A2A federation) + Pattern 03 (Supervisor)](../../patterns/) + Path 03 v2 patterns 01/06. Cross-organization deployment with OAuth 2.1 + JWS-signed agent cards + AP2 mandate verification + append-only audit log. Addresses the AIP arxiv:2603.24775 "every production MCP server lacked authentication" finding by shipping the security story correctly out of the gate. ~$305-9,900/mo cost envelope across 1K-100K cross-org tasks.
+
+📐 [`_template.md`](./projects/_template.md) — the shape for future Path 03 projects. 12-section structure: Project brief · Prerequisites · What you'll have when done · Architecture at a glance · Build milestones · Integration layer · Acceptance rubric · Failure modes and recoveries · Operational checklist · Cost envelope · Extensions · References.
+
+Production grounding for the projects: BSWEN March 2026 on routing classifier cost levers; MintSquare January 2026 on 3-10× LLM call multiplier in multi-agent + $63-171/mo small-deployment cost baselines; Use Apify March 2026 on PostgreSQL checkpointing recipes; Gurusup April 2026 on framework comparison; MarsDevs April 2026 on the 3-10× cost multiplier for agentic RAG; ByteByteGo December 2025 on cross-vendor deep-research architecture; Microsoft March 2026 on the DRACO benchmark + Council mode model diversity; Zylos Research May 2026 on the coherence-trap formalization driving model-diversity acceptance criteria; Atlan April 2026 on MCP vs A2A vertical/horizontal framing; PRNewswire April 2026 on A2A 150-org milestone + AP2 mandates extension; arxiv:2603.24775 on the AIP Knostic security scan; dev.to April 2026 on the Andrew Ng + Ivan Nardini "building agents is the easy part" framing.
+
 ## What's not in this batch (anti-scope)
 
 These are explicitly out of scope for Modules 1-5 — they're scoped for future Path 03 batches or other paths entirely:
@@ -231,7 +248,7 @@ These are explicitly out of scope for Modules 1-5 — they're scoped for future 
 
 ## What comes next
 
-Path 03 v1 closes with Module 6 — fully solutioned (every lab in `labs/10-*` through `labs/16-*` has a reference implementation in its `solution/` subdirectory; solutions for Labs 10-13 shipped in Batch 19, solutions for Labs 14-16 shipped in Batch 23). Path 03 v2 has started with the production patterns directory shipped in Batch 39 — three reusable mechanisms (handoff contracts, shared-state boundaries, escalation and fallback) that plug into all six v1 modules. Path 06 v2 completion has freed the build queue for Path 03 v2 continuation.
+Path 03 v1 closes with Module 6 — fully solutioned (every lab in `labs/10-*` through `labs/16-*` has a reference implementation in its `solution/` subdirectory; solutions for Labs 10-13 shipped in Batch 19, solutions for Labs 14-16 shipped in Batch 23). Path 03 v2 shipped the six-pattern set across Batches 39 + 41 (handoff contracts, shared-state boundaries, escalation, cost budgeting, retry policies, cross-agent provenance). **Path 03 v3 shipped the three production capstones in Batch 53** — customer-support multi-agent, research pipeline with deep research, and A2A-federated multi-agent.
 
 The planned next steps, in rough order:
 
@@ -239,7 +256,7 @@ The planned next steps, in rough order:
 - **Lab 13 (multi-agent RAG) framework-bridge variant.** A LangGraph implementation paralleling Lab 14's supervisor-bridge and Lab 15's plan-and-execute bridge — the "from scratch then framework" structure carried to Module 4.
 - **Lab 11 (critic) framework-bridge variant.** Same shape, for Module 2.
 - **Multi-turn (threaded) multi-agent evaluation.** Lab 16 evaluates single-task trajectories; production conversational systems also need to evaluate across conversation turns. This pairs naturally with Path 06's Module 7 (multi-turn evaluation) — the multi-agent dimension is the addition.
-- **Path 03 production projects (capstones)** and **Path 03 frameworks deep dive** (LangGraph vs CrewAI vs OpenAI Agents SDK vs Anthropic Agent SDK) — same shape as Path 06 v2's Projects and Frameworks Deep Dive batches.
+- **Path 03 frameworks deep dive** (LangGraph vs CrewAI vs OpenAI Agents SDK vs Anthropic Agent SDK vs Pydantic AI vs Google ADK 1.0) — same shape as Path 06 v2's Frameworks Deep Dive batch. Picks the framework-choice rationale apart by deployment-shape constraint.
 
 Each future batch follows the same shape as v1 + Batch 39: concept-page or pattern first, lab from-scratch, framework variant, quiz. The 2026 production literature is moving fast on multi-agent specifically; web-search-grounded references should anchor each new batch.
 
