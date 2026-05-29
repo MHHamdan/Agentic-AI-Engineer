@@ -231,24 +231,48 @@ Math pages are cross-linked from the concept pages, so you can read either track
 Agentic AI moves fast. The shape of this repo reflects that.
 
 ```mermaid
-flowchart LR
-    subgraph Stable[🟢 Stable — months to years]
-        S1[concepts/]
-        S2[math-foundations/]
-        S3[patterns/]
+flowchart TD
+    subgraph Stable["🟢 Stable<br/>months to years"]
+        direction TB
+        S1["concepts/"]
+        S2["math-foundations/"]
+        S3["patterns/"]
+        S1 --> S2
+        S2 --> S3
     end
-    subgraph SlowMoving[🟡 Slow-moving — quarters]
-        M1[recipes/]
-        M2[projects/]
-        M3[evaluation/]
+
+    subgraph SlowMoving["🟡 Slow-moving<br/>quarters"]
+        direction TB
+        M1["recipes/"]
+        M2["projects/"]
+        M3["evaluation/"]
+        M1 --> M2
+        M2 --> M3
     end
-    subgraph FastChanging[🔴 Fast-changing — weeks to months]
-        F1[tools/]
-        F2[examples/]
-        F3[production/ deployment specifics]
+
+    subgraph FastChanging["🔴 Fast-changing<br/>weeks to months"]
+        direction TB
+        F1["tools/"]
+        F2["examples/"]
+        F3["production / deployment specifics"]
+        F1 --> F2
+        F2 --> F3
     end
+
     Stable --> SlowMoving
     SlowMoving --> FastChanging
+
+    classDef stableNode fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef slowNode fill:#FFFDE7,stroke:#F9A825,stroke-width:2px,color:#F57F17;
+    classDef fastNode fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#B71C1C;
+
+    classDef stableGroup fill:#F1F8E9,stroke:#388E3C,stroke-width:2px,color:#1B5E20;
+    classDef slowGroup fill:#FFF8E1,stroke:#F9A825,stroke-width:2px,color:#E65100;
+    classDef fastGroup fill:#FFF5F5,stroke:#D32F2F,stroke-width:2px,color:#B71C1C;
+
+    class S1,S2,S3 stableNode;
+    class M1,M2,M3 slowNode;
+    class F1,F2,F3 fastNode;
 ```
 
 | Tier | Update cadence | What lives here |
