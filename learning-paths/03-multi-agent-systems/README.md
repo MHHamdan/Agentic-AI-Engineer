@@ -57,37 +57,41 @@ Path 02 (Agentic RAG) is recommended for Module 4. Modules 1-3 are independent o
 Path 03 v1 opens with Module 1 (foundations and the supervisor-worker pattern); Module 2 extends it with iterative refinement via generator-critic; Module 3 adds plan-and-execute with bounded parallel executor pool; Module 4 composes Path 02's retrieval pipeline with these coordination patterns as multi-agent RAG; Module 5 (framework bridge) rebuilds Labs 10 and 12 in LangGraph and provides line-by-line comparisons against the from-scratch baselines. Future batches add multi-agent evaluation.
 
 ```mermaid
-flowchart LR
-    A[📖 What is a multi-agent system?] --> B[📖 Supervisor-worker pattern]
-    B --> C[📖 Handoffs and shared state]
-    C --> L10[🧪 Lab 10: Supervisor-worker from scratch]
-    L10 --> Q1[🧠 Multi-agent fundamentals quiz]
-    Q1 --> D[📖 Agent debate and critics]
-    D --> E[📖 Generator-critic pattern]
-    E --> L11[🧪 Lab 11: Generator-critic from scratch]
-    L11 --> Q2[🧠 Agent debate and critics quiz]
-    Q2 --> F[📖 Plan-and-execute]
-    F --> G[📖 Planner-executor pattern]
-    G --> L12[🧪 Lab 12: Plan-and-execute from scratch]
-    L12 --> Q3[🧠 Plan-and-execute quiz]
-    Q3 --> H[📖 Multi-agent RAG]
-    H --> I[📖 Retriever-as-worker pattern]
-    I --> L13[🧪 Lab 13: Multi-agent RAG from scratch]
-    L13 --> Q4[🧠 Multi-agent RAG quiz]
-    Q4 --> J[📖 LangGraph multi-agent primitives]
-    J --> K[📖 When frameworks earn complexity]
-    K --> L14[🧪 Lab 14: LangGraph supervisor bridge]
-    L14 --> L15[🧪 Lab 15: LangGraph plan-execute bridge]
-    L15 --> Q5[🧠 Framework bridge quiz]
+flowchart TD
+    A["📖 What is a multi-agent system?"] --> B["📖 Supervisor-worker pattern"]
+    B --> C["📖 Handoffs and shared state"]
+    C --> L10["🧪 Lab 10:<br/>Supervisor-worker from scratch"]
+    L10 --> Q1["🧠 Multi-agent<br/>fundamentals quiz"]
 
-    classDef concept fill:#e8f0fe,stroke:#1a73e8
-    classDef lab fill:#fef7e0,stroke:#f9ab00
-    classDef quiz fill:#e6f4ea,stroke:#137333
-    class A,B,C,D,E,F,G,H,I,J,K concept
-    class L10,L11,L12,L13,L14,L15 lab
-    class Q1,Q2,Q3,Q4,Q5 quiz
+    Q1 --> D["📖 Agent debate and critics"]
+    D --> E["📖 Generator-critic pattern"]
+    E --> L11["🧪 Lab 11:<br/>Generator-critic from scratch"]
+    L11 --> Q2["🧠 Agent debate<br/>and critics quiz"]
+
+    Q2 --> F["📖 Plan-and-execute"]
+    F --> G["📖 Planner-executor pattern"]
+    G --> L12["🧪 Lab 12:<br/>Plan-and-execute from scratch"]
+    L12 --> Q3["🧠 Plan-and-execute quiz"]
+
+    Q3 --> H["📖 Multi-agent RAG"]
+    H --> I["📖 Retriever-as-worker pattern"]
+    I --> L13["🧪 Lab 13:<br/>Multi-agent RAG from scratch"]
+    L13 --> Q4["🧠 Multi-agent RAG quiz"]
+
+    Q4 --> J["📖 LangGraph multi-agent primitives"]
+    J --> K["📖 When frameworks earn complexity"]
+    K --> L14["🧪 Lab 14:<br/>LangGraph supervisor bridge"]
+    L14 --> L15["🧪 Lab 15:<br/>LangGraph plan-execute bridge"]
+    L15 --> Q5["🧠 Framework bridge quiz"]
+
+    classDef concept fill:#e8f0fe,stroke:#1a73e8,stroke-width:1px,color:#0d47a1;
+    classDef lab fill:#fef7e0,stroke:#f9ab00,stroke-width:1px,color:#7a4f00;
+    classDef quiz fill:#e6f4ea,stroke:#137333,stroke-width:1px,color:#0b3d1e;
+
+    class A,B,C,D,E,F,G,H,I,J,K concept;
+    class L10,L11,L12,L13,L14,L15 lab;
+    class Q1,Q2,Q3,Q4,Q5 quiz;
 ```
-
 ## Modules
 
 ### Module 1 — Foundations + supervisor-worker (batch 15)
