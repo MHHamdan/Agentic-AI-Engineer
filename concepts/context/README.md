@@ -9,8 +9,8 @@
 | [`foundations.md`](./foundations.md) | Three context zones; prompt-vs-context distinction; attention budget; 100:1 input-to-output ratio; canonical failure modes (suicide by context, context rot, re-reading) | ✅ Shipped (Batch 59) |
 | [`token-budgets.md`](./token-budgets.md) | Five-category production allocation; soft caps + hard caps; per-tenant tiers; static vs dynamic allocation; budget enforcement in the agent loop | ✅ Shipped (Batch 59) |
 | [`compression-and-summarization.md`](./compression-and-summarization.md) | When to compress / truncate / summarize / mask; lossy vs lossless; anchored iterative pattern; Anthropic's `compact-2026-01-12` API; agent-centric compression (ACON, Focus, RLM); the recursive summarization trap | ✅ Shipped (Batch 60) |
-| `context-drift-detection.md` | Four early-warning signals (re-reads, re-decisions, task reframing, retrieval-precision collapse); instrumenting at trace level | 📋 Planned (Path 05 Module 5) |
-| `long-context-models.md` | 1M-token tier (Claude Sonnet 4 beta, MiniMax-M1, Qwen3); pricing tier cliffs; needle-in-haystack degradation; choosing context size as a design decision | 📋 Planned (Path 05 Module 6) |
+| [`context-drift-detection.md`](./context-drift-detection.md) | Four early-warning signals (re-reads, re-decisions, task reframing, retrieval-precision collapse); signal hierarchy; trace-level OTel instrumentation; Lab 23 reuse at conversation level; baseline-relative alerting | ✅ Shipped (Batch 61) |
+| [`long-context-models.md`](./long-context-models.md) | 2026 frontier-model landscape; advertised-vs-effective context gap (NIAH single-needle vs MRCR v2 multi-needle); four mechanical failure modes; pricing tier cliffs; context-rot research; the Module 4 crossover updated | ✅ Shipped (Batch 61) |
 
 The companion memory-tier work (Path 05 Module 4) lives in [`../memory/`](../memory/) — shipped in Batch 60.
 
