@@ -1,8 +1,8 @@
 # Path 09 — Capstone Projects
 
-> 🔴 Advanced · ⏱ 15–40 hours per project · 📍 Start here after at least three of Paths 01-07 · 📋 **Scaffold — project briefs forthcoming**
+> 🔴 Advanced · ⏱ 15–40 hours per project · 📍 Start here after at least three of Paths 01-07 · 🚧 **v1 in progress — first project briefs shipped** (Batch 62: Beginner #01 + Capstone #07)
 
-> ⚠️ **This path is a scaffold.** The structure, prerequisites, and project catalog are locked. The actual project briefs and reference solutions land in future batches. The [`projects/`](../../projects/) directory already catalogs the eight planned projects across three tiers; this path is the *curated reading-list view* of that catalog organized by which prior paths each project draws on.
+> 🚧 **v1 in progress — 2 of 8 project briefs shipped.** Batch 62 opened Path 09 with the bookend pair: Beginner #01 (Personal research assistant) and Capstone #07 (Evaluated multi-agent system). The two briefs establish the project-brief template and the per-tier rubric; the remaining six briefs land in future batches. The [`projects/`](../../projects/) directory now has the `beginner/` and `capstone/` tier subdirs opened; the `intermediate/` tier will open with project #03 or #04 in a subsequent batch.
 
 ## Who this path is for
 
@@ -35,7 +35,7 @@ For engineers who've completed Path 01 and want a first substantial build:
 
 | # | Project | Draws from | Status |
 |---|---|---|---|
-| 01 | **Personal research assistant** — multi-source web research with citations | Path 01 (foundations); Path 02 (light retrieval) | 📋 Brief planned |
+| 01 | **Personal research assistant** — multi-source web research with citations | Path 01 (foundations); Path 02 (light retrieval) | ✅ Brief shipped (Batch 62) — [`projects/beginner/01-personal-research-assistant/`](../../projects/beginner/01-personal-research-assistant/) |
 | 02 | **PDF Q&A bot** — chunked PDF ingestion, retrieval, citation-grounded answers | Path 01; Path 02 (canonical RAG) | 📋 Brief planned |
 
 ### Intermediate tier — Build Challenges (~25-30 hours)
@@ -55,7 +55,7 @@ For engineers who've completed Paths 01 + 02 + 03 + 06 (the production-readiness
 | # | Project | Draws from | Status |
 |---|---|---|---|
 | 06 | **Financial research analyst** — multi-agent system with regulated-domain provenance, structured reports, audit trail | Path 01-04 + Path 06; Path 03 Pattern 6 (provenance) as load-bearing | 📋 Brief planned |
-| 07 | **Evaluated multi-agent system** — fully instrumented multi-agent system with online evals, drift detection, calibrated judges, regression promotion | Path 01-03 + Path 06 (deeply); Path 06 v2 (all six v2 directions) | 📋 Brief planned |
+| 07 | **Evaluated multi-agent system** — fully instrumented multi-agent system with online evals, drift detection, calibrated judges, regression promotion | Path 01-03 + Path 06 (deeply); Path 06 v2 (all six v2 directions) | ✅ Brief shipped (Batch 62) — [`projects/capstone/07-evaluated-multi-agent-system/`](../../projects/capstone/07-evaluated-multi-agent-system/) |
 | 08 | **Production-ready deep research** — long-running research agent with checkpointing, durable execution, cost budgets, HITL approval gates | Path 01-03 + Path 06 + Path 07 (when shipped); Path 03 v2 patterns as the operational substrate | 📋 Brief planned |
 
 ## What you can read right now

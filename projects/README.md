@@ -29,8 +29,12 @@ The initial set covers most production patterns:
 
 ### Beginner
 
-- 01 Personal research assistant
-- 02 PDF Q&A bot
+| # | Project | Status |
+|---|---|---|
+| 01 | [Personal research assistant](./beginner/01-personal-research-assistant/) | ✅ Brief shipped (Batch 62) |
+| 02 | PDF Q&A bot | 📋 Brief planned |
+
+See [`./beginner/`](./beginner/) for the tier landing page.
 
 ### Intermediate
 
@@ -40,9 +44,13 @@ The initial set covers most production patterns:
 
 ### Capstone
 
-- 06 Financial research analyst
-- 07 Evaluated multi-agent system
-- 08 Production-ready deep research
+| # | Project | Status |
+|---|---|---|
+| 06 | Financial research analyst | 📋 Brief planned |
+| 07 | [Evaluated multi-agent system](./capstone/07-evaluated-multi-agent-system/) | ✅ Brief shipped (Batch 62) |
+| 08 | Production-ready deep research | 📋 Brief planned |
+
+See [`./capstone/`](./capstone/) for the tier landing page.
 
 ## How to approach a project
 

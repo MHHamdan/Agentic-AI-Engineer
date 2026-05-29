@@ -1,6 +1,8 @@
-41fa230cd883d3d69cc3ddf4d00f4b01f603f55fc3455ee27fcc6e00d6e5db55  ./CHANGELOG.md
-c41eed7b57bde57bc3a1b1c39547974ad8f225c1dca8baa1d01556e368d0c440  ./concepts/context/README.md
-c65feef4e805fd4037f9d2fe6ae98c74c07b75e9a0a949a6e83c86c588fbfd1f  ./concepts/context/context-drift-detection.md
-4eea9db3064cb81dd123198e9ef4c13a12d127b7955f7406c8414f5f17a426ca  ./concepts/context/long-context-models.md
-fb747c5b95946a80a8675fdce8a7414dfd21360851b706a2685702ed8a312b60  ./learning-paths/05-context-engineering/README.md
-48aa320cee0c3358b58012a8a458bea9a3a4d11356e818dfea088e26d30f05e9  ./learning-paths/README.md
+b15c19eb01c503128f8943c426439c32f128ee22ede2e0e11af778045879a78b  ./CHANGELOG.md
+8df1b428ade2c003a536cea75caa2a898d150ddacd24391242bcb5a7a2398cb5  ./learning-paths/09-capstones/README.md
+1fbd61086923f67d7c07f1f96b31a5a65dea92d28c82f9782fab4b541aee7d54  ./learning-paths/README.md
+7f42492be4644faa60a847b7f1068d0dfd642a842664b541c4433b5190ecf7fe  ./projects/README.md
+97565250064f086c3c2fccdf181b0d07be574a459819e7e7b0706174825eded0  ./projects/beginner/01-personal-research-assistant/README.md
+0e8fd05bae3b2fc692810b5fa35ff8e422493189f7c65ea1d823b84a1762453a  ./projects/beginner/README.md
+eab3b2f5fe08ce7b03adddf8568cfd0759a166286af395efd13ca83c0d9df80a  ./projects/capstone/07-evaluated-multi-agent-system/README.md
+d48d3fb77329d5a0b0a023f194a8e758f3a6f36ab1c6fb8d62d2471f73c6a6f0  ./projects/capstone/README.md
