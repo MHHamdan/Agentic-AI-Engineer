@@ -22,7 +22,7 @@ By the end of Path 03 Modules 1-6 you should be able to:
 - Bound refinement with `MAX_REFINEMENT_CYCLES` and handle the cap  (surface partial results, not forced approvals).
 - Recognize the four debate-specific failure modes (sycophancy, infinite agreement, runaway disagreement, critique drift) and the mitigation each requires.
 - Implement the **plan-and-execute pattern**: a planner agent emits a structured `Plan` (typed `PlanStep` list with explicit `depends_on` and `parallel_group` fields); the supervisor resolves dependencies and dispatches steps to a bounded executor pool.
-- Apply the five planner-prompt rules (atomic steps, explicit dependencies, honest parallel groups, self-contained descriptions, bounded plans) and explain why each prevents a specific failure mode.
+- Apply the five planner-prompt rules (atomic steps, explicit dependencies,  parallel groups, self-contained descriptions, bounded plans) and explain why each prevents a specific failure mode.
 - Wire bounded executor-pool concurrency (`ThreadPoolExecutor(max_workers=3)`) and reason about parallelism as a wall-clock optimization rather than a cost or quality optimization.
 - Handle replanning with `MAX_REPLANS = 2` — invoke the planner with failure context, finalize  when the cap fires.
 - Recognize the four plan-and-execute-specific failure modes (plan brittleness, execution drift, replanning thrash, plan-execution gap) and the mitigation each requires.
@@ -94,7 +94,7 @@ flowchart LR
 
 **Three concept pages:**
 
-- [📖 What is a multi-agent system?](../../concepts/multi-agent/what-is-a-multi-agent-system.md) — ~10 min. The honest framing: when multi-agent is the wrong call, when it's the right one, why coordination cost is the central tradeoff.
+- [📖 What is a multi-agent system?](../../concepts/multi-agent/what-is-a-multi-agent-system.md) — ~10 min. The  framing: when multi-agent is the wrong call, when it's the right one, why coordination cost is the central tradeoff.
 - [📖 The supervisor-worker pattern](../../concepts/multi-agent/supervisor-worker-pattern.md) — ~10 min. The simplest useful multi-agent shape. One coordinator routes work to specialist workers and synthesizes results.
 - [📖 Handoffs and shared state](../../concepts/multi-agent/handoffs-and-shared-state.md) — ~9 min. The two architectures; the three handoff-hygiene rules; where things go wrong.
 
@@ -134,7 +134,7 @@ flowchart LR
 
 **One quiz:**
 
-- [🧠 Plan-and-execute](../../quizzes/multi-agent/plan-and-execute.md) — 8 single-select questions on when plan-and-execute beats supervisor-worker / ReAct, plan brittleness, parallel groups honesty, replanning policy, dependencies vs. parallel groups, plan-execution gap, and how the pattern composes with Lab 10's machinery.
+- [🧠 Plan-and-execute](../../quizzes/multi-agent/plan-and-execute.md) — 8 single-select questions on when plan-and-execute beats supervisor-worker / ReAct, plan brittleness, parallel groups y, replanning policy, dependencies vs. parallel groups, plan-execution gap, and how the pattern composes with Lab 10's machinery.
 
 ### Module 4 — Multi-agent RAG (batch 18)
 
