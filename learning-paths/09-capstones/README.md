@@ -1,8 +1,8 @@
 # Path 09 — Capstone Projects
 
-> 🔴 Advanced · ⏱ 15–40 hours per project · 📍 Start here after at least three of Paths 01-07 · 🚧 **v1 in progress — 6 of 8 project briefs shipped** (Batches 62-64)
+> 🔴 Advanced · ⏱ 15–40 hours per project · 📍 Start here after at least three of Paths 01-07 · ✅ **v1 COMPLETE — all 8 project briefs shipped** (Batches 62-65)
 
-> 🚧 **v1 in progress — 6 of 8 project briefs shipped.** Batch 62 opened Path 09 with the bookend pair (Beginner #01 + Capstone #07); Batch 63 continued with the next bookend pair (Beginner #02 + Intermediate #03), opening the [`projects/intermediate/`](../../projects/intermediate/) subdir. **Batch 64 completed the Intermediate tier with Projects #04 (Data analysis agent) + #05 (Multi-server MCP agent).** The Intermediate tier (Projects 03 + 04 + 05) is now complete. The six shipped briefs establish the project-brief template, the per-tier rubric pattern, and the cross-tier progression discipline; the remaining two briefs (Capstone #06 Financial research analyst + Capstone #08 Production-ready deep research) land in future batches.
+> ✅ **v1 COMPLETE — all 8 project briefs shipped across 4 batches.** Batch 62 opened Path 09 with the bookend pair (Beginner #01 + Capstone #07); Batch 63 continued with the next bookend pair (Beginner #02 + Intermediate #03), opening [`projects/intermediate/`](../../projects/intermediate/); Batch 64 completed the Intermediate tier (Projects #04 + #05); **Batch 65 closes Path 09 v1 with the final capstone-tier pair (Projects #06 Financial research analyst + #08 Production-ready deep research)**. All three tiers are complete; the v1 phase of Path 09 is structurally done. Future work on this path is continuous improvement (project starter code; reference solutions; community-contributed variants), not gap-filling.
 
 ## Who this path is for
 
@@ -54,9 +54,9 @@ For engineers who've completed Paths 01 + 02 + 03 + 06 (the production-readiness
 
 | # | Project | Draws from | Status |
 |---|---|---|---|
-| 06 | **Financial research analyst** — multi-agent system with regulated-domain provenance, structured reports, audit trail | Path 01-04 + Path 06; Path 03 Pattern 6 (provenance) as load-bearing | 📋 Brief planned |
+| 06 | **Financial research analyst** — multi-agent system with regulated-domain provenance, structured reports, audit trail | Path 01-04 + Path 06; Path 03 Pattern 6 (provenance) as load-bearing | ✅ Brief shipped (Batch 65) — [`projects/capstone/06-financial-research-analyst/`](../../projects/capstone/06-financial-research-analyst/) |
 | 07 | **Evaluated multi-agent system** — fully instrumented multi-agent system with online evals, drift detection, calibrated judges, regression promotion | Path 01-03 + Path 06 (deeply); Path 06 v2 (all six v2 directions) | ✅ Brief shipped (Batch 62) — [`projects/capstone/07-evaluated-multi-agent-system/`](../../projects/capstone/07-evaluated-multi-agent-system/) |
-| 08 | **Production-ready deep research** — long-running research agent with checkpointing, durable execution, cost budgets, HITL approval gates | Path 01-03 + Path 06 + Path 07 (when shipped); Path 03 v2 patterns as the operational substrate | 📋 Brief planned |
+| 08 | **Production-ready deep research** — long-running research agent with checkpointing, durable execution, cost budgets, HITL approval gates | Path 01-03 + Path 06 + Path 07 (when shipped); Path 03 v2 patterns as the operational substrate | ✅ Brief shipped (Batch 65) — [`projects/capstone/08-production-ready-deep-research/`](../../projects/capstone/08-production-ready-deep-research/) |
 
 ## What you can read right now
 

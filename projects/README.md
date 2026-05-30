@@ -50,9 +50,9 @@ See [`./intermediate/`](./intermediate/) for the tier landing page.
 
 | # | Project | Status |
 |---|---|---|
-| 06 | Financial research analyst | 📋 Brief planned |
+| 06 | [Financial research analyst](./capstone/06-financial-research-analyst/) | ✅ Brief shipped (Batch 65) |
 | 07 | [Evaluated multi-agent system](./capstone/07-evaluated-multi-agent-system/) | ✅ Brief shipped (Batch 62) |
-| 08 | Production-ready deep research | 📋 Brief planned |
+| 08 | [Production-ready deep research](./capstone/08-production-ready-deep-research/) | ✅ Brief shipped (Batch 65) |
 
 See [`./capstone/`](./capstone/) for the tier landing page.
 

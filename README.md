@@ -104,13 +104,35 @@ Skip the linear reading order and jump to what you actually need:
 | Add tracing, evals, and observability | [Evaluation & Observability Path](./learning-paths/06-evaluation-observability/) | ✅ v1 + v2 complete |
 | Ship to production safely | [Production & Safety Path](./learning-paths/07-production-and-safety/) | ✅ v1 complete — 8/8 modules (Batches 55-58) |
 | Understand the math behind it all | [Mathematical Foundations Path](./learning-paths/08-mathematical-foundations/) | 🚧 Scaffold + 4 of 13 pages authored |
-| Build something portfolio-worthy | [Capstone Projects Path](./learning-paths/09-capstones/) | 🚧 v1 in progress — 4/8 project briefs (Batches 62-63) |
+| Build something portfolio-worthy | [Capstone Projects Path](./learning-paths/09-capstones/) | ✅ v1 complete — all 8 project briefs (Batches 62-65) |
 
 Each path is a curated reading list across the rest of the repo — concepts, labs, recipes, patterns — not a duplicate folder of content. ✅ paths have substantial authored content; 🚧 paths are in active development with explicit "what's shipped" and "what's planned" sections in their READMEs. Every link in this table resolves to a real, authored README.
 
 ---
 
 ## Repository structure
+
+```
+agentic-ai-engineer/
+├── docs/              Start-here pages, FAQ, community pages
+├── learning-paths/    Curated journeys (links into the rest of the repo)
+├── concepts/          Short explainers — what something is and when to use it
+├── math-foundations/  Engineer-useful math with citations
+├── labs/              Hands-on guided exercises (notebooks + READMEs)
+├── recipes/           Copy-paste solutions to common problems
+├── patterns/          Architecture patterns with diagrams and tradeoffs
+├── projects/          Build Challenges and Capstone Projects
+├── examples/          Minimal reference implementations
+├── tools/             Versioned snapshots of fast-moving frameworks
+├── evaluation/        Eval frameworks, datasets, scorers
+├── production/        Deployment, cost, latency, streaming, concurrency
+├── security/          Threats, defenses, red-teaming
+├── diagrams/          Mermaid sources + rendered images
+├── references/        Papers, books, talks, community resources
+├── glossary/          A–Z terminology
+├── setup/             Environment setup
+└── assets/            Working artifacts (not user-facing curriculum)
+```
 
 A more detailed walkthrough of every folder lives in [`docs/how-to-use-this-repo.md`](./docs/how-to-use-this-repo.md).
 
@@ -121,48 +143,23 @@ A more detailed walkthrough of every folder lives in [`docs/how-to-use-this-repo
 Nine paths, each curating content across the rest of the repo. They overlap deliberately: the *Multi-Agent* path reuses concept pages from *Foundations*, the *Production* path leans on *Evaluation*, and so on.
 
 ```mermaid
-flowchart TD
-    F["01 Foundations"] --> R["02 Agentic RAG"]
-    F --> M["03 Multi-Agent"]
-    F --> T["04 Tool Protocols<br/>MCP + A2A"]
-
-    R --> C["05 Context Engineering"]
+flowchart LR
+    F[01 Foundations] --> R[02 Agentic RAG]
+    F --> M[03 Multi-Agent]
+    F --> T[04 Tool Protocols<br/>MCP + A2A]
+    R --> C[05 Context Engineering]
     M --> C
     T --> C
-
-    R --> E["06 Evaluation & Observability"]
+    R --> E[06 Evaluation & Observability]
     M --> E
     C --> E
-
-    E --> P["07 Production & Safety"]
-    P --> CAP["09 Capstones"]
-    E --> CAP
-
-    F -.-> X["08 Math Foundations"]
+    E --> P[07 Production & Safety]
+    F -.-> X[08 Math Foundations]
     R -.-> X
     M -.-> X
-
-    classDef foundations fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
-    classDef rag fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
-    classDef multi fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px,color:#4A148C;
-    classDef tools fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
-    classDef context fill:#E0F7FA,stroke:#00838F,stroke-width:2px,color:#004D40;
-    classDef eval fill:#FFFDE7,stroke:#F9A825,stroke-width:2px,color:#F57F17;
-    classDef production fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#B71C1C;
-    classDef math fill:#ECEFF1,stroke:#455A64,stroke-width:2px,color:#263238,stroke-dasharray:5 5;
-    classDef capstone fill:#EDE7F6,stroke:#512DA8,stroke-width:3px,color:#311B92;
-
-    class F foundations;
-    class R rag;
-    class M multi;
-    class T tools;
-    class C context;
-    class E eval;
-    class P production;
-    class X math;
-    class CAP capstone;
+    P --> CAP[09 Capstones]
+    E --> CAP
 ```
-
 
 | # | Path | Focus | Difficulty |
 |---|---|---|---|
@@ -231,48 +228,24 @@ Math pages are cross-linked from the concept pages, so you can read either track
 Agentic AI moves fast. The shape of this repo reflects that.
 
 ```mermaid
-flowchart TD
-    subgraph Stable["🟢 Stable<br/>months to years"]
-        direction TB
-        S1["concepts/"]
-        S2["math-foundations/"]
-        S3["patterns/"]
-        S1 --> S2
-        S2 --> S3
+flowchart LR
+    subgraph Stable[🟢 Stable — months to years]
+        S1[concepts/]
+        S2[math-foundations/]
+        S3[patterns/]
     end
-
-    subgraph SlowMoving["🟡 Slow-moving<br/>quarters"]
-        direction TB
-        M1["recipes/"]
-        M2["projects/"]
-        M3["evaluation/"]
-        M1 --> M2
-        M2 --> M3
+    subgraph SlowMoving[🟡 Slow-moving — quarters]
+        M1[recipes/]
+        M2[projects/]
+        M3[evaluation/]
     end
-
-    subgraph FastChanging["🔴 Fast-changing<br/>weeks to months"]
-        direction TB
-        F1["tools/"]
-        F2["examples/"]
-        F3["production / deployment specifics"]
-        F1 --> F2
-        F2 --> F3
+    subgraph FastChanging[🔴 Fast-changing — weeks to months]
+        F1[tools/]
+        F2[examples/]
+        F3[production/ deployment specifics]
     end
-
     Stable --> SlowMoving
     SlowMoving --> FastChanging
-
-    classDef stableNode fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
-    classDef slowNode fill:#FFFDE7,stroke:#F9A825,stroke-width:2px,color:#F57F17;
-    classDef fastNode fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#B71C1C;
-
-    classDef stableGroup fill:#F1F8E9,stroke:#388E3C,stroke-width:2px,color:#1B5E20;
-    classDef slowGroup fill:#FFF8E1,stroke:#F9A825,stroke-width:2px,color:#E65100;
-    classDef fastGroup fill:#FFF5F5,stroke:#D32F2F,stroke-width:2px,color:#B71C1C;
-
-    class S1,S2,S3 stableNode;
-    class M1,M2,M3 slowNode;
-    class F1,F2,F3 fastNode;
 ```
 
 | Tier | Update cadence | What lives here |
@@ -312,7 +285,7 @@ Verified-as-of dates are refreshed during routine maintenance sweeps (tracked in
 
 This is a community-maintained learning hub that's been iterating in public. As of the most-recent release:
 
-**Substantial-content paths (six of nine)**:
+**Substantial-content paths (eight of nine)**:
 
 - ✅ **Path 01 — Foundations**: complete
 - ✅ **Path 02 — Agentic RAG**: v1 + v2 shipped
@@ -321,11 +294,11 @@ This is a community-maintained learning hub that's been iterating in public. As 
 - ✅ **Path 05 — Context Engineering**: v1 complete — 6 of 6 modules (Batches 59-61)
 - ✅ **Path 06 — Evaluation & Observability**: v1 + v2 complete
 - ✅ **Path 07 — Production & Safety**: v1 complete — 8 of 8 modules (Batches 55-58)
+- ✅ **Path 09 — Capstones**: v1 complete — all 8 project briefs (Batches 62-65)
 
-**Paths in active development (two of nine)**:
+**Paths in active development (one of nine)**:
 
 - 🚧 **Path 08 — Mathematical Foundations**: 4 of 13 pages authored
-- 🚧 **Path 09 — Capstones**: v1 in progress — 4 of 8 project briefs (Batches 62-63)
 
 **Supporting infrastructure**:
 
@@ -393,18 +366,9 @@ External references cited in this README:
 
 ---
 
-```markdown
 ## Citation
 
-If you use this repository in research, teaching, technical writing, or software development, please cite it using the [`CITATION.cff`](./CITATION.cff) file.
-
-GitHub can automatically generate citation formats, including BibTeX, from the citation metadata. You can access this through the **Cite this repository** button on the repository page.
-
-Suggested citation:
-
-> Hamdan, M. (2026). *Agentic AI Engineer: An Open Learning Hub for Building Real Agentic AI Systems* (Version 0.1.0) [Software]. GitHub. https://github.com/MHHamdan/Agentic-AI-Engineer
-```
-
+If you use this material in research or teaching, please cite the repo via the [`CITATION.cff`](./CITATION.cff) file. A BibTeX snippet is also provided there.
 
 ---
 

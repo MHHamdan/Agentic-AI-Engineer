@@ -10,9 +10,9 @@ Capstones aren't measured in lines of code — they're measured in *cross-path i
 
 | # | Project | Time | Draws from | Status |
 |---|---|---|---|---|
-| 06 | Financial research analyst | 30-40+ hours | Paths 01-04 + Path 06; Path 03 Pattern 6 (provenance) load-bearing | 📋 Brief planned |
+| 06 | [Financial research analyst](./06-financial-research-analyst/) | 30-40+ hours | Paths 01-04 + Path 06; Path 03 Pattern 6 (provenance) load-bearing | ✅ Brief shipped (Batch 65) |
 | 07 | [Evaluated multi-agent system](./07-evaluated-multi-agent-system/) | 30-40 hours | Paths 01-03 + Path 06 (deeply); Path 06 v2 all six directions | ✅ Brief shipped (Batch 62) |
-| 08 | Production-ready deep research | 30-40+ hours | Paths 01-03 + Path 06 + Path 07; Path 03 v2 patterns as operational substrate | 📋 Brief planned |
+| 08 | [Production-ready deep research](./08-production-ready-deep-research/) | 30-40+ hours | Paths 01-03 + Path 06 + Path 07; Path 03 v2 patterns as operational substrate | ✅ Brief shipped (Batch 65) |
 
 ## What "done" looks like at capstone tier
 
