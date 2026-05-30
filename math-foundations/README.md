@@ -48,6 +48,11 @@ Either works. The pages are short enough that skipping won't leave you stranded.
 - Undergraduate-level probability and linear algebra.
 - No reinforcement-learning background required — RL terminology (state, action, policy, reward) is introduced where it comes up.
 
+## See also
+
+- [`glossary/terms.md`](../glossary/terms.md) — short definitions for mathematical terms used here (policy, MDP, POMDP, belief state, embedding, marginalization). The glossary entries link back to these pages for the full treatment.
+- [`concepts/`](../concepts/) — the engineering side of every mathematical idea here.
+
 ## Contributing
 
 Math pages must cite their sources. We don't accept invented equations or close paraphrases of someone else's formulation without attribution. The full source-citation rules are in [`CONTRIBUTING.md`](../CONTRIBUTING.md#citation-and-source-rules).

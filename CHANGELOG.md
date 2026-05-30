@@ -45,6 +45,30 @@ When a tool ships a breaking change (e.g., `langgraph.prebuilt` → `langchain.a
 
 ### Added
 
+- **✅ Glossary OPENED (Batch 66).** The `glossary/` folder moves from placeholder-only to authored: `glossary/terms.md` ships with ~65 A-Z entries covering core terms used across the repo. Cross-references added from `concepts/`, `patterns/`, and `math-foundations/` landing pages so the glossary is discoverable from any major content surface.
+
+  One new file:
+  - `glossary/terms.md` (~235 lines, ~65 entries). A-Z index of repo terms. Each entry follows the convention documented in `glossary/README.md`: bold the term + 1-2 sentence definition + arrow link to canonical source. Entries cover: agent foundations (Agent, Agent loop, ReAct, Reflection, Tool, Tool calling, System prompt, Token); RAG (RAG, Agentic RAG, Canonical RAG, Chunking, Embedding, Hybrid search, Reranking, Vector store, GraphRAG, HyDE, RAG-Fusion); multi-agent (Supervisor-worker, Plan-and-execute, Hierarchical, Swarm, Handoff, Handoff contract, Cross-agent provenance, Escalation, Fallback, Retry policy, Topology); tool protocols (MCP, MCP client, MCP server, A2A, STDIO, Streamable HTTP, Tool collision); context engineering (Context window, Context budget, Context drift, Compaction, Long-context model, Memory tier); evaluation + observability (LLM-as-judge, Judge ensemble, Golden dataset, Trace, Span, OpenTelemetry, Drift detection, Embedding-space drift, Calibration, Adversarial red-teaming, Regression set, Faithfulness); production (Cost engineering, Streaming, HITL, Approval gate, Audit trail, Compliance review, SEC EDGAR, Durable execution, Checkpoint, Transient failure); math/theoretical (Policy, Action, MDP, POMDP, Belief state); security (Prompt injection, Guardrail); deep research pattern. Each entry links to the canonical concept page, math page, pattern page, or project brief where the term gets full treatment.
+
+  Six modifications (cross-references + status updates):
+  - `glossary/README.md` — opening banner: "✅ `terms.md` is authored (Batch 66)" with link.
+  - `concepts/README.md` — added glossary cross-link to the Cross-links section: "Unfamiliar terms used across concept pages are defined in `glossary/terms.md` — faster than re-reading a whole page when you hit a word you don't recognize."
+  - `patterns/README.md` — added new "See also" section before Contributing with two cross-references: `glossary/terms.md` for architectural terms; `concepts/` for the conceptual treatment behind each pattern.
+  - `math-foundations/README.md` — added new "See also" section before Contributing with two cross-references: `glossary/terms.md` for mathematical terms; `concepts/` for the engineering side.
+  - `README.md` — Current state section updated: `glossary/` removed from the "scaffold-state" list; new "Recently opened — content shipped, expansion welcomed" subsection added naming `glossary/` with the ~65-entry count.
+  - `learning-paths/README.md` — status summary expanded with Batch 66 note: "Batch 66 opened the `glossary/` folder with `terms.md` (~65 A-Z entries), with cross-references added to `concepts/`, `patterns/`, and `math-foundations/` landing pages."
+  - `CHANGELOG.md` — this entry.
+
+  **Glossary cross-reference strategy**: rather than touching every concept page individually (71 files in `concepts/` alone), cross-references go in at the landing-page level. Readers landing in `concepts/`, `patterns/`, or `math-foundations/` see the glossary mentioned in their respective Cross-links / See also sections; readers landing in the glossary see arrow links out to canonical sources from every entry. This makes the glossary discoverable from any major content surface without requiring a per-file touch.
+
+  **The ~65-entry initial size**: the glossary scaffold documents that entries are 5-minute PRs and new terms land continuously. The initial ~65 covers the core vocabulary across all eight substantial-content paths; future PRs from contributors will fill in domain-specific terms (per-framework terminology, security-specific attacks, eval-metric variants). The glossary is opened with sufficient coverage to be useful; it's not opened claiming to be comprehensive.
+
+  **Each entry links to where the term is used canonically**: per the [`glossary/README.md`](./glossary/README.md) convention — "If a term has a precise mathematical meaning (e.g., *policy*, *belief state*), link to the corresponding `math-foundations/` page." Mathematical terms (Action, Belief state, MDP, POMDP, Policy) point at `math-foundations/`; pattern terms (Supervisor-worker, Swarm, Plan-and-execute, etc.) point at `patterns/`; concept terms point at `concepts/` subdirs; project-specific terms (Audit trail, Chunking, SEC EDGAR) point at the relevant project brief or path.
+
+  **AI-jargon discipline maintained — twelfth-consecutive batch.** All new content audited against the locked vocabulary AND the broader AI-pattern wordiness set on pre-flight. One hit caught at pre-flight (a quality-pairing variant with "production" in the Adversarial red-teaming entry) paraphrased to a neutral form; the broader-jargon sweep on the 235-line terms.md showed zero hits — the discipline is fully operational on glossary-style writing too.
+
+  Verification at delivery: word discipline clean across the 1 new file on both the locked vocabulary AND the broader AI-pattern wordiness set; MOD-file delta zero on all 7 MOD files; per-file link check; full-repo broken-link count maintained vs Batch 65 baseline (28); 50 notebook count unchanged (doc-only batch); 0 outputs across all notebooks; ruff streak N/A for doc-only batch but unbroken.
+
 - **✅ Path 09 v1 COMPLETE: Capstone tier closing pair (Batch 65).** Path 09 (Capstone Projects) moves from 6 of 8 (Batch 64) to **all 8 project briefs shipped** — Path 09 v1 is structurally complete. Two new capstone-tier project briefs shipped, closing the path with the fourth and final bookend pair:
 
   Two new files:

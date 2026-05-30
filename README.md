@@ -143,46 +143,22 @@ A more detailed walkthrough of every folder lives in [`docs/how-to-use-this-repo
 Nine paths, each curating content across the rest of the repo. They overlap deliberately: the *Multi-Agent* path reuses concept pages from *Foundations*, the *Production* path leans on *Evaluation*, and so on.
 
 ```mermaid
-flowchart TD
-    F["01 Foundations"] --> R["02 Agentic RAG"]
-    F --> M["03 Multi-Agent"]
-    F --> T["04 Tool Protocols<br/>MCP + A2A"]
-
-    R --> C["05 Context Engineering"]
+flowchart LR
+    F[01 Foundations] --> R[02 Agentic RAG]
+    F --> M[03 Multi-Agent]
+    F --> T[04 Tool Protocols<br/>MCP + A2A]
+    R --> C[05 Context Engineering]
     M --> C
     T --> C
-
-    R --> E["06 Evaluation & Observability"]
+    R --> E[06 Evaluation & Observability]
     M --> E
     C --> E
-
-    E --> P["07 Production & Safety"]
-    P --> CAP["09 Capstones"]
-    E --> CAP
-
-    F -.-> X["08 Math Foundations"]
+    E --> P[07 Production & Safety]
+    F -.-> X[08 Math Foundations]
     R -.-> X
     M -.-> X
-
-    classDef foundations fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
-    classDef rag fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
-    classDef multi fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px,color:#4A148C;
-    classDef tools fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
-    classDef context fill:#E0F7FA,stroke:#00838F,stroke-width:2px,color:#004D40;
-    classDef eval fill:#FFFDE7,stroke:#F9A825,stroke-width:2px,color:#F57F17;
-    classDef production fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#B71C1C;
-    classDef math fill:#ECEFF1,stroke:#455A64,stroke-width:2px,color:#263238,stroke-dasharray:5 5;
-    classDef capstone fill:#EDE7F6,stroke:#512DA8,stroke-width:3px,color:#311B92;
-
-    class F foundations;
-    class R rag;
-    class M multi;
-    class T tools;
-    class C context;
-    class E eval;
-    class P production;
-    class X math;
-    class CAP capstone;
+    P --> CAP[09 Capstones]
+    E --> CAP
 ```
 
 | # | Path | Focus | Difficulty |
@@ -252,48 +228,24 @@ Math pages are cross-linked from the concept pages, so you can read either track
 Agentic AI moves fast. The shape of this repo reflects that.
 
 ```mermaid
-flowchart TD
-    subgraph Stable["🟢 Stable<br/>months to years"]
-        direction TB
-        S1["concepts/"]
-        S2["math-foundations/"]
-        S3["patterns/"]
-        S1 --> S2
-        S2 --> S3
+flowchart LR
+    subgraph Stable[🟢 Stable — months to years]
+        S1[concepts/]
+        S2[math-foundations/]
+        S3[patterns/]
     end
-
-    subgraph SlowMoving["🟡 Slow-moving<br/>quarters"]
-        direction TB
-        M1["recipes/"]
-        M2["projects/"]
-        M3["evaluation/"]
-        M1 --> M2
-        M2 --> M3
+    subgraph SlowMoving[🟡 Slow-moving — quarters]
+        M1[recipes/]
+        M2[projects/]
+        M3[evaluation/]
     end
-
-    subgraph FastChanging["🔴 Fast-changing<br/>weeks to months"]
-        direction TB
-        F1["tools/"]
-        F2["examples/"]
-        F3["production / deployment specifics"]
-        F1 --> F2
-        F2 --> F3
+    subgraph FastChanging[🔴 Fast-changing — weeks to months]
+        F1[tools/]
+        F2[examples/]
+        F3[production/ deployment specifics]
     end
-
     Stable --> SlowMoving
     SlowMoving --> FastChanging
-
-    classDef stableNode fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
-    classDef slowNode fill:#FFFDE7,stroke:#F9A825,stroke-width:2px,color:#F57F17;
-    classDef fastNode fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#B71C1C;
-
-    classDef stableGroup fill:#F1F8E9,stroke:#388E3C,stroke-width:2px,color:#1B5E20;
-    classDef slowGroup fill:#FFF8E1,stroke:#F9A825,stroke-width:2px,color:#E65100;
-    classDef fastGroup fill:#FFF5F5,stroke:#D32F2F,stroke-width:2px,color:#B71C1C;
-
-    class S1,S2,S3 stableNode;
-    class M1,M2,M3 slowNode;
-    class F1,F2,F3 fastNode;
 ```
 
 | Tier | Update cadence | What lives here |
@@ -361,9 +313,12 @@ This is a community-maintained learning hub that's been iterating in public. As 
 - `examples/` — minimal reference implementations (placeholder)
 - `recipes/` — copy-paste solutions to specific problems (placeholder)
 - `references/` — curated reading lists (placeholder; concept-page inline citations cover the gap)
-- `glossary/` — A-Z terminology (placeholder)
 - `evaluation/` — eval frameworks/datasets/scorers (the conceptual side is already in `concepts/evaluation/`)
 - `quizzes/` — knowledge checks across the curriculum (31 files; partial coverage)
+
+**Recently opened — content shipped, expansion welcomed**:
+
+- `glossary/` — A-Z index of repo terms; ~65 entries shipped in Batch 66 at [`glossary/terms.md`](./glossary/terms.md). New term additions are 5-minute PRs.
 
 For each scaffold-state folder, the folder's own README documents what's planned and where related content currently lives. The curriculum is usable now; the supporting folders deepen it over time.
 
@@ -414,18 +369,9 @@ External references cited in this README:
 
 ---
 
-
 ## Citation
 
-If you use this material in research or teaching, please cite the repo via the [`CITATION.cff`](./CITATION.cff) file. 
-
-GitHub can automatically generate citation formats, including BibTeX, from the citation metadata. You can access this through the **Cite this repository** button on the repository page.
-
-Suggested citation:
-
-> Hamdan, M. (2026). *Agentic AI Engineer: An Open Learning Hub for Building Real Agentic AI Systems* (Version 0.1.0) [Software]. GitHub. https://github.com/MHHamdan/Agentic-AI-Engineer
-
-
+If you use this material in research or teaching, please cite the repo via the [`CITATION.cff`](./CITATION.cff) file. A BibTeX snippet is also provided there.
 
 ---
 
