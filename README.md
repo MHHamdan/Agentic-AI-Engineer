@@ -393,9 +393,18 @@ External references cited in this README:
 
 ---
 
+```markdown
 ## Citation
 
-If you use this material in research or teaching, please cite the repo via the [`CITATION.cff`](./CITATION.cff) file. A BibTeX snippet is also provided there.
+If you use this repository in research, teaching, technical writing, or software development, please cite it using the [`CITATION.cff`](./CITATION.cff) file.
+
+GitHub can automatically generate citation formats, including BibTeX, from the citation metadata. You can access this through the **Cite this repository** button on the repository page.
+
+Suggested citation:
+
+> Hamdan, M. (2026). *Agentic AI Engineer: An Open Learning Hub for Building Real Agentic AI Systems* (Version 0.1.0) [Software]. GitHub. https://github.com/MHHamdan/Agentic-AI-Engineer
+```
+
 
 ---
 
