@@ -2,27 +2,29 @@
 
 Engineer-useful math for agentic AI systems. Every page here exists because the equation makes you a better engineer — not because it makes the curriculum look rigorous.
 
+> ✅ **All 13 pages authored** (Batch 67). The folder is complete at v1 — every entry in the table below is a live link.
+
 ## What lives here
 
 Thirteen short notes, each focused on one piece of theory:
 
 | # | Topic | Connects to |
 |---|---|---|
-| 01 | Language model probability — $p(x_t \mid x_{<t})$ | sampling, temperature, top-p |
-| 02 | Embeddings and vector similarity | RAG retrieval |
-| 03 | RAG formulation — $p(y \mid x) = \sum_z p(y \mid x, z)\, p(z \mid x)$ | every RAG decision |
-| 04 | Agents as policies — $\pi_\theta(a_t \mid s_t)$ | every agent design |
-| 05 | MDP / POMDP intuition | belief state, partial observability |
-| 06 | The ReAct loop, formalized | tool-using agents |
-| 07 | Tool selection as function selection | tool routing |
-| 08 | Planning and search | task decomposition |
-| 09 | Memory models | short-term, long-term, retrieval |
-| 10 | Multi-agent coordination graphs | supervisor, hierarchical, swarm |
-| 11 | Evaluation metrics | precision, recall, faithfulness, latency, cost |
-| 12 | Uncertainty and safety | calibration, hallucination |
-| 13 | Context-window optimization | constrained selection |
+| 01 | [Language model probability — $p(x_t \mid x_{<t})$](./01-language-model-probability.md) | sampling, temperature, top-p |
+| 02 | [Embeddings and vector similarity](./02-embeddings-vector-similarity.md) | RAG retrieval |
+| 03 | [RAG formulation — $p(y \mid x) = \sum_z p(y \mid x, z)\, p(z \mid x)$](./03-rag-formulation.md) | every RAG decision |
+| 04 | [Agents as policies — $\pi_\theta(a_t \mid s_t)$](./04-agents-as-policies.md) | every agent design |
+| 05 | [MDP / POMDP intuition](./05-mdp-pomdp.md) | belief state, partial observability |
+| 06 | [The ReAct loop, formalized](./06-react-formalization.md) | tool-using agents |
+| 07 | [Tool selection as function selection](./07-tool-selection.md) | tool routing |
+| 08 | [Planning and search](./08-planning-search.md) | task decomposition |
+| 09 | [Memory models](./09-memory-models.md) | short-term, long-term, retrieval |
+| 10 | [Multi-agent coordination graphs](./10-multi-agent-coordination.md) | supervisor, hierarchical, swarm |
+| 11 | [Evaluation metrics](./11-evaluation-metrics.md) | precision, recall, faithfulness, latency, cost |
+| 12 | [Uncertainty and safety](./12-uncertainty-safety.md) | calibration, hallucination |
+| 13 | [Context-window optimization](./13-context-window-optimization.md) | constrained selection |
 
-A symbol-and-notation cheat sheet lives in `notation.md` (one source of truth for $\pi$, $s$, $a$, $\theta$, $z$, and friends).
+A symbol-and-notation cheat sheet lives in [`notation.md`](./notation.md) (one source of truth for $\pi$, $s$, $a$, $\theta$, $z$, and friends).
 
 ## Page template
 

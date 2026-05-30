@@ -103,14 +103,36 @@ Skip the linear reading order and jump to what you actually need:
 | Get more out of the context window | [Context Engineering Path](./learning-paths/05-context-engineering/) | ✅ v1 complete — 6/6 modules (Batches 59-61) |
 | Add tracing, evals, and observability | [Evaluation & Observability Path](./learning-paths/06-evaluation-observability/) | ✅ v1 + v2 complete |
 | Ship to production safely | [Production & Safety Path](./learning-paths/07-production-and-safety/) | ✅ v1 complete — 8/8 modules (Batches 55-58) |
-| Understand the math behind it all | [Mathematical Foundations Path](./learning-paths/08-mathematical-foundations/) | 🚧 Scaffold + 4 of 13 pages authored |
-| Build something portfolio-worthy | [Capstone Projects Path](./learning-paths/09-capstones/) | 🚧 v1 in progress — 4/8 project briefs (Batches 62-63) |
+| Understand the math behind it all | [Mathematical Foundations Path](./learning-paths/08-mathematical-foundations/) | ✅ v1 complete — all 13 math pages (Batches 53 + 67) |
+| Build something portfolio-worthy | [Capstone Projects Path](./learning-paths/09-capstones/) | ✅ v1 complete — all 8 project briefs (Batches 62-65) |
 
 Each path is a curated reading list across the rest of the repo — concepts, labs, recipes, patterns — not a duplicate folder of content. ✅ paths have substantial authored content; 🚧 paths are in active development with explicit "what's shipped" and "what's planned" sections in their READMEs. Every link in this table resolves to a real, authored README.
 
 ---
 
 ## Repository structure
+
+```
+agentic-ai-engineer/
+├── docs/              Start-here pages, FAQ, community pages
+├── learning-paths/    Curated journeys (links into the rest of the repo)
+├── concepts/          Short explainers — what something is and when to use it
+├── math-foundations/  Engineer-useful math with citations
+├── labs/              Hands-on guided exercises (notebooks + READMEs)
+├── recipes/           Copy-paste solutions to common problems
+├── patterns/          Architecture patterns with diagrams and tradeoffs
+├── projects/          Build Challenges and Capstone Projects
+├── examples/          Minimal reference implementations
+├── tools/             Versioned snapshots of fast-moving frameworks
+├── evaluation/        Eval frameworks, datasets, scorers
+├── production/        Deployment, cost, latency, streaming, concurrency
+├── security/          Threats, defenses, red-teaming
+├── diagrams/          Mermaid sources + rendered images
+├── references/        Papers, books, talks, community resources
+├── glossary/          A–Z terminology
+├── setup/             Environment setup
+└── assets/            Working artifacts (not user-facing curriculum)
+```
 
 A more detailed walkthrough of every folder lives in [`docs/how-to-use-this-repo.md`](./docs/how-to-use-this-repo.md).
 
@@ -138,7 +160,6 @@ flowchart LR
     P --> CAP[09 Capstones]
     E --> CAP
 ```
-
 
 | # | Path | Focus | Difficulty |
 |---|---|---|---|
@@ -264,7 +285,7 @@ Verified-as-of dates are refreshed during routine maintenance sweeps (tracked in
 
 This is a community-maintained learning hub that's been iterating in public. As of the most-recent release:
 
-**Substantial-content paths (six of nine)**:
+**Substantial-content paths (nine of nine — repo v1 phase complete)**:
 
 - ✅ **Path 01 — Foundations**: complete
 - ✅ **Path 02 — Agentic RAG**: v1 + v2 shipped
@@ -273,11 +294,10 @@ This is a community-maintained learning hub that's been iterating in public. As 
 - ✅ **Path 05 — Context Engineering**: v1 complete — 6 of 6 modules (Batches 59-61)
 - ✅ **Path 06 — Evaluation & Observability**: v1 + v2 complete
 - ✅ **Path 07 — Production & Safety**: v1 complete — 8 of 8 modules (Batches 55-58)
+- ✅ **Path 08 — Mathematical Foundations**: v1 complete — all 13 math pages (Batches 53 + 67)
+- ✅ **Path 09 — Capstones**: v1 complete — all 8 project briefs (Batches 62-65)
 
-**Paths in active development (two of nine)**:
-
-- 🚧 **Path 08 — Mathematical Foundations**: 4 of 13 pages authored
-- 🚧 **Path 09 — Capstones**: v1 in progress — 4 of 8 project briefs (Batches 62-63)
+🎉 **All nine paths have substantial content. The repo's v1 phase is structurally complete.** Future work is continuous improvement (depth, breadth, examples, recipes, references) rather than gap-filling.
 
 **Supporting infrastructure**:
 
