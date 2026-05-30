@@ -30,7 +30,7 @@ When a term has multiple meanings across communities (e.g., *agent*, *context*, 
 
 ## B
 
-**Belief state.** In a POMDP, the agent's probability distribution over hidden states — what the agent *thinks* the world looks like given partial observations. → [`math-foundations/`](../math-foundations/) Page 05 (planned).
+**Belief state.** In a POMDP, the agent's probability distribution over hidden states — what the agent *thinks* the world looks like given partial observations. → [`math-foundations/05-mdp-pomdp.md`](../math-foundations/05-mdp-pomdp.md).
 
 **BM25.** A sparse keyword-based retrieval scoring function used in hybrid search alongside dense vector retrieval. Strong for exact-match technical terms where embeddings underperform. → Path 02.
 
@@ -72,7 +72,7 @@ When a term has multiple meanings across communities (e.g., *agent*, *context*, 
 
 ## E
 
-**Embedding.** Dense vector representation of text (or other modality) where semantic similarity maps to cosine or dot-product distance. Production models: OpenAI text-embedding-3, Cohere embed-v3, sentence-transformers. → [`math-foundations/`](../math-foundations/) Page 02 (planned).
+**Embedding.** Dense vector representation of text (or other modality) where semantic similarity maps to cosine or dot-product distance. Production models: OpenAI text-embedding-3, Cohere embed-v3, sentence-transformers. → [`math-foundations/02-embeddings-vector-similarity.md`](../math-foundations/02-embeddings-vector-similarity.md).
 
 **Embedding-space drift.** Distribution shift in query or retrieval-result embeddings over time, detected via clustering or distance-from-centroid metrics. Catches retrieval degradation before quality drops. → Lab 23.
 
@@ -132,7 +132,7 @@ When a term has multiple meanings across communities (e.g., *agent*, *context*, 
 
 **MCP server.** A service that exposes tools, resources, and prompts to AI agents via the MCP protocol. Built once, consumed everywhere. → Path 04.
 
-**MDP (Markov Decision Process).** Mathematical framework for sequential decision-making under uncertainty: states, actions, transition probabilities, rewards. Agents formalize as MDP policies. → [`math-foundations/`](../math-foundations/) Page 05 (planned) + [`math-foundations/04-agents-as-policies.md`](../math-foundations/04-agents-as-policies.md).
+**MDP (Markov Decision Process).** Mathematical framework for sequential decision-making under uncertainty: states, actions, transition probabilities, rewards. Agents formalize as MDP policies. → [`math-foundations/05-mdp-pomdp.md`](../math-foundations/05-mdp-pomdp.md) + [`math-foundations/04-agents-as-policies.md`](../math-foundations/04-agents-as-policies.md).
 
 **Memory tier.** Layer in an agent's memory architecture (short-term scratch / working memory / long-term retrieval). Tier-specific budgets prevent unbounded growth. → Path 05 Module 4 + [`concepts/memory/`](../concepts/memory/).
 
@@ -146,7 +146,7 @@ When a term has multiple meanings across communities (e.g., *agent*, *context*, 
 
 **Plan-and-execute.** Agent topology where a planner agent decomposes the task once, then an executor agent runs each step. Replanning happens on failure. → [`patterns/06-plan-and-execute.md`](../patterns/06-plan-and-execute.md).
 
-**POMDP (Partially Observable MDP).** MDP variant where the agent doesn't see the full state — it sees observations and maintains a belief state. The natural framework for agents working with imperfect information. → [`math-foundations/`](../math-foundations/) Page 05 (planned).
+**POMDP (Partially Observable MDP).** MDP variant where the agent doesn't see the full state — it sees observations and maintains a belief state. The natural framework for agents working with imperfect information. → [`math-foundations/05-mdp-pomdp.md`](../math-foundations/05-mdp-pomdp.md).
 
 **Policy.** The function $\pi_\theta(a_t \mid s_t)$ that maps states to actions. Agent system prompts and tool definitions together parameterize the policy. → [`math-foundations/04-agents-as-policies.md`](../math-foundations/04-agents-as-policies.md).
 
@@ -156,7 +156,7 @@ When a term has multiple meanings across communities (e.g., *agent*, *context*, 
 
 ## R
 
-**RAG (Retrieval-Augmented Generation).** Pattern where the model retrieves context from an external store before generating an answer. The canonical formulation: $p(y \mid x) = \sum_z p(y \mid x, z)\, p(z \mid x)$. → Path 02 + [`math-foundations/`](../math-foundations/) Page 03 (planned).
+**RAG (Retrieval-Augmented Generation).** Pattern where the model retrieves context from an external store before generating an answer. The canonical formulation: $p(y \mid x) = \sum_z p(y \mid x, z)\, p(z \mid x)$. → Path 02 + [`math-foundations/03-rag-formulation.md`](../math-foundations/03-rag-formulation.md).
 
 **RAG-Fusion.** RAG variant where the original query is rewritten into multiple sub-queries; retrieval results from each are fused with reciprocal rank fusion. Coming in Path 02 v3.
 
@@ -190,9 +190,9 @@ When a term has multiple meanings across communities (e.g., *agent*, *context*, 
 
 ## T
 
-**Temperature (sampling).** Hyperparameter controlling randomness in next-token sampling. Higher → more diverse; lower → more deterministic. Tool-calling typically uses low temperature. → Path 01 + [`math-foundations/`](../math-foundations/) Page 01 (planned).
+**Temperature (sampling).** Hyperparameter controlling randomness in next-token sampling. Higher → more diverse; lower → more deterministic. Tool-calling typically uses low temperature. → Path 01 + [`math-foundations/01-language-model-probability.md`](../math-foundations/01-language-model-probability.md).
 
-**Token.** The basic unit of model processing — roughly 0.75 words in English. Costs are quoted per million tokens; budgets are tracked per token. → [`math-foundations/`](../math-foundations/) Page 01 (planned).
+**Token.** The basic unit of model processing — roughly 0.75 words in English. Costs are quoted per million tokens; budgets are tracked per token. → [`math-foundations/01-language-model-probability.md`](../math-foundations/01-language-model-probability.md).
 
 **Token budget.** Allocated tokens per context zone (system / tools / conversation / retrieval). Per-zone tiers + caps prevent runaway costs and context degradation. → [`concepts/context/token-budgets.md`](../concepts/context/token-budgets.md).
 
