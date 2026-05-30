@@ -1,10 +1,12 @@
 # Glossary
 
-A–Z index of terms used across the repo. When you hit a word you don't recognize while reading a concept page or lab, this is faster than re-reading the whole page.
+A-Z index of terms used across the repo. When you hit a word you don't recognize while reading a concept page or lab, this is faster than re-reading the whole page.
+
+> ✅ **`terms.md` is authored** (Batch 66). [`terms.md`](./terms.md) contains the A-Z index with ~65 entries linking out to canonical concept, math, and pattern pages.
 
 ## What lives here
 
-A single `terms.md` file with one short entry per term, organized A–Z. Each entry:
+A single [`terms.md`](./terms.md) file with one short entry per term, organized A-Z. Each entry:
 
 - Defines the term in one or two sentences.
 - Links to the most relevant concept page for the full treatment.

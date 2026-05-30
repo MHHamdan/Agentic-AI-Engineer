@@ -30,6 +30,7 @@ Every page follows the same template — TL;DR, the problem it solves, how it wo
 - Each concept links to related [`labs/`](../labs/) for hands-on practice.
 - Where useful, each concept has a *"🧮 Math behind it"* callout linking to [`math-foundations/`](../math-foundations/).
 - Architectural concepts link to corresponding [`patterns/`](../patterns/) for the decision-making view.
+- Unfamiliar terms used across concept pages are defined in [`glossary/terms.md`](../glossary/terms.md) — faster than re-reading a whole page when you hit a word you don't recognize.
 
 ## Contributing
 

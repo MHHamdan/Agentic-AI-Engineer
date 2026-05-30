@@ -56,6 +56,11 @@ A first-pass decision aid:
 
 Patterns combine. A common production stack is *supervisor* + *agentic RAG* + *human-in-the-loop* + *MCP*. The individual pattern pages call out the most common combinations.
 
+## See also
+
+- [`glossary/terms.md`](../glossary/terms.md) — short definitions for the architectural terms used in pattern pages (supervisor-worker, handoff contract, swarm, agentic RAG, ReAct, and others).
+- [`concepts/`](../concepts/) — the conceptual treatment behind each pattern (the *what* and *why*; patterns are the *when* and *which*).
+
 ## Contributing
 
 A new pattern page is a substantial contribution. We'd rather have 12 strong patterns than 30 thin ones, so new additions go through more review than recipes or concepts. Open a Discussion before investing time on a new pattern.
