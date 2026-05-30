@@ -45,6 +45,48 @@ When a tool ships a breaking change (e.g., `langgraph.prebuilt` → `langchain.a
 
 ### Added
 
+- **🔧 Math foundations FULL REWRITE (Batch 68).** Every file in `math-foundations/` rewritten end-to-end with a richer template. The Batch 67 template (equation + intuition + engineering anchor + sources) gains five new section types: a "Why this matters for agentic AI" intro, a "How to read this equation" subsection, a minimal executable Python code example per page, a "Common mistakes" section, and an explicit "Related pages" cross-link block. Each reference now carries a one-sentence relevance note. Net effect: every math page is now self-contained for an engineer wanting to learn the concept, not just look up the equation.
+
+  This is a continuous-improvement batch, not a v1-completion batch. Path 08 v1 closed in Batch 67; Batch 68 deepens the existing pages rather than adding new ones. The page count stays at 13; the per-page line count roughly doubles.
+
+  **What was broken that this fixes**:
+  - 20 occurrences of backslash-spacing-around-equals patterns across 11 files. These were intended as LaTeX thin-space spacing but rendered as visible semicolons on GitHub's KaTeX. The fix: drop the spacing commands around equals signs and use plain `=`. Where vertical spacing is genuinely needed, use `\quad` between equations or `aligned` inside `$$...$$`.
+  - 209 em-dashes and en-dashes across the 15 files in `math-foundations/`. These render inconsistently across GitHub web, mobile, and editor previews. Replaced with ASCII hyphens throughout the math-foundations directory. (Convention applies only to files under `math-foundations/`; the rest of the repo retains its existing typographic conventions.)
+  - Stale internal link in `notation.md` pointing at a renamed file. Fixed to the current canonical filename.
+
+  **What each page gained**:
+  - Page 01 (LM probability): perplexity computation snippet using OpenAI logprobs.
+  - Page 02 (Embeddings): embed-and-rank corpus example using `text-embedding-3-small`.
+  - Page 03 (RAG formulation): minimal RAG implementation showing the marginalization explicitly.
+  - Page 04 (Agents as policies): the agent loop mapped to the equation, plus a POMDP belief-state section.
+  - Page 05 (MDP / POMDP): toy MDP runner with state, action, reward.
+  - Page 06 (ReAct): the thought-action factorization equation and a ReAct loop with structured logging.
+  - Page 07 (Tool selection): tool calling with deliberately overlapping coverage to see selection in action.
+  - Page 08 (Planning and search): plan-and-execute skeleton with bounded replanning.
+  - Page 09 (Memory): three-tier `AgentMemory` class with importance-routed writes.
+  - Page 10 (Multi-agent): supervisor-worker star topology with typed handoffs.
+  - Page 11 (Evaluation): precision/recall/F1 + LLM-as-judge with structured outputs.
+  - Page 12 (Uncertainty + safety): token entropy from logprobs + verbalized-confidence routing for HITL.
+  - Page 13 (Context-window optimization): greedy knapsack + lost-in-the-middle reorder.
+
+- **🔧 MOD: `math-foundations/README.md`** - landing page rewrite. The table of 13 pages reflects the new template; section explaining the 10-step page template; GitHub LaTeX rendering notes for contributors; explicit "stable" classification banner.
+
+- **🔧 MOD: `math-foundations/notation.md`** - symbol cheat-sheet rewrite. Fixed the stale internal link to page 02; added a "GitHub LaTeX rendering notes" section covering the spacing-around-equals issue, the `\lVert ... \rVert` vs `\| ... \|` distinction in Markdown tables, and the `aligned`-inside-`$$...$$` pattern for multi-line equations.
+
+- **🔧 MOD: `learning-paths/08-mathematical-foundations/README.md`** - reflects the Batch 68 refresh: status header gains the "🔧 Batch 68 refresh" line; the 13-page table marks every row as "Refreshed"; the path template section documents the expanded 10-step structure.
+
+- **🔧 MOD: `learning-paths/README.md`** - Path 08 row status amended with Batch 68 refresh annotation.
+
+- **🔧 MOD: `CHANGELOG.md`** - this entry; vocabulary trigger words in the meta-prose paraphrased per the established self-citation rule.
+
+  **Why a full rewrite was justified**: Batch 67 shipped 11 pages quickly to close Path 08 v1. The template at that time was thinner than what was warranted; reviewers (and the repo author) observed that math pages would benefit from explicit code examples, separated common-mistakes sections, and explicit related-pages navigation. The broken LaTeX rendering was a separate concrete bug that needed fixing. Combining the bug fix with the template upgrade in one batch avoids two separate touch-passes over the same files.
+
+  **What stayed the same**: the page count (13), the page titles, the file names, the inter-page numbering, the path landing location. All inbound links from concept pages, lab pages, patterns, glossary entries, and learning-path READMEs continue to resolve unchanged. No external links shifted.
+
+  Verification at delivery: word discipline clean across all 15 new files (locked + broader AI-jargon vocabularies); em-dash count in `math-foundations/` is zero; broken-LaTeX-spacing pattern count is zero; per-file link check clean on all rewritten files; full-repo broken-link count maintained vs Batch 67 baseline. 50 notebook count unchanged (doc-only batch); 0 outputs across all notebooks.
+
+  **The 5-batch arc for Path 08** (now): Batch 42 opened the scaffold; Batch 53 shipped the showcase pair; Batch 66 added the glossary cross-link; Batch 67 closed v1 with the remaining 11 pages; Batch 68 deepened every page to a stronger template. The arc demonstrates a viable rhythm for content paths: scaffold then showcase then close then deepen.
+
 - **🎉 ✅ Path 08 v1 COMPLETE — Repo v1 phase structurally done (Batch 67).** Path 08 (Mathematical Foundations) moves from 4/13 (Batch 53) to **all 13 math pages authored** — Path 08 v1 is structurally complete. With this batch, **all nine paths now have substantial content** and **five paths are fully complete at v1 level** (Paths 04, 05, 07, 08, 09); Path 01 is complete; Paths 02 v1+v2 / 03 v1+v2+v3+frameworks / 06 v1+v2 are substantial-content paths. The repo's v1 phase is structurally complete. Future batches are continuous improvement (depth, breadth, examples, recipes, references) rather than gap-filling.
 
   Eleven new math pages (~80-120 lines each, ~1,100 lines total):
