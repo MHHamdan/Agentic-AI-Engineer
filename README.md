@@ -414,7 +414,6 @@ External references cited in this README:
 
 ---
 
-```markdown
 
 ## Citation
 
@@ -425,7 +424,7 @@ GitHub can automatically generate citation formats, including BibTeX, from the c
 Suggested citation:
 
 > Hamdan, M. (2026). *Agentic AI Engineer: An Open Learning Hub for Building Real Agentic AI Systems* (Version 0.1.0) [Software]. GitHub. https://github.com/MHHamdan/Agentic-AI-Engineer
-```
+
 
 
 ---
