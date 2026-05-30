@@ -1,7 +1,8 @@
-d16561bbebdff20b8d9d0b0d3e51a04f124d4bea1af3c1a6b907ae2d7b6f7e1c  ./CHANGELOG.md
-c4beb0d5584990efdf59ce995dde5af0abfa4ef4abc25aa75de4ae9b1baa18ae  ./learning-paths/09-capstones/README.md
-1fb24d964a341cc5741d294b79ef30ff46784b6dc8bf900c59786a64a5597480  ./learning-paths/README.md
-3bfe25c24c489c597518bfbb77a3bdfdbbb50ab997cc509a79291942260f8acb  ./projects/README.md
-46ef6b659c4721dd04a9eef8dcf42c01224ce302de3973ea965c2333da7224d8  ./projects/intermediate/04-data-analysis-agent/README.md
-8bace85f5161216814c4fbc67e30834970a286c9ece52ce0e2fe0aa97a5c4d84  ./projects/intermediate/05-multi-server-mcp-agent/README.md
-b55c1574f6470c9d4ccbca40cf47fd9c0c64520c7bf51067d2e3f13ef5e0ecdc  ./projects/intermediate/README.md
+f82e720275cac59a4b94bb7987ec67ce9c67d23b48ff50e2c856422f1193600d  ./CHANGELOG.md
+a77fb73171baa9b74afad402f767a03fb51e76bc2ce3617ff8c3772889c05536  ./README.md
+42a9dd89bf953f72f63f066889ad098b82450bed735e42d347fd421f9074cd92  ./learning-paths/09-capstones/README.md
+333aea769cf37be8a74aba4389f89f70d18f1f21f90897e0980ccccf60bc0688  ./learning-paths/README.md
+03f8b207c20651bac7c2ff7c9fe17c2bb44b473b0501812839de7b5769aa87cd  ./projects/README.md
+36d64cecc162faa3596e995e5fe4aa7c3b1271ae26c917d122baaba4d689e0f6  ./projects/capstone/06-financial-research-analyst/README.md
+91f1015961f34a05b22e526d66e75371b0e125716414d0e5d77e49aba0616936  ./projects/capstone/08-production-ready-deep-research/README.md
+2e2715fc59f26fca8eca552a18350dac3fe308339951429e02dfed5f122b838a  ./projects/capstone/README.md
