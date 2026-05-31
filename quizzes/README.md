@@ -37,6 +37,13 @@ The quizzes are **GitHub-first** by design — they work in any Markdown viewer 
 | 🧠 [Retrieval strategies, hybrid search, and reranking](./agentic-rag/retrieval-strategies.md) | [`concepts/rag/retrieval-strategies.md`](../concepts/rag/retrieval-strategies.md) + [`hybrid-search.md`](../concepts/rag/hybrid-search.md) + [`reranking.md`](../concepts/rag/reranking.md) + [Lab 07](../labs/07-retrieval-strategies-and-reranking/) | 8 questions | mixed |
 | 🧠 [Contextual retrieval, query rewriting, and retrieval failure modes](./agentic-rag/contextual-retrieval-and-query-rewriting.md) | [`concepts/rag/contextual-retrieval.md`](../concepts/rag/contextual-retrieval.md) + [`query-rewriting.md`](../concepts/rag/query-rewriting.md) + [`retrieval-failure-modes.md`](../concepts/rag/retrieval-failure-modes.md) + [Lab 08](../labs/08-contextual-retrieval-and-query-rewriting/) | 8 questions | mixed |
 | 🧠 [RAG evaluation: metrics, eval sets, and answer quality](./agentic-rag/rag-evaluation.md) | [`concepts/evaluation/what-is-rag-evaluation.md`](../concepts/evaluation/what-is-rag-evaluation.md) + [`eval-set-construction.md`](../concepts/evaluation/eval-set-construction.md) + [`retrieval-metrics.md`](../concepts/evaluation/retrieval-metrics.md) + [`answer-quality-metrics.md`](../concepts/evaluation/answer-quality-metrics.md) + [Lab 09](../labs/09-evaluating-agentic-rag/) | 8 questions | mixed |
+| 🧠 [SOTA RAG patterns (2024-2026)](./agentic-rag/sota-rag-patterns.md) | [`concepts/rag/sota-rag-patterns.md`](../concepts/rag/sota-rag-patterns.md) + [`concepts/evaluation/rag-evaluation-framework.md`](../concepts/evaluation/rag-evaluation-framework.md) + [`recipes/rag/`](../recipes/rag/) | 8 questions | mixed |
+
+### Mathematical Foundations (Path 08)
+
+| Quiz | Source | Length | Difficulty |
+|---|---|---|---|
+| 🧠 [Retrieval and ranking metrics](./math-foundations/retrieval-ranking-metrics.md) | [`math-foundations/14-retrieval-ranking-metrics.md`](../math-foundations/14-retrieval-ranking-metrics.md) + [`concepts/evaluation/retrieval-metrics.md`](../concepts/evaluation/retrieval-metrics.md) | 8 questions | mixed |
 
 ### Multi-Agent Systems (Path 03)
 

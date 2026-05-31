@@ -1,0 +1,37 @@
+flowchart TD
+    subgraph PIPE["🔧 RAG request"]
+        direction TB
+        S1[Span: query rewrite]
+        S2[Span: retrieve]
+        S3[Span: rerank]
+        S4[Span: generate]
+        S1 --> S2 --> S3 --> S4
+    end
+
+    PIPE --> OTEL[📡 OpenTelemetry<br/>collector]
+    OTEL --> TRACE[(🗃️ Trace store)]
+
+    TRACE --> ONLINE[🔬 Online evaluators<br/><i>sampled, async</i>]
+    TRACE --> DASH[📊 Dashboards<br/><i>latency, cost, tokens</i>]
+
+    ONLINE --> QUAL[📈 Quality signals<br/><i>faithfulness drift,<br/>retrieval precision</i>]
+    QUAL --> ALERT{🚨 Threshold<br/>breached?}
+    ALERT -->|yes| PAGE[📟 Alert on-call]
+    ALERT -->|no| QUAL
+    QUAL --> PROMO[⬆️ Promote failures<br/>to regression set]
+
+    classDef pipe fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1
+    classDef otel fill:#ede7f6,stroke:#5e35b1,stroke-width:2px,color:#311b92
+    classDef store fill:#fff8e1,stroke:#f57f17,stroke-width:2px,color:#e65100
+    classDef eval fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20
+    classDef decision fill:#fff9c4,stroke:#f9a825,stroke-width:2px,color:#e65100
+    classDef alert fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c
+    classDef sgPipe fill:#e1f5fe,stroke:#0277bd,stroke-width:3px,color:#01579b
+
+    class S1,S2,S3,S4 pipe
+    class OTEL otel
+    class TRACE store
+    class ONLINE,DASH,QUAL,PROMO eval
+    class ALERT decision
+    class PAGE alert
+    class PIPE sgPipe

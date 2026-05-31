@@ -1,0 +1,20 @@
+flowchart TD
+    BAD[❌ Wrong answer] --> Q1{Is the evidence<br/>in the corpus<br/>at all?}
+    Q1 -->|no| F1[📥 Corpus gap<br/><i>ingest more sources</i>]
+    Q1 -->|yes| Q2{Was it<br/>retrieved?}
+    Q2 -->|no| Q3{In top-k but<br/>ranked low?}
+    Q3 -->|not retrieved| F2[✂️ Chunking / embedding<br/><i>re-chunk, better model,<br/>hybrid search</i>]
+    Q3 -->|low rank| F3[🎯 Add reranking]
+    Q2 -->|yes| Q4{Did the model<br/>use it?}
+    Q4 -->|ignored it| F4[🪟 Context order<br/><i>lost-in-the-middle,<br/>reduce k</i>]
+    Q4 -->|used it wrong| Q5{Faithful to<br/>the evidence?}
+    Q5 -->|no, made things up| F5[🛡️ Faithfulness<br/><i>prompt, verification,<br/>lower temperature</i>]
+    Q5 -->|yes but off-topic| F6[🎯 Answer relevance<br/><i>prompt, query understanding</i>]
+
+    classDef bad fill:#ffebee,stroke:#c62828,stroke-width:3px,color:#b71c1c
+    classDef decision fill:#fff9c4,stroke:#f9a825,stroke-width:2px,color:#e65100
+    classDef fix fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20
+
+    class BAD bad
+    class Q1,Q2,Q3,Q4,Q5 decision
+    class F1,F2,F3,F4,F5,F6 fix

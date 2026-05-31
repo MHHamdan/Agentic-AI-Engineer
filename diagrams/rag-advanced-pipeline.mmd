@@ -1,0 +1,48 @@
+flowchart TD
+    Q[❓ Query] --> PRE
+
+    subgraph PRE["🔧 Pre-retrieval"]
+        direction TB
+        RW[✍️ Query rewriting]
+        EXP[➕ Query expansion / HyDE]
+        DEC[🪓 Decomposition<br/><i>multi-hop</i>]
+    end
+
+    PRE --> HYB
+
+    subgraph HYB["🔍 Hybrid retrieval"]
+        direction TB
+        DENSE[🧲 Dense<br/><i>embeddings</i>]
+        SPARSE[🔤 Sparse<br/><i>BM25</i>]
+        FUSE[🔗 Fuse<br/><i>RRF</i>]
+        DENSE --> FUSE
+        SPARSE --> FUSE
+    end
+
+    HYB --> POST
+
+    subgraph POST["📊 Post-retrieval"]
+        direction TB
+        RR[🎯 Rerank<br/><i>cross-encoder</i>]
+        COMP[🗜️ Compress / select<br/><i>context budget</i>]
+        RR --> COMP
+    end
+
+    POST --> GEN[🤖 Generate]
+    GEN --> VER{🛡️ Verify<br/>grounded?}
+    VER -->|yes| ANS[✅ Answer + citations]
+    VER -->|no| RW
+
+    classDef pre fill:#ede7f6,stroke:#5e35b1,stroke-width:2px,color:#311b92
+    classDef hyb fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1
+    classDef post fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c
+    classDef gen fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20
+    classDef decision fill:#fff9c4,stroke:#f9a825,stroke-width:2px,color:#e65100
+    classDef answer fill:#fce4ec,stroke:#c2185b,stroke-width:3px,color:#880e4f
+
+    class RW,EXP,DEC pre
+    class DENSE,SPARSE,FUSE hyb
+    class RR,COMP post
+    class GEN gen
+    class VER decision
+    class ANS answer

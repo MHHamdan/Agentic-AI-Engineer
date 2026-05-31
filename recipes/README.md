@@ -16,6 +16,14 @@ Every recipe follows the same five-section template:
 
 Full template is in [`CONTRIBUTING.md`](../CONTRIBUTING.md#how-to-add-a-recipe).
 
+## Recipe collections
+
+Most recipes are single imperative-named files. Coherent multi-recipe series live in a subfolder:
+
+| Collection | Covers |
+|---|---|
+| [`recipes/rag/`](./rag/) | Basic RAG, hybrid + reranked RAG, Corrective RAG (CRAG). Runnable, with a local-models note for Ollama / OpenAI-compatible endpoints. |
+
 ## Categories
 
 Recipes are grouped by what they fix:

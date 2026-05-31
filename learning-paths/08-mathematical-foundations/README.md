@@ -41,7 +41,7 @@ Every math page follows this expanded structure:
 
 The Batch 67 template had the first half; Batch 68 added sections 6, 7, 9 (explicit), and tightened section 10. The refresh also removed broken LaTeX spacing artifacts (`\;=\;` patterns that rendered as visible semicolons on GitHub KaTeX) and replaced em-dashes inside `math-foundations/` with ASCII hyphens for consistent rendering across clients.
 
-## Path structure (✅ 13 of 13 pages authored and refreshed)
+## Path structure (✅ 13 v1 pages refreshed + page 14 added in the RAG upgrade)
 
 This path differs from the other paths: each page is a self-contained short note (8 to 10 min of reading), not a multi-module sequence. Read whichever pages help you with whichever paper or lab is in front of you.
 
@@ -60,6 +60,7 @@ This path differs from the other paths: each page is a self-contained short note
 | 11 | **Evaluation metrics** — precision, recall, faithfulness, LLM-as-judge, calibration | ✅ Refreshed — [`11-evaluation-metrics.md`](../../math-foundations/11-evaluation-metrics.md) |
 | 12 | **Uncertainty and safety** — entropy, calibration, abstention, HITL routing | ✅ Refreshed — [`12-uncertainty-safety.md`](../../math-foundations/12-uncertainty-safety.md) |
 | 13 | **Context-window optimization** — knapsack selection, lost-in-the-middle, reorder | ✅ Refreshed — [`13-context-window-optimization.md`](../../math-foundations/13-context-window-optimization.md) |
+| 14 | **Retrieval and ranking metrics** — precision@k, recall@k, MRR, MAP, NDCG, context precision/recall | ✅ Added (RAG upgrade) — [`14-retrieval-ranking-metrics.md`](../../math-foundations/14-retrieval-ranking-metrics.md) |
 
 Plus the supporting pages:
 - ✅ [`README.md`](../../math-foundations/README.md) — the math-foundations directory landing page (refreshed)
@@ -87,6 +88,7 @@ All 13 math pages plus 2 supporting files are authored, refreshed, and on disk i
 - 📖 [Page 11 — Evaluation metrics](../../math-foundations/11-evaluation-metrics.md)
 - 📖 [Page 12 — Uncertainty and safety](../../math-foundations/12-uncertainty-safety.md)
 - 📖 [Page 13 — Context-window optimization](../../math-foundations/13-context-window-optimization.md)
+- 📖 [Page 14 — Retrieval and ranking metrics](../../math-foundations/14-retrieval-ranking-metrics.md) — added in the RAG evaluation upgrade; the IR metrics (precision@k, recall@k, MRR, MAP, NDCG) behind retrieval evaluation
 
 Each page is independently readable; the cross-references between pages let you navigate by curiosity rather than sequence.
 
@@ -117,7 +119,7 @@ Directions for continuous improvement:
 
 - **Add worked numerical examples.** The current pages establish the equation, the engineering implications, and one minimal code example. Adding "here's what this looks like with concrete numbers from a real run" would deepen intuition.
 - **Add per-framework code references.** "Repo cross-references" currently points at the labs in this repo; a parallel "where you'll see it in LangGraph / CrewAI / Pydantic AI" section would help readers map the math onto whichever framework they're using.
-- **Extend the page set with workload-specific pages.** Pages 01 through 13 cover the universal core. Topics like "speculative decoding math," "RLHF objective derivation," or "DPO loss" could become Page 14+ if the community needs them.
+- **Extend the page set with workload-specific pages.** Pages 01 through 14 cover the universal core plus retrieval metrics. Topics like "speculative decoding math," "RLHF objective derivation," or "DPO loss" could become Page 15+ if the community needs them.
 
 Open an issue describing the proposed addition before writing — math pages get more review than other content types because the citation-rigor bar is higher.
 

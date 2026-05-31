@@ -17,6 +17,14 @@ The pages here are a four-step progression from "what is RAG evaluation" to "wha
 
 These four pages are prerequisites for [Lab 09: Evaluating agentic RAG](../../labs/09-evaluating-agentic-rag/).
 
+### The framework (start here for the big picture)
+
+| Page | Read time | Covers |
+|------|-----------|--------|
+| 📖 [rag-evaluation-framework.md](./rag-evaluation-framework.md) | ~16 min | The consolidated A-Z map: six layers from eval set to production monitoring, the full metric taxonomy (retrieval + generation), the RAG error taxonomy, CI/CD eval gates, benchmarks (BEIR, MTEB), and a build order that works. Ties the four primer pages above into one framework. |
+
+Read the framework page if you want the whole picture in one place; read the four primer pages for depth on each piece. The framework page links into all of them and into the [retrieval-ranking-metrics math page](../../math-foundations/14-retrieval-ranking-metrics.md).
+
 ## Path 06 — Production evaluation & observability (✅ v1 complete — all 7 modules shipped)
 
 The pages above (Path 02's RAG-evaluation primer) cover offline evaluation against hand-curated fixture sets. Path 06 extends that mechanism to production: live trace ingestion, drift detection, agent-as-judge calibration, distributed-tracing correlation across parallel sub-agents.

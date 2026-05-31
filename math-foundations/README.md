@@ -6,7 +6,7 @@ Engineer-useful math for agentic AI systems. Every page exists because the equat
 
 ## What lives here
 
-Thirteen short notes, each focused on one piece of theory:
+Fourteen short notes, each focused on one piece of theory:
 
 | # | Topic | Connects to |
 |---|---|---|
@@ -23,6 +23,7 @@ Thirteen short notes, each focused on one piece of theory:
 | 11 | [Evaluation metrics](./11-evaluation-metrics.md) | precision, recall, faithfulness, calibration |
 | 12 | [Uncertainty and safety](./12-uncertainty-safety.md) | entropy, calibration, abstention |
 | 13 | [Context-window optimization](./13-context-window-optimization.md) | budget allocation, lost-in-the-middle |
+| 14 | [Retrieval and ranking metrics](./14-retrieval-ranking-metrics.md) | precision@k, recall@k, MRR, MAP, NDCG, context precision/recall |
 
 A symbol-and-notation cheat sheet lives in [`notation.md`](./notation.md). One source of truth for `pi`, `s`, `a`, `theta`, `z`, and friends.
 

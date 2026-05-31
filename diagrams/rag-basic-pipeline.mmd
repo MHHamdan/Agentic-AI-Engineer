@@ -1,0 +1,32 @@
+flowchart TD
+    subgraph OFFLINE["🗄️ Offline - indexing"]
+        direction TB
+        D[📄 Documents] --> CH[✂️ Chunk<br/><i>size + overlap + boundary</i>]
+        CH --> EM[🔢 Embed<br/><i>embedding model</i>]
+        EM --> IX[(🗂️ Vector index<br/><i>HNSW / IVF</i>)]
+    end
+
+    subgraph ONLINE["⚡ Online - query time"]
+        direction TB
+        Q[❓ User query] --> QE[🔢 Embed query]
+        QE --> RET[🔍 Retrieve top-k<br/><i>nearest neighbors</i>]
+        RET --> AUG[🧩 Augment prompt<br/><i>query + retrieved chunks</i>]
+        AUG --> GEN[🤖 Generate<br/><i>LLM</i>]
+        GEN --> ANS[✅ Answer + citations]
+    end
+
+    IX -.retrieved from.-> RET
+
+    classDef offline fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1
+    classDef online fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20
+    classDef store fill:#fff8e1,stroke:#f57f17,stroke-width:2px,color:#e65100
+    classDef answer fill:#fce4ec,stroke:#c2185b,stroke-width:3px,color:#880e4f
+    classDef sgOff fill:#e1f5fe,stroke:#0277bd,stroke-width:3px,color:#01579b
+    classDef sgOn fill:#f1f8e9,stroke:#558b2f,stroke-width:3px,color:#33691e
+
+    class D,CH,EM offline
+    class Q,QE,RET,AUG,GEN online
+    class IX store
+    class ANS answer
+    class OFFLINE sgOff
+    class ONLINE sgOn

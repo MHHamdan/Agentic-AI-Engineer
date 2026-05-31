@@ -1,0 +1,33 @@
+flowchart TD
+    START([🚀 Start]) --> BUILD[📝 Build eval set<br/><i>golden queries +<br/>expected answers</i>]
+    BUILD --> RUN[⚙️ Run pipeline<br/><i>retrieve + generate</i>]
+    RUN --> SCORE
+
+    subgraph SCORE["📊 Score"]
+        direction TB
+        RM[🔍 Retrieval metrics<br/><i>recall@k, MRR, NDCG</i>]
+        GM[🤖 Generation metrics<br/><i>faithfulness, relevance</i>]
+    end
+
+    SCORE --> SLICE[🔪 Slice by category<br/><i>lexical / paraphrase /<br/>multi-hop / off-corpus</i>]
+    SLICE --> DECIDE{🎯 Ship?}
+    DECIDE -->|regression| FIX[🔧 Fix + iterate]
+    FIX --> RUN
+    DECIDE -->|pass| SHIP[🚢 Deploy]
+    SHIP --> MON[👁️ Monitor production]
+    MON --> PROMO[⬆️ Promote failures<br/>to regression set]
+    PROMO --> BUILD
+
+    classDef start fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20
+    classDef build fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1
+    classDef score fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c
+    classDef decision fill:#fff9c4,stroke:#f9a825,stroke-width:2px,color:#e65100
+    classDef ship fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#880e4f
+    classDef monitor fill:#ede7f6,stroke:#5e35b1,stroke-width:2px,color:#311b92
+
+    class START start
+    class BUILD,RUN build
+    class RM,GM score
+    class SLICE,DECIDE,FIX decision
+    class SHIP,SHIP ship
+    class MON,PROMO monitor
