@@ -160,6 +160,8 @@ After Lab 08, you've built every standard retrieval intervention. The honest que
 
 21. 📖 **[Answer quality metrics](../../concepts/evaluation/answer-quality-metrics.md)** *(~11 min)* — Faithfulness, groundedness, citation accuracy, answer relevance, refusal quality. Rule-based vs LLM-as-judge tradeoffs. The Zheng et al. 2023 documented biases (position, verbosity, self-enhancement). RAGAS, TruLens, and DeepEval as future production tools — mentioned only.
 
+> 🗺️ **Want the whole evaluation picture in one page?** [The RAG evaluation framework](../../concepts/evaluation/rag-evaluation-framework.md) *(~16 min)* consolidates the four pages above into a six-layer A-Z map (eval set → component metrics → automated scoring → error taxonomy → CI gates → production monitoring), with the full metric taxonomy, the RAG error taxonomy, benchmarks (BEIR, MTEB), and a build order. Read it for the map; read the four pages above for depth.
+
 ## Module 12: The evaluation lab
 
 22. 🧪 **[Lab 09: Evaluating agentic RAG](../../labs/09-evaluating-agentic-rag/)** *(~100–130 min)* — The synthesis lab. A from-scratch evaluation harness that runs your Labs 06-08 pipelines against a 30-question hand-curated eval set (shipped as `eval_set.jsonl`), produces comparison tables sliced by category, scores answer quality with rule-based metrics, and optionally runs LLM-as-judge faithfulness on a small subset.
@@ -172,6 +174,16 @@ After Lab 08, you've built every standard retrieval intervention. The honest que
 
 23. 🧠 **[RAG evaluation quiz](../../quizzes/agentic-rag/rag-evaluation.md)** *(~12 min)* — 8 single-select questions on the retrieval/generation split, eval set construction tradeoffs, MRR mechanics, the canonical correctness/groundedness distinction, Zheng et al.'s LLM-as-judge biases, and the rule-based vs LLM-as-judge tradeoff.
 
+## Module 14: SOTA RAG patterns (2024-2026)
+
+With the closed loop in hand — build, diagnose, measure — the last module maps the modern RAG landscape so you know what to add when your eval set shows static RAG failing.
+
+24. 📖 **[SOTA RAG patterns](../../concepts/rag/sota-rag-patterns.md)** *(~15 min)* — Self-RAG, Corrective RAG (CRAG), Adaptive RAG, Agentic RAG, Graph RAG, long-context and multimodal RAG. What each pattern adds over static RAG, when it earns its added cost, and the real papers behind each. Ends with a decision guide keyed to the failure you measured in Module 12.
+
+25. 🧠 **[SOTA RAG patterns quiz](../../quizzes/agentic-rag/sota-rag-patterns.md)** *(~10 min)* — 8 questions on matching patterns to failure modes, the cost/benefit of each control loop, and the citations.
+
+> 💡 The math behind the retrieval metrics in Module 11 now has its own page: [Math foundations page 14 — retrieval and ranking metrics](../../math-foundations/14-retrieval-ranking-metrics.md). Runnable recipes for the patterns above are in [`recipes/rag/`](../../recipes/rag/).
+
 ## What's *not* in this path yet
 
 Anti-scope, kept explicit so you know what's coming and what isn't:
@@ -180,12 +192,14 @@ Anti-scope, kept explicit so you know what's coming and what isn't:
 - ❌ **RAG evaluation frameworks as dependencies** (RAGAS, TruLens, DeepEval, Phoenix). Mentioned by name in Module 11 only as future production tools. Path 06 covers them in depth.
 - ❌ **LangChain / LlamaIndex RAG abstractions**. Reserved for a future framework-bridge lab analogous to Lab 05.
 - ❌ **Multi-agent coordination** (researcher + synthesizer, etc.). That's Path 03.
-- ❌ **Late-interaction retrieval** (ColBERT, PLAID, ColPali). Mentioned briefly in `reranking.md` as a production path; full treatment deferred.
+- ❌ **Late-interaction retrieval** (ColBERT, PLAID, ColPali). Mentioned in `reranking.md` and `sota-rag-patterns.md` as a production path; hands-on lab treatment deferred.
 - ❌ **Conversational query rewriting** (multi-turn rewriting against chat history). Future framework-bridge or conversational-RAG batch.
 - ❌ **Fine-tuning** (rewriters, embedders, rerankers). Out of scope.
 - ❌ **Production observability** (LangSmith, LangFuse, W&B). Different problem from offline eval; Path 06.
 - ❌ **A/B testing and drift detection.** Path 06.
 - ❌ **Synthetic eval set generation via LLM.** Briefly discussed in Module 11; recommended against for the first 30-50 queries.
+
+> 📚 **Newly added:** the SOTA patterns (Self-RAG, CRAG, Adaptive, Graph, agentic, long-context, multimodal RAG) now have conceptual coverage in [`sota-rag-patterns.md`](../../concepts/rag/sota-rag-patterns.md) (Module 14) and runnable recipes in [`recipes/rag/`](../../recipes/rag/). Hands-on labs for these patterns are still a future batch.
 
 Each item above is meaningful enough to deserve its own focused treatment rather than a paragraph buried elsewhere.
 
@@ -193,8 +207,8 @@ Each item above is meaningful enough to deserve its own focused treatment rather
 
 Path 02 v1 is now complete. Future Path 02 batches:
 
-- **Module 14: Framework bridge** — same Lab 06–09 agent in LangChain/LangGraph, analogous to Lab 05 for Foundations.
-- **Module 15: Conversational RAG** — multi-turn retrieval with chat history, query rewriting against context.
+- **Module 15: Framework bridge** — same Lab 06–09 agent in LangChain/LangGraph, analogous to Lab 05 for Foundations.
+- **Module 16: Conversational RAG** — multi-turn retrieval with chat history, query rewriting against context.
 
 If you've finished Path 02 v1 and want more *now*, the natural next moves are:
 

@@ -71,6 +71,16 @@ A CI workflow checks that every `.mmd` has a matching rendered file and that the
 - Use subgraphs for groupings of 3+ related nodes.
 - Avoid color unless it carries information; default styling is clearer.
 
+### Curriculum diagram bundles
+
+Some topics ship a curated bundle of diagrams as a single rendered Markdown page rather than loose `.mmd` files:
+
+| Bundle | Covers |
+|---|---|
+| [`rag-bundle.md`](./rag-bundle.md) | Nine vertical, color-coded RAG diagrams: basic + advanced pipeline, evaluation lifecycle, retrieval-vs-generation eval, agentic RAG, Graph RAG, production observability, failure diagnosis, evolution timeline. |
+
+The RAG bundle uses `flowchart TD` (vertical) with `classDef` color tiers deliberately: the colors encode stage and tier groupings (offline vs online, retrieval vs generation, era in the timeline), so color carries information here rather than decoration. Each diagram in the bundle also has a standalone `.mmd` source file in this directory.
+
 ## Contributing
 
 A good diagram is often the highest-leverage contribution to a concept page. If a page is mostly text and you can replace a paragraph with a clear Mermaid block, that's almost always an improvement.

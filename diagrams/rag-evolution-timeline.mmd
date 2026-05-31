@@ -1,0 +1,26 @@
+flowchart TD
+    E1[📚 Classical IR<br/><i>TF-IDF, BM25</i><br/>pre-2019]
+    E2[🧲 Dense retrieval<br/><i>DPR, dual encoders</i><br/>2020]
+    E3[🔗 Canonical RAG<br/><i>Lewis et al. RAG</i><br/>2020]
+    E4[🔧 Advanced RAG<br/><i>hybrid, rerank, HyDE</i><br/>2022-2023]
+    E5[🔁 Self-reflective RAG<br/><i>Self-RAG, CRAG</i><br/>2023-2024]
+    E6[🧭 Adaptive + Graph RAG<br/><i>query-complexity routing,<br/>GraphRAG</i><br/>2024]
+    E7[🤖 Agentic RAG<br/><i>retrieval as a tool,<br/>multi-step reasoning</i><br/>2024-2026]
+
+    E1 --> E2 --> E3 --> E4 --> E5 --> E6 --> E7
+
+    classDef era1 fill:#eceff1,stroke:#455a64,stroke-width:2px,color:#263238
+    classDef era2 fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1
+    classDef era3 fill:#e0f7fa,stroke:#00838f,stroke-width:2px,color:#006064
+    classDef era4 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20
+    classDef era5 fill:#fff8e1,stroke:#f57f17,stroke-width:2px,color:#e65100
+    classDef era6 fill:#ede7f6,stroke:#5e35b1,stroke-width:2px,color:#311b92
+    classDef era7 fill:#fce4ec,stroke:#c2185b,stroke-width:3px,color:#880e4f
+
+    class E1 era1
+    class E2 era2
+    class E3 era3
+    class E4 era4
+    class E5 era5
+    class E6 era6
+    class E7 era7

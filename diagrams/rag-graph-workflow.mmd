@@ -1,0 +1,37 @@
+flowchart TD
+    subgraph BUILD["🏗️ Index time - build graph"]
+        direction TB
+        DOCS[📄 Documents] --> EXT[🔍 Extract entities<br/>+ relationships<br/><i>LLM</i>]
+        EXT --> GRAPH[(🕸️ Knowledge graph<br/>nodes + edges)]
+        GRAPH --> COMM[👥 Detect communities<br/><i>Leiden clustering</i>]
+        COMM --> SUMM[📋 Summarize each<br/>community]
+    end
+
+    subgraph QUERY["⚡ Query time - traverse"]
+        direction TB
+        Q[❓ Query] --> TYPE{Global or local?}
+        TYPE -->|global theme| GLOBAL[🌐 Map-reduce over<br/>community summaries]
+        TYPE -->|specific entity| LOCAL[📍 Traverse local<br/>subgraph]
+        GLOBAL --> SYNTH[🤖 Synthesize answer]
+        LOCAL --> SYNTH
+    end
+
+    SUMM -.feeds.-> GLOBAL
+    GRAPH -.feeds.-> LOCAL
+    SYNTH --> ANS[✅ Answer + provenance]
+
+    classDef build fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1
+    classDef store fill:#fff8e1,stroke:#f57f17,stroke-width:2px,color:#e65100
+    classDef query fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20
+    classDef decision fill:#fff9c4,stroke:#f9a825,stroke-width:2px,color:#e65100
+    classDef answer fill:#fce4ec,stroke:#c2185b,stroke-width:3px,color:#880e4f
+    classDef sgBuild fill:#e1f5fe,stroke:#0277bd,stroke-width:3px,color:#01579b
+    classDef sgQuery fill:#f1f8e9,stroke:#558b2f,stroke-width:3px,color:#33691e
+
+    class DOCS,EXT,COMM,SUMM build
+    class GRAPH store
+    class Q,GLOBAL,LOCAL,SYNTH query
+    class TYPE decision
+    class ANS answer
+    class BUILD sgBuild
+    class QUERY sgQuery

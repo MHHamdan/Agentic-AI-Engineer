@@ -1,0 +1,38 @@
+flowchart TD
+    SYS[🔧 RAG system output] --> SPLIT{Which half?}
+
+    SPLIT -->|did we find<br/>the right chunks?| RET
+    SPLIT -->|given chunks, did we<br/>write the right answer?| GEN
+
+    subgraph RET["🔍 Retrieval evaluation"]
+        direction TB
+        R1["Context precision<br/><i>signal-to-noise</i>"]
+        R2["Context recall<br/><i>did we miss evidence?</i>"]
+        R3["Recall@k, MRR, NDCG<br/><i>ranking quality</i>"]
+        R4["Needs: relevance labels"]
+    end
+
+    subgraph GEN["🤖 Generation evaluation"]
+        direction TB
+        G1["Faithfulness<br/><i>grounded in context?</i>"]
+        G2["Answer relevance<br/><i>addresses the query?</i>"]
+        G3["Citation correctness<br/><i>claims map to sources?</i>"]
+        G4["Needs: LLM-as-judge<br/>or human labels"]
+    end
+
+    RET --> FIX_R[🔧 Fix: chunking,<br/>embeddings, hybrid,<br/>rerank]
+    GEN --> FIX_G[🔧 Fix: prompt,<br/>model, context order,<br/>verification]
+
+    classDef sys fill:#e8eaf6,stroke:#283593,stroke-width:2px,color:#1a237e
+    classDef decision fill:#fff9c4,stroke:#f9a825,stroke-width:2px,color:#e65100
+    classDef ret fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1
+    classDef gen fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20
+    classDef fixr fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#01579b
+    classDef fixg fill:#f1f8e9,stroke:#558b2f,stroke-width:2px,color:#33691e
+
+    class SYS sys
+    class SPLIT decision
+    class R1,R2,R3,R4 ret
+    class G1,G2,G3,G4 gen
+    class FIX_R fixr
+    class FIX_G fixg

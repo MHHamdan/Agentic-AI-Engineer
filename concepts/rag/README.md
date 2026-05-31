@@ -36,13 +36,22 @@ These three are prerequisites for [Lab 07](../../labs/07-retrieval-strategies-an
 
 These three are prerequisites for [Lab 08](../../labs/08-contextual-retrieval-and-query-rewriting/), and the failure-modes page is the debugging mental model the whole Path 02 curriculum builds toward.
 
+### SOTA patterns (2024-2026)
+
+| Page | Read time | Covers |
+|------|-----------|--------|
+| 📖 [sota-rag-patterns.md](./sota-rag-patterns.md) | ~15 min | Self-RAG, Corrective RAG (CRAG), Adaptive RAG, Agentic RAG, Graph RAG, long-context and multimodal RAG. When each pattern earns its cost, with citations. |
+
+This page is the map of the modern RAG landscape. Read it after the foundations and failure-modes pages; it assumes you know the canonical pipeline and want to know what to add and when.
+
 ## Pending pages (future Path 02 batches)
 
 The following concept pages are forward-referenced from this curriculum but not yet authored:
 
-- `rag-evaluation.md` — faithfulness, groundedness, citation accuracy. (Likely lives in `concepts/evaluation/` cross-referenced from here.)
 - `conversational-rag.md` — multi-turn query rewriting, chat history handling, when to recompute retrieval.
 - `framework-bridge-rag.md` — same Lab 06–08 agent in LangChain/LangGraph.
+
+> RAG evaluation (faithfulness, groundedness, citation accuracy) is covered in [`concepts/evaluation/rag-evaluation-framework.md`](../evaluation/rag-evaluation-framework.md), the consolidated A-Z evaluation hub, cross-referenced from here.
 
 ## Where this is used
 
