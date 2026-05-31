@@ -1,6 +1,6 @@
 # Agentic AI Engineer
 
-> An open, community-built learning hub for engineers who design, build, evaluate, and ship real agentic AI systems &mdash; not just prompts.
+> An open, community-built learning hub for engineers who design, build, evaluate, and ship real agentic AI systems &mdash continual updates.
 
 <p>
   <img alt="License: Apache-2.0 (code)" src="https://img.shields.io/badge/code-Apache--2.0-blue">
