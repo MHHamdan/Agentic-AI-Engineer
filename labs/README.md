@@ -69,6 +69,8 @@ A growing list:
 | 41 | Operating the maintenance loop | 🔴 |
 | 42 | Hardening the operations loop | 🔴 |
 | 43 | Tracking annotator drift | 🔴 |
+| 44 | Hardening the signals for real traffic | 🔴 |
+| 45 | Anchoring the consensus | 🔴 |
 
 Labs land continuously. Check [`CHANGELOG.md`](../CHANGELOG.md) for the most recent additions.
 

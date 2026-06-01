@@ -1,10 +1,16 @@
-{"query": "Who leads the Helix Lab?", "route": "specific", "reference": "Aanya Rao leads the Helix Lab."}
-{"query": "Which project is Lena Fischer the lead engineer on?", "route": "specific", "reference": "The Lattice Project."}
-{"query": "Who did the leader of the Helix Lab previously collaborate with?", "route": "multihop", "reference": "Tomas Vega, on hybrid search at the Meridian Institute."}
-{"query": "What funds the project that builds knowledge graphs?", "route": "multihop", "reference": "The Beacon Foundation funds the Lattice Project."}
-{"query": "What are the main collaboration clusters?", "route": "global", "reference": "Helix-Meridian, the Atlas-Cascade evaluation group, and the Northgate training lineage."}
-{"query": "What role does Northgate play across the ecosystem?", "route": "global", "reference": "It trains researchers who then spread to other labs."}
-{"query": "What is the Helix Lab's annual budget?", "route": "off_corpus_risk", "reference": "INSUFFICIENT EVIDENCE"}
-{"query": "In which city is the Meridian Institute?", "route": "off_corpus_risk", "reference": "INSUFFICIENT EVIDENCE"}
-{"query": "What does RAG stand for?", "route": "parametric", "reference": "Retrieval-augmented generation."}
-{"query": "What does cosine similarity measure?", "route": "parametric", "reference": "The angle between two vectors; closeness in embedding space."}
+{"query": "Who leads the Helix Lab?", "route": "specific", "reference": "Aanya Rao leads the Helix Lab.", "failure_mode": "entity_confusion", "corpus_refs": ["helix.md"]}
+{"query": "Which project is Lena Fischer the lead engineer on?", "route": "specific", "reference": "The Lattice Project.", "failure_mode": "entity_confusion", "corpus_refs": ["lattice.md"]}
+{"query": "Who did the leader of the Helix Lab previously collaborate with?", "route": "multihop", "reference": "Tomas Vega, on hybrid search at the Meridian Institute.", "failure_mode": "multihop_shortcut", "corpus_refs": ["helix.md", "meridian.md"]}
+{"query": "What funds the project that builds knowledge graphs?", "route": "multihop", "reference": "The Beacon Foundation funds the Lattice Project.", "failure_mode": "multihop_shortcut", "corpus_refs": ["lattice.md", "beacon.md"]}
+{"query": "What are the main collaboration clusters?", "route": "global", "reference": "Helix-Meridian, the Atlas-Cascade evaluation group, and the Northgate training lineage.", "failure_mode": "global_flatten", "corpus_refs": ["helix.md", "atlas.md", "northgate.md"]}
+{"query": "What role does Northgate play across the ecosystem?", "route": "global", "reference": "It trains researchers who then spread to other labs.", "failure_mode": "global_flatten", "corpus_refs": ["northgate.md"]}
+{"query": "What is the Helix Lab's annual budget?", "route": "off_corpus_risk", "reference": "INSUFFICIENT EVIDENCE", "failure_mode": "off_corpus_overreach", "corpus_refs": []}
+{"query": "In which city is the Meridian Institute?", "route": "off_corpus_risk", "reference": "INSUFFICIENT EVIDENCE", "failure_mode": "off_corpus_overreach", "corpus_refs": []}
+{"query": "What does RAG stand for?", "route": "parametric", "reference": "Retrieval-augmented generation.", "failure_mode": "route_flip", "corpus_refs": []}
+{"query": "What does cosine similarity measure?", "route": "parametric", "reference": "The angle between two vectors; closeness in embedding space.", "failure_mode": "route_flip", "corpus_refs": []}
+{"query": "Is Tomas Vega the lead of the Helix Lab?", "route": "specific", "reference": "No; Aanya Rao leads the Helix Lab. Vega is associated with the Meridian Institute.", "failure_mode": "entity_confusion", "corpus_refs": ["helix.md", "meridian.md"]}
+{"query": "Who leads the Lattice Project and who funds it?", "route": "multihop", "reference": "Lena Fischer leads it; the Beacon Foundation funds it.", "failure_mode": "multihop_shortcut", "corpus_refs": ["lattice.md", "beacon.md"]}
+{"query": "Does the Beacon Foundation pay members a yearly bonus?", "route": "off_corpus_risk", "reference": "INSUFFICIENT EVIDENCE", "failure_mode": "fabrication", "corpus_refs": ["beacon.md"]}
+{"query": "who's in charge over at helix??", "route": "specific", "reference": "Aanya Rao leads the Helix Lab.", "failure_mode": "paraphrase_brittleness", "corpus_refs": ["helix.md"]}
+{"query": "what's the funding situation for the graph project", "route": "multihop", "reference": "The Beacon Foundation funds the Lattice Project.", "failure_mode": "paraphrase_brittleness", "corpus_refs": ["lattice.md", "beacon.md"]}
+{"query": "What does the Cascade Consortium do?", "route": "specific", "reference": "It is part of the Atlas-Cascade evaluation group.", "failure_mode": "stale_fact", "corpus_refs": ["atlas.md", "cascade.md"]}

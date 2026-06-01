@@ -244,6 +244,16 @@ The loop and the evaluation both have gaps that only show once they run for real
 
 > 💡 Module 19 hardens both halves: Lab 42 makes the operations loop survive contact with on-call and quiet days; Lab 43 keeps the evaluation's ground truth honest as the humans behind it change. The recurring lesson — a signal you don't maintain is a signal you can't trust.
 
+## Module 20: Before you point it at production
+
+The Module 18–19 signals work on a quiet repo. This module hardens them for the conditions real traffic creates, and surfaces a single discipline that ties the operations and evaluation sides together: don't measure against yourself.
+
+39. 🧪 **[Lab 44: Hardening the signals for real traffic](../../labs/44-hardening-the-signals/)** *(~90–110 min)* — make the three signals production-ready: a notifier with retries, rate limiting, and dedup/cooldown; a drift baseline measured on a held-out clean reference instead of the circular prototype set; and a canary suite grown to named failure modes with a corpus-change review.
+
+40. 🧪 **[Lab 45: Anchoring the consensus](../../labs/45-anchoring-the-consensus/)** *(~75–95 min)* — the evaluation-side twin: a majority consensus built from your annotators can be confidently wrong, so anchor it to a gold set (expert/adjudicated truth), re-rank annotators against gold, and spend adjudication where it changes the answer.
+
+> 💡 Module 20's through-line: **anchor every reference to something you did not derive from the thing being judged.** The drift baseline measured on the model's own training data is optimistic (Lab 44); the judge measured against a consensus built from the same annotators is circular (Lab 45). Held-out reference is to the baseline what a gold set is to the consensus.
+
 ## What's *not* in this path yet
 
 Anti-scope, kept explicit so you know what's coming and what isn't:

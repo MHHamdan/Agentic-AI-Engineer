@@ -36,6 +36,10 @@ jobs:
       - name: Canary routing check (hard - a flipped route fails the run)
         run: python labs/41-operating-the-loop/canary.py
 
+      - name: Canary corpus review (non-blocking - flags canaries to revalidate)
+        continue-on-error: true
+        run: python labs/41-operating-the-loop/canary.py --review
+
       - name: Run drift check
         id: drift
         run: |
