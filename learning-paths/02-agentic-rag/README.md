@@ -182,7 +182,17 @@ With the closed loop in hand — build, diagnose, measure — the last module ma
 
 25. 🧠 **[SOTA RAG patterns quiz](../../quizzes/agentic-rag/sota-rag-patterns.md)** *(~10 min)* — 8 questions on matching patterns to failure modes, the cost/benefit of each control loop, and the citations.
 
-> 💡 The math behind the retrieval metrics in Module 11 now has its own page: [Math foundations page 14 — retrieval and ranking metrics](../../math-foundations/14-retrieval-ranking-metrics.md). Runnable recipes for the patterns above are in [`recipes/rag/`](../../recipes/rag/).
+### The SOTA pattern labs (build them from scratch)
+
+Three from-scratch labs implement the patterns on top of Lab 06's retrieval stack. Each is self-contained and reuses the Lab 06 corpus, so the contrast with static RAG is direct.
+
+26. 🧪 **[Lab 31: Corrective RAG (CRAG) from scratch](../../labs/31-corrective-rag-from-scratch/)** *(~90–120 min)* — add a retrieval evaluator, decompose-then-recompose refinement, and corrective actions (rewrite-and-retry, web-search fallback). See it route an off-corpus query away from fabrication.
+
+27. 🧪 **[Lab 32: Self-RAG from scratch](../../labs/32-self-rag-from-scratch/)** *(~90–120 min)* — implement the reflection tokens (on-demand retrieve, ISREL, ISSUP, ISUSE) as constrained classification calls; generate one candidate per relevant passage and select by support + usefulness.
+
+28. 🧪 **[Lab 33: Graph RAG from scratch](../../labs/33-graph-rag-from-scratch/)** *(~110–140 min)* — extract entities and relationships, build a `networkx` knowledge graph, detect and summarize communities, and answer global (map-reduce) vs local (traversal) questions. See the global-question win flat retrieval misses.
+
+> 💡 The math behind the retrieval metrics in Module 11 now has its own page: [Math foundations page 14 — retrieval and ranking metrics](../../math-foundations/14-retrieval-ranking-metrics.md). Runnable (compact) recipes for these patterns are in [`recipes/rag/`](../../recipes/rag/); the labs above are the deeper, from-scratch versions.
 
 ## What's *not* in this path yet
 
@@ -194,12 +204,12 @@ Anti-scope, kept explicit so you know what's coming and what isn't:
 - ❌ **Multi-agent coordination** (researcher + synthesizer, etc.). That's Path 03.
 - ❌ **Late-interaction retrieval** (ColBERT, PLAID, ColPali). Mentioned in `reranking.md` and `sota-rag-patterns.md` as a production path; hands-on lab treatment deferred.
 - ❌ **Conversational query rewriting** (multi-turn rewriting against chat history). Future framework-bridge or conversational-RAG batch.
-- ❌ **Fine-tuning** (rewriters, embedders, rerankers). Out of scope.
+- ❌ **Fine-tuning** (rewriters, embedders, rerankers). Out of scope. (The Self-RAG lab approximates reflection tokens with prompting rather than fine-tuning, and says so.)
 - ❌ **Production observability** (LangSmith, LangFuse, W&B). Different problem from offline eval; Path 06.
 - ❌ **A/B testing and drift detection.** Path 06.
 - ❌ **Synthetic eval set generation via LLM.** Briefly discussed in Module 11; recommended against for the first 30-50 queries.
 
-> 📚 **Newly added:** the SOTA patterns (Self-RAG, CRAG, Adaptive, Graph, agentic, long-context, multimodal RAG) now have conceptual coverage in [`sota-rag-patterns.md`](../../concepts/rag/sota-rag-patterns.md) (Module 14) and runnable recipes in [`recipes/rag/`](../../recipes/rag/). Hands-on labs for these patterns are still a future batch.
+> 📚 **Now shipped:** the SOTA patterns (Self-RAG, CRAG, Graph RAG) have conceptual coverage in [`sota-rag-patterns.md`](../../concepts/rag/sota-rag-patterns.md) (Module 14), compact recipes in [`recipes/rag/`](../../recipes/rag/), **and from-scratch labs** ([Lab 31](../../labs/31-corrective-rag-from-scratch/), [Lab 32](../../labs/32-self-rag-from-scratch/), [Lab 33](../../labs/33-graph-rag-from-scratch/)). Adaptive, long-context, and multimodal RAG remain concept-and-recipe only for now.
 
 Each item above is meaningful enough to deserve its own focused treatment rather than a paragraph buried elsewhere.
 

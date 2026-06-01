@@ -56,6 +56,9 @@ A growing list:
 | 18 | RAGAS RAG eval | 🔴 |
 | 19 | Red-team an agent | 🔴 |
 | 20 | Cost & latency tuning | 🔴 |
+| 31 | Corrective RAG (CRAG) from scratch | 🔴 |
+| 32 | Self-RAG from scratch | 🔴 |
+| 33 | Graph RAG from scratch | 🔴 |
 
 Labs land continuously. Check [`CHANGELOG.md`](../CHANGELOG.md) for the most recent additions.
 
