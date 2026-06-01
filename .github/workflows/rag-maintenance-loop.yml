@@ -52,7 +52,7 @@ jobs:
             --reviewed labs/41-operating-the-loop/review_queue.jsonl
           # Refresh BOTH baselines so neither drifts out from under its check:
           python labs/38-calibrating-the-eval-gate/derive_thresholds.py   # gate thresholds (Lab 38)
-          python labs/41-operating-the-loop/record_baseline.py            # drift baseline (Lab 42)
+          python labs/41-operating-the-loop/record_baseline.py            # drift baseline on held-out reference (Lab 44)
 
 # The promote phase is intentionally manual (workflow_dispatch phase=promote): a human
 # reviews the queue and confirms the measured lift before the retrained model ships.
