@@ -43,93 +43,31 @@ If you've also done Lab 05 (LangGraph), great — but it's not required here. La
 Path 02 v1 is the closed loop: *build* retrieval (Labs 06-08), *diagnose* what fails (failure modes), *measure* whether your interventions help (Lab 09). Five batches across the foundation, the retrieval-quality stack, the corpus and query-side interventions, the failure-modes synthesis, and the evaluation primer. Future batches will add the framework-bridge lab and conversational RAG.
 
 ```mermaid
-flowchart TD
-    subgraph Foundations["Phase 1 — RAG Foundations"]
-        direction TB
-        A["📖 What is RAG?"]
-        B["📖 Retrieval as a tool"]
-        C["📖 Chunking and indexing"]
-        S1["⚙️ Embeddings snapshot"]
-        S2["⚙️ Vector stores snapshot"]
-        L6["🧪 Lab 06:<br/>Agentic RAG from scratch"]
-        Q1["🧠 RAG fundamentals quiz"]
-
-        A --> B
-        B --> C
-        C --> S1
-        C --> S2
-        S1 --> L6
-        S2 --> L6
-        L6 --> Q1
-    end
-
-    subgraph RetrievalStrategies["Phase 2 — Retrieval Strategies"]
-        direction TB
-        RS["📖 Retrieval strategies"]
-        HS["📖 Hybrid search"]
-        RR["📖 Reranking"]
-        L7["🧪 Lab 07:<br/>Retrieval strategies and reranking"]
-        Q2["🧠 Retrieval strategies quiz"]
-
-        RS --> HS
-        HS --> RR
-        RR --> L7
-        L7 --> Q2
-    end
-
-    subgraph ContextualRetrieval["Phase 3 — Contextual Retrieval"]
-        direction TB
-        CR["📖 Contextual retrieval"]
-        QR["📖 Query rewriting"]
-        FM["📖 Retrieval failure modes"]
-        L8["🧪 Lab 08:<br/>Contextual retrieval and query rewriting"]
-        Q3["🧠 Contextual retrieval<br/>and query rewriting quiz"]
-
-        CR --> QR
-        QR --> FM
-        FM --> L8
-        L8 --> Q3
-    end
-
-    subgraph Evaluation["Phase 4 — RAG Evaluation"]
-        direction TB
-        E1["📖 What is RAG evaluation?"]
-        E2["📖 Eval set construction"]
-        E3["📖 Retrieval metrics"]
-        E4["📖 Answer quality metrics"]
-        L9["🧪 Lab 09:<br/>Evaluating agentic RAG"]
-        Q4["🧠 RAG evaluation quiz"]
-
-        E1 --> E2
-        E2 --> E3
-        E3 --> E4
-        E4 --> L9
-        L9 --> Q4
-    end
-
-    N["🚀 Future batches"]
-
-    Q1 --> RS
-    Q2 --> CR
-    Q3 --> E1
-    Q4 --> N
-
-    classDef concept fill:#E8F0FE,stroke:#1A73E8,stroke-width:2px,color:#0D47A1;
-    classDef snapshot fill:#E0F7FA,stroke:#00838F,stroke-width:2px,color:#004D40;
-    classDef lab fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
-    classDef quiz fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
-    classDef future fill:#F3E5F5,stroke:#7B1FA2,stroke-width:3px,color:#4A148C;
-
-    classDef foundationGroup fill:#F8FBFF,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
-    classDef retrievalGroup fill:#FFF8E1,stroke:#F9A825,stroke-width:2px,color:#E65100;
-    classDef contextualGroup fill:#F1F8E9,stroke:#388E3C,stroke-width:2px,color:#1B5E20;
-    classDef evaluationGroup fill:#FCE4EC,stroke:#C2185B,stroke-width:2px,color:#880E4F;
-
-    class A,B,C,RS,HS,RR,CR,QR,FM,E1,E2,E3,E4 concept;
-    class S1,S2 snapshot;
-    class L6,L7,L8,L9 lab;
-    class Q1,Q2,Q3,Q4 quiz;
-    class N future;
+flowchart LR
+    A[📖 What is RAG?] --> B[📖 Retrieval as a tool]
+    B --> C[📖 Chunking and indexing]
+    C --> S1[⚙️ Embeddings snapshot]
+    C --> S2[⚙️ Vector stores snapshot]
+    S1 --> L6[🧪 Lab 06: Agentic RAG from scratch]
+    S2 --> L6
+    L6 --> Q1[🧠 RAG fundamentals quiz]
+    Q1 --> RS[📖 Retrieval strategies]
+    RS --> HS[📖 Hybrid search]
+    HS --> RR[📖 Reranking]
+    RR --> L7[🧪 Lab 07: Retrieval strategies and reranking]
+    L7 --> Q2[🧠 Retrieval strategies quiz]
+    Q2 --> CR[📖 Contextual retrieval]
+    CR --> QR[📖 Query rewriting]
+    QR --> FM[📖 Retrieval failure modes]
+    FM --> L8[🧪 Lab 08: Contextual retrieval and query rewriting]
+    L8 --> Q3[🧠 Contextual retrieval and query rewriting quiz]
+    Q3 --> E1[📖 What is RAG evaluation?]
+    E1 --> E2[📖 Eval set construction]
+    E2 --> E3[📖 Retrieval metrics]
+    E3 --> E4[📖 Answer quality metrics]
+    E4 --> L9[🧪 Lab 09: Evaluating agentic RAG]
+    L9 --> Q4[🧠 RAG evaluation quiz]
+    Q4 --> N[Future batches]
 ```
 
 The arrows reflect the *recommended* order. Each concept-page set is designed to be read together; they cross-reference each other and converge on the matching lab.
@@ -285,6 +223,26 @@ A gate that emits numbers and a router trained on clean data are not enough — 
 34. 🧪 **[Lab 39: The router's query-data lifecycle](../../labs/39-router-data-lifecycle/)** *(~90–110 min)* — the prototype trainset underrepresents messy real-user phrasing (shown by a confidence drop). Capture messy queries, dedup, triage by confidence to a human-review queue, retrain, and measure whether the round helped before promoting — then re-derive the Lab 38 baseline.
 
 > 💡 Module 17 is the operational layer: Lab 38 makes the gate's numbers trustworthy (validate the judge, derive thresholds); Lab 39 keeps the router's training data fresh (capture, triage, retrain, measure). The recurring discipline — validate before you trust, measure before you promote — is the point.
+
+## Module 18: Running it for real
+
+Two final moves turn the pipeline into a system that maintains itself: know the quality ceiling of your evaluation, and automate the upkeep loop around its human gates.
+
+35. 🧪 **[Lab 40: Annotation quality and the judge ceiling](../../labs/40-annotation-quality/)** *(~80–100 min)* — add multiple annotators to Lab 38's validation set and measure inter-annotator agreement (Fleiss' κ), the ceiling on how good any judge can look. Score the judge against the human consensus and report it on clear vs ambiguous items separately — a judge at the human ceiling is as good as the task allows.
+
+36. 🧪 **[Lab 41: Operating the maintenance loop](../../labs/41-operating-the-loop/)** *(~90–110 min)* — schedule the upkeep: a confidence-drift trigger on live traffic ([`rag-drift-check.yml`](../../.github/workflows/rag-drift-check.yml)), a notifier off the nightly faithfulness monitor, and a maintenance loop ([`rag-maintenance-loop.yml`](../../.github/workflows/rag-maintenance-loop.yml)) that automates the deterministic steps and gates retraining on a human review plus a measured lift.
+
+> 💡 Module 18 is where the system starts maintaining itself: Lab 40 tells you how good your judge can be (the human ceiling); Lab 41 makes the system tell *you* when to act (drift → issue, regression → alert, schedule → review queue). Automate the deterministic steps; keep humans on the judgment steps.
+
+## Module 19: Hardening for real operation
+
+The loop and the evaluation both have gaps that only show once they run for real. This module closes them on both sides.
+
+37. 🧪 **[Lab 42: Hardening the operations loop](../../labs/42-hardening-operations/)** *(~90–110 min)* — make the alerting real and self-maintaining: a severity-aware notifier routed to Slack/PagerDuty/issues, a drift baseline that re-records on every promote so it never goes stale, and a fixed canary set that keeps the drift check and nightly job honest on a quiet traffic day.
+
+38. 🧪 **[Lab 43: Tracking annotator drift](../../labs/43-annotator-drift/)** *(~70–90 min)* — annotators drift too. Track each annotator's agreement-with-consensus across rounds (Fleiss/Cohen κ), flag a drifting rater by trajectory, down-weight them, and recompute the ceiling — because annotator drift and model drift look identical in a single judge-vs-consensus number.
+
+> 💡 Module 19 hardens both halves: Lab 42 makes the operations loop survive contact with on-call and quiet days; Lab 43 keeps the evaluation's ground truth honest as the humans behind it change. The recurring lesson — a signal you don't maintain is a signal you can't trust.
 
 ## What's *not* in this path yet
 

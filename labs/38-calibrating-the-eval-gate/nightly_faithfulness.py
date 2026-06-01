@@ -23,6 +23,21 @@ import sys
 HERE = pathlib.Path(__file__).resolve().parent
 THRESHOLDS = HERE / "gate_thresholds.json"
 EVALSET = HERE.parent / "34-rag-pattern-head-to-head" / "eval_set.jsonl"
+CANARIES = HERE.parent / "41-operating-the-loop" / "canary_queries.jsonl"
+
+
+def scoring_items() -> list[dict]:
+    """Eval-set queries plus the always-on canaries (Lab 42, item 4). Canaries keep the
+    nightly faithfulness check meaningful even when the eval set is small or stale."""
+    items = []
+    if EVALSET.exists():
+        with open(EVALSET) as f:
+            items = [json.loads(line) for line in f]
+    cans = []
+    if CANARIES.exists():
+        with open(CANARIES) as f:
+            cans = [json.loads(line) for line in f]
+    return items + [{"query": c["query"], "reference": c["reference"], "canary": True} for c in cans]
 
 
 def load_threshold(name: str, default: float) -> float:
@@ -63,7 +78,10 @@ def _self_test() -> int:
     md, reg = summarize(0.70, 0.764)
     assert reg and "BELOW" in md, md
     assert load_threshold("judged_faithfulness", 0.5) >= 0.0
-    print("self-test: summarize() + load_threshold() OK")
+    items = scoring_items()
+    # canaries (if present) are always tagged and carry a reference
+    assert all(("reference" in it) for it in items if it.get("canary")), items
+    print("self-test: summarize() + load_threshold() + scoring_items() OK")
     return 0
 
 
@@ -82,6 +100,10 @@ def main() -> int:
     if summary_path:
         with open(summary_path, "a") as f:
             f.write(md)
+    # Emit a machine-readable record so the notifier (Lab 41) can alert on regression.
+    (HERE / "faithfulness.json").write_text(json.dumps(
+        {"metric": "judged_faithfulness", "value": round(faithfulness, 3),
+         "threshold": round(threshold, 3), "regressed": regressed}) + "\n")
     print(md)
     # Non-blocking by design: exit 0 so a scheduled regression is visible in the
     # summary and via the workflow's regression step, without failing other work.

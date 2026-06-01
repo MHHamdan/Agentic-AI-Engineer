@@ -3,6 +3,7 @@ name: RAG nightly judged faithfulness
 # Informational, NOT a PR gate. Judged faithfulness needs LLM-judge calls and is
 # noisy, so it runs on a schedule and reports a trend instead of blocking merges.
 # The blocking gate (routing accuracy) lives in rag-eval-gate.yml.
+# The scoring set always includes the Lab 42 canaries (a quiet day still has signal).
 
 on:
   schedule:
@@ -35,6 +36,24 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python labs/38-calibrating-the-eval-gate/nightly_faithfulness.py
 
-# Regression handling: the script writes a 🔴/🟢 line to the run summary and exits 0
-# (non-blocking). To turn drift into an alert, watch this workflow's scheduled runs or
-# add a notification step keyed off the summary - but never gate a PR on this metric.
+      - name: Notify on regression (Lab 42 - severity-aware, real channel)
+        if: always()
+        env:
+          GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          PAGERDUTY_EVENTS_URL: ${{ secrets.PAGERDUTY_EVENTS_URL }}
+          PAGERDUTY_ROUTING_KEY: ${{ secrets.PAGERDUTY_ROUTING_KEY }}
+        run: |
+          F=labs/38-calibrating-the-eval-gate/faithfulness.json
+          if [ -f "$F" ]; then
+            # notify.py decides severity (warn vs page) and shapes the payload per channel.
+            python labs/41-operating-the-loop/notify.py --channel slack \
+              --metric "$(python -c "import json;print(json.load(open('$F'))['metric'])")" \
+              --value "$(python -c "import json;print(json.load(open('$F'))['value'])")" \
+              --threshold "$(python -c "import json;print(json.load(open('$F'))['threshold'])")"
+          else
+            echo "no faithfulness.json produced; skipping notify"
+          fi
+
+# Severity and routing live in notify.py: a small dip warns, a large one pages. Set
+# SLACK_WEBHOOK_URL / PAGERDUTY_* in repo secrets to send; unset = safe no-op.

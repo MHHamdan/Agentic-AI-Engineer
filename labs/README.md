@@ -65,6 +65,10 @@ A growing list:
 | 37 | Evaluation gates for RAG | 🔴 |
 | 38 | Calibrating the eval gate | 🔴 |
 | 39 | The router's query-data lifecycle | 🔴 |
+| 40 | Annotation quality and the judge ceiling | 🔴 |
+| 41 | Operating the maintenance loop | 🔴 |
+| 42 | Hardening the operations loop | 🔴 |
+| 43 | Tracking annotator drift | 🔴 |
 
 Labs land continuously. Check [`CHANGELOG.md`](../CHANGELOG.md) for the most recent additions.
 
