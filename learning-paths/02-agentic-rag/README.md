@@ -43,31 +43,93 @@ If you've also done Lab 05 (LangGraph), great — but it's not required here. La
 Path 02 v1 is the closed loop: *build* retrieval (Labs 06-08), *diagnose* what fails (failure modes), *measure* whether your interventions help (Lab 09). Five batches across the foundation, the retrieval-quality stack, the corpus and query-side interventions, the failure-modes synthesis, and the evaluation primer. Future batches will add the framework-bridge lab and conversational RAG.
 
 ```mermaid
-flowchart LR
-    A[📖 What is RAG?] --> B[📖 Retrieval as a tool]
-    B --> C[📖 Chunking and indexing]
-    C --> S1[⚙️ Embeddings snapshot]
-    C --> S2[⚙️ Vector stores snapshot]
-    S1 --> L6[🧪 Lab 06: Agentic RAG from scratch]
-    S2 --> L6
-    L6 --> Q1[🧠 RAG fundamentals quiz]
-    Q1 --> RS[📖 Retrieval strategies]
-    RS --> HS[📖 Hybrid search]
-    HS --> RR[📖 Reranking]
-    RR --> L7[🧪 Lab 07: Retrieval strategies and reranking]
-    L7 --> Q2[🧠 Retrieval strategies quiz]
-    Q2 --> CR[📖 Contextual retrieval]
-    CR --> QR[📖 Query rewriting]
-    QR --> FM[📖 Retrieval failure modes]
-    FM --> L8[🧪 Lab 08: Contextual retrieval and query rewriting]
-    L8 --> Q3[🧠 Contextual retrieval and query rewriting quiz]
-    Q3 --> E1[📖 What is RAG evaluation?]
-    E1 --> E2[📖 Eval set construction]
-    E2 --> E3[📖 Retrieval metrics]
-    E3 --> E4[📖 Answer quality metrics]
-    E4 --> L9[🧪 Lab 09: Evaluating agentic RAG]
-    L9 --> Q4[🧠 RAG evaluation quiz]
-    Q4 --> N[Future batches]
+flowchart TD
+    subgraph Foundations["Phase 1 — RAG Foundations"]
+        direction TB
+        A["📖 What is RAG?"]
+        B["📖 Retrieval as a tool"]
+        C["📖 Chunking and indexing"]
+        S1["⚙️ Embeddings snapshot"]
+        S2["⚙️ Vector stores snapshot"]
+        L6["🧪 Lab 06:<br/>Agentic RAG from scratch"]
+        Q1["🧠 RAG fundamentals quiz"]
+
+        A --> B
+        B --> C
+        C --> S1
+        C --> S2
+        S1 --> L6
+        S2 --> L6
+        L6 --> Q1
+    end
+
+    subgraph RetrievalStrategies["Phase 2 — Retrieval Strategies"]
+        direction TB
+        RS["📖 Retrieval strategies"]
+        HS["📖 Hybrid search"]
+        RR["📖 Reranking"]
+        L7["🧪 Lab 07:<br/>Retrieval strategies and reranking"]
+        Q2["🧠 Retrieval strategies quiz"]
+
+        RS --> HS
+        HS --> RR
+        RR --> L7
+        L7 --> Q2
+    end
+
+    subgraph ContextualRetrieval["Phase 3 — Contextual Retrieval"]
+        direction TB
+        CR["📖 Contextual retrieval"]
+        QR["📖 Query rewriting"]
+        FM["📖 Retrieval failure modes"]
+        L8["🧪 Lab 08:<br/>Contextual retrieval and query rewriting"]
+        Q3["🧠 Contextual retrieval<br/>and query rewriting quiz"]
+
+        CR --> QR
+        QR --> FM
+        FM --> L8
+        L8 --> Q3
+    end
+
+    subgraph Evaluation["Phase 4 — RAG Evaluation"]
+        direction TB
+        E1["📖 What is RAG evaluation?"]
+        E2["📖 Eval set construction"]
+        E3["📖 Retrieval metrics"]
+        E4["📖 Answer quality metrics"]
+        L9["🧪 Lab 09:<br/>Evaluating agentic RAG"]
+        Q4["🧠 RAG evaluation quiz"]
+
+        E1 --> E2
+        E2 --> E3
+        E3 --> E4
+        E4 --> L9
+        L9 --> Q4
+    end
+
+    N["🚀 Future batches"]
+
+    Q1 --> RS
+    Q2 --> CR
+    Q3 --> E1
+    Q4 --> N
+
+    classDef concept fill:#E8F0FE,stroke:#1A73E8,stroke-width:2px,color:#0D47A1;
+    classDef snapshot fill:#E0F7FA,stroke:#00838F,stroke-width:2px,color:#004D40;
+    classDef lab fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
+    classDef quiz fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef future fill:#F3E5F5,stroke:#7B1FA2,stroke-width:3px,color:#4A148C;
+
+    classDef foundationGroup fill:#F8FBFF,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
+    classDef retrievalGroup fill:#FFF8E1,stroke:#F9A825,stroke-width:2px,color:#E65100;
+    classDef contextualGroup fill:#F1F8E9,stroke:#388E3C,stroke-width:2px,color:#1B5E20;
+    classDef evaluationGroup fill:#FCE4EC,stroke:#C2185B,stroke-width:2px,color:#880E4F;
+
+    class A,B,C,RS,HS,RR,CR,QR,FM,E1,E2,E3,E4 concept;
+    class S1,S2 snapshot;
+    class L6,L7,L8,L9 lab;
+    class Q1,Q2,Q3,Q4 quiz;
+    class N future;
 ```
 
 The arrows reflect the *recommended* order. Each concept-page set is designed to be read together; they cross-reference each other and converge on the matching lab.
