@@ -1,0 +1,58 @@
+name: RAG router maintenance loop
+
+# A loop with a human-judgment step cannot be fully automated. This schedules the
+# DETERMINISTIC front half (capture -> dedup -> triage -> review queue) and stops for
+# humans; the promote half (retrain -> measure -> gate -> re-baseline) is run manually
+# after the queue is labeled.
+
+on:
+  schedule:
+    - cron: "0 8 * * 1"   # weekly prepare, Monday 08:00 UTC
+  workflow_dispatch:
+    inputs:
+      phase:
+        description: "prepare | promote"
+        default: "prepare"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  loop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install "scikit-learn>=1.4" "sentence-transformers>=5.0,<6.0" numpy
+      - name: Self-test the loop logic (fast, no model)
+        run: python labs/41-operating-the-loop/run_loop.py --self-test
+      - name: Prepare (capture -> dedup -> triage -> review queue)
+        if: ${{ (github.event.inputs.phase || 'prepare') == 'prepare' }}
+        run: |
+          python labs/41-operating-the-loop/run_loop.py --phase prepare \
+            --window labs/41-operating-the-loop/recent_queries.example.jsonl
+      - name: Upload the review queue for human labeling
+        if: ${{ (github.event.inputs.phase || 'prepare') == 'prepare' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: router-review-queue
+          path: labs/41-operating-the-loop/review_queue.jsonl
+      - name: Promote (retrain -> measure -> gate -> re-baseline)
+        if: ${{ github.event.inputs.phase == 'promote' }}
+        run: |
+          python labs/41-operating-the-loop/run_loop.py --phase promote \
+            --reviewed labs/41-operating-the-loop/review_queue.jsonl
+          # Refresh BOTH baselines so neither drifts out from under its check:
+          python labs/38-calibrating-the-eval-gate/derive_thresholds.py   # gate thresholds (Lab 38)
+          python labs/41-operating-the-loop/record_baseline.py            # drift baseline (Lab 42)
+
+# The promote phase is intentionally manual (workflow_dispatch phase=promote): a human
+# reviews the queue and confirms the measured lift before the retrained model ships.

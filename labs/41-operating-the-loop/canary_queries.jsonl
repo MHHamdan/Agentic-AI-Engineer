@@ -1,0 +1,10 @@
+{"query": "Who leads the Helix Lab?", "route": "specific", "reference": "Aanya Rao leads the Helix Lab."}
+{"query": "Which project is Lena Fischer the lead engineer on?", "route": "specific", "reference": "The Lattice Project."}
+{"query": "Who did the leader of the Helix Lab previously collaborate with?", "route": "multihop", "reference": "Tomas Vega, on hybrid search at the Meridian Institute."}
+{"query": "What funds the project that builds knowledge graphs?", "route": "multihop", "reference": "The Beacon Foundation funds the Lattice Project."}
+{"query": "What are the main collaboration clusters?", "route": "global", "reference": "Helix-Meridian, the Atlas-Cascade evaluation group, and the Northgate training lineage."}
+{"query": "What role does Northgate play across the ecosystem?", "route": "global", "reference": "It trains researchers who then spread to other labs."}
+{"query": "What is the Helix Lab's annual budget?", "route": "off_corpus_risk", "reference": "INSUFFICIENT EVIDENCE"}
+{"query": "In which city is the Meridian Institute?", "route": "off_corpus_risk", "reference": "INSUFFICIENT EVIDENCE"}
+{"query": "What does RAG stand for?", "route": "parametric", "reference": "Retrieval-augmented generation."}
+{"query": "What does cosine similarity measure?", "route": "parametric", "reference": "The angle between two vectors; closeness in embedding space."}
