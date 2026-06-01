@@ -10,8 +10,8 @@ Usage:
     python eval_gate.py                      # routing-accuracy gate (default thresholds)
     python eval_gate.py --route-min 0.85     # custom threshold
     python eval_gate.py --answer --judge     # also score answers (needs API key)
-    python eval_gate.py --self-test          # gate() logic only
-    no deps, no network
+    python eval_gate.py --self-test          # gate() logic only; no deps, no network
+    python eval_gate.py --thresholds gate_thresholds.json   # thresholds from a baseline run
 
 Exit code 0 = pass, 1 = regression (so CI fails the build).
 """
@@ -19,8 +19,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import pathlib
 import sys
+import tempfile
 
 # Resolve paths relative to this file so the script runs from anywhere.
 HERE = pathlib.Path(__file__).resolve().parent
@@ -34,8 +36,19 @@ CAT_TO_ROUTE = {
 }
 
 
-def gate(metrics:
-    dict, thresholds: dict) -> tuple[bool, list[str]]:
+
+def load_thresholds(path: str | None, route_min: float) -> dict:
+    """Thresholds come from a baseline run when a config is given (Batch 73's
+    derive_thresholds.py writes it); otherwise fall back to the --route-min default.
+    Only numeric keys are treated as thresholds; keys starting with '_' (e.g. _meta)
+    are ignored."""
+    if not path:
+        return {"routing_accuracy": route_min}
+    with open(path) as f:
+        cfg = json.load(f)
+    return {k: v for k, v in cfg.items() if not k.startswith("_") and isinstance(v, (int, float))}
+
+def gate(metrics: dict, thresholds: dict) -> tuple[bool, list[str]]:
     """Pure threshold logic. Returns (passed, failures). Unit-testable, no I/O."""
     failures = []
     for key, minimum in thresholds.items():
@@ -83,24 +96,39 @@ def _self_test() -> int:
     assert not ok and len(fails) == 1, fails
     ok, fails = gate({}, {"routing_accuracy": 0.85})
     assert not ok and "missing" in fails[0], fails
-    print("self-test: gate() logic OK")
+    # load_thresholds: default path, and _meta keys ignored
+    assert load_thresholds(None, 0.85) == {"routing_accuracy": 0.85}
+    fd, tmp = tempfile.mkstemp(suffix=".json")
+    os.close(fd)
+    with open(tmp, "w") as f:
+        json.dump({"routing_accuracy": 0.9, "judged_faithfulness": 0.7, "_meta": {"x": 1}}, f)
+    loaded = load_thresholds(tmp, 0.85)
+    os.unlink(tmp)
+    assert loaded == {"routing_accuracy": 0.9, "judged_faithfulness": 0.7}, loaded
+    print("self-test: gate() + load_thresholds() OK")
     return 0
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="Eval gate for the adaptive RAG router")
     ap.add_argument("--route-min", type=float, default=0.85, help="min routing accuracy")
+    ap.add_argument("--thresholds", default=None, help="JSON file of metric->min thresholds (overrides --route-min)")
     ap.add_argument("--self-test", action="store_true", help="test gate() logic only")
     args = ap.parse_args()
 
     if args.self_test:
         return _self_test()
 
+    thresholds = load_thresholds(args.thresholds, args.route_min)
     metrics = routing_accuracy()
-    passed, failures = gate(metrics, {"routing_accuracy": args.route_min})
+    # Only enforce thresholds for metrics this run actually computed (routing_accuracy).
+    # A noisy judged metric in the config is enforced by the nightly job, not here.
+    active = {k: v for k, v in thresholds.items() if k in metrics}
+    passed, failures = gate(metrics, active)
 
+    src = args.thresholds if args.thresholds else f"--route-min {args.route_min}"
     print(f"routing_accuracy = {metrics['routing_accuracy']:.3f} on {metrics['n']} eval queries "
-          f"(threshold {args.route_min:.2f})")
+          f"(thresholds from {src})")
     for q, p, t in metrics["misroutes"]:
         print(f"  misroute: {q[:50]!r} -> {p} (expected {t})")
     print("GATE:", "PASS" if passed else "FAIL")

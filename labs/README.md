@@ -63,6 +63,8 @@ A growing list:
 | 35 | Adaptive RAG router | 🔴 |
 | 36 | Training and hardening the router | 🔴 |
 | 37 | Evaluation gates for RAG | 🔴 |
+| 38 | Calibrating the eval gate | 🔴 |
+| 39 | The router's query-data lifecycle | 🔴 |
 
 Labs land continuously. Check [`CHANGELOG.md`](../CHANGELOG.md) for the most recent additions.
 

@@ -1,0 +1,19 @@
+{
+  "routing_accuracy": 0.877,
+  "judged_faithfulness": 0.764,
+  "_meta": {
+    "routing": {
+      "baseline": 0.938,
+      "tolerance": 0.06,
+      "rule": "baseline - tolerance"
+    },
+    "faithfulness": {
+      "mean": 0.802,
+      "std": 0.019,
+      "k": 2.0,
+      "rule": "mean - k*std",
+      "n_samples": 5
+    },
+    "note": "routing_accuracy is enforced by the blocking gate; judged_faithfulness is enforced by the nightly job, not the PR gate."
+  }
+}
