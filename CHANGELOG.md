@@ -45,6 +45,16 @@ When a tool ships a breaking change (e.g., `langgraph.prebuilt` → `langchain.a
 
 ### Added
 
+- **🧪 SOTA RAG pattern labs (Batch 70).** Three from-scratch, runnable labs implementing the patterns introduced conceptually in Batch 69, each building on Lab 06's corpus and retrieval stack:
+
+  - **`labs/31-corrective-rag-from-scratch/`** — CRAG: a retrieval evaluator that grades retrieval correct/ambiguous/incorrect, decompose-then-recompose knowledge refinement with citation provenance, and corrective actions (rewrite-and-retry, web-search fallback). Demonstrates routing an off-corpus query away from fabrication, plus grader calibration.
+  - **`labs/32-self-rag-from-scratch/`** — Self-RAG: the reflection tokens (on-demand Retrieve decision, ISREL relevance, ISSUP support, ISUSE usefulness) approximated with constrained classification calls, per-passage candidate generation, and support+usefulness selection. The `chat_token` helper matches reflection tokens on word boundaries (so `irrelevant` is not mis-read as `relevant`).
+  - **`labs/33-graph-rag-from-scratch/`** — Graph RAG: per-document entity/relationship extraction, a `networkx` knowledge graph, greedy-modularity community detection (a Leiden stand-in), community summarization, and both global (map-reduce over community summaries) and local (subgraph traversal) query paths with a router. Demonstrates the global-question win flat retrieval misses.
+
+  Each lab ships the house structure: a `README.md` brief, a scaffold `lab.ipynb` with `TODO` cells, and a `solution/` (reference `lab.ipynb` + notes). All three honestly mark their lab-grade simplifications versus the source papers — CRAG's evaluator is an LLM call rather than a fine-tuned model, Self-RAG's reflection tokens are prompt-approximated rather than fine-tuned, and Graph RAG uses greedy modularity rather than Leiden. The deterministic logic (chunking, indexing, refinement, graph construction, community detection, traversal, token parsing) is verified to run; the LLM-dependent steps follow the repo's provider-agnostic client pattern. Navigation updated: `learning-paths/02-agentic-rag/README.md` (Module 14 now lists the three labs; anti-scope updated to "now shipped") and `labs/README.md` (catalog).
+
+  References: Yan et al. 2024 (CRAG, [arXiv:2401.15884](https://arxiv.org/abs/2401.15884)); Asai et al. 2023 (Self-RAG, [arXiv:2310.11511](https://arxiv.org/abs/2310.11511)); Edge et al. 2024 (Graph RAG, [arXiv:2404.16130](https://arxiv.org/abs/2404.16130)).
+
 - **📚 RAG evaluation and SOTA upgrade (Batch 69).** A research-grounded extension of the Path 02 (Agentic RAG) and Path 06 (Evaluation) material, plus new math, diagrams, recipes, and quizzes. This is an extend-and-consolidate batch: Path 02 was already mature (9 concept pages, 22 evaluation pages, 6 labs), so the work fills genuine gaps rather than rewriting. New surfaces:
 
   - **`concepts/rag/sota-rag-patterns.md`** — the modern RAG landscape (2024-2026): Self-RAG, Corrective RAG (CRAG), Adaptive RAG, agentic RAG, Graph RAG, long-context RAG, multimodal RAG (marked emerging), and structured-data RAG. Each pattern states what it adds over static RAG, when it earns its cost, and the real paper behind it, ending in a decision guide keyed to measured failures. Closes the page the `concepts/rag/README.md` previously forward-referenced as "coming."
