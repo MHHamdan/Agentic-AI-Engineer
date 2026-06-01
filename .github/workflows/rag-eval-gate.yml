@@ -1,0 +1,42 @@
+name: RAG router eval gate
+
+# Blocking check: routing accuracy of the trained classifier on the held-out eval
+# set. Deterministic (classifier only, no LLM), so the gate is stable and free.
+# Runs only when the router, its training data, the corpus, or the eval set change.
+
+on:
+  pull_request:
+    paths:
+      - "labs/33-graph-rag-from-scratch/corpus/**"
+      - "labs/34-rag-pattern-head-to-head/eval_set.jsonl"
+      - "labs/36-training-the-router/router_trainset.jsonl"
+      - "labs/37-rag-eval-gates/eval_gate.py"
+  workflow_dispatch: {}
+
+jobs:
+  routing-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install "scikit-learn>=1.4" "sentence-transformers>=5.0,<6.0" numpy
+
+      - name: Self-test the gate logic (fast, no model)
+        run: python labs/37-rag-eval-gates/eval_gate.py --self-test
+
+      - name: Routing-accuracy gate
+        run: python labs/37-rag-eval-gates/eval_gate.py --route-min 0.85
+
+# Note: answer faithfulness via the LLM judge is intentionally NOT run here. It is
+# noisy and costs API calls; run it on a nightly schedule (schedule: cron) as an
+# informational job that posts a trend, and alert on regression rather than blocking
+# the build. See labs/37-rag-eval-gates/ for the judge.

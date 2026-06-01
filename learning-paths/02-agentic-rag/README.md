@@ -204,6 +204,16 @@ Having built the patterns, the closing module measures them against each other a
 
 > 💡 Labs 34 and 35 reuse Lab 33's entity-rich corpus and a shared 16-query eval set (`labs/34-rag-pattern-head-to-head/eval_set.jsonl`) spanning six query categories, so the comparison and the router are measured on the same footing.
 
+## Module 16: Production-hardening the router
+
+The router works — now make it deployable. Train its classifier, give it a fallback for uncertainty, score it with a real judge, and gate it in CI.
+
+31. 🧪 **[Lab 36: Training and hardening the router](../../labs/36-training-the-router/)** *(~100–130 min)* — replace Lab 35's per-query LLM classification with a trained classifier (query embeddings + logistic regression on a labeled set), add a confidence gate from `predict_proba`, and route low-confidence queries to an agentic fallback that tries the top-2 strategies and verifies. An applied-ML lab: cross-validation on small data, trained-vs-prompt cost, and the calibration risk.
+
+32. 🧪 **[Lab 37: Evaluation gates for RAG](../../labs/37-rag-eval-gates/)** *(~90–120 min)* — build an LLM-as-judge scorer that drops into Lab 34's harness in place of token-presence scoring, then wrap the router in an `eval_gate` ([`eval_gate.py`](../../labs/37-rag-eval-gates/eval_gate.py) + a [GitHub Actions workflow](../../.github/workflows/rag-eval-gate.yml)) that blocks CI on routing regressions. The design rule: block on cheap deterministic signals, monitor expensive noisy ones out of band.
+
+> 💡 Module 16 turns the teaching router into a deployable one. Lab 36 is mostly a classification + calibration problem; Lab 37 is mostly evaluation-infrastructure and CI. Together they are the production tail of the RAG track.
+
 ## What's *not* in this path yet
 
 Anti-scope, kept explicit so you know what's coming and what isn't:

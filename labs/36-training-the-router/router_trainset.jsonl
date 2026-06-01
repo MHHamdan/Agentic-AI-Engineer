@@ -1,0 +1,81 @@
+{"query": "Who is the advisor of both Lena Fischer and Wei Chen?", "route": "multihop"}
+{"query": "Who leads the Helix Lab?", "route": "specific"}
+{"query": "Describe the overall structure of the research network.", "route": "global"}
+{"query": "Who trained the multimodal embeddings specialist now at the Meridian Institute?", "route": "multihop"}
+{"query": "What overall story do the documents tell about this field?", "route": "global"}
+{"query": "What is the focus of the Sentinel Project?", "route": "specific"}
+{"query": "What organization funds the project that builds knowledge graphs?", "route": "multihop"}
+{"query": "How are the different projects connected across organizations?", "route": "global"}
+{"query": "Define dense retrieval.", "route": "parametric"}
+{"query": "How does funding influence which organizations sit at the center of the field?", "route": "global"}
+{"query": "Who co-authored the hybrid-search work that the Lattice Project builds on?", "route": "multihop"}
+{"query": "Who leads the Lattice Project's direction?", "route": "specific"}
+{"query": "Where did the lead engineer on Lattice study before joining Helix?", "route": "multihop"}
+{"query": "What organization funds both the Lattice Project and the Cascade Consortium?", "route": "multihop"}
+{"query": "Give an overview of how research, funding, and collaboration interrelate here.", "route": "global"}
+{"query": "What is a large language model?", "route": "parametric"}
+{"query": "What are the overall patterns of collaboration in this community?", "route": "global"}
+{"query": "What is the Sentinel Project's exact line-item budget?", "route": "off_corpus_risk"}
+{"query": "What are the central hubs that connect the whole community?", "route": "global"}
+{"query": "Which foundation funds the Lattice Project?", "route": "specific"}
+{"query": "What is the Prism Project about?", "route": "specific"}
+{"query": "Explain what an embedding is.", "route": "parametric"}
+{"query": "Who advised the researcher who now works on graph-based retrieval at the Helix Lab?", "route": "multihop"}
+{"query": "What does Wei Chen specialize in?", "route": "specific"}
+{"query": "What did the Meridian principal scientist work on with the current Helix Lab leader?", "route": "multihop"}
+{"query": "Explain what a reranker does in general.", "route": "parametric"}
+{"query": "Who is the principal scientist at the Meridian Institute?", "route": "specific"}
+{"query": "What are the recurring themes that span multiple documents?", "route": "global"}
+{"query": "What does BM25 measure?", "route": "parametric"}
+{"query": "What did the principal scientist at Meridian co-author before leading Prism?", "route": "multihop"}
+{"query": "What kind of organization is the Meridian Institute?", "route": "specific"}
+{"query": "What is Aanya Rao's salary?", "route": "off_corpus_risk"}
+{"query": "Which foundation indirectly supports the work Priya Nair contributes to Cascade?", "route": "multihop"}
+{"query": "What is map-reduce?", "route": "parametric"}
+{"query": "What does NDCG stand for?", "route": "parametric"}
+{"query": "What is the street address of the Helix Lab?", "route": "off_corpus_risk"}
+{"query": "What ties the academic and industry organizations together?", "route": "global"}
+{"query": "What is the modularity of a graph community?", "route": "parametric"}
+{"query": "In which city is the Meridian Institute headquartered?", "route": "off_corpus_risk"}
+{"query": "What is the email address of Tomas Vega?", "route": "off_corpus_risk"}
+{"query": "What are the main collaboration clusters across this research ecosystem?", "route": "global"}
+{"query": "What is a vector database?", "route": "parametric"}
+{"query": "Which lab employs the doctoral graduate that Samuel Okafor advised who studies graphs?", "route": "multihop"}
+{"query": "Who did the leader of the Helix Lab previously collaborate with, and on what topic?", "route": "multihop"}
+{"query": "How much funding did Beacon give in 2019 specifically?", "route": "off_corpus_risk"}
+{"query": "How many papers has the Prism Project published in total?", "route": "off_corpus_risk"}
+{"query": "Which project is Lena Fischer the lead engineer on?", "route": "specific"}
+{"query": "When was Northgate University founded?", "route": "off_corpus_risk"}
+{"query": "What is the stock price of Atlas Systems?", "route": "off_corpus_risk"}
+{"query": "What project does the person Aanya Rao previously collaborated with now lead?", "route": "multihop"}
+{"query": "In one sentence, what is cosine similarity?", "route": "parametric"}
+{"query": "How big is the Lattice Project's compute cluster?", "route": "off_corpus_risk"}
+{"query": "Where does Lena Fischer live?", "route": "off_corpus_risk"}
+{"query": "Summarize the major research themes across all the labs.", "route": "global"}
+{"query": "What does the acronym RAG stand for in machine learning?", "route": "parametric"}
+{"query": "What is the big picture of how these labs relate to each other?", "route": "global"}
+{"query": "Which institution does Samuel Okafor work at?", "route": "specific"}
+{"query": "What is the difference between precision and recall?", "route": "parametric"}
+{"query": "What role does Northgate University play across the whole ecosystem?", "route": "global"}
+{"query": "What year was the Beacon Foundation established?", "route": "off_corpus_risk"}
+{"query": "What does the Prism Project work on?", "route": "specific"}
+{"query": "What is community detection in graphs?", "route": "parametric"}
+{"query": "How does Beacon Foundation funding shape the structure of the field?", "route": "global"}
+{"query": "Define multimodal retrieval in general terms.", "route": "parametric"}
+{"query": "Which projects report against the benchmarks Priya Nair's project produces?", "route": "multihop"}
+{"query": "What is the Helix Lab's main research focus?", "route": "specific"}
+{"query": "How many employees does Atlas Systems have?", "route": "off_corpus_risk"}
+{"query": "What is the phone number for the Cascade Consortium?", "route": "off_corpus_risk"}
+{"query": "What does Atlas Systems do?", "route": "specific"}
+{"query": "Who funds the Cascade Consortium?", "route": "specific"}
+{"query": "What funds the consortium that the leader of Prism advises?", "route": "multihop"}
+{"query": "What is Priya Nair's date of birth?", "route": "off_corpus_risk"}
+{"query": "Which lab runs the Lattice Project?", "route": "specific"}
+{"query": "How does the training lineage from Northgate affect the wider ecosystem?", "route": "global"}
+{"query": "Who sits on the Cascade Consortium steering committee?", "route": "specific"}
+{"query": "What is a knowledge graph?", "route": "parametric"}
+{"query": "Who is a research scientist at the Meridian Institute?", "route": "specific"}
+{"query": "Who leads the Sentinel Project?", "route": "specific"}
+{"query": "What is the Helix Lab's annual operating budget in dollars?", "route": "off_corpus_risk"}
+{"query": "Which university did the lead engineer of the Lattice Project earn her doctorate from?", "route": "multihop"}
+{"query": "Across the whole corpus, what are the dominant research directions?", "route": "global"}
