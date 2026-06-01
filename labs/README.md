@@ -61,6 +61,8 @@ A growing list:
 | 33 | Graph RAG from scratch | 🔴 |
 | 34 | Head-to-head RAG pattern evaluation | 🔴 |
 | 35 | Adaptive RAG router | 🔴 |
+| 36 | Training and hardening the router | 🔴 |
+| 37 | Evaluation gates for RAG | 🔴 |
 
 Labs land continuously. Check [`CHANGELOG.md`](../CHANGELOG.md) for the most recent additions.
 
