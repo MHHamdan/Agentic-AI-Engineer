@@ -1,0 +1,40 @@
+name: RAG nightly judged faithfulness
+
+# Informational, NOT a PR gate. Judged faithfulness needs LLM-judge calls and is
+# noisy, so it runs on a schedule and reports a trend instead of blocking merges.
+# The blocking gate (routing accuracy) lives in rag-eval-gate.yml.
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # 06:00 UTC nightly
+  workflow_dispatch: {}
+
+jobs:
+  faithfulness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install "scikit-learn>=1.4" "sentence-transformers>=5.0,<6.0" numpy openai anthropic
+
+      - name: Self-test the monitor logic (fast, no API)
+        run: python labs/38-calibrating-the-eval-gate/nightly_faithfulness.py --self-test
+
+      - name: Score nightly faithfulness and write trend
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python labs/38-calibrating-the-eval-gate/nightly_faithfulness.py
+
+# Regression handling: the script writes a 🔴/🟢 line to the run summary and exits 0
+# (non-blocking). To turn drift into an alert, watch this workflow's scheduled runs or
+# add a notification step keyed off the summary - but never gate a PR on this metric.

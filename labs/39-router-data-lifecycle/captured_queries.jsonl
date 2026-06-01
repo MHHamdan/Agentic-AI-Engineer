@@ -1,0 +1,36 @@
+{"query": "meridian institute city", "gold": "off_corpus_risk"}
+{"query": "beacon foundation founded when", "gold": "off_corpus_risk"}
+{"query": "foundation behind both lattice and cascade", "gold": "multihop"}
+{"query": "rao salary", "gold": "off_corpus_risk"}
+{"query": "wei chen focus area", "gold": "specific"}
+{"query": "atlas systems = what kind of org", "gold": "specific"}
+{"query": "who did helix lab leader work w before + on what", "gold": "multihop"}
+{"query": "big picture how labs connected", "gold": "global"}
+{"query": "helix lab boss??", "gold": "specific"}
+{"query": "explain embeddings simply", "gold": "parametric"}
+{"query": "ndcg meaning", "gold": "parametric"}
+{"query": "phone number cascade", "gold": "off_corpus_risk"}
+{"query": "central hubs of the network", "gold": "global"}
+{"query": "aanya rao old collaborator now leads what", "gold": "multihop"}
+{"query": "what funds the knowledge graph project", "gold": "multihop"}
+{"query": "helix budget $$ ?", "gold": "off_corpus_risk"}
+{"query": "define knowledge graph plz", "gold": "parametric"}
+{"query": "who runs helix again", "gold": "specific"}
+{"query": "northgate role across whole ecosystem", "gold": "global"}
+{"query": "whats prism project doing", "gold": "specific"}
+{"query": "cascade consortium funder?", "gold": "specific"}
+{"query": "lattice lead engineer phd from where", "gold": "multihop"}
+{"query": "who advised fischer AND chen", "gold": "multihop"}
+{"query": "lena fischer - which project", "gold": "specific"}
+{"query": "rag = ?", "gold": "parametric"}
+{"query": "overall themes across the docs", "gold": "global"}
+{"query": "what ties academia + industry here", "gold": "global"}
+{"query": "main collab clusters??", "gold": "global"}
+{"query": "how does beacon money shape things overall", "gold": "global"}
+{"query": "atlas systems headcount", "gold": "off_corpus_risk"}
+{"query": "sentinel proj lead", "gold": "specific"}
+{"query": "okafor student that does graphs works at", "gold": "multihop"}
+{"query": "what bm25 measure", "gold": "parametric"}
+{"query": "whats a reranker do", "gold": "parametric"}
+{"query": "wuts cosine sim", "gold": "parametric"}
+{"query": "lattice cluster size gpus", "gold": "off_corpus_risk"}

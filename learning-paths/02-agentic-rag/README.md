@@ -214,6 +214,16 @@ The router works — now make it deployable. Train its classifier, give it a fal
 
 > 💡 Module 16 turns the teaching router into a deployable one. Lab 36 is mostly a classification + calibration problem; Lab 37 is mostly evaluation-infrastructure and CI. Together they are the production tail of the RAG track.
 
+## Module 17: Trusting and maintaining the system
+
+A gate that emits numbers and a router trained on clean data are not enough — the numbers have to be calibrated against humans, the thresholds have to come from measurement, and the training data has to keep up with real queries.
+
+33. 🧪 **[Lab 38: Calibrating the eval gate](../../labs/38-calibrating-the-eval-gate/)** *(~90–110 min)* — measure judge-vs-human agreement (Cohen's κ) before trusting judged metrics, derive gate thresholds from a baseline run plus a tolerance band, and operate judged faithfulness as a nightly monitor ([`rag-faithfulness-nightly.yml`](../../.github/workflows/rag-faithfulness-nightly.yml)) rather than a PR gate. Extends Lab 37's `eval_gate.py` with a `--thresholds` config.
+
+34. 🧪 **[Lab 39: The router's query-data lifecycle](../../labs/39-router-data-lifecycle/)** *(~90–110 min)* — the prototype trainset underrepresents messy real-user phrasing (shown by a confidence drop). Capture messy queries, dedup, triage by confidence to a human-review queue, retrain, and measure whether the round helped before promoting — then re-derive the Lab 38 baseline.
+
+> 💡 Module 17 is the operational layer: Lab 38 makes the gate's numbers trustworthy (validate the judge, derive thresholds); Lab 39 keeps the router's training data fresh (capture, triage, retrain, measure). The recurring discipline — validate before you trust, measure before you promote — is the point.
+
 ## What's *not* in this path yet
 
 Anti-scope, kept explicit so you know what's coming and what isn't:
