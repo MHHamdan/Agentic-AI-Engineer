@@ -17,12 +17,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Restore alert cooldown state
+      - name: Restore shared alert state (atomic across workers, Lab 46)
         uses: actions/cache@v4
         with:
-          path: labs/41-operating-the-loop/alert_state.json
-          key: alert-state-${{ github.run_id }}
-          restore-keys: alert-state-
+          path: labs/41-operating-the-loop/alert_store.json
+          key: alert-store-${{ github.run_id }}
+          restore-keys: alert-store-
 
       - uses: actions/setup-python@v5
         with:
@@ -55,7 +55,7 @@ jobs:
           if [ -f "$F" ]; then
             # notify.py decides severity (warn vs page) and shapes the payload per channel.
             python labs/41-operating-the-loop/notify.py --channel slack \
-              --state-file labs/41-operating-the-loop/alert_state.json \
+              --shared-store labs/41-operating-the-loop/alert_store.json \
               --metric "$(python -c "import json;print(json.load(open('$F'))['metric'])")" \
               --value "$(python -c "import json;print(json.load(open('$F'))['value'])")" \
               --threshold "$(python -c "import json;print(json.load(open('$F'))['threshold'])")"

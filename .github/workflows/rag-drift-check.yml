@@ -23,6 +23,13 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+
+      - name: Restore per-document corpus map (Lab 46)
+        uses: actions/cache@v4
+        with:
+          path: labs/41-operating-the-loop/canary_corpus.map.json
+          key: canary-map-${{ github.run_id }}
+          restore-keys: canary-map-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"

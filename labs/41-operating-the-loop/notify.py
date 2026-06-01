@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Route a regression to on-call, hardened for real volume (Labs 42 + 44).
 
-Lab 42 added severity and provider adapters. Before pointing this at live traffic it
-needs three more things so it neither floods on-call nor drops alerts on a transient
-blip: retries with backoff (a flaky webhook shouldn't lose a page), rate limiting (a
-storm of regressions shouldn't become a storm of pages), and dedup/cooldown (the same
-alert shouldn't re-fire every run while you're already on it). Safe no-op default
-unchanged - nothing configured means nothing sent.
+Lab 44 added retries, rate limiting, and dedup/cooldown - but kept the state in a
+per-process dict, so two workers (two CI runs, two replicas) each have their own view and
+both page. Lab 46 moves the state behind a shared StateStore with an ATOMIC claim, so
+exactly one worker pages. `deliver` is backward compatible: pass a dict for the old
+single-process behavior, or a StateStore (e.g. FileLockStore) for a shared one. Safe no-op
+default unchanged - nothing configured means nothing sent.
 
 Usage:
     python notify.py --metric judged_faithfulness --value 0.55 --threshold 0.764 --channel pagerduty
@@ -22,6 +22,11 @@ import sys
 import time
 from urllib import request as _request
 from urllib.error import URLError
+
+try:
+    from store import FileLockStore, InMemoryStore  # shared-state backends (Lab 46)
+except Exception:  # store.py colocated in the toolkit; degrade to legacy dict path
+    InMemoryStore = FileLockStore = None
 
 PAGE_FRACTION = 0.10
 # Hardening defaults (tune to your tolerance and on-call appetite).
@@ -121,18 +126,35 @@ def send_with_retry(fn, retries: int = RETRIES, base_delay: float = BASE_DELAY_S
     raise RuntimeError(f"delivery failed after {retries} attempts: {last}")
 
 
-def deliver(shaped: dict, payload: dict, url: str | None, state: dict, now: float,
-            sleep=time.sleep) -> tuple[str, dict]:
-    """Apply cooldown -> rate-limit -> retry around the actual post. Returns (status, state).
-    Never raises for control-flow reasons (suppressed/limited); only a true delivery
-    failure after retries propagates."""
+def deliver(shaped: dict, payload: dict, url: str | None, store, now: float,
+            sleep=time.sleep) -> tuple[str, object]:
+    """Apply cooldown -> rate-limit -> retry around the actual post. Returns (status, store).
+
+    `store` may be a StateStore (shared, atomic claim - one worker wins) OR a plain dict
+    (legacy single-process state, the Lab 44 behavior). With a StateStore the cooldown and
+    rate-limit checks happen inside one atomic claim, closing the check-then-record race
+    across workers. Never raises for control-flow reasons; only a true delivery failure
+    after retries propagates.
+
+    Note: the claim is taken BEFORE delivery, so a send that ultimately fails after retries
+    still consumed the cooldown slot - deliberate, so a broken webhook can't retry-storm
+    every worker. Release-on-failure is a possible refinement (see the lab)."""
     key = dedup_key(payload)
+    if hasattr(store, "try_claim"):                 # shared StateStore path (Lab 46)
+        if not store.try_claim(key, now, COOLDOWN_S, MAX_ALERTS_PER_WINDOW, RATE_WINDOW_S):
+            return f"suppressed (cooldown or rate limit): {key}", store
+        if not url:
+            return "no endpoint configured - payload printed, not sent", store
+        status = send_with_retry(lambda: post(shaped, url), sleep=sleep)  # pragma: no cover
+        return status, store
+    # legacy dict path (Lab 44): check-then-record, single process only
+    state = store if store is not None else {}
     if in_cooldown(key, now, state):
         return f"suppressed (cooldown): {key}", state
     if rate_limited(now, state):
         return "suppressed (rate limit reached)", state
     if not url:
-        state = record_send(key, now, state)   # still record, so no-op runs honor cooldown
+        state = record_send(key, now, state)
         return "no endpoint configured - payload printed, not sent", state
     status = send_with_retry(lambda: post(shaped, url), sleep=sleep)  # pragma: no cover
     state = record_send(key, now, state)
@@ -199,12 +221,18 @@ def _self_test() -> int:
     except RuntimeError:
         pass
 
-    # deliver: first send records; immediate second is cooldown-suppressed
+    # deliver, legacy dict path: first send records; immediate second is cooldown-suppressed
     state = {}
     s1, state = deliver(to_slack(p), p, None, state, now=0.0, sleep=lambda s: None)
     s2, state = deliver(to_slack(p), p, None, state, now=10.0, sleep=lambda s: None)
     assert s1.startswith("no endpoint") and s2.startswith("suppressed (cooldown)")
-    print("self-test: severity/adapters + dedup/cooldown + rate-limit + retry + deliver OK")
+    # deliver, shared StateStore path: the atomic claim suppresses the second worker
+    if InMemoryStore is not None:
+        store = InMemoryStore()
+        r1, store = deliver(to_slack(p), p, None, store, now=0.0, sleep=lambda s: None)
+        r2, store = deliver(to_slack(p), p, None, store, now=10.0, sleep=lambda s: None)
+        assert r1.startswith("no endpoint") and r2.startswith("suppressed (cooldown or rate limit)")
+    print("self-test: severity/adapters + dedup/cooldown + rate-limit + retry + deliver (dict+store) OK")
     return 0
 
 
@@ -214,7 +242,8 @@ def main() -> int:
     ap.add_argument("--value", type=float)
     ap.add_argument("--threshold", type=float)
     ap.add_argument("--channel", choices=["slack", "pagerduty", "issue"], default="slack")
-    ap.add_argument("--state-file", default=None, help="persist cooldown/rate state across runs")
+    ap.add_argument("--state-file", default=None, help="legacy per-process state JSON")
+    ap.add_argument("--shared-store", default=None, help="shared state file (atomic, multi-worker)")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
     if args.self_test:
@@ -232,9 +261,13 @@ def main() -> int:
     print(json.dumps(shaped, indent=2))
     env_key = ENDPOINT_ENV.get(args.channel)
     url = os.environ.get(env_key) if env_key else None
-    state = load_state(args.state_file)
-    status, state = deliver(shaped, payload, url, state, now=time.time())
-    save_state(args.state_file, state)
+    if args.shared_store and FileLockStore is not None:
+        store = FileLockStore(args.shared_store)            # shared across workers (atomic)
+        status, _ = deliver(shaped, payload, url, store, now=time.time())
+    else:
+        state = load_state(args.state_file)                 # legacy single-process dict
+        status, state = deliver(shaped, payload, url, state, now=time.time())
+        save_state(args.state_file, state)
     print(status)
     return 0
 

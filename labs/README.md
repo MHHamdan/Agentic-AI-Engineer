@@ -71,6 +71,8 @@ A growing list:
 | 43 | Tracking annotator drift | 🔴 |
 | 44 | Hardening the signals for real traffic | 🔴 |
 | 45 | Anchoring the consensus | 🔴 |
+| 46 | Scaling the signals across workers and traffic | 🔴 |
+| 47 | Trustworthy gold | 🔴 |
 
 Labs land continuously. Check [`CHANGELOG.md`](../CHANGELOG.md) for the most recent additions.
 
