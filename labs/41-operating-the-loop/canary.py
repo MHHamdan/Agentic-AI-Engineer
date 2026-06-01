@@ -7,11 +7,11 @@ A small fixed canary set - known queries with known routes and reference answers
 gives both jobs a constant heartbeat. If a canary's route flips or its answer breaks,
 something regressed regardless of traffic.
 
-Lab 44 grows the set to cover named failure modes (entity confusion, multi-hop
-shortcutting, off-corpus overreach, paraphrase brittleness, stale facts, ...) and adds a
-corpus-change review: each canary records the corpus docs its answer depends on, so when
-the corpus fingerprint changes you know exactly which canaries to revalidate before
-trusting them again.
+Lab 44 grows the set to cover named failure modes and adds a corpus-change review keyed on
+a single WHOLE-CORPUS fingerprint - which flags every corpus-dependent canary on any change,
+even a typo fix in one unrelated doc. Lab 46 keeps a PER-DOCUMENT fingerprint map, so a
+change to doc X flags only the canaries whose corpus_refs include X. Same safety, far less
+revalidation noise.
 
 Usage:
     python canary.py --self-test
@@ -77,6 +77,33 @@ def corpus_fingerprint(corpus_dir: pathlib.Path = CORPUS_DIR) -> str:
     return h.hexdigest()[:16]
 
 
+MAP_FILE = HERE / "canary_corpus.map.json"
+
+
+def per_doc_fingerprint(corpus_dir: pathlib.Path = CORPUS_DIR) -> dict:
+    """Per-document hashes: {doc_name: sha256[:16]}. A change localizes to specific docs."""
+    out = {}
+    for f in sorted(corpus_dir.glob("*.md")) if corpus_dir.exists() else []:
+        out[f.name] = hashlib.sha256(f.read_bytes()).hexdigest()[:16]
+    return out
+
+
+def changed_docs(old_map: dict, new_map: dict) -> set:
+    """Docs that were added, removed, or whose hash changed."""
+    changed = set()
+    for name in set(old_map) | set(new_map):
+        if old_map.get(name) != new_map.get(name):
+            changed.add(name)
+    return changed
+
+
+def canaries_for_changed_docs(canaries: list[dict], changed: set) -> list[dict]:
+    """Only canaries whose corpus_refs intersect the changed docs need revalidation."""
+    if not changed:
+        return []
+    return [c for c in canaries if set(c.get("corpus_refs", [])) & changed]
+
+
 def canaries_needing_review(canaries: list[dict], corpus_changed: bool) -> list[dict]:
     """If the corpus changed, every canary with a non-empty corpus_refs must be reviewed
     (its reference answer may no longer match the corpus). Corpus-free canaries (parametric,
@@ -88,11 +115,19 @@ def canaries_needing_review(canaries: list[dict], corpus_changed: bool) -> list[
 
 def review_status(canaries: list[dict], recorded_fp: str | None,
                   current_fp: str | None = None) -> dict:
-    """Compare the recorded corpus fingerprint to the current one and list canaries to review."""
+    """Whole-corpus review (Lab 44): any change flags every corpus-dependent canary."""
     current_fp = current_fp if current_fp is not None else corpus_fingerprint()
     changed = recorded_fp is not None and recorded_fp != current_fp
     return {"corpus_changed": changed, "recorded": recorded_fp, "current": current_fp,
             "to_review": [c["query"] for c in canaries_needing_review(canaries, changed)]}
+
+
+def review_status_per_doc(canaries: list[dict], old_map: dict, new_map: dict | None = None) -> dict:
+    """Per-document review (Lab 46): flag only canaries that depend on a CHANGED doc."""
+    new_map = new_map if new_map is not None else per_doc_fingerprint()
+    changed = changed_docs(old_map, new_map)
+    return {"changed_docs": sorted(changed),
+            "to_review": [c["query"] for c in canaries_for_changed_docs(canaries, changed)]}
 
 
 def _self_test() -> int:
@@ -117,7 +152,19 @@ def _self_test() -> int:
     assert all(q not in rs["to_review"] for q in free)
     # unchanged fingerprint -> nothing to review
     assert review_status(cans, recorded_fp="SAME", current_fp="SAME")["to_review"] == []
-    print("self-test: load + augment_window + routing-failures + failure-modes + corpus-review OK")
+    # per-doc precision: change ONE doc -> only canaries referencing it are flagged
+    old_map = {"helix.md": "a", "lattice.md": "b", "beacon.md": "c", "meridian.md": "d",
+               "atlas.md": "e", "northgate.md": "f", "cascade.md": "g"}
+    new_map = dict(old_map)
+    new_map["helix.md"] = "CHANGED"
+    pd = review_status_per_doc(cans, old_map, new_map)
+    assert pd["changed_docs"] == ["helix.md"]
+    flagged = set(pd["to_review"])
+    assert flagged and all("helix.md" in c.get("corpus_refs", []) for c in cans if c["query"] in flagged)
+    # per-doc flags FEWER than the whole-corpus review (which flags all corpus-dependent)
+    whole = [c["query"] for c in cans if c.get("corpus_refs")]
+    assert len(pd["to_review"]) < len(whole), (len(pd["to_review"]), len(whole))
+    print(f"self-test: ... + per-doc review flags {len(pd['to_review'])} vs whole-corpus {len(whole)} OK")
     return 0
 
 
@@ -129,15 +176,24 @@ def main() -> int:
     if args.self_test:
         return _self_test()
     if args.review:
-        recorded = FINGERPRINT_FILE.read_text().strip() if FINGERPRINT_FILE.exists() else None
-        rs = review_status(load_canaries(), recorded)
-        if rs["corpus_changed"]:
-            print(f"corpus changed ({rs['recorded']} -> {rs['current']}); revalidate {len(rs['to_review'])} canaries:")
-            for q in rs["to_review"]:
+        # Per-document review (Lab 46): flag only canaries depending on a CHANGED doc.
+        if MAP_FILE.exists():
+            with open(MAP_FILE) as f:
+                old_map = json.load(f)
+        else:
+            old_map = {}
+        new_map = per_doc_fingerprint()
+        pd = review_status_per_doc(load_canaries(), old_map, new_map)
+        if old_map and pd["changed_docs"]:
+            print(f"changed docs: {pd['changed_docs']}; revalidate {len(pd['to_review'])} canaries:")
+            for q in pd["to_review"]:
                 print(f"  - {q}")
+            with open(MAP_FILE, "w") as f:
+                json.dump(new_map, f, indent=2)
             return 2
-        print(f"corpus unchanged (fingerprint {rs['current']}); no canary review needed")
-        FINGERPRINT_FILE.write_text(rs["current"] + "\n")
+        print(f"no corpus-dependent canaries need review ({len(new_map)} docs mapped)")
+        with open(MAP_FILE, "w") as f:
+                json.dump(new_map, f, indent=2)
         return 0
     fails = canary_routing_failures(predict_canary_routes(), load_canaries())
     if fails:

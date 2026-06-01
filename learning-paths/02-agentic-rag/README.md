@@ -254,6 +254,16 @@ The Module 18–19 signals work on a quiet repo. This module hardens them for th
 
 > 💡 Module 20's through-line: **anchor every reference to something you did not derive from the thing being judged.** The drift baseline measured on the model's own training data is optimistic (Lab 44); the judge measured against a consensus built from the same annotators is circular (Lab 45). Held-out reference is to the baseline what a gold set is to the consensus.
 
+## Module 21: Scaling past a single point
+
+Modules 18–20 quietly assumed a single point: one worker, one curated sample, one corpus hash, one expert. Production makes every one of them plural, and the signals that worked on one box start to lie. This module removes the single-point assumption on both sides.
+
+41. 🧪 **[Lab 46: Scaling the signals across workers and traffic](../../labs/46-scaling-the-signals/)** *(~90–110 min)* — a shared `StateStore` with an atomic claim so many workers share one view of "already paged" (no more double-pages), a larger clean held-out reference distilled from real traffic (with a tighter confidence band), and a per-document corpus map so a change flags only the canaries that depend on the changed docs.
+
+42. 🧪 **[Lab 47: Trustworthy gold](../../labs/47-trustworthy-gold/)** *(~75–95 min)* — the evaluation-side twin: a single-expert gold is just another biased annotator, so build gold from multiple experts (agreement measured, splits adjudicated), show the annotator consensus was *flattering* the judge, and re-derive the Lab 40 judge ceiling against gold rather than consensus.
+
+> 💡 Module 21's through-line: **any single point you trusted has to become plural and externally anchored before it holds at scale.** One worker's state → a shared store; one curated reference → a sampled, verified set; one corpus hash → a per-document map; one expert → multi-expert, adjudicated gold — and then re-measure everything that was calibrated against the single point.
+
 ## What's *not* in this path yet
 
 Anti-scope, kept explicit so you know what's coming and what isn't:

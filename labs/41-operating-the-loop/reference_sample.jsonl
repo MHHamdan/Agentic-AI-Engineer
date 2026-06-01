@@ -1,16 +1,31 @@
-{"query": "who's the person running the Helix Lab these days", "route": "specific", "clean": true}
-{"query": "which engineer heads up the Lattice work", "route": "specific", "clean": true}
-{"query": "tell me who leads Prism", "route": "specific", "clean": true}
-{"query": "the Helix lead used to work with who, on what", "route": "multihop", "clean": true}
-{"query": "what's paying for the knowledge-graph project", "route": "multihop", "clean": true}
-{"query": "who funds the lab that Rao runs", "route": "multihop", "clean": true}
-{"query": "give me the big picture of how these groups cluster", "route": "global", "clean": true}
-{"query": "what's Northgate's overall role across everyone", "route": "global", "clean": true}
+{"query": "who funds the lab aanya runs", "route": "multihop", "clean": true}
+{"query": "the helix lead worked with whom before", "route": "multihop", "clean": true}
+{"query": "the meridian collaborator of the helix lead is who", "route": "multihop", "clean": true}
+{"query": "what funds the knowledge-graph project", "route": "multihop", "clean": true}
+{"query": "who leads lattice and who pays for it", "route": "multihop", "clean": true}
+{"query": "what bankrolls the graph project", "route": "multihop", "clean": true}
+{"query": "who runs helix now", "route": "specific", "clean": true}
+{"query": "who directs helix", "route": "specific", "clean": true}
+{"query": "who heads the helix lab currently", "route": "specific", "clean": true}
+{"query": "who is in charge of prism these days", "route": "specific", "clean": true}
+{"query": "which engineer leads lattice", "route": "specific", "clean": true}
+{"query": "tell me the prism lead", "route": "specific", "clean": true}
+{"query": "name the lead of the lattice project", "route": "specific", "clean": true}
+{"query": "lead engineer on lattice?", "route": "specific", "clean": true}
+{"query": "northgate's role across everyone", "route": "global", "clean": true}
+{"query": "how do these labs connect overall", "route": "global", "clean": true}
 {"query": "summarize the collaboration structure", "route": "global", "clean": true}
-{"query": "how much money does Helix make a year", "route": "off_corpus_risk", "clean": true}
-{"query": "where exactly is Meridian located", "route": "off_corpus_risk", "clean": true}
-{"query": "what's the home address of the Prism lead", "route": "off_corpus_risk", "clean": true}
-{"query": "what does RAG actually stand for", "route": "parametric", "clean": true}
-{"query": "explain what cosine similarity is measuring", "route": "parametric", "clean": true}
-{"query": "what's an embedding in plain terms", "route": "parametric", "clean": true}
-{"query": "remind me what reranking does", "route": "parametric", "clean": true}
+{"query": "describe the ecosystem of collaborations", "route": "global", "clean": true}
+{"query": "what are the main research clusters", "route": "global", "clean": true}
+{"query": "big picture of how the groups cluster", "route": "global", "clean": true}
+{"query": "meridian's annual revenue figure", "route": "off_corpus_risk", "clean": true}
+{"query": "what's the helix lab phone number", "route": "off_corpus_risk", "clean": true}
+{"query": "where exactly is meridian located", "route": "off_corpus_risk", "clean": true}
+{"query": "how much does helix make a year", "route": "off_corpus_risk", "clean": true}
+{"query": "home address of the prism lead", "route": "off_corpus_risk", "clean": true}
+{"query": "explain cosine similarity", "route": "parametric", "clean": true}
+{"query": "what is an embedding", "route": "parametric", "clean": true}
+{"query": "what does rag stand for", "route": "parametric", "clean": true}
+{"query": "what's a knowledge graph in general", "route": "parametric", "clean": true}
+{"query": "define vector search", "route": "parametric", "clean": true}
+{"query": "what does reranking do", "route": "parametric", "clean": true}

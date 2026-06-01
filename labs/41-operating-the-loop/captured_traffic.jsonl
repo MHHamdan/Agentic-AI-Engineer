@@ -1,0 +1,43 @@
+{"query": "who funds the lab aanya runs", "route": "multihop", "source": "live"}
+{"query": "who runs helix now", "route": "specific", "source": "live"}
+{"query": "northgate's role across everyone", "route": "global", "source": "live"}
+{"query": "the helix lead worked with whom before", "route": "multihop", "source": "live"}
+{"query": "meridian's annual revenue figure", "route": "off_corpus_risk", "source": "live"}
+{"query": "Who leads the Helix Lab?", "route": "specific", "source": "live"}
+{"query": "?", "route": "parametric", "source": "live"}
+{"query": "how do these labs connect overall", "route": "global", "source": "live"}
+{"query": "who directs helix", "route": "specific", "source": "live"}
+{"query": "the meridian collaborator of the helix lead is who", "route": "multihop", "source": "live"}
+{"query": "Describe the overall structure of the research network.", "route": "global", "source": "live"}
+{"query": "what's the helix lab phone number", "route": "off_corpus_risk", "source": "live"}
+{"query": "who heads the helix lab currently", "route": "specific", "source": "live"}
+{"query": "where exactly is meridian located", "route": "off_corpus_risk", "source": "live"}
+{"query": "explain cosine similarity", "route": "parametric", "source": "live"}
+{"query": "what is an embedding", "route": "parametric", "source": "live"}
+{"query": "summarize the collaboration structure", "route": "global", "source": "live"}
+{"query": "who runs helix now", "route": "specific", "source": "live"}
+{"query": "who is in charge of prism these days", "route": "specific", "source": "live"}
+{"query": "who runs  helix   now", "route": "specific", "source": "live"}
+{"query": "", "route": "global", "source": "live"}
+{"query": "describe the ecosystem of collaborations", "route": "global", "source": "live"}
+{"query": "which engineer leads lattice", "route": "specific", "source": "live"}
+{"query": "how much does helix make a year", "route": "off_corpus_risk", "source": "live"}
+{"query": "home address of the prism lead", "route": "off_corpus_risk", "source": "live"}
+{"query": "what does rag stand for", "route": "parametric", "source": "live"}
+{"query": "what are the main research clusters", "route": "global", "source": "live"}
+{"query": "tell me the prism lead", "route": "specific", "source": "live"}
+{"query": "name the lead of the lattice project", "route": "specific", "source": "live"}
+{"query": "what funds the knowledge-graph project", "route": "multihop", "source": "live"}
+{"query": "big picture of how the groups cluster", "route": "global", "source": "live"}
+{"query": "lead engineer on lattice?", "route": "specific", "source": "live"}
+{"query": "Who trained the multimodal embeddings specialist now at the Meridian Institute?", "route": "multihop", "source": "live"}
+{"query": "what's a knowledge graph in general", "route": "parametric", "source": "live"}
+{"query": "Who is the advisor of both Lena Fischer and Wei Chen?", "route": "multihop", "source": "live"}
+{"query": "who leads lattice and who pays for it", "route": "multihop", "source": "live"}
+{"query": "what bankrolls the graph project", "route": "multihop", "source": "live"}
+{"query": "asdf", "route": "parametric", "source": "live"}
+{"query": "Who Runs Helix Now", "route": "specific", "source": "live"}
+{"query": "What overall story do the documents tell about this field?", "route": "global", "source": "live"}
+{"query": "define vector search", "route": "parametric", "source": "live"}
+{"query": "helix", "route": "specific", "source": "live"}
+{"query": "what does reranking do", "route": "parametric", "source": "live"}
