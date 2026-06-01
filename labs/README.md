@@ -59,6 +59,8 @@ A growing list:
 | 31 | Corrective RAG (CRAG) from scratch | 🔴 |
 | 32 | Self-RAG from scratch | 🔴 |
 | 33 | Graph RAG from scratch | 🔴 |
+| 34 | Head-to-head RAG pattern evaluation | 🔴 |
+| 35 | Adaptive RAG router | 🔴 |
 
 Labs land continuously. Check [`CHANGELOG.md`](../CHANGELOG.md) for the most recent additions.
 

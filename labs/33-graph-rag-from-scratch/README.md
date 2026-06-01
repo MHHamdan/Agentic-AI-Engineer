@@ -1,10 +1,12 @@
 # Lab 33: Graph RAG from scratch
 
-> 🔴 Advanced · ⏱ ~110–140 min · 📚 Builds on Lab 06's corpus
+> 🔴 Advanced · ⏱ ~110–140 min · 📚 Ships a dedicated entity-rich corpus
 
 ## 🎯 Goal
 
 Replace the flat vector index with a knowledge graph. Extract entities and relationships from the corpus, build a graph, detect communities of related entities, summarize each community, and answer two query types: GLOBAL questions ("what are the themes?") by map-reduce over community summaries, and LOCAL questions (about a specific entity) by traversing its neighborhood.
+
+> **Corpus.** Unlike Labs 31 and 32 (which reuse Lab 06's concept corpus), this lab ships its own **entity-rich corpus** in [`./corpus/`](./corpus/) — a fictional AI-research ecosystem of researchers, labs, projects, publications, collaborations, and funding. Graph RAG needs entities and relationships to build a graph from; the Lab 06 corpus is too conceptual to show the technique's strengths. See [`corpus/README.md`](./corpus/README.md) for why this structure was chosen.
 
 By the end you should be able to:
 
@@ -23,7 +25,7 @@ By the end you should be able to:
 
 **Complete first:**
 
-- 🧪 [Lab 06: Agentic RAG from scratch](../06-agentic-rag-from-scratch/) — reuses its corpus (the contrast: flat retrieval vs graph).
+- 🧪 [Lab 06: Agentic RAG from scratch](../06-agentic-rag-from-scratch/) — the flat-retrieval baseline this lab contrasts against.
 
 **Setup:** Python 3.11+ with the repo environment, plus one new dependency:
 

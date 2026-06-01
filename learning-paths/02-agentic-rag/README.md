@@ -190,9 +190,19 @@ Three from-scratch labs implement the patterns on top of Lab 06's retrieval stac
 
 27. 🧪 **[Lab 32: Self-RAG from scratch](../../labs/32-self-rag-from-scratch/)** *(~90–120 min)* — implement the reflection tokens (on-demand retrieve, ISREL, ISSUP, ISUSE) as constrained classification calls; generate one candidate per relevant passage and select by support + usefulness.
 
-28. 🧪 **[Lab 33: Graph RAG from scratch](../../labs/33-graph-rag-from-scratch/)** *(~110–140 min)* — extract entities and relationships, build a `networkx` knowledge graph, detect and summarize communities, and answer global (map-reduce) vs local (traversal) questions. See the global-question win flat retrieval misses.
+28. 🧪 **[Lab 33: Graph RAG from scratch](../../labs/33-graph-rag-from-scratch/)** *(~110–140 min)* — extract entities and relationships, build a `networkx` knowledge graph, detect and summarize communities, and answer global (map-reduce) vs local (traversal) questions. See the global-question win flat retrieval misses. Ships a dedicated entity-rich corpus so the technique's strengths are visible.
 
 > 💡 The math behind the retrieval metrics in Module 11 now has its own page: [Math foundations page 14 — retrieval and ranking metrics](../../math-foundations/14-retrieval-ranking-metrics.md). Runnable (compact) recipes for these patterns are in [`recipes/rag/`](../../recipes/rag/); the labs above are the deeper, from-scratch versions.
+
+## Module 15: Comparing and routing the patterns
+
+Having built the patterns, the closing module measures them against each other and turns the result into a router — the synthesis of everything in Path 02.
+
+29. 🧪 **[Lab 34: Head-to-head RAG pattern evaluation](../../labs/34-rag-pattern-head-to-head/)** *(~90–120 min)* — run static, CRAG, Self-RAG, and Graph RAG over one shared corpus and eval set, score them with the [evaluation framework](../../concepts/evaluation/rag-evaluation-framework.md), and produce a pattern × category comparison table. The finding: each pattern wins the category it was built for, and none dominates.
+
+30. 🧪 **[Lab 35: Adaptive RAG router](../../labs/35-adaptive-rag-router/)** *(~80–110 min)* — build a query classifier that routes each query to the category winner from Lab 34 (parametric → skip retrieval, global/multi-hop → graph, off-corpus-risk → CRAG, specific → flat). This is Adaptive-RAG ([Jeong et al. 2024](https://arxiv.org/abs/2403.14403)) and the synthesis of Labs 31–34.
+
+> 💡 Labs 34 and 35 reuse Lab 33's entity-rich corpus and a shared 16-query eval set (`labs/34-rag-pattern-head-to-head/eval_set.jsonl`) spanning six query categories, so the comparison and the router are measured on the same footing.
 
 ## What's *not* in this path yet
 
@@ -209,7 +219,7 @@ Anti-scope, kept explicit so you know what's coming and what isn't:
 - ❌ **A/B testing and drift detection.** Path 06.
 - ❌ **Synthetic eval set generation via LLM.** Briefly discussed in Module 11; recommended against for the first 30-50 queries.
 
-> 📚 **Now shipped:** the SOTA patterns (Self-RAG, CRAG, Graph RAG) have conceptual coverage in [`sota-rag-patterns.md`](../../concepts/rag/sota-rag-patterns.md) (Module 14), compact recipes in [`recipes/rag/`](../../recipes/rag/), **and from-scratch labs** ([Lab 31](../../labs/31-corrective-rag-from-scratch/), [Lab 32](../../labs/32-self-rag-from-scratch/), [Lab 33](../../labs/33-graph-rag-from-scratch/)). Adaptive, long-context, and multimodal RAG remain concept-and-recipe only for now.
+> 📚 **Now shipped:** the SOTA patterns (Self-RAG, CRAG, Graph RAG) have conceptual coverage in [`sota-rag-patterns.md`](../../concepts/rag/sota-rag-patterns.md) (Module 14), compact recipes in [`recipes/rag/`](../../recipes/rag/), **from-scratch labs** ([31](../../labs/31-corrective-rag-from-scratch/), [32](../../labs/32-self-rag-from-scratch/), [33](../../labs/33-graph-rag-from-scratch/)), a **head-to-head evaluation** ([Lab 34](../../labs/34-rag-pattern-head-to-head/)), and an **adaptive router** ([Lab 35](../../labs/35-adaptive-rag-router/), which also realizes Adaptive RAG). Long-context and multimodal RAG remain concept-and-recipe only for now.
 
 Each item above is meaningful enough to deserve its own focused treatment rather than a paragraph buried elsewhere.
 
