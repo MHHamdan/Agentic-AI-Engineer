@@ -294,6 +294,18 @@ The observability guide named four pillars — traces, evals, alerts, and red te
 
 > 💡 Module 24's through-line: **the four pillars are one discipline.** Red teaming is evaluation pointed at an adversary (grade trajectories, gate on pass rate); cost observability is alerting pointed at the bill (own the p99 tail, not the mean). Two cost problems need two controls — routing for routine spend, loop detection for runaways — and the PM owns the bar on both.
 
+## Module 25: From stand-ins to production
+
+Modules 16–24 built the observability loop with stand-ins — a file queue, a fixed cosine threshold, a single additive judge shift, hand-built cost data, a keyword leak detector. This module swaps each for the thing you run in production, keeping the contract the stand-in defined. The companion note is [from-stand-ins-to-production.md](../../concepts/observability/from-stand-ins-to-production.md); the math is [math-foundations/15](../../math-foundations/15-calibration-threshold-selection.md).
+
+49. 🧪 **[Lab 54: Production durable backends](../../labs/54-production-durable-backends/)** *(~80–100 min)* — swap Lab 50's file-backed dead-letter queue for Redis Streams (consumer group + Pending Entries List) or SQS (visibility timeout + redrive), behind one lease/ack/reclaim contract. The redelivery worker drives either unchanged.
+50. 🧪 **[Lab 55: Calibrated detection and judgment](../../labs/55-calibrated-detection-judgment/)** *(~95–115 min)* — replace the fixed 0.98 cosine threshold (Lab 50) with one tuned on labeled reflow/edit pairs by Youden's J, and the additive judge shift + all-dims gate (Lab 51) with isotonic (PAVA) calibration and a weighted gate.
+51. 🧪 **[Lab 56: Production traces and routing](../../labs/56-production-traces-routing/)** *(~85–105 min)* — instrument agent steps as OpenTelemetry GenAI spans, run the cost loop over the exported spans, and replace the hand-set routing flag with a learned classifier that has its own eval.
+
+> 💡 Also in this batch: [Lab 52](../../labs/52-red-teaming-trajectories/) gains a pluggable LLM judge that catches the paraphrased leak its keyword detector missed (scorer-vs-gold agreement 0.98 → 1.00), plus notes on generating trajectories with garak / PyRIT / AgentDojo.
+
+> 💡 Module 25's through-line: **every stand-in becomes the thing you run, and the contract is what makes the swap safe.** Code to the contract (the queue), calibrate on held-out data (the threshold and the judge), run the loop on the traces the agent already emits, and keep a human where the automated grade is only a floor.
+
 ## What's *not* in this path yet
 
 Anti-scope, kept explicit so you know what's coming and what isn't:

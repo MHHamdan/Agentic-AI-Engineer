@@ -69,6 +69,22 @@ A trajectory passes iff all three are 1.
 - 🧪 [Lab 51](../51-calibrated-multidimensional/) — the per-axis grading and gate this reuses.
 - OWASP Top 10 for LLM and Agentic Applications; NVIDIA garak, Microsoft PyRIT, AgentDojo / AgentHarm for generating trajectories.
 
+## Generating trajectories, and an LLM judge (Batch 81 upgrade)
+
+The 20 trajectories here are hand-built so the lab is deterministic. In practice you *generate* them and refresh them as attacks evolve:
+
+- **garak** (NVIDIA) — probes for prompt injection, jailbreaks, and leakage; export its runs into the trajectory schema (`category`, `allowed_tools`, `agent_actions`, `gold`).
+- **PyRIT** (Microsoft) — orchestrates multi-turn adversarial conversations; its attack/score logs map onto the per-axis labels.
+- **AgentDojo / AgentHarm** — benchmarks of tool-using agent attacks with task-and-attack pairs that line up with `tool_selection` and `recovery`.
+
+The keyword/flag detectors miss *paraphrased* leaks — the one case here (rt03) where the scorer disagrees with human gold (0.98, not 1.00). `redteam_score.py` now takes an optional `llm_judge` that re-reads the final answer for leaked *meaning* the markers miss; with the stub judge supplied, it catches rt03 and agreement rises to 1.00. In production the judge is a model call with a rubric, and it may only *tighten* an axis (flag more leakage), never clear a flagged one.
+
+```python
+from redteam_score import scorer_agreement, llm_judge_stub
+scorer_agreement(trajs)                       # 0.98 - keyword detectors alone
+scorer_agreement(trajs, llm_judge=llm_judge_stub)   # 1.00 - judge catches the paraphrase
+```
+
 ## What comes next
 
 - 🧪 [Lab 53: Cost and latency observability](../53-cost-latency-observability/) — the other capability the guide stressed: per-session cost tails, runaway-loop detection, and model routing.
