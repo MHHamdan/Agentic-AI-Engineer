@@ -22,7 +22,11 @@ Usage:
     python calibrate.py --self-test
 """
 from __future__ import annotations
-import argparse, math, re, sys
+
+import argparse
+import math
+import re
+import sys
 
 LEVELS = (0, 1, 2, 3)
 
@@ -55,10 +59,10 @@ def tune_threshold(cos_labels: list[tuple[float, int]]) -> dict:
     label 1 = meaning changed. Predict 'changed' when cosine < threshold. Returns the threshold,
     its J, and accuracy, plus the same metrics at the fixed 0.98 baseline."""
     def metrics(th):
-        tp = sum(1 for c, l in cos_labels if l == 1 and c < th)
-        fp = sum(1 for c, l in cos_labels if l == 0 and c < th)
-        tn = sum(1 for c, l in cos_labels if l == 0 and c >= th)
-        fn = sum(1 for c, l in cos_labels if l == 1 and c >= th)
+        tp = sum(1 for c, label in cos_labels if label == 1 and c < th)
+        fp = sum(1 for c, label in cos_labels if label == 0 and c < th)
+        tn = sum(1 for c, label in cos_labels if label == 0 and c >= th)
+        fn = sum(1 for c, label in cos_labels if label == 1 and c >= th)
         tpr = tp / (tp + fn) if tp + fn else 0.0
         fpr = fp / (fp + tn) if fp + tn else 0.0
         acc = (tp + tn) / len(cos_labels)
@@ -100,51 +104,86 @@ def make_change_pairs() -> list[tuple[str, str, int]]:
 
 
 # ============================ Part B: isotonic calibration + weighted gate =====================
+
 def qwk(y1, y2, levels=LEVELS) -> float:
-    K = len(levels); idx = {v: i for i, v in enumerate(levels)}; O = [[0] * K for _ in range(K)]
-    for a, b in zip(y1, y2):
-        O[idx[a]][idx[b]] += 1
-    N = len(y1); r = [sum(O[i]) for i in range(K)]; c = [sum(O[i][j] for i in range(K)) for j in range(K)]
-    w = [[((i - j) ** 2) / ((K - 1) ** 2) for j in range(K)] for i in range(K)]
-    num = sum(w[i][j] * O[i][j] for i in range(K) for j in range(K))
-    den = sum(w[i][j] * r[i] * c[j] / N for i in range(K) for j in range(K))
-    return 1 - num / den if den else 1.0
+    level_count = len(levels)
+    idx = {v: i for i, v in enumerate(levels)}
+    observed = [[0] * level_count for _ in range(level_count)]
+
+    for a, b in zip(y1, y2, strict=False):
+        observed[idx[a]][idx[b]] += 1
+
+    n_items = len(y1)
+    row_totals = [sum(observed[i]) for i in range(level_count)]
+    col_totals = [
+        sum(observed[i][j] for i in range(level_count))
+        for j in range(level_count)
+    ]
+    weights = [
+        [((i - j) ** 2) / ((level_count - 1) ** 2) for j in range(level_count)]
+        for i in range(level_count)
+    ]
+
+    numerator = sum(
+        weights[i][j] * observed[i][j]
+        for i in range(level_count)
+        for j in range(level_count)
+    )
+    denominator = sum(
+        weights[i][j] * row_totals[i] * col_totals[j] / n_items
+        for i in range(level_count)
+        for j in range(level_count)
+    )
+
+    return 1 - numerator / denominator if denominator else 1.0
 
 
 def additive_shift(judge: list[int], gold: list[int]) -> int:
-    return round(sum(g - j for g, j in zip(gold, judge)) / len(judge))
+    return round(
+        sum(g - j for g, j in zip(gold, judge, strict=False)) / len(judge)
+    )
 
 
-def isotonic_fit(x: list[float], y: list[float]):
-    """Monotone non-decreasing fit via pool-adjacent-violators. Returns (breakpoints, values).
-    sklearn.isotonic.IsotonicRegression is the production equivalent; this is the algorithm."""
-    pts = sorted(zip(x, y)); xs = []; ys = []; ws = []
+def isotonic_fit(x: list[float], y: list[int]) -> tuple[list[float], list[float]]:
+    """Monotone non-decreasing fit via pool-adjacent-violators."""
+    pts = sorted(zip(x, y, strict=False))
+    xs = []
+    ys = []
+    ws = []
+
     for xi, yi in pts:
         if xs and xs[-1] == xi:
-            ys[-1] = (ys[-1] * ws[-1] + yi) / (ws[-1] + 1); ws[-1] += 1
+            ys[-1] = (ys[-1] * ws[-1] + yi) / (ws[-1] + 1)
+            ws[-1] += 1
         else:
-            xs.append(xi); ys.append(float(yi)); ws.append(1.0)
+            xs.append(xi)
+            ys.append(float(yi))
+            ws.append(1.0)
+
     i = 0
     while i < len(ys) - 1:
-        if ys[i] > ys[i + 1]:                       # violation -> pool adjacent blocks
-            ys[i] = (ys[i] * ws[i] + ys[i + 1] * ws[i + 1]) / (ws[i] + ws[i + 1]); ws[i] += ws[i + 1]
-            del ys[i + 1]; del ws[i + 1]; del xs[i + 1]
+        if ys[i] > ys[i + 1]:
+            ys[i] = (ys[i] * ws[i] + ys[i + 1] * ws[i + 1]) / (ws[i] + ws[i + 1])
+            ws[i] += ws[i + 1]
+            del ys[i + 1]
+            del ws[i + 1]
+            del xs[i + 1]
             if i > 0:
                 i -= 1
         else:
             i += 1
+
     return xs, ys
 
 
-def isotonic_predict(xs, ys, q) -> int:
+def isotonic_predict(xs: list[float], ys: list[float], q: float) -> int:
     best = ys[0]
-    for xi, yi in zip(xs, ys):
+
+    for xi, yi in zip(xs, ys, strict=False):
         if xi <= q:
             best = yi
-        else:
-            break
-    return round(best)
 
+    return max(0, min(3, round(best)))
 
 def weighted_gate(scores_by_dim: dict, weights: dict, i: int, threshold: float) -> bool:
     """Pass release i if the weighted, max-normalized mean of its dimension scores clears the
@@ -166,7 +205,8 @@ def _self_test() -> int:
     gold = [(i * 7) % 4 for i in range(N)]
     compress = {0: 0, 1: 0, 2: 1, 3: 2}            # judge compresses the low end (not a constant shift)
     judge = [compress[g] for g in gold]
-    calib = list(range(12)); test = list(range(12, 24))
+    calib = list(range(12))
+    test = list(range(12, 24))
     shift = additive_shift([judge[i] for i in calib], [gold[i] for i in calib])
     add_cal = [max(0, min(3, judge[i] + shift)) for i in range(N)]
     xs, ys = isotonic_fit([judge[i] for i in calib], [gold[i] for i in calib])
@@ -177,10 +217,15 @@ def _self_test() -> int:
     assert iso_q >= add_q > raw_q, (raw_q, add_q, iso_q)
 
     # ---- Part B: weighted gate is a different (product) decision than all-dimensions-pass ----
-    F = [3, 3, 2, 1]; R = [3, 2, 3, 1]; C = [1, 2, 1, 3]
-    sbd = {"f": F, "r": R, "c": C}; W = {"f": 0.5, "r": 0.3, "c": 0.2}
-    all_dims = lambda i: F[i] >= 2 and R[i] >= 2 and C[i] >= 2
-    wgate = lambda i: weighted_gate(sbd, W, i, threshold=0.66)
+    F = [3, 3, 2, 1]
+    R = [3, 2, 3, 1]
+    C = [1, 2, 1, 3]
+    sbd = {"f": F, "r": R, "c": C}
+    W = {"f": 0.5, "r": 0.3, "c": 0.2}
+    def all_dims(i):
+        return F[i] >= 2 and R[i] >= 2 and C[i] >= 2
+    def wgate(i):
+        return weighted_gate(sbd, W, i, threshold=0.66)
     assert any(all_dims(i) != wgate(i) for i in range(4))
 
     print(f"self-test: Part A tuned threshold {res['threshold']:.3f} acc {res['tuned']['acc']:.2f} "

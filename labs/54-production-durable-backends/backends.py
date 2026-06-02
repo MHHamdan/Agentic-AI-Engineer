@@ -24,7 +24,11 @@ Usage:
     python backends.py --self-test
 """
 from __future__ import annotations
-import argparse, sys, time, uuid
+
+import argparse
+import sys
+import time
+import uuid
 
 try:
     import redis  # noqa: F401  (real client; not needed for the fake-backed self-test)
@@ -50,7 +54,8 @@ class FakeRedisStreams:
 
     def xadd(self, payload: dict) -> str:
         mid = f"{len(self.order)}-0"
-        self.entries[mid] = payload; self.order.append(mid)
+        self.entries[mid] = payload
+        self.order.append(mid)
         return mid
 
     def xreadgroup(self, count: int, now: float) -> list[tuple[str, dict]]:
@@ -68,7 +73,8 @@ class FakeRedisStreams:
         out = []
         for mid, meta in self.pel.items():        # reclaim entries idle past the lease
             if now - meta["delivered_at"] >= min_idle:
-                meta["delivered_at"] = now; meta["deliveries"] += 1
+                meta["delivered_at"] = now
+                meta["deliveries"] += 1
                 out.append((mid, self.entries[mid]))
         return out
 
@@ -76,7 +82,8 @@ class FakeRedisStreams:
         return self.pel.get(mid, {}).get("deliveries", 0)
 
     def xack(self, mid: str) -> None:
-        self.pel.pop(mid, None); self.acked.add(mid)
+        self.pel.pop(mid, None)
+        self.acked.add(mid)
 
     def xdel(self, mid: str) -> None:
         if mid in self.entries:
@@ -136,16 +143,21 @@ class RedisStreamQueue:
         return self.r.xreadgroup(max_n, now)      # XREADGROUP GROUP g c COUNT n STREAMS s >
 
     def ack(self, mid: str) -> None:
-        self.r.xack(mid); self.r.xdel(mid)        # XACK + XDEL (retention: drop acked)
+        self.r.xack(mid)
+        self.r.xdel(mid)        # XACK + XDEL (retention: drop acked)
 
     def reclaim_expired(self, lease_s: float, now: float) -> list[tuple[str, dict]]:
-        claimed = self.r.xautoclaim(lease_s, now)  # XAUTOCLAIM s g c <min-idle> 0
+        claimed = self.r.xautoclaim(lease_s, now)
         live = []
+
         for mid, payload in claimed:
             if self.r.deliveries(mid) > self.max_deliveries:
-                self._dead.append(payload); self.r.xack(mid); self.r.xdel(mid)  # give up -> DLQ
+                self._dead.append(payload)
+                self.r.xack(mid)
+                self.r.xdel(mid)  # give up -> DLQ
             else:
                 live.append((mid, payload))
+
         return live
 
     def pending(self) -> int:
@@ -180,9 +192,18 @@ class SQSQueue:
         self.q.delete(mid)                        # DeleteMessage
 
     def reclaim_expired(self, lease_s: float, now: float) -> list[tuple[str, dict]]:
-        # SQS redelivers automatically when the visibility timeout lapses; leasing again at a
-        # later `now` surfaces the expired messages. This mirrors that.
-        return self.lease(1000, lease_s, now)
+        claimed = self.r.xautoclaim(lease_s, now)
+        live = []
+
+        for mid, payload in claimed:
+            if self.r.deliveries(mid) > self.max_deliveries:
+                self._dead.append(payload)
+                self.r.xack(mid)
+                self.r.xdel(mid)  # give up -> DLQ
+            else:
+                live.append((mid, payload))
+
+        return live
 
     def pending(self) -> int:
         return len(self.q.msgs)
@@ -200,7 +221,8 @@ def run_contract(q, send_fn, *, lease_s: float = 30.0) -> dict:
     # first drain at t=0: m0 acks; m1 (transient) and m2 (permanent) fail and stay leased
     for mid, payload in q.lease(10, lease_s, now=0.0):
         try:
-            send_fn(payload); q.ack(mid)
+            send_fn(payload)
+            q.ack(mid)
         except Exception:
             pass                                   # leave leased; the lease will expire
     # advance past the lease repeatedly; reclaim expired and retry. m1 recovers on its retry; m2
@@ -209,7 +231,9 @@ def run_contract(q, send_fn, *, lease_s: float = 30.0) -> dict:
     for t in (lease_s + 1, 2 * lease_s + 2, 3 * lease_s + 3, 4 * lease_s + 4):
         for mid, payload in q.reclaim_expired(lease_s, now=t):
             try:
-                send_fn(payload); q.ack(mid); redelivered += 1
+                send_fn(payload)
+                q.ack(mid)
+                redelivered += 1
             except Exception:
                 pass
     return {"pending": q.pending(), "dead": q.dead(), "redelivered": redelivered}
@@ -224,7 +248,8 @@ def _self_test() -> int:
             if m == "m2":
                 raise RuntimeError("endpoint permanently down")
             if m == "m1" and m not in seen:
-                seen.add(m); raise RuntimeError("transient blip")
+                seen.add(m)
+                raise RuntimeError("transient blip")
         return send
 
     redis_state = run_contract(RedisStreamQueue(max_deliveries=3), make_send())

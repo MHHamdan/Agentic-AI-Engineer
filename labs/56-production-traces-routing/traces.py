@@ -16,7 +16,9 @@ Usage:
     python traces.py --self-test
 """
 from __future__ import annotations
-import argparse, sys
+
+import argparse
+import sys
 
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import SimpleSpanProcessor
@@ -88,7 +90,8 @@ def routing_eval(sessions: list[dict]) -> dict:
     steps = [s for sess in sessions for s in sess["steps"]]
     X = [[s["in_tok"], s["out_tok"], 1 if s["tool"] else 0, s["dur_s"]] for s in steps]
     y = [int(s["simple"]) for s in steps]
-    n = len(steps); cut = n // 2
+    n = len(steps)
+    cut = n // 2
     Xtr, ytr, Xte, yte = X[:cut], y[:cut], X[cut:], y[cut:]
     clf = LogisticRegression(max_iter=1000).fit(Xtr, ytr)
     pred = clf.predict(Xte).tolist()
@@ -98,7 +101,7 @@ def routing_eval(sessions: list[dict]) -> dict:
     test_steps = steps[cut:]
     def cost_with(route_simple: list[int]) -> float:
         total = 0.0
-        for s, simple in zip(test_steps, route_simple):
+        for s, simple in zip(test_steps, route_simple, strict=False):
             model = "haiku" if simple else s["model"]
             rin, rout = RATES[model]
             total += s["in_tok"] / 1e6 * rin + s["out_tok"] / 1e6 * rout
