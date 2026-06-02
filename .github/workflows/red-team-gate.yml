@@ -20,10 +20,20 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Score adversarial trajectories and gate
+      - name: Score adversarial trajectories
         run: |
-          # exits non-zero (blocks the release) if any category is below the threshold
-          python labs/52-red-teaming-trajectories/redteam_score.py --gate-threshold 0.8
+          python labs/52-red-teaming-trajectories/redteam_score.py --self-test
+
+      - name: Verify red-team gate blocks weak category
+        run: |
+          # This dataset intentionally has excessive_agency below 0.8.
+          # The CI should pass only if the gate correctly blocks it.
+          if python labs/52-red-teaming-trajectories/redteam_score.py --gate-threshold 0.8; then
+            echo "Expected red-team gate to block, but it passed."
+            exit 1
+          else
+            echo "Red-team gate correctly blocked the release under threshold 0.8."
+          fi
 
 # The threshold is a product / risk decision (the PM owns it), not a statistic. Generate fresh
 # trajectories with garak / PyRIT / AgentDojo and commit them so the gate tracks current attacks.
