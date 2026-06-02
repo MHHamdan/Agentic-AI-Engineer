@@ -8,6 +8,11 @@ exactly one worker pages. `deliver` is backward compatible: pass a dict for the 
 single-process behavior, or a StateStore (e.g. FileLockStore) for a shared one. Safe no-op
 default unchanged - nothing configured means nothing sent.
 
+Lab 48 adds a dead-letter path: with a shared store, the claim is taken before delivery, so
+a send that fails after all retries would otherwise keep the cooldown slot and silence the
+page. `deliver` now releases the slot on failure and records the alert to a dead-letter
+queue, so the next run can retry and on-call can see what was missed.
+
 Usage:
     python notify.py --metric judged_faithfulness --value 0.55 --threshold 0.764 --channel pagerduty
     python notify.py ... --state-file alert_state.json     # persist cooldown across runs
@@ -24,9 +29,9 @@ from urllib import request as _request
 from urllib.error import URLError
 
 try:
-    from store import FileLockStore, InMemoryStore  # shared-state backends (Lab 46)
+    from store import FileLockStore, InMemoryStore, make_store  # shared-state backends (Lab 46/48)
 except Exception:  # store.py colocated in the toolkit; degrade to legacy dict path
-    InMemoryStore = FileLockStore = None
+    InMemoryStore = FileLockStore = make_store = None
 
 PAGE_FRACTION = 0.10
 # Hardening defaults (tune to your tolerance and on-call appetite).
@@ -126,8 +131,28 @@ def send_with_retry(fn, retries: int = RETRIES, base_delay: float = BASE_DELAY_S
     raise RuntimeError(f"delivery failed after {retries} attempts: {last}")
 
 
+class DeadLetter:
+    """A failed-delivery queue. When a send exhausts its retries, the payload lands here
+    (append-only JSONL) so the next run can retry and on-call can see the missed page."""
+    def __init__(self, path: str | None):
+        self.path = path
+
+    def record(self, payload: dict, reason: str, now: float) -> None:
+        if not self.path:
+            return
+        with open(self.path, "a") as f:
+            f.write(json.dumps({"ts": now, "reason": reason, "payload": payload}) + "\n")
+
+    def entries(self) -> list[dict]:
+        if not self.path or not os.path.exists(self.path):
+            return []
+        with open(self.path) as f:
+            return [json.loads(line) for line in f]
+
+
 def deliver(shaped: dict, payload: dict, url: str | None, store, now: float,
-            sleep=time.sleep) -> tuple[str, object]:
+            sleep=time.sleep, dead_letter: DeadLetter | None = None,
+            release_on_failure: bool = True) -> tuple[str, object]:
     """Apply cooldown -> rate-limit -> retry around the actual post. Returns (status, store).
 
     `store` may be a StateStore (shared, atomic claim - one worker wins) OR a plain dict
@@ -145,8 +170,15 @@ def deliver(shaped: dict, payload: dict, url: str | None, store, now: float,
             return f"suppressed (cooldown or rate limit): {key}", store
         if not url:
             return "no endpoint configured - payload printed, not sent", store
-        status = send_with_retry(lambda: post(shaped, url), sleep=sleep)  # pragma: no cover
-        return status, store
+        try:
+            status = send_with_retry(lambda: post(shaped, url), sleep=sleep)  # pragma: no cover
+            return status, store
+        except RuntimeError as e:                   # retries exhausted (Lab 48)
+            if release_on_failure and hasattr(store, "release"):
+                store.release(key, now, RATE_WINDOW_S)   # free the slot for the next attempt
+            if dead_letter is not None:
+                dead_letter.record(payload, str(e), now)
+            return f"failed; dead-lettered and slot released: {key}", store
     # legacy dict path (Lab 44): check-then-record, single process only
     state = store if store is not None else {}
     if in_cooldown(key, now, state):
@@ -232,7 +264,25 @@ def _self_test() -> int:
         r1, store = deliver(to_slack(p), p, None, store, now=0.0, sleep=lambda s: None)
         r2, store = deliver(to_slack(p), p, None, store, now=10.0, sleep=lambda s: None)
         assert r1.startswith("no endpoint") and r2.startswith("suppressed (cooldown or rate limit)")
-    print("self-test: severity/adapters + dedup/cooldown + rate-limit + retry + deliver (dict+store) OK")
+        # release-on-failure + dead-letter: a send that always fails frees its slot
+        import os as _os
+        import tempfile
+        store2 = InMemoryStore()
+        dlq = DeadLetter(_os.path.join(tempfile.mkdtemp(), "dlq.jsonl"))
+        orig_post = globals()["post"]
+        globals()["post"] = lambda shaped, url: (_ for _ in ()).throw(URLError("down"))
+        try:
+            st, store2 = deliver(to_slack(p), p, url="https://x", store=store2, now=0.0,
+                                 sleep=lambda s: None, dead_letter=dlq)
+        finally:
+            globals()["post"] = orig_post
+        assert st.startswith("failed; dead-lettered"), st
+        assert len(dlq.entries()) == 1
+        # the slot was freed, so the next attempt can claim again
+        ok, store2 = deliver(to_slack(p), p, url=None, store=store2, now=1.0, sleep=lambda s: None)
+        assert ok.startswith("no endpoint")     # claim succeeded (not suppressed)
+    print("self-test: severity/adapters + dedup/cooldown + rate-limit + retry + deliver (dict+store) "
+          "+ release-on-failure/dead-letter OK")
     return 0
 
 
@@ -244,6 +294,8 @@ def main() -> int:
     ap.add_argument("--channel", choices=["slack", "pagerduty", "issue"], default="slack")
     ap.add_argument("--state-file", default=None, help="legacy per-process state JSON")
     ap.add_argument("--shared-store", default=None, help="shared state file (atomic, multi-worker)")
+    ap.add_argument("--store", default=None, help="store spec: memory | file:/path | redis://...")
+    ap.add_argument("--dead-letter", default=None, help="JSONL path for failed deliveries")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
     if args.self_test:
@@ -261,9 +313,13 @@ def main() -> int:
     print(json.dumps(shaped, indent=2))
     env_key = ENDPOINT_ENV.get(args.channel)
     url = os.environ.get(env_key) if env_key else None
-    if args.shared_store and FileLockStore is not None:
+    dlq = DeadLetter(args.dead_letter)
+    if args.store and make_store is not None:
+        store = make_store(args.store)                      # memory | file: | redis://
+        status, _ = deliver(shaped, payload, url, store, now=time.time(), dead_letter=dlq)
+    elif args.shared_store and FileLockStore is not None:
         store = FileLockStore(args.shared_store)            # shared across workers (atomic)
-        status, _ = deliver(shaped, payload, url, store, now=time.time())
+        status, _ = deliver(shaped, payload, url, store, now=time.time(), dead_letter=dlq)
     else:
         state = load_state(args.state_file)                 # legacy single-process dict
         status, state = deliver(shaped, payload, url, state, now=time.time())

@@ -73,6 +73,8 @@ A growing list:
 | 45 | Anchoring the consensus | 🔴 |
 | 46 | Scaling the signals across workers and traffic | 🔴 |
 | 47 | Trustworthy gold | 🔴 |
+| 48 | Distributed backends and failure handling | 🔴 |
+| 49 | Graded gold | 🔴 |
 
 Labs land continuously. Check [`CHANGELOG.md`](../CHANGELOG.md) for the most recent additions.
 

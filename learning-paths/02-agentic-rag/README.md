@@ -264,6 +264,16 @@ Modules 18–20 quietly assumed a single point: one worker, one curated sample, 
 
 > 💡 Module 21's through-line: **any single point you trusted has to become plural and externally anchored before it holds at scale.** One worker's state → a shared store; one curated reference → a sampled, verified set; one corpus hash → a per-document map; one expert → multi-expert, adjudicated gold — and then re-measure everything that was calibrated against the single point.
 
+## Module 22: Real backends and graded judgments
+
+Module 21 made the signals plural, but with stand-ins: a file lock for a shared store, claim-before-send for failure handling, raw-byte hashing for change detection, and binary labels for the gold. This module swaps each stand-in for the thing you actually run, and moves the evaluation rubric from binary to graded.
+
+43. 🧪 **[Lab 48: Distributed backends and failure handling](../../labs/48-distributed-and-graded/)** *(~90–110 min)* — back the `StateStore` with Redis (one atomic Lua claim that works across serverless and multi-region workers), add release-on-failure plus a dead-letter queue so a failed page frees its slot instead of silently consuming it, and hash normalized corpus content so a cosmetic reformat doesn't trigger canary review.
+
+44. 🧪 **[Lab 49: Graded gold](../../labs/49-graded-gold/)** *(~80–100 min)* — the evaluation-side twin: move the rubric from binary to a 0-3 ordinal scale, measure agreement with the right tools (Krippendorff's α, quadratic-weighted κ), adjudicate the items experts split on with a senior adjudicator rather than a silent majority, and re-derive the Lab 45 annotator weights against graded gold — where the ranking flips.
+
+> 💡 Module 22's through-line: **the stand-ins become the things you run, and binary becomes graded.** A file lock → Redis; claim-before-send → a dead-letter queue; raw bytes → normalized content; one binary majority → an ordinal scale with a senior adjudicator. The anchor gets as production-shaped as the backend.
+
 ## What's *not* in this path yet
 
 Anti-scope, kept explicit so you know what's coming and what isn't:

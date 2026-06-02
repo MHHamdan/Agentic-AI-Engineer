@@ -45,7 +45,7 @@ Covered in detail in [`tool-design.md`](./tool-design.md). The two failure modes
 
 The state $s_t$ includes the user's request, prior turns, and prior tool results. All of it influences the next selection. Two specific patterns to watch:
 
-- **Stale context.** The model picks a tool because of something from 6 turns ago that's no longer relevant. Fix: summarize older context, or explicitly note in the prompt "the user's *current* request is X." See [Context Engineering](../context/context-budget.md) for the broader treatment.
+- **Stale context.** The model picks a tool because of something from 6 turns ago that's no longer relevant. Fix: summarize older context, or explicitly note in the prompt "the user's *current* request is X." See [Context Engineering](../context/token-budgets.md) for the broader treatment.
 - **Buried observations.** The last tool's result is the most important input for the next selection, but it's sitting under 4KB of other observations. Fix: pin the most recent observation high in the prompt, or pass it through a summarization step.
 
 ### Lever 4 — The `tool_choice` parameter

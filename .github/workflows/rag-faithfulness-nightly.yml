@@ -24,6 +24,13 @@ jobs:
           key: alert-store-${{ github.run_id }}
           restore-keys: alert-store-
 
+      - name: Restore dead-letter queue (failed pages, Lab 48)
+        uses: actions/cache@v4
+        with:
+          path: labs/41-operating-the-loop/dead_letter.jsonl
+          key: dead-letter-${{ github.run_id }}
+          restore-keys: dead-letter-
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -56,6 +63,7 @@ jobs:
             # notify.py decides severity (warn vs page) and shapes the payload per channel.
             python labs/41-operating-the-loop/notify.py --channel slack \
               --shared-store labs/41-operating-the-loop/alert_store.json \
+              --dead-letter labs/41-operating-the-loop/dead_letter.jsonl \
               --metric "$(python -c "import json;print(json.load(open('$F'))['metric'])")" \
               --value "$(python -c "import json;print(json.load(open('$F'))['value'])")" \
               --threshold "$(python -c "import json;print(json.load(open('$F'))['threshold'])")"

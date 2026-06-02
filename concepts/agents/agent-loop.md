@@ -26,7 +26,7 @@ The agent reads its current **state**. In most LLM agents this state is just a l
 State is the most important design choice in an agent. Three things to nail down before you write a line of code:
 
 - **What's in it?** Messages are the minimum. Some agents add a scratchpad, a plan, retrieved documents, or per-tool memory. Each addition costs tokens; each omission risks losing context the agent will need later.
-- **How does it grow?** Naively it grows monotonically and you blow the context window in 10 steps. You'll eventually need summarization, retrieval, or windowing — see [Context Engineering](../context/context-budget.md).
+- **How does it grow?** Naively it grows monotonically and you blow the context window in 10 steps. You'll eventually need summarization, retrieval, or windowing — see [Context Engineering](../context/token-budgets.md).
 - **Is it persisted?** A loop that lives in one Python process is fine for a demo. Production agents persist state so they can resume across crashes, be paused for human review, or run for hours. This is what LangGraph's "durable execution" is about and why frameworks generally win over hand-rolled loops at scale.
 
 ### 2. Reason

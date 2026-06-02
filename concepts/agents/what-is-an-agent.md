@@ -91,7 +91,7 @@ Most agent failures fall into a small set of categories. Recognizing them on sig
 
 - **Looping without progress.** The agent keeps calling the same tool with slight variations because it's not making real headway. Fix: step limits, observation-based progress checks, prompting the model to summarize what it has and decide whether to give up.
 - **Hallucinated tool calls.** The agent invokes a tool that doesn't exist, or passes arguments that don't match the schema. Fix: structured-output constraints, schema-validated tool wrappers that return clean error messages.
-- **Lost in the observations.** Tool results pile up in context until the actual task is buried. Fix: summarization, retrieval, or [context engineering](../context/context-budget.md) — covered in its own learning path.
+- **Lost in the observations.** Tool results pile up in context until the actual task is buried. Fix: summarization, retrieval, or [context engineering](../context/token-budgets.md) — covered in its own learning path.
 - **Tool selection confusion.** Two tools have overlapping descriptions and the agent picks the wrong one. Fix: tighter tool descriptions, examples, or a routing pattern that picks the tool family before delegating.
 - **Silent failures.** A tool returns an error string in plain text and the agent treats it as data. Fix: distinguish errors from data at the tool layer; raise structured errors.
 
