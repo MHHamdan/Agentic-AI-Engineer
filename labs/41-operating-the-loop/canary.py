@@ -11,7 +11,8 @@ Lab 44 grows the set to cover named failure modes and adds a corpus-change revie
 a single WHOLE-CORPUS fingerprint - which flags every corpus-dependent canary on any change,
 even a typo fix in one unrelated doc. Lab 46 keeps a PER-DOCUMENT fingerprint map, so a
 change to doc X flags only the canaries whose corpus_refs include X. Same safety, far less
-revalidation noise.
+revalidation noise. Lab 48 hashes NORMALIZED content, so a cosmetic reformat (trailing
+whitespace, CRLF, an extra blank line) does not count as a change - only content does.
 
 Usage:
     python canary.py --self-test
@@ -80,11 +81,34 @@ def corpus_fingerprint(corpus_dir: pathlib.Path = CORPUS_DIR) -> str:
 MAP_FILE = HERE / "canary_corpus.map.json"
 
 
-def per_doc_fingerprint(corpus_dir: pathlib.Path = CORPUS_DIR) -> dict:
-    """Per-document hashes: {doc_name: sha256[:16]}. A change localizes to specific docs."""
+def normalize_corpus_text(raw: bytes) -> str:
+    """Format-insensitive view of a document: normalize line endings, strip trailing
+    whitespace per line, collapse blank-line runs, and trim leading/trailing blank lines.
+    A cosmetic reformat maps to the same string; a content edit does not. This is NOT
+    semantic - a reflow that rewraps prose still changes the text (semantic hashing via
+    embeddings is out of scope; see the lab)."""
+    text = raw.decode("utf-8", errors="replace").replace("\r\n", "\n").replace("\r", "\n")
+    lines = [ln.rstrip() for ln in text.split("\n")]
+    out, blanks = [], 0
+    for ln in lines:
+        if ln == "":
+            blanks += 1
+            if blanks <= 1:
+                out.append("")
+        else:
+            blanks = 0
+            out.append(ln)
+    return "\n".join(out).strip("\n") + "\n"
+
+
+def per_doc_fingerprint(corpus_dir: pathlib.Path = CORPUS_DIR, normalize: bool = True) -> dict:
+    """Per-document hashes: {doc_name: sha256[:16]}. With normalize=True (default) a cosmetic
+    reformat does not change the hash; pass normalize=False for an exact-bytes fingerprint."""
     out = {}
     for f in sorted(corpus_dir.glob("*.md")) if corpus_dir.exists() else []:
-        out[f.name] = hashlib.sha256(f.read_bytes()).hexdigest()[:16]
+        raw = f.read_bytes()
+        data = normalize_corpus_text(raw).encode("utf-8") if normalize else raw
+        out[f.name] = hashlib.sha256(data).hexdigest()[:16]
     return out
 
 
@@ -164,7 +188,17 @@ def _self_test() -> int:
     # per-doc flags FEWER than the whole-corpus review (which flags all corpus-dependent)
     whole = [c["query"] for c in cans if c.get("corpus_refs")]
     assert len(pd["to_review"]) < len(whole), (len(pd["to_review"]), len(whole))
-    print(f"self-test: ... + per-doc review flags {len(pd['to_review'])} vs whole-corpus {len(whole)} OK")
+    # normalized hashing: a cosmetic reformat does not change the hash; content does
+    base = b"# Helix\n\nAanya Rao leads Helix Lab.\n"
+    reformat = b"# Helix\r\n\n\nAanya Rao leads Helix Lab.   \n\n"   # CRLF, blank run, trailing ws
+    changed = b"# Helix\n\nTomas Vega leads Helix Lab.\n"               # real edit
+    def h(blob):
+        return hashlib.sha256(normalize_corpus_text(blob).encode()).hexdigest()
+    assert h(base) == h(reformat), "reformat should not change the normalized hash"
+    assert h(base) != h(changed), "a content edit must change the hash"
+    assert hashlib.sha256(base).hexdigest() != hashlib.sha256(reformat).hexdigest()  # raw differs
+    print(f"self-test: ... + per-doc review flags {len(pd['to_review'])} vs whole-corpus {len(whole)}; "
+          f"normalized hashing ignores reformats OK")
     return 0
 
 

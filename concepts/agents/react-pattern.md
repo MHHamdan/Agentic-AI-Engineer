@@ -78,7 +78,7 @@ messages.append({
 })
 ```
 
-`format_observation` is where you compress, redact, or summarize. A raw 50KB JSON response is observation noise; a five-line extracted summary is observation signal. We come back to this in [Context Engineering](../context/context-budget.md).
+`format_observation` is where you compress, redact, or summarize. A raw 50KB JSON response is observation noise; a five-line extracted summary is observation signal. We come back to this in [Context Engineering](../context/token-budgets.md).
 
 ### 3. Termination conditions
 
@@ -138,7 +138,7 @@ A ReAct loop can be written as a sequence of policy invocations $\pi_\theta(a_t 
 
 - 📖 [What is an agent?](./what-is-an-agent.md) — the broader framing.
 - 📖 [Agent loop](./agent-loop.md) — the four-step cycle ReAct specializes.
-- 📖 [Plan-and-execute](./plan-and-execute.md) — the alternative when you need an auditable plan first.
+- 📖 [Plan-and-execute](../../patterns/06-plan-and-execute.md) — the alternative when you need an auditable plan first.
 - 🧪 [Lab 01: First agent from scratch](../../labs/01-first-agent-from-scratch/) — build a ReAct loop end-to-end with no framework.
 - 🏛 [Single-agent tool-use pattern](../../patterns/01-single-agent-tool-use.md) — the architectural pattern this concept sits inside.
 - 🧮 [ReAct formalization](../../math-foundations/06-react-formalization.md) — the mathematical version.
