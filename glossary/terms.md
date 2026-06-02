@@ -32,6 +32,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Agent runtime.** The orchestration layer that executes the agent loop — parses tool calls, dispatches them, returns results, manages state. Examples: LangGraph runtime, OpenAI Agents SDK runtime, custom Python loops. → Path 01.
 
+**AgentDojo.** Benchmark of tool-using agent attacks with paired tasks and injections — a source for generating red-team trajectories. → [`labs/52-red-teaming-trajectories/`](../labs/52-red-teaming-trajectories/).
+
 **Agentic RAG.** RAG where retrieval is a tool the agent can choose to call (rather than a pre-pended context block), allowing query reformulation, multi-step retrieval, and reflexive critique. → [`patterns/08-agentic-rag.md`](../patterns/08-agentic-rag.md) + Path 02.
 
 **Agentic workflow.** A multi-step process executed by one or more agents, distinguished from a fully scripted workflow by the agent's autonomy over tool selection and step ordering. → [`patterns/`](../patterns/).
@@ -118,6 +120,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Confidence.** Numeric estimate of an answer's correctness, either token-level (from logprobs and entropy) or verbalized (the model emits a confidence number). → [`math-foundations/12-uncertainty-safety.md`](../math-foundations/12-uncertainty-safety.md).
 
+**Conjunctive gate.** Release rule that passes only if *every* dimension clears its floor — contrast with a weighted gate. → [`math-foundations/15-calibration-threshold-selection.md`](../math-foundations/15-calibration-threshold-selection.md).
+
 **Constitutional AI.** Anthropic methodology for aligning a model to a written set of principles, using AI-generated critique rather than only human labels. → [Bai et al. 2022](https://arxiv.org/abs/2212.08073).
 
 **Context budget.** The token allocation per zone of an agent's context (system prompt / tool definitions / conversation / retrieval / scratchpad). Per-zone tiers + soft/hard caps prevent runaway growth. → Path 05 Module 2 + [`concepts/context/token-budgets.md`](../concepts/context/token-budgets.md).
@@ -145,6 +149,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 **DAG (Directed Acyclic Graph).** Graph with directed edges and no cycles. The natural shape for plan-and-execute workflows, since acyclicity bounds runtime to at most $\|V\|$ steps. → [`math-foundations/10-multi-agent-coordination.md`](../math-foundations/10-multi-agent-coordination.md).
 
 **Data leakage.** Eval pathology where information from the test set bleeds into training or prompt design, inflating measured performance. Especially common with synthetic golden datasets. → Path 06.
+
+**Dead-letter queue (DLQ).** Holding area for messages that failed past a max-delivery count, kept for inspection instead of looping forever. → [`labs/54-production-durable-backends/`](../labs/54-production-durable-backends/).
 
 **DeepEval.** Open-source evaluation framework for LLM applications with built-in faithfulness, answer relevance, and contextual precision metrics. → [github.com/confident-ai/deepeval](https://github.com/confident-ai/deepeval) (needs manual verification).
 
@@ -218,7 +224,11 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 ## G
 
+**garak.** NVIDIA's LLM vulnerability scanner — probes for prompt injection, jailbreaks, and leakage; its runs export into red-team trajectories. → [`labs/52-red-teaming-trajectories/`](../labs/52-red-teaming-trajectories/).
+
 **Gemini.** Google's frontier multimodal model family with native long context, image/video understanding, and tool calling. → [deepmind.google/technologies/gemini/](https://deepmind.google/technologies/gemini/).
+
+**GenAI semantic conventions.** OpenTelemetry's standard attribute names for model calls (`gen_ai.system`, `gen_ai.request.model`, `gen_ai.usage.input_tokens`) so any tool can read agent spans. → [`labs/56-production-traces-routing/`](../labs/56-production-traces-routing/).
 
 **Generator-critic.** Two-agent pattern where one agent produces output, another critiques it, and revision loops until a quality bar is met. → [`patterns/07-reflection.md`](../patterns/07-reflection.md).
 
@@ -280,6 +290,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Intent classification.** Determining what the user is trying to do as a discrete category. Useful for routing to specialist agents or tools. → Path 03.
 
+**Isotonic regression.** Monotone (non-decreasing) least-squares fit that calibrates a scorer whose bias is monotone but not a constant offset; computed by pool-adjacent-violators. → [`math-foundations/15-calibration-threshold-selection.md`](../math-foundations/15-calibration-threshold-selection.md).
+
 ## J
 
 **Jailbreak.** Adversarial prompt designed to bypass a model's safety filters or override its system prompt. Active research area; standard production defenses are layered (input filter + model alignment + output filter). → [`security/`](../security/) + Path 07.
@@ -325,6 +337,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 **LLM (Large Language Model).** Foundation model trained on next-token prediction over large text corpora. The substrate of every agentic system in this repo. → [`math-foundations/01-language-model-probability.md`](../math-foundations/01-language-model-probability.md).
 
 **LLM-as-judge.** Using an LLM to score the quality of another LLM's output against a rubric — the operational foundation of modern eval pipelines. Failure modes: bias toward verbose answers, calibration drift. → Path 06 Modules 4-5 + [`math-foundations/11-evaluation-metrics.md`](../math-foundations/11-evaluation-metrics.md).
+
+**LLM-as-judge.** Using a model with a rubric to grade outputs or trajectories that rule-based detectors miss — e.g. catching paraphrased leaks a keyword detector slips past. → [`labs/52-red-teaming-trajectories/`](../labs/52-red-teaming-trajectories/).
 
 **Long-context model.** Frontier model with context windows of 200K to 1M+ tokens. The engineering decision: absorb the cost of larger contexts or build tiered retrieval architecture? → [`concepts/context/long-context-models.md`](../concepts/context/long-context-models.md).
 
@@ -406,6 +420,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Parallel tool calls.** Agent capability to invoke multiple tools simultaneously in one step, with the model emitting all calls together and the runtime executing them concurrently. Major latency win when tools are independent. → [OpenAI docs](https://platform.openai.com/docs/guides/function-calling) (needs manual verification).
 
+**Pending Entries List (PEL).** In a Redis Streams consumer group, the set of delivered-but-unacked entries with their delivery counts — the lease and give-up bookkeeping. → [`labs/54-production-durable-backends/`](../labs/54-production-durable-backends/).
+
 **Perplexity (metric).** $\exp(-\frac{1}{T} \sum_t \log p(x_t \mid x_{<t}))$. Inverse-confidence measure for a generated sequence. Lower means more confident. → [`math-foundations/01-language-model-probability.md`](../math-foundations/01-language-model-probability.md).
 
 **Phoenix (Arize).** Open-source LLM observability platform with OpenTelemetry support, evaluation framework, and notebook integration. → [phoenix.arize.com](https://phoenix.arize.com/) (needs manual verification).
@@ -417,6 +433,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 **Policy.** The function $\pi_\theta(a_t \mid s_t)$ that maps states to actions. Agent system prompts and tool definitions together parameterize the policy. → [`math-foundations/04-agents-as-policies.md`](../math-foundations/04-agents-as-policies.md).
 
 **POMDP (Partially Observable MDP).** MDP variant where the agent doesn't see the full state — it sees observations and maintains a belief state. The natural framework for agents working with imperfect information. → [`math-foundations/05-mdp-pomdp.md`](../math-foundations/05-mdp-pomdp.md).
+
+**Pool adjacent violators (PAVA).** Linear-time algorithm that computes the isotonic (monotone) least-squares fit by merging adjacent blocks that violate monotonicity. → [`math-foundations/15-calibration-threshold-selection.md`](../math-foundations/15-calibration-threshold-selection.md).
 
 **Pre-training.** First training stage where a base model learns next-token prediction on a large corpus. Subsequent stages: SFT, DPO/RLHF. → [Foundation models survey](https://arxiv.org/abs/2108.07258).
 
@@ -437,6 +455,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 **Pydantic.** Python library for data validation using type hints. The standard schema layer in modern Python LLM applications. → [docs.pydantic.dev](https://docs.pydantic.dev/).
 
 **Pydantic AI.** Agent framework from the Pydantic team emphasizing type-safe agents, structured outputs, and minimal abstraction overhead. → [ai.pydantic.dev](https://ai.pydantic.dev/) (needs manual verification).
+
+**PyRIT.** Microsoft's Python Risk Identification Toolkit for orchestrating multi-turn adversarial conversations against AI systems. → [`labs/52-red-teaming-trajectories/`](../labs/52-red-teaming-trajectories/).
 
 ## Q
 
@@ -468,6 +488,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Reciprocal rank fusion (RRF).** Method for combining ranked lists from multiple retrievers by summing $1/(k + r_i)$ where $r_i$ is each document's rank in each list. Used in RAG-Fusion. → Path 02 v3.
 
+**Redis Streams consumer group.** Redis primitive giving at-least-once delivery with per-consumer leases (the PEL) and reclaim of idle entries via `XAUTOCLAIM` — one production backend for the failure loop. → [`labs/54-production-durable-backends/`](../labs/54-production-durable-backends/).
+
 **Reflection.** Agent pattern where the agent critiques its own output and revises before producing the final answer. Strong for tasks where the first answer is usually wrong. → [`patterns/07-reflection.md`](../patterns/07-reflection.md).
 
 **Reflexion.** Self-improvement pattern (Shinn et al. 2023) where the agent generates verbal reflection on past failures and stores it for future attempts. → [Shinn et al. 2023](https://arxiv.org/abs/2303.11366).
@@ -487,6 +509,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 **RLAIF (Reinforcement Learning from AI Feedback).** Variant of RLHF where AI-generated preferences replace some human labels. Used in Constitutional AI. → [Lee et al. 2023](https://arxiv.org/abs/2309.00267).
 
 **RLHF (Reinforcement Learning from Human Feedback).** Fine-tuning method using human preference labels to train a reward model, then optimizing the policy with PPO or similar. The training stage that turned base GPT into ChatGPT. → [Ouyang et al. 2022](https://arxiv.org/abs/2203.02155).
+
+**ROC curve.** Plot of true-positive rate against false-positive rate across all thresholds; Youden's J picks the operating point that maximizes their gap. → [`math-foundations/15-calibration-threshold-selection.md`](../math-foundations/15-calibration-threshold-selection.md).
 
 **Router.** Agent or component that routes inputs to specialist tools or sub-agents. → [`patterns/02-router.md`](../patterns/02-router.md).
 
@@ -514,9 +538,13 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **smolagents.** Hugging Face's compact agent framework emphasizing code-as-action (the agent emits Python rather than JSON tool calls). → [github.com/huggingface/smolagents](https://github.com/huggingface/smolagents) (needs manual verification).
 
+**Span.** A single timed unit of work in a trace (one agent step, one model call) carrying attributes; spans nest to form a trace. → [`labs/56-production-traces-routing/`](../labs/56-production-traces-routing/).
+
 **Span (OTel).** A timed unit of work in a distributed trace — one tool call, one model invocation, one retrieval. Spans nest to form trace trees. → Path 06 Modules 1-3.
 
 **Sparse retrieval.** Retrieval using term-frequency-based scoring (BM25, TF-IDF) rather than dense vectors. Strong for exact-match technical queries. → Path 02.
+
+**SQS visibility timeout.** Amazon SQS mechanism that hides a received message for a fixed window; if it isn't deleted (acked) in time it becomes visible again — the lease primitive behind SQS-backed redelivery. → [`labs/54-production-durable-backends/`](../labs/54-production-durable-backends/).
 
 **SSE (Server-Sent Events).** HTTP-based one-way streaming protocol. Originally used by MCP; replaced by Streamable HTTP in the current spec. → Path 04.
 
@@ -620,6 +648,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Weaviate.** Open-source vector database with built-in hybrid search and modular vectorization. Self-hosted or managed. → [weaviate.io](https://weaviate.io/) (needs manual verification).
 
+**Weighted gate.** Release rule that passes when a weighted sum of dimension scores clears a threshold, letting a strong dimension offset a weaker one — contrast with a conjunctive gate. → [`math-foundations/15-calibration-threshold-selection.md`](../math-foundations/15-calibration-threshold-selection.md).
+
 **Workflow.** A defined sequence of steps with conditional branches. Distinct from an agent: a workflow has the steps pre-specified; an agent decides the steps at runtime. The distinction matters for cost, predictability, and debugging. → [`patterns/`](../patterns/).
 
 **Working memory.** Mid-tier memory holding task-scoped scratch (notes, plans, intermediate results). Larger than short-term context but more transient than long-term storage. → [`concepts/memory/`](../concepts/memory/) + [`math-foundations/09-memory-models.md`](../math-foundations/09-memory-models.md).
@@ -631,6 +661,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 ## Y
 
 **YAML.** Human-readable serialization format used widely for prompt templates, agent configurations, and quiz files in this repo. → [yaml.org](https://yaml.org/).
+
+**Youden's J.** Threshold-selection objective $J = \text{TPR} - \text{FPR}$; the cutoff maximizing it best separates two classes without assuming their relative cost. → [`math-foundations/15-calibration-threshold-selection.md`](../math-foundations/15-calibration-threshold-selection.md).
 
 ## Z
 

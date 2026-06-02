@@ -1,6 +1,6 @@
 # Agentic AI Engineer
 
-> An open, community-built learning hub for engineers who design, build, evaluate, and ship real agentic AI systems. Continual updates.
+> An open, community-built learning hub for engineers who design, build, evaluate, and ship real agentic AI systems &mdash; not just prompts.
 
 <p>
   <img alt="License: Apache-2.0 (code)" src="https://img.shields.io/badge/code-Apache--2.0-blue">
@@ -17,9 +17,9 @@
 <table>
 <tr>
 <td align="center"><b>9</b><br><sub>Learning paths<br>(all substantial)</sub></td>
-<td align="center"><b>50</b><br><sub>Hands-on labs<br>(notebooks)</sub></td>
+<td align="center"><b>55</b><br><sub>Hands-on labs<br>(notebooks)</sub></td>
 <td align="center"><b>8</b><br><sub>Capstone<br>projects</sub></td>
-<td align="center"><b>13</b><br><sub>Math foundations<br>(with code)</sub></td>
+<td align="center"><b>15</b><br><sub>Math foundations<br>(with code)</sub></td>
 </tr>
 <tr>
 <td align="center"><b>12</b><br><sub>Architecture<br>patterns</sub></td>
