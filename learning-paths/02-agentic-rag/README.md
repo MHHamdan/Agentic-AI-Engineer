@@ -274,6 +274,26 @@ Module 21 made the signals plural, but with stand-ins: a file lock for a shared 
 
 > 💡 Module 22's through-line: **the stand-ins become the things you run, and binary becomes graded.** A file lock → Redis; claim-before-send → a dead-letter queue; raw bytes → normalized content; one binary majority → an ordinal scale with a senior adjudicator. The anchor gets as production-shaped as the backend.
 
+## Module 23: Closing the loop, and observability for PMs
+
+Module 22 made the backends and the rubric real. This module closes both loops — operations and evaluation — and steps back to the product question they serve: what it takes to *see* an agent in production, and who owns which part.
+
+45. 🧪 **[Lab 50: Closing the failure loop](../../labs/50-closing-the-failure-loop/)** *(~85–105 min)* — turn the inspect-only dead-letter queue into a durable queue with a redelivery worker (lease/ack, retention, give-up past max attempts), and add a semantic corpus fingerprint so a meaning-preserving reflow no longer triggers canary review.
+46. 🧪 **[Lab 51: Calibrated, multi-dimensional judgment](../../labs/51-calibrated-multidimensional/)** *(~90–110 min)* — re-derive the judge ceiling on the ordinal scale, calibrate the judge's one-level-low bias on a held-out split instead of discarding the judge, re-threshold the gate, and grade faithfulness × relevance × completeness at once.
+
+> 📖 The product framing for this whole arc — why observability became the priority in 2026, the four pillars (traces, evals, alerts, red teaming) and how they fit, and where the PM's job ends and engineering's begins — is in [concepts/observability/](../../concepts/observability/observability-for-agent-pms.md).
+
+> 💡 Module 23's through-line: **a failure is the start of a loop, not the end of one.** An inspect-only DLQ → redelivery to completion; exact-line hashing → semantic comparison; a discarded biased judge → a calibrated one; a single binary verdict → a calibrated, multi-dimensional gate. The PM owns the bar; engineering owns the wiring.
+
+## Module 24: Completing the observability pillars
+
+The observability guide named four pillars — traces, evals, alerts, and red teaming — and Modules 16–23 built the first three. This module builds the fourth and adds the cost dimension the guide put on the PM, so every pillar has a hands-on lab.
+
+47. 🧪 **[Lab 52: Red-teaming agent trajectories](../../labs/52-red-teaming-trajectories/)** *(~90–110 min)* — grade adversarial multi-step trajectories on tool-selection, recovery, and information leakage, mapped to the OWASP Agentic Top 10 (prompt injection, goal hijacking, excessive agency, tool misuse), and gate releases on the per-category pass rate. The grading machinery is Lab 51's, pointed at an adversary.
+48. 🧪 **[Lab 53: Cost and latency observability](../../labs/53-cost-latency-observability/)** *(~80–100 min)* — account per-session cost across tokens, runtime, and tool calls; surface the p90/p99 tail the mean hides; detect runaway loops; and simulate model routing — the cost metrics the guide put on the PM.
+
+> 💡 Module 24's through-line: **the four pillars are one discipline.** Red teaming is evaluation pointed at an adversary (grade trajectories, gate on pass rate); cost observability is alerting pointed at the bill (own the p99 tail, not the mean). Two cost problems need two controls — routing for routine spend, loop detection for runaways — and the PM owns the bar on both.
+
 ## What's *not* in this path yet
 
 Anti-scope, kept explicit so you know what's coming and what isn't:
