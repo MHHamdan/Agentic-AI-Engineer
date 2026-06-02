@@ -1,0 +1,29 @@
+name: Red-team gate
+
+# Runs the adversarial-trajectory scorer (Lab 52) as a release gate: if any OWASP Agentic
+# category falls below the pass-rate bar, the job fails and the release is blocked. This is the
+# red-teaming pillar wired into CI, the same way the faithfulness gate blocks on quality.
+
+on:
+  pull_request:
+    paths:
+      - "labs/52-red-teaming-trajectories/**"
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"   # weekly, alongside the other release checks
+
+jobs:
+  red-team-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Score adversarial trajectories and gate
+        run: |
+          # exits non-zero (blocks the release) if any category is below the threshold
+          python labs/52-red-teaming-trajectories/redteam_score.py --gate-threshold 0.8
+
+# The threshold is a product / risk decision (the PM owns it), not a statistic. Generate fresh
+# trajectories with garak / PyRIT / AgentDojo and commit them so the gate tracks current attacks.
