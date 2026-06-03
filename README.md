@@ -17,7 +17,7 @@
 <table>
 <tr>
 <td align="center"><b>9</b><br><sub>Learning paths<br>(all substantial)</sub></td>
-<td align="center"><b>55</b><br><sub>Hands-on labs<br>(notebooks)</sub></td>
+<td align="center"><b>57</b><br><sub>Hands-on labs<br>(notebooks)</sub></td>
 <td align="center"><b>8</b><br><sub>Capstone<br>projects</sub></td>
 <td align="center"><b>15</b><br><sub>Math foundations<br>(with code)</sub></td>
 </tr>

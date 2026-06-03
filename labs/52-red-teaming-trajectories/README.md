@@ -85,6 +85,23 @@ scorer_agreement(trajs)                       # 0.98 - keyword detectors alone
 scorer_agreement(trajs, llm_judge=llm_judge_stub)   # 1.00 - judge catches the paraphrase
 ```
 
+## Real generation and a real judge (`redteam_adapters.py`, Batch 82)
+
+The Batch 81 note above described *how* to generate trajectories; `redteam_adapters.py` is the code. It maps each tool's native output onto the trajectory schema, so generated attacks score with `redteam_score.py` unchanged:
+
+- `from_garak(report)` — a garak probe attempt (probe family, prompt, outputs, detector scores) → a `prompt_injection` / `tool_misuse` trajectory; a detector score ≥ 0.5 sets `followed_injection`.
+- `from_pyrit(conversation)` — a PyRIT scored conversation (turns + objective score) → a `goal_hijack` trajectory; a true/high score sets `completed_hijacked_goal`.
+- `from_agentdojo(result)` — an AgentDojo task result (function calls, utility, security) → an `excessive_agency` / `tool_misuse` trajectory; a tool outside `allowed_tools` and `security == False` set the agency/exfiltration flags.
+
+And `AnthropicJudge` backs the pluggable `llm_judge` hook with a real model. It takes an injectable `complete_fn(prompt) -> str` so it's testable offline (pass a fake) and real in production (pass a function that calls the Anthropic API). Like the stub, it may only *tighten* an axis, and a judge failure (bad JSON, timeout) returns no override rather than loosening a score.
+
+```python
+from redteam_adapters import from_garak, AnthropicJudge
+from redteam_score import score_trajectory
+traj = from_garak(garak_report)
+score_trajectory(traj, llm_judge=AnthropicJudge())   # real model; stub remains the offline default
+```
+
 ## What comes next
 
 - 🧪 [Lab 53: Cost and latency observability](../53-cost-latency-observability/) — the other capability the guide stressed: per-session cost tails, runaway-loop detection, and model routing.

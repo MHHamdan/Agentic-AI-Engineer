@@ -52,6 +52,16 @@ By the end you should be able to:
 - 📖 [From stand-ins to production](../../concepts/observability/from-stand-ins-to-production.md) — the trace → eval/cost → gate pipeline.
 - OpenTelemetry GenAI semantic conventions.
 
+## Decoupled eval service (`eval_service.py`, Batch 82)
+
+Lab 56 ran the cost loop in-process over the in-memory exporter. `eval_service.py` makes the production decoupling literal: `export_to_store` serializes the exported GenAI spans to a trace store (a JSONL file standing in for the trace backend), and `read_trace_store` / `run_eval_loop` is a separate reader that loads the store and runs the cost loop with no access to the agent's in-memory objects — only the span attributes that crossed the wire. The cost it computes matches the source exactly. Swap the JSONL file for an OTLP exporter and a real backend query and the loop is unchanged.
+
+```python
+from eval_service import export_to_store, run_eval_loop
+export_to_store(sessions, "trace_store.jsonl")   # agent side
+run_eval_loop("trace_store.jsonl")                # separate eval service
+```
+
 ## What comes next
 
 Wiring the instrumentation to a real OTLP collector and running the eval loop as a separate service that queries the trace backend.
