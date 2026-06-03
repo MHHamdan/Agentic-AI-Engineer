@@ -140,6 +140,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Cosine similarity.** $\cos(\mathbf{u}, \mathbf{v}) = \mathbf{u} \cdot \mathbf{v} / (\lVert \mathbf{u} \rVert \lVert \mathbf{v} \rVert)$. The angle-only similarity used in nearly every vector search. → [`math-foundations/02-embeddings-vector-similarity.md`](../math-foundations/02-embeddings-vector-similarity.md).
 
+**Covariate shift.** Distribution shift where the inputs change but the input-to-label relationship does not; a threshold or model fit on the old input distribution may no longer be calibrated. → [`math-foundations/16-threshold-selection-under-shift.md`](../math-foundations/16-threshold-selection-under-shift.md).
+
 **CrewAI.** Agent framework emphasizing role-based crews — specialist agents with assigned roles, goals, and backstories — coordinated through tasks. → [crewai.com](https://www.crewai.com/) (needs manual verification).
 
 **Critic agent.** Second-pass agent that reviews another agent's output and provides structured feedback. Core to generator-critic patterns and reflection. → [`patterns/07-reflection.md`](../patterns/07-reflection.md).
@@ -147,6 +149,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 **Cross-agent provenance.** Tracking which agent produced which output, from which inputs, in which step, across a multi-agent system. Load-bearing for audit trails. → Path 03 v2 Pattern 6.
 
 **Cross-encoder.** Model that scores a query-document *pair* directly, rather than embedding each independently. Used for reranking: slower than dual-encoder retrieval, more accurate. → Path 02.
+
+**Cross-validation.** Estimating held-out performance by partitioning the data into k folds and, for each, fitting on the other k-1 and evaluating on the held-out fold; lower variance than a single split when data is scarce. → [`math-foundations/16-threshold-selection-under-shift.md`](../math-foundations/16-threshold-selection-under-shift.md).
 
 ## D
 
@@ -285,6 +289,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 ## I
 
 **Idempotent (tool).** Tool whose effect on the world is the same whether called once or multiple times. Property that makes retry-on-failure safe. → [`concepts/tools/`](../concepts/tools/).
+
+**In-sample optimism.** The upward bias from tuning a threshold (or any selected parameter) and reporting its accuracy on the same data; scales with the number of candidates and shrinks like 1/sqrt(n). → [`labs/59-retuning-on-held-out-pairs/`](../labs/59-retuning-on-held-out-pairs/).
 
 **Indirect prompt injection.** Attack where the malicious instruction lives inside content the agent retrieves (a web page, a PDF, a tool result) rather than in the user's message. Harder to defend than direct injection. → [`security/`](../security/) + Path 07 Module 4.
 
@@ -432,6 +438,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Orchestration.** The layer that decides which agent or tool runs next and routes data between them. Examples: LangGraph, AutoGen, CrewAI, custom Python. → Path 03.
 
+**OTLP collector.** A process that receives OpenTelemetry spans over OTLP, batches/filters/samples them, and forwards to one or more trace backends - decoupling the agent (which only speaks OTLP) from the backend. → [`ops/otel-collector/`](../ops/otel-collector/).
+
 ## P
 
 **Parallel tool calls.** Agent capability to invoke multiple tools simultaneously in one step, with the model emitting all calls together and the runtime executing them concurrently. Major latency win when tools are independent. → [OpenAI docs](https://platform.openai.com/docs/guides/function-calling) (needs manual verification).
@@ -550,7 +558,11 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Sentence-transformer.** Family of dense text embedding models (e.g. all-MiniLM-L6-v2) producing normalized sentence vectors for semantic similarity; the production embedder behind the change-detection fingerprint. → [`labs/55-calibrated-detection-judgment/`](../labs/55-calibrated-detection-judgment/).
 
+**Service container (CI).** A dependency (Redis, LocalStack, a database) that a CI job starts alongside the test runner, so a skip-unless-live integration test runs against real infrastructure in CI. → [`labs/57-real-backends-integration/`](../labs/57-real-backends-integration/).
+
 **SFT (Supervised Fine-Tuning).** Fine-tuning a base model on input-output pairs to teach a specific task. The step before RLHF or DPO in modern alignment pipelines. → Path 06.
+
+**Shared-space embedding.** A multimodal embedding (CLIP/SigLIP) that maps images and text into one vector space so a text query can retrieve an image directly; strong on appearance, blind to dense in-image text. → [`labs/60-multimodal-rag-runnable/`](../labs/60-multimodal-rag-runnable/).
 
 **SigLIP.** Sigmoid-loss image-text embedding model, a successor to CLIP with stronger zero-shot retrieval; a shared-space option for multimodal RAG. → [`concepts/rag/multimodal-rag.md`](../concepts/rag/multimodal-rag.md).
 

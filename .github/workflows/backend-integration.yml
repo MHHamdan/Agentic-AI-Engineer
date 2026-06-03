@@ -1,0 +1,72 @@
+name: Backend integration (Lab 57)
+
+# Runs the skip-unless-live integration test from labs/57-real-backends-integration against real
+# Redis and LocalStack (SQS) service containers. The same test skips locally when REDIS_URL /
+# AWS_ENDPOINT_URL are unset, so this workflow is the "live" half of that contract.
+
+on:
+  push:
+    branches: [main]
+    paths: ["labs/57-real-backends-integration/**", ".github/workflows/backend-integration.yml"]
+  pull_request:
+    paths: ["labs/57-real-backends-integration/**", ".github/workflows/backend-integration.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  integration:
+    name: Real Redis + LocalStack
+    runs-on: ubuntu-latest
+
+    services:
+      redis:
+        image: redis:7
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 5
+      localstack:
+        image: localstack/localstack:3
+        ports: ["4566:4566"]
+        env:
+          SERVICES: sqs
+        options: >-
+          --health-cmd "curl -sf http://localhost:4566/_localstack/health || exit 1"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+
+    env:
+      REDIS_URL: redis://localhost:6379
+      AWS_ENDPOINT_URL: http://localhost:4566
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_DEFAULT_REGION: us-east-1
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install redis boto3 pytest
+
+      - name: Self-test (offline, via fakeredis + moto)
+        working-directory: labs/57-real-backends-integration
+        run: |
+          pip install fakeredis "moto[sqs]"
+          python backends.py --self-test
+
+      - name: Integration test (live Redis + LocalStack)
+        working-directory: labs/57-real-backends-integration
+        run: pytest test_integration.py -v

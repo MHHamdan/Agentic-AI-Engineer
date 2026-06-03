@@ -1,0 +1,38 @@
+# Minimal OpenTelemetry Collector config for the agent trace pipeline (Lab 56 / eval_service.py).
+# The agent exports GenAI spans over OTLP to this collector; the collector batches them and writes
+# to a trace backend. The eval service then queries that backend instead of the JSONL stand-in.
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  batch:
+    timeout: 5s
+    send_batch_size: 512
+  # keep only GenAI/agent spans to bound trace volume and cost
+  filter/genai:
+    spans:
+      include:
+        match_type: strict
+        span_names: ["gen_ai.chat"]
+
+exporters:
+  # swap this for your real backend (Tempo, Jaeger, a vendor OTLP endpoint, etc.)
+  debug:
+    verbosity: normal
+  otlp/backend:
+    endpoint: tempo:4317
+    tls:
+      insecure: true
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [filter/genai, batch]
+      exporters: [debug, otlp/backend]

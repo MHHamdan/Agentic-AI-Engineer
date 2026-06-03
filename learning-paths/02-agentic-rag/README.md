@@ -88,7 +88,7 @@ The conceptual prerequisites for Lab 06. Read these in order; the lab assumes th
 
 The pinned APIs and versions Lab 06 depends on. Reference material — skim once, refer back when you write your own code.
 
-4. ⚙️ **[Embedding models snapshot](../../tools/embeddings/snapshot-v1.0.md)** *(~6 min reference)* — `sentence-transformers/all-MiniLM-L6-v2` as the default (no API key, CPU, 384-dim) and `text-embedding-3-small` as the production swap-in (1536-dim, $0.02/1M tokens). Pinned APIs, honest tradeoffs, the freshness-check protocol.
+4. ⚙️ **[Embedding models snapshot](../../tools/embeddings/snapshot-v1.0.md)** *(~6 min reference)* — `sentence-transformers/all-MiniLM-L6-v2` as the default (no API key, CPU, 384-dim) and `text-embedding-3-small` as the production swap-in (1536-dim, $0.02/1M tokens). Pinned APIs, unbiased tradeoffs, the freshness-check protocol.
 
 5. ⚙️ **[Vector stores snapshot](../../tools/vector-stores/snapshot-v1.0.md)** *(~8 min reference)* — A survey of Chroma, pgvector, Qdrant, Weaviate, Pinecone, plus FAISS. A decision aid, not a tutorial. Lab 06 doesn't use any of these; the page explains when you would.
 
@@ -150,7 +150,7 @@ The corpus-side and query-side interventions for the failure modes Module 5/6 co
 
 ## Module 11: RAG evaluation primer
 
-After Lab 08, you've built every standard retrieval intervention. The honest question becomes: **did any of them actually help on your corpus?** Module 11 is the answer. Four concept pages in `concepts/evaluation/` covering what to measure, how to construct an eval set that surfaces the failures synthetic queries would miss, and what the metrics on each side of the retrieval/generation split actually reveal vs. hide. Read in order; Lab 09 assumes them.
+After Lab 08, you've built every standard retrieval intervention. The unbiased question becomes: **did any of them actually help on your corpus?** Module 11 is the answer. Four concept pages in `concepts/evaluation/` covering what to measure, how to construct an eval set that surfaces the failures synthetic queries would miss, and what the metrics on each side of the retrieval/generation split actually reveal vs. hide. Read in order; Lab 09 assumes them.
 
 18. 📖 **[What is RAG evaluation?](../../concepts/evaluation/what-is-rag-evaluation.md)** *(~10 min)* — Orientation: the retrieval/generation split, offline vs online, correctness vs groundedness (the distinction most teams conflate). Frames the rest of the section.
 
@@ -238,11 +238,11 @@ Two final moves turn the pipeline into a system that maintains itself: know the 
 
 The loop and the evaluation both have gaps that only show once they run for real. This module closes them on both sides.
 
-37. 🧪 **[Lab 42: Hardening the operations loop](../../labs/42-hardening-operations/)** *(~90–110 min)* — make the alerting real and self-maintaining: a severity-aware notifier routed to Slack/PagerDuty/issues, a drift baseline that re-records on every promote so it never goes stale, and a fixed canary set that keeps the drift check and nightly job honest on a quiet traffic day.
+37. 🧪 **[Lab 42: Hardening the operations loop](../../labs/42-hardening-operations/)** *(~90–110 min)* — make the alerting real and self-maintaining: a severity-aware notifier routed to Slack/PagerDuty/issues, a drift baseline that re-records on every promote so it never goes stale, and a fixed canary set that keeps the drift check and nightly job unbiased on a quiet traffic day.
 
 38. 🧪 **[Lab 43: Tracking annotator drift](../../labs/43-annotator-drift/)** *(~70–90 min)* — annotators drift too. Track each annotator's agreement-with-consensus across rounds (Fleiss/Cohen κ), flag a drifting rater by trajectory, down-weight them, and recompute the ceiling — because annotator drift and model drift look identical in a single judge-vs-consensus number.
 
-> 💡 Module 19 hardens both halves: Lab 42 makes the operations loop survive contact with on-call and quiet days; Lab 43 keeps the evaluation's ground truth honest as the humans behind it change. The recurring lesson — a signal you don't maintain is a signal you can't trust.
+> 💡 Module 19 hardens both halves: Lab 42 makes the operations loop survive contact with on-call and quiet days; Lab 43 keeps the evaluation's ground truth unbiased as the humans behind it change. The recurring lesson — a signal you don't maintain is a signal you can't trust.
 
 ## Module 20: Before you point it at production
 
@@ -319,6 +319,17 @@ Module 25 swapped each stand-in for its production form behind the same contract
 
 > 💡 Module 26's through-line: **"real" means the actual library, the actual tool, and a test that runs against live infrastructure - and the science you skipped will bite in production.** Use `fakeredis`/`moto` for fast offline tests of real client code and a skip-unless-live integration test for the gap they leave; and remember that retrieval recall is necessary but not sufficient - *where* the evidence sits in the prompt is part of the eval.
 
+## Module 27: From offline to live - CI, distribution shift, and multimodal
+
+Module 26 made the code real and tested it offline. This module takes it the rest of the way: run the real-client tests against live infrastructure in CI, tune thresholds out-of-sample when you re-fit on real embeddings, point the trace pipeline at a real collector, and make multimodal retrieval runnable. Two new labs, a new math-foundations page, a concept note with CI and trace-pipeline diagrams, and ops artifacts (a CI workflow and an OTel collector bundle).
+
+54. 🧪 **[Lab 59: Re-tuning the threshold on held-out pairs](../../labs/59-retuning-on-held-out-pairs/)** *(~70-85 min)* - in-sample threshold tuning is optimistically biased; measure the optimism as a function of sample size and use cross-validated held-out accuracy. Math: [math-foundations/16](../../math-foundations/16-threshold-selection-under-shift.md).
+55. 🧪 **[Lab 60: Multimodal RAG, runnable](../../labs/60-multimodal-rag-runnable/)** *(~65-80 min)* - shared-space (CLIP/SigLIP) vs caption-then-embed on one corpus, the "CLIP can't read" failure on text-in-image queries, and retrieval-vs-grounding as separate metrics. Concept: [multimodal-rag.md](../../concepts/rag/multimodal-rag.md).
+
+> 💡 Ops and CI artifacts: [`.github/workflows/backend-integration.yml`](../../.github/workflows/backend-integration.yml) runs Lab 57's skip-unless-live test against real Redis + LocalStack service containers; [`ops/otel-collector/`](../../ops/otel-collector/) is a runnable OTLP collector + backend so [Lab 56](../../labs/56-production-traces-routing/)'s eval service can query a real trace backend instead of the JSONL stand-in. The reasoning is in [from-offline-mocks-to-live-ci.md](../../concepts/observability/from-offline-mocks-to-live-ci.md).
+
+> 💡 Module 27's through-line: **a test pyramid for external dependencies - fast offline tests on every push, live tests where the mocks stop being faithful, costly tests on a schedule - and the discipline that a tuned threshold is a fitted parameter that earns held-out validation and re-tuning on drift.**
+
 ## What's *not* in this path yet
 
 Anti-scope, kept explicit so you know what's coming and what isn't:
@@ -394,5 +405,5 @@ Foundational sources cited across this path's pages:
 - Es, S., James, J., Espinosa-Anke, L., & Schockaert, S. (2023). [*RAGAS: Automated Evaluation of Retrieval Augmented Generation*](https://arxiv.org/abs/2309.15217). The framework paper; introduces `faithfulness`, `answer_relevancy`, `context_precision`, `context_recall` as a standardized metric set. RAGAS is mentioned in Module 11 as a future tool; not used in Path 02.
 - Min, S. et al. (2023). [*FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation*](https://arxiv.org/abs/2305.14251). EMNLP 2023. The atomic-claim-decomposition approach to faithfulness checking.
 - Zheng, L. et al. (2023). [*Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*](https://arxiv.org/abs/2306.05685). NeurIPS 2023 Datasets and Benchmarks Track. The canonical LLM-as-judge paper; documents the position, verbosity, and self-enhancement biases that every LLM-as-judge user needs to design around.
-- Saad-Falcon, J., Khattab, O., Potts, C., & Zaharia, M. (2023). [*ARES: An Automated Evaluation Framework for Retrieval-Augmented Generation Systems*](https://arxiv.org/abs/2311.09476). NAACL 2024. Argues for synthetic-question generation with human-validated subsets; honest about the limits.
+- Saad-Falcon, J., Khattab, O., Potts, C., & Zaharia, M. (2023). [*ARES: An Automated Evaluation Framework for Retrieval-Augmented Generation Systems*](https://arxiv.org/abs/2311.09476). NAACL 2024. Argues for synthetic-question generation with human-validated subsets; unbiased about the limits.
 - Liu, Y. et al. (2024). [*G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment*](https://arxiv.org/abs/2303.16634). EMNLP 2023. The standard LLM-as-judge protocol for text generation; chain-of-thought scoring template that many frameworks adopted.

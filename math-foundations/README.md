@@ -24,6 +24,8 @@ Fourteen short notes, each focused on one piece of theory:
 | 12 | [Uncertainty and safety](./12-uncertainty-safety.md) | entropy, calibration, abstention |
 | 13 | [Context-window optimization](./13-context-window-optimization.md) | budget allocation, lost-in-the-middle |
 | 14 | [Retrieval and ranking metrics](./14-retrieval-ranking-metrics.md) | precision@k, recall@k, MRR, MAP, NDCG, context precision/recall |
+| 15 | [Calibration and threshold selection](./15-calibration-threshold-selection.md) | ROC, Youden's J, isotonic regression / PAVA, weighted vs conjunctive gates |
+| 16 | [Threshold selection under distribution shift](./16-threshold-selection-under-shift.md) | in-sample optimism, held-out / cross-validation, covariate shift |
 
 A symbol-and-notation cheat sheet lives in [`notation.md`](./notation.md). One source of truth for `pi`, `s`, `a`, `theta`, `z`, and friends.
 
