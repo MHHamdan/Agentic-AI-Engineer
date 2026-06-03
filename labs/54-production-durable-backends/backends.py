@@ -168,28 +168,64 @@ class RedisStreamQueue:
 
 
 class SQSQueue:
-    """Production: `sqs = boto3.client("sqs")`; SendMessage/ReceiveMessage/DeleteMessage with a
-    VisibilityTimeout and a redrive policy to a DLQ. Here `sqs` is a FakeSQS mirroring those."""
-    def __init__(self, client=None, max_receives: int = 3):
-        self.q = client or FakeSQS()
+    """Production-shaped SQS queue wrapper.
+
+    Production uses boto3 SendMessage / ReceiveMessage / DeleteMessage with a
+    visibility timeout and a redrive policy to a DLQ. This lab implementation is
+    in-memory but preserves the same lease, ack, redelivery, and dead-letter
+    contract used by the worker.
+    """
+
+    def __init__(self, sqs=None, max_receives: int = 3):
+        self.sqs = sqs
         self.max_receives = max_receives
+        self._messages = []
+        self._dead = []
 
     def enqueue(self, payload: dict) -> str:
-        return self.q.send(payload)               # SendMessage
+        mid = str(uuid.uuid4())
+        self._messages.append(
+            {
+                "id": mid,
+                "payload": payload,
+                "visible_at": 0.0,
+                "receives": 0,
+                "deleted": False,
+                "dead": False,
+            }
+        )
+        return mid
 
-    def lease(self, max_n: int, lease_s: float, now: float) -> list[tuple[str, dict]]:
-        msgs = self.q.receive(max_n, lease_s, now)  # ReceiveMessage VisibilityTimeout=lease_s
-        # redrive anything that has now been received too many times
+    def lease(self, n: int, lease_s: float, now: float) -> list[tuple[str, dict]]:
         out = []
-        for mid, payload in msgs:
-            if self.q.receives(mid) > self.max_receives:
-                self.q.redrive(mid)
-            else:
-                out.append((mid, payload))
+
+        for msg in self._messages:
+            if len(out) >= n:
+                break
+
+            if msg["deleted"] or msg["dead"]:
+                continue
+
+            if msg["visible_at"] > now:
+                continue
+
+            msg["receives"] += 1
+
+            if msg["receives"] > self.max_receives:
+                msg["dead"] = True
+                self._dead.append(msg["payload"])
+                continue
+
+            msg["visible_at"] = now + lease_s
+            out.append((msg["id"], msg["payload"]))
+
         return out
 
     def ack(self, mid: str) -> None:
-        self.q.delete(mid)                        # DeleteMessage
+        for msg in self._messages:
+            if msg["id"] == mid:
+                msg["deleted"] = True
+                return
 
     def reclaim_expired(self, lease_s: float, now: float) -> list[tuple[str, dict]]:
         claimed = self.r.xautoclaim(lease_s, now)
@@ -206,29 +242,33 @@ class SQSQueue:
         return live
 
     def pending(self) -> int:
-        return len(self.q.msgs)
+        return sum(
+            1
+            for msg in self._messages
+            if not msg["deleted"] and not msg["dead"]
+        )
 
     def dead(self) -> int:
-        return len(self.q.dlq)
+        return len(self._dead)
 
 
-def run_contract(q, send_fn, *, lease_s: float = 30.0) -> dict:
-    """Drive any backend through the Lab 50 redelivery contract: enqueue three failed pages,
-    lease + redeliver, ack the ones that land, let the rest expire and reclaim, and give up the
-    permanent failure. Returns the observable end state."""
-    for i in range(3):
-        q.enqueue({"metric": f"m{i}"})
-    # first drain at t=0: m0 acks; m1 (transient) and m2 (permanent) fail and stay leased
+
+def run_contract(q, send_fn):
+    """Run the same worker contract against Redis-like and SQS-like queues."""
+    lease_s = 10.0
+    redelivered = 0
+
+    for item in [{"metric": "m0"}, {"metric": "m1"}, {"metric": "m2"}]:
+        q.enqueue(item)
+
     for mid, payload in q.lease(10, lease_s, now=0.0):
         try:
             send_fn(payload)
             q.ack(mid)
         except Exception:
-            pass                                   # leave leased; the lease will expire
-    # advance past the lease repeatedly; reclaim expired and retry. m1 recovers on its retry; m2
-    # keeps failing until it gives up to the dead set.
-    redelivered = 0
-    for t in (lease_s + 1, 2 * lease_s + 2, 3 * lease_s + 3, 4 * lease_s + 4):
+            pass
+
+    for t in [10.0, 20.0, 30.0, 40.0, 50.0]:
         for mid, payload in q.reclaim_expired(lease_s, now=t):
             try:
                 send_fn(payload)
@@ -236,7 +276,13 @@ def run_contract(q, send_fn, *, lease_s: float = 30.0) -> dict:
                 redelivered += 1
             except Exception:
                 pass
-    return {"pending": q.pending(), "dead": q.dead(), "redelivered": redelivered}
+
+    return {
+        "pending": q.pending(),
+        "dead": q.dead(),
+        "redelivered": redelivered,
+    }
+
 
 
 def _self_test() -> int:
