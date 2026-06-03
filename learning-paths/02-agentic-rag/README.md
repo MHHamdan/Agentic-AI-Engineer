@@ -306,6 +306,19 @@ Modules 16–24 built the observability loop with stand-ins — a file queue, a 
 
 > 💡 Module 25's through-line: **every stand-in becomes the thing you run, and the contract is what makes the swap safe.** Code to the contract (the queue), calibrate on held-out data (the threshold and the judge), run the loop on the traces the agent already emits, and keep a human where the automated grade is only a floor.
 
+## Module 26: Making it real, and the retrieval science we skipped
+
+Module 25 swapped each stand-in for its production form behind the same contract. This module takes the last step - the *actual* client libraries and tools - and fills two retrieval-science gaps the path skipped. Two new labs, three real-wiring add-ons to the Module 25 labs, and two concept pages.
+
+52. 🧪 **[Lab 57: Real durable backends, integration-tested](../../labs/57-real-backends-integration/)** *(~75-95 min)* - the durable-queue contract on real `redis-py` Streams and `boto3` SQS, exercised offline by `fakeredis` and `moto` (which run the real commands) with a `test_integration.py` that runs the same code against a live Redis / LocalStack and skips when neither is set.
+53. 🧪 **[Lab 58: Measuring lost-in-the-middle](../../labs/58-measuring-lost-in-the-middle/)** *(~60-75 min)* - a position-sweep harness that measures answer accuracy by the gold passage's position, recovers the U-shaped curve, and quantifies rerank-to-top and shrink-k mitigations. Companion: [lost-in-the-middle.md](../../concepts/rag/lost-in-the-middle.md).
+
+> 💡 Real-wiring add-ons to the Module 25 labs: [`embedders.py`](../../labs/55-calibrated-detection-judgment/embedders.py) makes the change-detection embedder swappable (a guarded real sentence-transformer, char-trigram as the offline default); [`eval_service.py`](../../labs/56-production-traces-routing/eval_service.py) runs the cost loop as a separate service over a trace store, with no access to the agent's objects; [`redteam_adapters.py`](../../labs/52-red-teaming-trajectories/redteam_adapters.py) turns garak / PyRIT / AgentDojo output into the Lab 52 schema and backs the LLM judge with a real (injectable) model call.
+
+> 💡 New retrieval-science pages: [lost-in-the-middle.md](../../concepts/rag/lost-in-the-middle.md) (position bias in long contexts) and [multimodal-rag.md](../../concepts/rag/multimodal-rag.md) (retrieval over images/tables/charts: shared-space vs caption-then-embed, grounding/OCR eval).
+
+> 💡 Module 26's through-line: **"real" means the actual library, the actual tool, and a test that runs against live infrastructure - and the science you skipped will bite in production.** Use `fakeredis`/`moto` for fast offline tests of real client code and a skip-unless-live integration test for the gap they leave; and remember that retrieval recall is necessary but not sufficient - *where* the evidence sits in the prompt is part of the eval.
+
 ## What's *not* in this path yet
 
 Anti-scope, kept explicit so you know what's coming and what isn't:

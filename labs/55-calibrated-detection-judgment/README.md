@@ -57,6 +57,15 @@ By the end you should be able to:
 - 📐 [math-foundations/15](../../math-foundations/15-calibration-threshold-selection.md) — every equation here, derived.
 - 🧪 [Lab 50](../50-closing-the-failure-loop/), [Lab 51](../51-calibrated-multidimensional/) — the stand-ins this replaces.
 
+## Swappable embedder (`embedders.py`, Batch 82)
+
+The threshold-tuning procedure is embedder-agnostic. `embedders.py` makes the embedder a dependency you inject: `CharTrigramEmbedder` is the offline default, `SentenceTransformerEmbedder` wraps a real model behind a guarded import (you only pay for the dependency when you instantiate it), and `tune_with(embedder)` re-runs the same ROC/Youden selection with whichever you pass. Swapping in a real sentence-transformer and re-tuning on your own reflow/edit pairs is a one-line change; the cosine distributions and the tuned threshold move, the procedure does not.
+
+```python
+from embedders import SentenceTransformerEmbedder, tune_with
+tune_with(SentenceTransformerEmbedder())["threshold"]   # re-tuned on real embeddings
+```
+
 ## What comes next
 
 - 🧪 [Lab 56: Production traces and routing](../56-production-traces-routing/) — run the eval and cost loops over real OpenTelemetry spans, and learn the routing decision instead of hand-flagging it.

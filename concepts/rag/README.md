@@ -23,6 +23,8 @@ These three are prerequisites for [Lab 06](../../labs/06-agentic-rag-from-scratc
 | 📖 [retrieval-strategies.md](./retrieval-strategies.md) | ~11 min | The four knobs that drive retrieval quality: top_k, score floors, MMR, query construction. |
 | 📖 [hybrid-search.md](./hybrid-search.md) | ~10 min | BM25 + dense fusion via reciprocal rank fusion (RRF). When hybrid beats dense alone. |
 | 📖 [reranking.md](./reranking.md) | ~10 min | Cross-encoder reranking, the retrieve-then-rerank pipeline, what changes vs bi-encoders. |
+| 📖 [lost-in-the-middle.md](./lost-in-the-middle.md) | ~8 min | Why a perfect retriever can still answer wrong: U-shaped accuracy by context position, and how to measure it (Lab 58). |
+| 📖 [multimodal-rag.md](./multimodal-rag.md) | ~10 min | Retrieval over images/tables/charts: shared-space vs caption-then-embed, mixed-content chunking, and grounding/OCR eval. |
 
 These three are prerequisites for [Lab 07](../../labs/07-retrieval-strategies-and-reranking/).
 

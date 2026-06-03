@@ -106,7 +106,7 @@ def make_change_pairs() -> list[tuple[str, str, int]]:
 # ============================ Part B: isotonic calibration + weighted gate =====================
 def qwk(y1, y2, levels=LEVELS) -> float:
     level_count = len(levels)
-    idx = {v: i for i, v in enumerate(levels)}
+    idx = {value: i for i, value in enumerate(levels)}
     observed = [[0] * level_count for _ in range(level_count)]
 
     for a, b in zip(y1, y2, strict=False):
@@ -138,7 +138,8 @@ def qwk(y1, y2, levels=LEVELS) -> float:
 
 def additive_shift(judge: list[int], gold: list[int]) -> int:
     return round(
-        sum(g - j for g, j in zip(gold, judge, strict=False)) / len(judge)
+        sum(gold_value - judge_value for gold_value, judge_value in zip(gold, judge, strict=False))
+        / len(judge)
     )
 
 def isotonic_fit(x: list[float], y: list[int]) -> tuple[list[float], list[float]]:
@@ -165,6 +166,7 @@ def isotonic_fit(x: list[float], y: list[int]) -> tuple[list[float], list[float]
             del ys[i + 1]
             del ws[i + 1]
             del xs[i + 1]
+
             if i > 0:
                 i -= 1
         else:

@@ -92,6 +92,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Capstone (project).** Full-stack agentic system spanning at least four paths with evaluation, observability, deployment, and a written architecture defense. → [`projects/capstone/`](../projects/capstone/).
 
+**caption-then-embed.** Multimodal-RAG technique: describe each image or table with a vision-language model, then embed and index that text - preserves dense in-image text and reuses the text retrieval stack. → [`concepts/rag/multimodal-rag.md`](../concepts/rag/multimodal-rag.md).
+
 **Chain (LangChain primitive).** Sequence of LLM calls and transformations composed as a pipeline. The original LangChain abstraction; mostly superseded by LangGraph for agentic workflows. → [LangChain docs](https://docs.langchain.com/) (needs manual verification).
 
 **Chain-of-Thought (CoT).** Prompting technique where the model is induced to produce intermediate reasoning steps before its final answer. Empirically lifts reasoning task accuracy. → [Wei et al. 2022](https://arxiv.org/abs/2201.11903).
@@ -107,6 +109,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 **Citation.** Inline reference linking each claim in an agent's output back to the source that supports it. Load-bearing for faithfulness eval and audit trails. → [Project 06](../projects/capstone/06-financial-research-analyst/).
 
 **Claude.** Anthropic's frontier model family (Haiku, Sonnet, Opus tiers). Native tool calling, structured outputs, computer use, MCP support. → [anthropic.com/claude](https://www.anthropic.com/claude).
+
+**CLIP.** Contrastive image-text embedding model that maps images and captions into a shared vector space; strong on what an image depicts, weak on dense text inside it. → [`concepts/rag/multimodal-rag.md`](../concepts/rag/multimodal-rag.md).
 
 **Code interpreter.** Tool that lets the model write and execute code in a sandbox, observing output and iterating. Available as a first-class tool in OpenAI and Anthropic APIs. → [OpenAI docs](https://platform.openai.com/docs/assistants/tools/code-interpreter) + [Anthropic docs](https://docs.anthropic.com/en/docs/build-with-claude/tool-use).
 
@@ -210,6 +214,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Faithfulness.** Eval metric measuring whether a generated answer is supported by its cited sources — the canonical RAG failure mode the metric catches. → Path 06 v1 + [`concepts/evaluation/`](../concepts/evaluation/) + [`math-foundations/11-evaluation-metrics.md`](../math-foundations/11-evaluation-metrics.md).
 
+**fakeredis.** In-process implementation of the Redis protocol (including Streams) that runs real `redis-py` commands without a server, so real client code can be tested offline. → [`labs/57-real-backends-integration/`](../labs/57-real-backends-integration/).
+
 **Fallback.** When the agent's preferred approach fails, the policy that chooses the simpler/safer alternative. Sister concept to escalation. → Path 03 v2 Pattern 3.
 
 **FAISS.** Facebook AI Similarity Search. Open-source library for efficient nearest-neighbor search over dense vectors. Default for self-hosted in-process vector indices. → [github.com/facebookresearch/faiss](https://github.com/facebookresearch/faiss).
@@ -288,6 +294,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Instruction tuning.** Fine-tuning a base model on instruction-response pairs to make it follow user directives. The step between base GPT and ChatGPT. → [Ouyang et al. 2022](https://arxiv.org/abs/2203.02155).
 
+**Integration test (skip-unless-live).** A test that exercises real infrastructure (a live Redis, LocalStack) when its endpoint is configured and skips cleanly otherwise, so the suite runs anywhere. → [`labs/57-real-backends-integration/`](../labs/57-real-backends-integration/).
+
 **Intent classification.** Determining what the user is trying to do as a discrete category. Useful for routing to specialist agents or tools. → Path 03.
 
 **Isotonic regression.** Monotone (non-decreasing) least-squares fit that calibrates a scorer whose bias is monotone but not a constant offset; computed by pool-adjacent-violators. → [`math-foundations/15-calibration-threshold-selection.md`](../math-foundations/15-calibration-threshold-selection.md).
@@ -340,11 +348,15 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **LLM-as-judge.** Using a model with a rubric to grade outputs or trajectories that rule-based detectors miss — e.g. catching paraphrased leaks a keyword detector slips past. → [`labs/52-red-teaming-trajectories/`](../labs/52-red-teaming-trajectories/).
 
+**LocalStack.** Local emulator of AWS services (SQS, S3, and others) used to run `boto3` integration tests without a real AWS account. → [`labs/57-real-backends-integration/`](../labs/57-real-backends-integration/).
+
 **Long-context model.** Frontier model with context windows of 200K to 1M+ tokens. The engineering decision: absorb the cost of larger contexts or build tiered retrieval architecture? → [`concepts/context/long-context-models.md`](../concepts/context/long-context-models.md).
 
 **Loop detection.** Runtime guard that detects when an agent is repeating the same action without progress and halts execution. → Path 07.
 
 **Lost in the middle.** Empirical finding that long-context models have weaker recall on content positioned in the middle of the context window. Defense: place load-bearing content at the start and end. → [Liu et al. 2023](https://arxiv.org/abs/2307.03172) + [`math-foundations/13-context-window-optimization.md`](../math-foundations/13-context-window-optimization.md).
+
+**Lost-in-the-middle.** Finding (Liu et al., 2023) that long-context models attend best to the start and end of the context and worst to the middle, so answer accuracy is U-shaped in the gold passage's position. → [`concepts/rag/lost-in-the-middle.md`](../concepts/rag/lost-in-the-middle.md).
 
 ## M
 
@@ -374,6 +386,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Model card.** Standardized document describing a model's intended use, training data, evaluation results, and known limitations. → [Mitchell et al. 2019](https://arxiv.org/abs/1810.03993).
 
+**moto.** Library that mocks AWS APIs in-process so real `boto3` calls (SQS send/receive, redrive to a DLQ) run offline against an in-memory backend. → [`labs/57-real-backends-integration/`](../labs/57-real-backends-integration/).
+
 **MTEB (Massive Text Embedding Benchmark).** Standard benchmark for comparing embedding models across retrieval, clustering, and classification tasks. The de facto leaderboard for picking embedding models. → [Muennighoff et al. 2023](https://arxiv.org/abs/2210.07316).
 
 **Multi-agent system.** System with two or more agents that communicate, delegate, or collaborate. Topologies include supervisor-worker, hierarchical, plan-and-execute, swarm. → Path 03 + [`math-foundations/10-multi-agent-coordination.md`](../math-foundations/10-multi-agent-coordination.md).
@@ -381,6 +395,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 **Multi-hop reasoning.** Task that requires connecting multiple pieces of evidence to answer. The motivating use case for GraphRAG, agentic RAG with iteration, and ReAct. → Path 02.
 
 **Multimodal agent.** Agent that processes inputs across modalities (text, image, audio, video) and/or produces multimodal outputs. → Path 03.
+
+**Multimodal RAG.** Retrieval over a corpus whose evidence can be images, tables, or charts as well as text, with a vision-language generator; embed via a shared space or caption-then-embed. → [`concepts/rag/multimodal-rag.md`](../concepts/rag/multimodal-rag.md).
 
 ## N
 
@@ -532,7 +548,11 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Sentence Transformers.** Python library for sentence and text embeddings via fine-tuned BERT-family models. The most-used open-weight embedding stack. → [sbert.net](https://www.sbert.net/) (needs manual verification).
 
+**Sentence-transformer.** Family of dense text embedding models (e.g. all-MiniLM-L6-v2) producing normalized sentence vectors for semantic similarity; the production embedder behind the change-detection fingerprint. → [`labs/55-calibrated-detection-judgment/`](../labs/55-calibrated-detection-judgment/).
+
 **SFT (Supervised Fine-Tuning).** Fine-tuning a base model on input-output pairs to teach a specific task. The step before RLHF or DPO in modern alignment pipelines. → Path 06.
+
+**SigLIP.** Sigmoid-loss image-text embedding model, a successor to CLIP with stronger zero-shot retrieval; a shared-space option for multimodal RAG. → [`concepts/rag/multimodal-rag.md`](../concepts/rag/multimodal-rag.md).
 
 **SKILL.md.** Convention (Anthropic Claude Code, Claude.ai) where a folder contains a SKILL.md file teaching the agent how to perform a category of tasks. Used by Claude's file-creation and document-editing skills. → [Anthropic docs](https://docs.claude.com/en/docs/claude-code/skills) (needs manual verification).
 
