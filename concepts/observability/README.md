@@ -8,6 +8,7 @@ In 2026, agent observability became a discipline of its own: agents run for hour
 
 | Page | Read time | Covers |
 |------|-----------|--------|
+| 📖 [from-offline-mocks-to-live-ci.md](./from-offline-mocks-to-live-ci.md) | ~9 min | The last gap: running the real-client code against live infrastructure - a test pyramid (offline self-tests on every push, live Redis/LocalStack integration in CI, scheduled red-team generation), a real OTLP collector pipeline, and what stays unchanged across the move. With CI and trace-pipeline diagrams. |
 | 📖 [from-stand-ins-to-production.md](./from-stand-ins-to-production.md) | ~9 min | The move from each observability stand-in (file queue, fixed threshold, additive shift, hand-built data, keyword detector) to its production form, with a pipeline diagram and the one rule that survives every swap: code to the contract, calibrate on held-out data, keep a human where the automated grade is only a floor. |
 | 📖 [observability-for-agent-pms.md](./observability-for-agent-pms.md) | ~18 min | Why observability is the priority for agent teams, the four pillars (traces, evals, alerts, red teaming) and how they form one loop, and where the PM's job ends and engineering's begins — with the metrics a PM should own. |
 

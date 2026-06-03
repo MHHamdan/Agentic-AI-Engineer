@@ -1,0 +1,20 @@
+# Bring up an OpenTelemetry Collector locally so eval_service.py can point at a real OTLP endpoint
+# instead of the JSONL trace store. Run: docker compose up. The agent exports to localhost:4318.
+
+services:
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    command: ["--config=/etc/otelcol/config.yaml"]
+    volumes:
+      - ./collector-config.yaml:/etc/otelcol/config.yaml:ro
+    ports:
+      - "4317:4317"   # OTLP gRPC
+      - "4318:4318"   # OTLP HTTP
+
+  # A trace backend the collector exports to. Swap for your own; Tempo shown as an example.
+  tempo:
+    image: grafana/tempo:latest
+    command: ["-config.file=/etc/tempo.yaml"]
+    # mount your tempo.yaml; the eval service queries this backend's API
+    ports:
+      - "3200:3200"
