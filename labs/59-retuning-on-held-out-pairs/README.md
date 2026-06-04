@@ -56,6 +56,8 @@ By the end you should be able to:
 
 The suggested-next item was to re-tune with a real sentence-transformer and compare the optimism curve to the stand-in's. `compare.py` does the comparison for any pair of embedders (char-trigram vs word-bag offline; add a `SentenceTransformerEmbedder` when available): a different embedding geometry separates reflows from edits differently, so it overfits the threshold by a different amount at small n (here +0.031 vs +0.044 at n=16) even though both converge to the same held-out accuracy. The label budget is embedder-specific.
 
+It now compares **three real geometries** - char-trigram, word-bag, and a model-free dense embedder (the hashing trick) - giving distinct optimism at n=16 (+0.031 / +0.044 / +0.053), all converging to the same held-out accuracy. A `SentenceTransformerEmbedder` adapter drops in via `--real-embedder MODEL` when a model is available.
+
 ```bash
 python compare.py --self-test
 ```

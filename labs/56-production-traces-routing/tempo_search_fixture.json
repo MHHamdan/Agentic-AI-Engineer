@@ -1,0 +1,54 @@
+{
+  "traces": [
+    {
+      "traceID": "0af7651916cd43dd8448eb211c80319c",
+      "rootServiceName": "rag-agent",
+      "spanSets": [
+        {
+          "spans": [
+            {
+              "spanID": "b7ad6b7169203331",
+              "name": "gen_ai.chat",
+              "attributes": [
+                {"key": "agent.session_id", "value": {"stringValue": "sess-1"}},
+                {"key": "gen_ai.request.model", "value": {"stringValue": "haiku"}},
+                {"key": "gen_ai.usage.input_tokens", "value": {"intValue": "1000"}},
+                {"key": "gen_ai.usage.output_tokens", "value": {"intValue": "200"}}
+              ]
+            },
+            {
+              "spanID": "b7ad6b7169203332",
+              "name": "gen_ai.chat",
+              "attributes": [
+                {"key": "agent.session_id", "value": {"stringValue": "sess-1"}},
+                {"key": "gen_ai.request.model", "value": {"stringValue": "haiku"}},
+                {"key": "gen_ai.usage.input_tokens", "value": {"intValue": "500"}},
+                {"key": "gen_ai.usage.output_tokens", "value": {"intValue": "100"}}
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "traceID": "1bf8762027de54ee9559fc322d914207",
+      "rootServiceName": "rag-agent",
+      "spanSets": [
+        {
+          "spans": [
+            {
+              "spanID": "c8be7c8270314442",
+              "name": "gen_ai.chat",
+              "attributes": [
+                {"key": "agent.session_id", "value": {"stringValue": "sess-2"}},
+                {"key": "gen_ai.request.model", "value": {"stringValue": "sonnet"}},
+                {"key": "gen_ai.usage.input_tokens", "value": {"intValue": "2000"}},
+                {"key": "gen_ai.usage.output_tokens", "value": {"intValue": "400"}}
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
