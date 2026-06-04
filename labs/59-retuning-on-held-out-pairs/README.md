@@ -52,6 +52,14 @@ By the end you should be able to:
 - 📐 [math-foundations/16](../../math-foundations/16-threshold-selection-under-shift.md) — the bias of in-sample selection and how it scales with n.
 - 🧪 [Lab 55](../55-calibrated-detection-judgment/) — the threshold and the swappable embedder.
 
+## Comparing embedders (`compare.py`, Batch 84)
+
+The suggested-next item was to re-tune with a real sentence-transformer and compare the optimism curve to the stand-in's. `compare.py` does the comparison for any pair of embedders (char-trigram vs word-bag offline; add a `SentenceTransformerEmbedder` when available): a different embedding geometry separates reflows from edits differently, so it overfits the threshold by a different amount at small n (here +0.031 vs +0.044 at n=16) even though both converge to the same held-out accuracy. The label budget is embedder-specific.
+
+```bash
+python compare.py --self-test
+```
+
 ## What comes next
 
 - 🧪 [Lab 60: Multimodal RAG, runnable](../60-multimodal-rag-runnable/) — the other retrieval-science gap: retrieval over images and tables.

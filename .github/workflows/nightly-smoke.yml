@@ -1,0 +1,51 @@
+name: Nightly smoke (LocalStack SQS)
+
+# A fast nightly liveness check against LocalStack, separate from the per-PR integration suite.
+# If SQS is unreachable or misbehaving, this fails before the heavier backend-integration job runs.
+
+on:
+  schedule:
+    - cron: "17 6 * * *"   # 06:17 UTC daily
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: SQS smoke vs LocalStack
+    runs-on: ubuntu-latest
+
+    services:
+      localstack:
+        image: localstack/localstack:3
+        ports: ["4566:4566"]
+        env:
+          SERVICES: sqs
+        options: >-
+          --health-cmd "curl -sf http://localhost:4566/_localstack/health || exit 1"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+
+    env:
+      AWS_ENDPOINT_URL: http://localhost:4566
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_DEFAULT_REGION: us-east-1
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install boto3
+        run: pip install boto3
+      - name: Offline self-test (moto)
+        working-directory: labs/57-real-backends-integration
+        run: |
+          pip install "moto[sqs]"
+          python smoke_sqs.py --self-test
+      - name: SQS smoke (live LocalStack)
+        working-directory: labs/57-real-backends-integration
+        run: python smoke_sqs.py

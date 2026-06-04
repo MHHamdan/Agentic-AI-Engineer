@@ -102,6 +102,14 @@ traj = from_garak(garak_report)
 score_trajectory(traj, llm_judge=AnthropicJudge())   # real model; stub remains the offline default
 ```
 
+## Batch generation runner (`generate.py`, Batch 84)
+
+`redteam_adapters.py` maps one tool record to one trajectory; `generate.py` is the pipeline runner. Point it at a directory of tool output files and it dispatches each by filename (`garak*.json` / `pyrit*.json` / `agentdojo*.json`) to the right adapter and writes one trajectories JSONL that `redteam_score.py` consumes. A scheduled CI job runs this, scores with the keyword detectors plus `AnthropicJudge`, and gates on the pass rate.
+
+```bash
+python generate.py --input-dir runs/ --out trajectories.jsonl
+```
+
 ## What comes next
 
 - 🧪 [Lab 53: Cost and latency observability](../53-cost-latency-observability/) — the other capability the guide stressed: per-session cost tails, runaway-loop detection, and model routing.

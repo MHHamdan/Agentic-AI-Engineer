@@ -330,6 +330,17 @@ Module 26 made the code real and tested it offline. This module takes it the res
 
 > 💡 Module 27's through-line: **a test pyramid for external dependencies - fast offline tests on every push, live tests where the mocks stop being faithful, costly tests on a schedule - and the discipline that a tuned threshold is a fitted parameter that earns held-out validation and re-tuning on drift.**
 
+## Module 28: Multimodal evaluation in depth - retrieval, grounding, and OCR-reading
+
+Module 27 made multimodal retrieval runnable. This module is about *grading* it: a multimodal answer can fail at retrieval, OCR-reading, or grounding, and a single accuracy number cannot tell them apart. Two labs that grade the three axes separately and attribute every failure to its cause, a new math-foundations page, a concept note with two diagrams, plus real-wiring add-ons that take the Module 26-27 suggested-next items the rest of the way.
+
+56. 🧪 **[Lab 61: Grading multimodal RAG by stage](../../labs/61-grading-multimodal-rag/)** *(~80-100 min)* - retrieval recall, OCR CER, and grounding rate as separate metrics, with first-failing-stage attribution. Two runs that both score 0.75 end-to-end are revealed to be an OCR bug and a grounding bug. Concept: [grounding-and-ocr.md](../../concepts/rag/grounding-and-ocr.md).
+57. 🧪 **[Lab 62: OCR-reading quality](../../labs/62-ocr-reading-quality/)** *(~55-70 min)* - CER/WER, normalization, and why numeric answers need a value-aware match: a misread decimal is a tiny CER but a 10x error, a reformat is a large CER but the same value. Math: [math-foundations/17](../../math-foundations/17-multimodal-eval-metrics.md).
+
+> 💡 Real-wiring add-ons (the prior suggested-next items, made runnable): [`generate.py`](../../labs/52-red-teaming-trajectories/generate.py) batches a directory of garak/PyRIT/AgentDojo outputs into a trajectories JSONL; [`trace_backend.py`](../../labs/56-production-traces-routing/trace_backend.py) puts the eval loop behind a `TraceBackend` protocol (JSONL now, Tempo when live); [`smoke_sqs.py`](../../labs/57-real-backends-integration/smoke_sqs.py) + [`.github/workflows/nightly-smoke.yml`](../../.github/workflows/nightly-smoke.yml) add a nightly LocalStack SQS liveness check; [`compare.py`](../../labs/59-retuning-on-held-out-pairs/compare.py) compares the optimism curve across embedders.
+
+> 💡 Module 28's through-line: **grounded is not correct, and one accuracy number hides three bugs.** Grade retrieval, OCR-reading, and grounding as three numbers; attribute each failure to the first stage that broke; and for numeric answers, score legibility (CER) and value (numeric tolerance) separately - a faithfully reported misread is an OCR failure, not a grounding one.
+
 ## What's *not* in this path yet
 
 Anti-scope, kept explicit so you know what's coming and what isn't:
