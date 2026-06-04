@@ -71,6 +71,8 @@ from trace_backend import JsonlBackend, run_eval_loop
 run_eval_loop(JsonlBackend("trace_store.jsonl"))   # swap for TempoBackend(endpoint) when live
 ```
 
+`parse_tempo_search` reads the **real Grafana Tempo search response schema** (traces → spanSets → spans → OTLP-JSON attributes), verified offline against a recorded `tempo_search_fixture.json`, so pointing `TempoBackend` at a live Tempo only changes where the JSON comes from.
+
 ## What comes next
 
 Wiring the instrumentation to a real OTLP collector and running the eval loop as a separate service that queries the trace backend.

@@ -341,6 +341,16 @@ Module 27 made multimodal retrieval runnable. This module is about *grading* it:
 
 > 💡 Module 28's through-line: **grounded is not correct, and one accuracy number hides three bugs.** Grade retrieval, OCR-reading, and grounding as three numbers; attribute each failure to the first stage that broke; and for numeric answers, score legibility (CER) and value (numeric tolerance) separately - a faithfully reported misread is an OCR failure, not a grounding one.
 
+## Module 29: OCR-reading on real images, and making the staged pieces real
+
+Module 28 graded OCR-reading with a stand-in reader. This module reads real pixels with a real engine, and turns the prior modules' guarded wirings into verified-on-real-format ones. One new lab on real OCR, a new math-foundations page, a concept note with a pipeline diagram, and four real-technique/real-schema upgrades that take the suggested-next items as far as they go without live infrastructure.
+
+58. 🧪 **[Lab 63: OCR-reading on real rendered images](../../labs/63-ocr-on-real-images/)** *(~75-95 min)* - render a deterministic image corpus across a degradation ladder, run real tesseract OCR, and grade by CER and a value-aware answer check. The engine reads clean images perfectly, returns a blank on heavy noise, and misreads "9.4 billion" as "94 bien" - a real ~10^8 value error that CER alone (0.27) waves through. Concept: [ocr-on-real-images.md](../../concepts/rag/ocr-on-real-images.md); math: [18](../../math-foundations/18-edit-distance-alignment.md).
+
+> 💡 Real-technique / real-schema upgrades (the prior suggested-next items, made real where verifiable offline): [`compare.py`](../../labs/59-retuning-on-held-out-pairs/compare.py) adds a model-free dense embedder (the hashing trick) so three real geometries are compared, plus a `SentenceTransformerEmbedder` adapter; [`trace_backend.py`](../../labs/56-production-traces-routing/trace_backend.py) parses the real Grafana Tempo search schema, verified against a recorded fixture; [`generate.py`](../../labs/52-red-teaming-trajectories/generate.py) reads the real garak `report.jsonl` format; [`ops/ci-local/`](../../ops/ci-local/) reproduces the CI integration jobs locally (offline tier + live tier against Redis + LocalStack).
+
+> 💡 Module 29's through-line: **real pixels and a real engine, measured.** OCR failures are emergent - a blank read, a garble, a single deleted decimal that flips a value - and you cannot enumerate them in advance, only render real images, run a real engine (recording its version), and grade legibility and value separately. The same discipline applies to the wirings: parse the real wire format and reproduce CI locally, so "guarded" becomes "verified against reality" before it ever touches live infrastructure.
+
 ## What's *not* in this path yet
 
 Anti-scope, kept explicit so you know what's coming and what isn't:

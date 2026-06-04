@@ -106,8 +106,10 @@ score_trajectory(traj, llm_judge=AnthropicJudge())   # real model; stub remains 
 
 `redteam_adapters.py` maps one tool record to one trajectory; `generate.py` is the pipeline runner. Point it at a directory of tool output files and it dispatches each by filename (`garak*.json` / `pyrit*.json` / `agentdojo*.json`) to the right adapter and writes one trajectories JSONL that `redteam_score.py` consumes. A scheduled CI job runs this, scores with the keyword detectors plus `AnthropicJudge`, and gates on the pass rate.
 
+It also reads the **real garak `report.jsonl` format** directly (`entry_type`/`probe_classname` are normalized onto the adapter input), so a genuine garak run feeds straight in alongside the per-record `pyrit*.json` / `agentdojo*.json` files.
+
 ```bash
-python generate.py --input-dir runs/ --out trajectories.jsonl
+python generate.py --input-dir runs/ --out trajectories.jsonl   # runs/ may contain a garak report.jsonl
 ```
 
 ## What comes next

@@ -1,0 +1,26 @@
+# Local equivalents of the service containers used by .github/workflows/backend-integration.yml and
+# nightly-smoke.yml. Bring these up to reproduce and debug the CI integration jobs on your machine:
+#   docker compose up -d
+#   ./run-checks.sh
+#   docker compose down
+
+services:
+  redis:
+    image: redis:7
+    ports: ["6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  localstack:
+    image: localstack/localstack:3
+    ports: ["4566:4566"]
+    environment:
+      SERVICES: sqs
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:4566/_localstack/health || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 10

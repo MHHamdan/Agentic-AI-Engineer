@@ -42,6 +42,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **AI alignment.** Research and engineering effort to make AI systems behave according to human intent and values. Practical agentic touchpoints: HITL, guardrails, evaluation, refusal behavior. → [Anthropic research](https://www.anthropic.com/research).
 
+**Alignment (edit-distance).** The path through the Levenshtein DP matrix that achieves the minimum distance, recovered by backtracing; decomposes the error into substitutions, insertions, and deletions and yields a character confusion profile. → [`math-foundations/18-edit-distance-alignment.md`](../math-foundations/18-edit-distance-alignment.md).
+
 **Anthropic.** AI safety company that builds the Claude model family and authored the MCP protocol and Constitutional AI methodology. → [anthropic.com](https://www.anthropic.com/).
 
 **Approval gate.** Pause point in an agent workflow where execution waits for explicit human approval before continuing — the operational primitive of HITL. → [`patterns/10-human-in-the-loop.md`](../patterns/10-human-in-the-loop.md).
@@ -192,6 +194,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Edit distance (Levenshtein).** Minimum single-character insertions, deletions, and substitutions to turn one string into another; the basis of CER and WER. → [`math-foundations/17-multimodal-eval-metrics.md`](../math-foundations/17-multimodal-eval-metrics.md).
 
+**Edit operations (substitution / insertion / deletion).** The three single-character edits an alignment counts; their split diagnoses an OCR pipeline - deletions lose characters, insertions hallucinate them, substitutions confuse look-alikes - where the single CER cannot. → [`math-foundations/18-edit-distance-alignment.md`](../math-foundations/18-edit-distance-alignment.md).
+
 **Embedding.** Dense vector representation of text (or other modality) where semantic similarity maps to cosine or dot-product distance. Production models: OpenAI text-embedding-3, Cohere embed-v3, sentence-transformers. → [`math-foundations/02-embeddings-vector-similarity.md`](../math-foundations/02-embeddings-vector-similarity.md).
 
 **Embedding model.** Neural network that maps text to a fixed-dimensional vector. Choice of model matters more than dimension; production options live in [MTEB](https://huggingface.co/spaces/mteb/leaderboard). → Path 02.
@@ -229,6 +233,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 **Fallback.** When the agent's preferred approach fails, the policy that chooses the simpler/safer alternative. Sister concept to escalation. → Path 03 v2 Pattern 3.
 
 **FAISS.** Facebook AI Similarity Search. Open-source library for efficient nearest-neighbor search over dense vectors. Default for self-hosted in-process vector indices. → [github.com/facebookresearch/faiss](https://github.com/facebookresearch/faiss).
+
+**Feature hashing (the hashing trick).** A model-free dense embedding: hash features (e.g. char n-grams) into a fixed-dimension vector with signed buckets. Deterministic, no training or download - used to compare optimism curves across embedder geometries. → [`labs/59-retuning-on-held-out-pairs/`](../labs/59-retuning-on-held-out-pairs/).
 
 **Few-shot prompting.** Including examples of input-output pairs in the prompt to teach the model the task without weight updates. Often the simplest fix for under-performing classification or extraction tasks. → Path 01.
 
@@ -297,6 +303,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 ## I
 
 **Idempotent (tool).** Tool whose effect on the world is the same whether called once or multiple times. Property that makes retry-on-failure safe. → [`concepts/tools/`](../concepts/tools/).
+
+**Image preprocessing (binarization / deskew / upscale).** Cleaning a cropped region before OCR - thresholding to black/white, straightening rotation, enlarging small text. Often a large win, but each lever can be pulled too far (eroding strokes, smearing digits), so it is part of the system under test. → [`concepts/rag/ocr-on-real-images.md`](../concepts/rag/ocr-on-real-images.md).
 
 **In-sample optimism.** The upward bias from tuning a threshold (or any selected parameter) and reporting its accuracy on the same data; scales with the number of candidates and shrinks like 1/sqrt(n). → [`labs/59-retuning-on-held-out-pairs/`](../labs/59-retuning-on-held-out-pairs/).
 
@@ -432,6 +440,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **OAuth.** Authorization framework used to grant agents access to user resources (Gmail, GitHub, etc.) without sharing passwords. Standard MCP-server authentication mechanism. → [oauth.net](https://oauth.net/).
 
+**OCR engine.** The component that turns the pixels of a cropped region into text (e.g. tesseract). Its output drifts across versions, so an OCR eval records the engine version and ships a recorded fixture for reproducibility. → [`labs/63-ocr-on-real-images/`](../labs/63-ocr-on-real-images/).
+
 **OCR-reading.** The stage that turns the pixels of a retrieved image/table into text; graded by CER/WER plus a value-aware match, and a distinct failure axis from retrieval and grounding. → [`concepts/rag/grounding-and-ocr.md`](../concepts/rag/grounding-and-ocr.md).
 
 **Off-policy.** RL term: evaluating or learning about a policy different from the one generating the data. Mostly tangential to inference-time agents; relevant when fine-tuning. → [Sutton and Barto 2018](http://incompleteideas.net/book/the-book-2nd.html).
@@ -515,6 +525,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 **RAGAS.** Framework for automated RAG evaluation with faithfulness, answer relevance, context recall, and context precision metrics. → [docs.ragas.io](https://docs.ragas.io/) (needs manual verification).
 
 **Rate limit.** Per-time-window cap on requests or tokens enforced by a model provider. Triggers 429 errors when exceeded; defense is retry with backoff. → [`production/`](../production/).
+
+**Read failure vs misread.** Two distinct OCR outcomes: a *read failure* returns blank (the recognizer gave up), a *misread* returns text with the wrong value (e.g. 9.4 billion read as 94). They attribute differently and need different fixes. → [`labs/63-ocr-on-real-images/`](../labs/63-ocr-on-real-images/).
 
 **Reasoning model.** Model trained or prompted to produce extended internal reasoning before its final answer (OpenAI o1/o3, DeepSeek R1, Claude with extended thinking). Higher accuracy on hard tasks; higher latency and cost. → [OpenAI o1 system card](https://openai.com/index/openai-o1-system-card/) (needs manual verification).
 

@@ -60,6 +60,8 @@ python smoke_sqs.py --self-test                              # offline (moto)
 AWS_ENDPOINT_URL=http://localhost:4566 python smoke_sqs.py   # live LocalStack
 ```
 
+To reproduce the CI integration jobs locally (the offline tier, then the live tier against Redis + LocalStack), use [`ops/ci-local/`](../../ops/ci-local/): `./run-checks.sh --offline` for the no-services tier, or `docker compose up -d && ./run-checks.sh` for the full run.
+
 ## What comes next
 
 - 🧪 [Lab 58: Measuring lost-in-the-middle](../58-measuring-lost-in-the-middle/) — a retrieval-science gap the path skipped: how context position changes answer accuracy, and how to measure it.
