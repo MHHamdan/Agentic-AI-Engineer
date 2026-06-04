@@ -1,6 +1,43 @@
-      - name: Check Markdown links
-        uses: lycheeverse/lychee-action@v2
-        with:
-          args: --verbose --no-progress './**/*.md'
+name: Check Markdown links
+
+on:
+  pull_request:
+    paths:
+      - "**/*.md"
+      - ".github/workflows/link-check.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.md"
+      - ".github/workflows/link-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-markdown-links:
+    name: Check Markdown links
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run lychee with Docker
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          docker run --rm \
+            -e GITHUB_TOKEN="$GITHUB_TOKEN" \
+            -v "$PWD":/repo \
+            -w /repo \
+            lycheeverse/lychee:latest \
+            --verbose \
+            --no-progress \
+            --accept 200,204,206,429 \
+            --exclude-loopback \
+            --exclude-mail \
+            './**/*.md'
