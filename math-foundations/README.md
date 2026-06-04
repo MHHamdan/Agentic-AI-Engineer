@@ -26,6 +26,7 @@ Fourteen short notes, each focused on one piece of theory:
 | 14 | [Retrieval and ranking metrics](./14-retrieval-ranking-metrics.md) | precision@k, recall@k, MRR, MAP, NDCG, context precision/recall |
 | 15 | [Calibration and threshold selection](./15-calibration-threshold-selection.md) | ROC, Youden's J, isotonic regression / PAVA, weighted vs conjunctive gates |
 | 16 | [Threshold selection under distribution shift](./16-threshold-selection-under-shift.md) | in-sample optimism, held-out / cross-validation, covariate shift |
+| 17 | [Multimodal evaluation metrics](./17-multimodal-eval-metrics.md) | edit distance, CER/WER, numeric tolerance, grounding as conditional accuracy, end-to-end decomposition |
 
 A symbol-and-notation cheat sheet lives in [`notation.md`](./notation.md). One source of truth for `pi`, `s`, `a`, `theta`, `z`, and friends.
 

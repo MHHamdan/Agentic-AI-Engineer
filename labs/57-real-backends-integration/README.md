@@ -51,6 +51,15 @@ AWS_ENDPOINT_URL=http://localhost:4566 pytest test_integration.py  # LocalStack
 - 🧪 [Lab 54](../54-production-durable-backends/) — the contract and the hand-written fakes.
 - 📖 [From stand-ins to production](../../concepts/observability/from-stand-ins-to-production.md).
 
+## Nightly SQS smoke test (`smoke_sqs.py`, Batch 84)
+
+`smoke_sqs.py` is a one-second liveness check for the nightly CI job: create a queue, round-trip one message, tear it down. It is not the full contract test (`test_integration.py`) - it answers "is SQS reachable and behaving" so a broken LocalStack/AWS surfaces before the heavier suite. Offline it runs through moto (`--self-test`); in CI it runs against a LocalStack service container (`.github/workflows/nightly-smoke.yml`).
+
+```bash
+python smoke_sqs.py --self-test                              # offline (moto)
+AWS_ENDPOINT_URL=http://localhost:4566 python smoke_sqs.py   # live LocalStack
+```
+
 ## What comes next
 
 - 🧪 [Lab 58: Measuring lost-in-the-middle](../58-measuring-lost-in-the-middle/) — a retrieval-science gap the path skipped: how context position changes answer accuracy, and how to measure it.

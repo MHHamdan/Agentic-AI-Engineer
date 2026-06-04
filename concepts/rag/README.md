@@ -25,6 +25,7 @@ These three are prerequisites for [Lab 06](../../labs/06-agentic-rag-from-scratc
 | 📖 [reranking.md](./reranking.md) | ~10 min | Cross-encoder reranking, the retrieve-then-rerank pipeline, what changes vs bi-encoders. |
 | 📖 [lost-in-the-middle.md](./lost-in-the-middle.md) | ~8 min | Why a perfect retriever can still answer wrong: U-shaped accuracy by context position, and how to measure it (Lab 58). |
 | 📖 [multimodal-rag.md](./multimodal-rag.md) | ~10 min | Retrieval over images/tables/charts: shared-space vs caption-then-embed, mixed-content chunking, and grounding/OCR eval. |
+| 📖 [grounding-and-ocr.md](./grounding-and-ocr.md) | ~11 min | Three failure axes - retrieval, OCR-reading, grounding - measured separately; why grounded is not correct; first-failing-stage attribution (Labs 61-62). |
 
 These three are prerequisites for [Lab 07](../../labs/07-retrieval-strategies-and-reranking/).
 

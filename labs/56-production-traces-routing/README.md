@@ -62,6 +62,15 @@ export_to_store(sessions, "trace_store.jsonl")   # agent side
 run_eval_loop("trace_store.jsonl")                # separate eval service
 ```
 
+## Pluggable trace backend (`trace_backend.py`, Batch 84)
+
+`eval_service.py` read the JSONL stand-in directly. `trace_backend.py` makes the backend swappable behind a `TraceBackend` protocol: `JsonlBackend` (offline default) and a guarded `TempoBackend` that queries a real trace backend over HTTP and reconstructs the same per-session steps. `run_eval_loop(backend)` is backend-agnostic, so moving from the JSONL store to a live backend does not change the loop.
+
+```python
+from trace_backend import JsonlBackend, run_eval_loop
+run_eval_loop(JsonlBackend("trace_store.jsonl"))   # swap for TempoBackend(endpoint) when live
+```
+
 ## What comes next
 
 Wiring the instrumentation to a real OTLP collector and running the eval loop as a separate service that queries the trace backend.

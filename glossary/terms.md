@@ -94,6 +94,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **caption-then-embed.** Multimodal-RAG technique: describe each image or table with a vision-language model, then embed and index that text - preserves dense in-image text and reuses the text retrieval stack. → [`concepts/rag/multimodal-rag.md`](../concepts/rag/multimodal-rag.md).
 
+**CER (Character Error Rate).** Character-level edit distance between read text and reference, normalized by reference length; the standard OCR metric. Too lenient on a misread digit, too harsh on a reformat - pair it with a value-aware match for numeric answers. → [`labs/62-ocr-reading-quality/`](../labs/62-ocr-reading-quality/).
+
 **Chain (LangChain primitive).** Sequence of LLM calls and transformations composed as a pipeline. The original LangChain abstraction; mostly superseded by LangGraph for agentic workflows. → [LangChain docs](https://docs.langchain.com/) (needs manual verification).
 
 **Chain-of-Thought (CoT).** Prompting technique where the model is induced to produce intermediate reasoning steps before its final answer. Empirically lifts reasoning task accuracy. → [Wei et al. 2022](https://arxiv.org/abs/2201.11903).
@@ -188,6 +190,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **ECE (Expected Calibration Error).** Metric for calibration: average absolute gap between stated and actual accuracy, weighted across confidence bins. Lower is better; 0 is perfectly calibrated. → [`math-foundations/12-uncertainty-safety.md`](../math-foundations/12-uncertainty-safety.md).
 
+**Edit distance (Levenshtein).** Minimum single-character insertions, deletions, and substitutions to turn one string into another; the basis of CER and WER. → [`math-foundations/17-multimodal-eval-metrics.md`](../math-foundations/17-multimodal-eval-metrics.md).
+
 **Embedding.** Dense vector representation of text (or other modality) where semantic similarity maps to cosine or dot-product distance. Production models: OpenAI text-embedding-3, Cohere embed-v3, sentence-transformers. → [`math-foundations/02-embeddings-vector-similarity.md`](../math-foundations/02-embeddings-vector-similarity.md).
 
 **Embedding model.** Neural network that maps text to a fixed-dimensional vector. Choice of model matters more than dimension; production options live in [MTEB](https://huggingface.co/spaces/mteb/leaderboard). → Path 02.
@@ -201,6 +205,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 **Environment.** In RL, everything outside the agent — the world the agent acts on and observes from. For LLM agents, the environment includes the conversation, tools, and external systems they reach. → [`math-foundations/05-mdp-pomdp.md`](../math-foundations/05-mdp-pomdp.md).
 
 **Episodic memory.** Memory tier holding records of specific past events or interactions, indexed by time or context. Distinct from semantic memory (facts) and procedural memory (skills). → [`concepts/memory/`](../concepts/memory/) + [`math-foundations/09-memory-models.md`](../math-foundations/09-memory-models.md).
+
+**Error attribution (first-failing-stage).** Charging each wrong multimodal answer to the first stage that failed - retrieval, then OCR-reading, then grounding - so the per-stage error shares sum to the total and tell you which stage to fix. → [`labs/61-grading-multimodal-rag/`](../labs/61-grading-multimodal-rag/).
 
 **Escalation.** When an agent recognizes a failure mode it can't handle and routes to a different agent (multi-agent) or a human (HITL). Defined per failure class in retry policies. → Path 03 v2 Pattern 3.
 
@@ -257,6 +263,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 **Groq.** Custom-silicon inference provider offering very low time-to-first-token for popular open models. → [groq.com](https://groq.com/) (needs manual verification).
 
 **Groundedness.** Whether a model's claims are supported by the provided context. RAGAS metric; close cousin of faithfulness. → [RAGAS docs](https://docs.ragas.io/) (needs manual verification).
+
+**Grounding rate.** Fraction of answers derived from the retrieved/read evidence rather than parametric memory. Distinct from correctness: an answer can be grounded in misread evidence and wrong. → [`concepts/rag/grounding-and-ocr.md`](../concepts/rag/grounding-and-ocr.md).
 
 **Guardrail.** Runtime check that blocks unsafe or off-policy agent outputs. Input guardrails screen the request; output guardrails screen the response. → [`security/`](../security/) + Path 07.
 
@@ -414,6 +422,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Nucleus sampling (top-p).** Sampling strategy restricting selection to the smallest set of tokens whose cumulative probability exceeds $p$. Truncates the long tail of unlikely tokens. → [Holtzman et al. 2020](https://arxiv.org/abs/1904.09751) + [`math-foundations/01-language-model-probability.md`](../math-foundations/01-language-model-probability.md).
 
+**Numeric tolerance (value-aware match).** Comparing the parsed numeric value of an answer span within a relative tolerance, independent of format; catches a 10x OCR misread that CER misses and accepts a reformat that CER penalizes. → [`labs/62-ocr-reading-quality/`](../labs/62-ocr-reading-quality/).
+
 ## O
 
 **Observability.** The ability to inspect what an agent is doing in production — traces, spans, metrics, alerts. 2026 production discipline: OpenTelemetry-first posture. → Path 06.
@@ -421,6 +431,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 **Observation.** Output of a tool call that the agent integrates into its state for the next step. The $o_t$ in the agent loop. → [`math-foundations/06-react-formalization.md`](../math-foundations/06-react-formalization.md).
 
 **OAuth.** Authorization framework used to grant agents access to user resources (Gmail, GitHub, etc.) without sharing passwords. Standard MCP-server authentication mechanism. → [oauth.net](https://oauth.net/).
+
+**OCR-reading.** The stage that turns the pixels of a retrieved image/table into text; graded by CER/WER plus a value-aware match, and a distinct failure axis from retrieval and grounding. → [`concepts/rag/grounding-and-ocr.md`](../concepts/rag/grounding-and-ocr.md).
 
 **Off-policy.** RL term: evaluating or learning about a policy different from the one generating the data. Mostly tangential to inference-time agents; relevant when fine-tuning. → [Sutton and Barto 2018](http://incompleteideas.net/book/the-book-2nd.html).
 
@@ -568,6 +580,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **SKILL.md.** Convention (Anthropic Claude Code, Claude.ai) where a folder contains a SKILL.md file teaching the agent how to perform a category of tasks. Used by Claude's file-creation and document-editing skills. → [Anthropic docs](https://docs.claude.com/en/docs/claude-code/skills) (needs manual verification).
 
+**Smoke test (CI).** A fast liveness check (e.g. one SQS send/receive/delete round-trip) run on a schedule to catch a broken dependency before the heavier integration suite runs. → [`labs/57-real-backends-integration/`](../labs/57-real-backends-integration/).
+
 **smolagents.** Hugging Face's compact agent framework emphasizing code-as-action (the agent emits Python rather than JSON tool calls). → [github.com/huggingface/smolagents](https://github.com/huggingface/smolagents) (needs manual verification).
 
 **Span.** A single timed unit of work in a trace (one agent step, one model call) carrying attributes; spans nest to form a trace. → [`labs/56-production-traces-routing/`](../labs/56-production-traces-routing/).
@@ -646,6 +660,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 
 **Trace.** A complete causal record of one agent execution — the tree of spans showing every model call, tool call, and decision. The unit of debugging for agents. → Path 06 Modules 1-3.
 
+**Trace backend.** The store (Tempo, Jaeger, a vendor OTLP endpoint) the collector forwards spans to and the eval service queries; behind a backend protocol the eval loop is the same whether the source is a JSONL file or a live backend. → [`labs/56-production-traces-routing/`](../labs/56-production-traces-routing/).
+
 **Trace ID.** Unique identifier for one trace, propagated through the agent system so logs and spans can be correlated. → Path 06.
 
 **Transient failure.** A failure that resolves on retry — network timeout, 429 rate limit, 502 service unavailable. Distinguished from permanent failures (auth, quota, bad request). → Path 03 v2 Pattern 5.
@@ -681,6 +697,8 @@ Where a term has no dedicated repo page yet, the entry links to a canonical exte
 **Weaviate.** Open-source vector database with built-in hybrid search and modular vectorization. Self-hosted or managed. → [weaviate.io](https://weaviate.io/) (needs manual verification).
 
 **Weighted gate.** Release rule that passes when a weighted sum of dimension scores clears a threshold, letting a strong dimension offset a weaker one — contrast with a conjunctive gate. → [`math-foundations/15-calibration-threshold-selection.md`](../math-foundations/15-calibration-threshold-selection.md).
+
+**WER (Word Error Rate).** Word-level edit distance normalized by reference word count; coarser than CER but closer to how a reader perceives errors. → [`labs/62-ocr-reading-quality/`](../labs/62-ocr-reading-quality/).
 
 **Workflow.** A defined sequence of steps with conditional branches. Distinct from an agent: a workflow has the steps pre-specified; an agent decides the steps at runtime. The distinction matters for cost, predictability, and debugging. → [`patterns/`](../patterns/).
 
