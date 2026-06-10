@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "system-engineering-tutorials"
+version = "0.1.0"
+description = "A progressive backend and distributed systems tutorial repository."
+readme = "README.md"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra"
+testpaths = ["labs"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+exclude = ["**/*.ipynb"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "D", "SIM", "B"]
