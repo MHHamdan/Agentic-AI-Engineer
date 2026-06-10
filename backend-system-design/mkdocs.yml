@@ -1,0 +1,200 @@
+site_name: System Engineering Tutorials
+site_description: A practical system design and backend engineering guide
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - tables
+  - toc:
+      permalink: true
+nav:
+  - Home: index.md
+  - Learning Path: learning-path.md
+  - Topic Map: topic-map.md
+  - Topic Index: topic-index.md
+  - Glossary: glossary.md
+  - References: references.md
+  - Topics:
+      - APIs:
+          - Concept: topics/01-apis/concept.md
+          - Foundation: topics/01-apis/foundation.md
+          - Math Foundation: topics/01-apis/math-foundation.md
+          - Lab: topics/01-apis/lab.md
+          - Quiz: topics/01-apis/quiz.md
+      - API Gateways:
+          - Concept: topics/02-api-gateways/concept.md
+          - Foundation: topics/02-api-gateways/foundation.md
+          - Math Foundation: topics/02-api-gateways/math-foundation.md
+          - Lab: topics/02-api-gateways/lab.md
+          - Quiz: topics/02-api-gateways/quiz.md
+      - JWTs:
+          - Concept: topics/03-jwts/concept.md
+          - Foundation: topics/03-jwts/foundation.md
+          - Math Foundation: topics/03-jwts/math-foundation.md
+          - Lab: topics/03-jwts/lab.md
+          - Quiz: topics/03-jwts/quiz.md
+      - Webhooks:
+          - Concept: topics/04-webhooks/concept.md
+          - Foundation: topics/04-webhooks/foundation.md
+          - Math Foundation: topics/04-webhooks/math-foundation.md
+          - Lab: topics/04-webhooks/lab.md
+          - Quiz: topics/04-webhooks/quiz.md
+      - REST vs GraphQL:
+          - Concept: topics/05-rest-vs-graphql/concept.md
+          - Foundation: topics/05-rest-vs-graphql/foundation.md
+          - Math Foundation: topics/05-rest-vs-graphql/math-foundation.md
+          - Lab: topics/05-rest-vs-graphql/lab.md
+          - Quiz: topics/05-rest-vs-graphql/quiz.md
+      - Long Polling vs WebSockets:
+          - Concept: topics/06-long-polling-vs-websockets/concept.md
+          - Foundation: topics/06-long-polling-vs-websockets/foundation.md
+          - Math Foundation: topics/06-long-polling-vs-websockets/math-foundation.md
+          - Lab: topics/06-long-polling-vs-websockets/lab.md
+          - Quiz: topics/06-long-polling-vs-websockets/quiz.md
+      - Rate Limiting:
+          - Concept: topics/07-rate-limiting/concept.md
+          - Foundation: topics/07-rate-limiting/foundation.md
+          - Math Foundation: topics/07-rate-limiting/math-foundation.md
+          - Lab: topics/07-rate-limiting/lab.md
+          - Quiz: topics/07-rate-limiting/quiz.md
+      - Idempotency:
+          - Concept: topics/08-idempotency/concept.md
+          - Foundation: topics/08-idempotency/foundation.md
+          - Math Foundation: topics/08-idempotency/math-foundation.md
+          - Lab: topics/08-idempotency/lab.md
+          - Quiz: topics/08-idempotency/quiz.md
+      - Load Balancing:
+          - Concept: topics/09-load-balancing/concept.md
+          - Foundation: topics/09-load-balancing/foundation.md
+          - Math Foundation: topics/09-load-balancing/math-foundation.md
+          - Lab: topics/09-load-balancing/lab.md
+          - Quiz: topics/09-load-balancing/quiz.md
+      - Proxy vs Reverse Proxy:
+          - Concept: topics/10-proxy-vs-reverse-proxy/concept.md
+          - Foundation: topics/10-proxy-vs-reverse-proxy/foundation.md
+          - Math Foundation: topics/10-proxy-vs-reverse-proxy/math-foundation.md
+          - Lab: topics/10-proxy-vs-reverse-proxy/lab.md
+          - Quiz: topics/10-proxy-vs-reverse-proxy/quiz.md
+      - Scalability:
+          - Concept: topics/11-scalability/concept.md
+          - Foundation: topics/11-scalability/foundation.md
+          - Math Foundation: topics/11-scalability/math-foundation.md
+          - Lab: topics/11-scalability/lab.md
+          - Quiz: topics/11-scalability/quiz.md
+      - Caching:
+          - Concept: topics/12-caching/concept.md
+          - Foundation: topics/12-caching/foundation.md
+          - Math Foundation: topics/12-caching/math-foundation.md
+          - Lab: topics/12-caching/lab.md
+          - Quiz: topics/12-caching/quiz.md
+      - Cache Eviction:
+          - Concept: topics/13-cache-eviction/concept.md
+          - Foundation: topics/13-cache-eviction/foundation.md
+          - Math Foundation: topics/13-cache-eviction/math-foundation.md
+          - Lab: topics/13-cache-eviction/lab.md
+          - Quiz: topics/13-cache-eviction/quiz.md
+      - CDN:
+          - Concept: topics/14-cdn/concept.md
+          - Foundation: topics/14-cdn/foundation.md
+          - Math Foundation: topics/14-cdn/math-foundation.md
+          - Lab: topics/14-cdn/lab.md
+          - Quiz: topics/14-cdn/quiz.md
+      - SQL vs NoSQL:
+          - Concept: topics/15-sql-vs-nosql/concept.md
+          - Foundation: topics/15-sql-vs-nosql/foundation.md
+          - Math Foundation: topics/15-sql-vs-nosql/math-foundation.md
+          - Lab: topics/15-sql-vs-nosql/lab.md
+          - Quiz: topics/15-sql-vs-nosql/quiz.md
+      - ACID Transactions:
+          - Concept: topics/16-acid-transactions/concept.md
+          - Foundation: topics/16-acid-transactions/foundation.md
+          - Math Foundation: topics/16-acid-transactions/math-foundation.md
+          - Lab: topics/16-acid-transactions/lab.md
+          - Quiz: topics/16-acid-transactions/quiz.md
+      - Indexes:
+          - Concept: topics/17-indexes/concept.md
+          - Foundation: topics/17-indexes/foundation.md
+          - Math Foundation: topics/17-indexes/math-foundation.md
+          - Lab: topics/17-indexes/lab.md
+          - Quiz: topics/17-indexes/quiz.md
+      - Sharding:
+          - Concept: topics/18-sharding/concept.md
+          - Foundation: topics/18-sharding/foundation.md
+          - Math Foundation: topics/18-sharding/math-foundation.md
+          - Lab: topics/18-sharding/lab.md
+          - Quiz: topics/18-sharding/quiz.md
+      - Change Data Capture:
+          - Concept: topics/19-change-data-capture/concept.md
+          - Foundation: topics/19-change-data-capture/foundation.md
+          - Math Foundation: topics/19-change-data-capture/math-foundation.md
+          - Lab: topics/19-change-data-capture/lab.md
+          - Quiz: topics/19-change-data-capture/quiz.md
+      - Availability:
+          - Concept: topics/20-availability/concept.md
+          - Foundation: topics/20-availability/foundation.md
+          - Math Foundation: topics/20-availability/math-foundation.md
+          - Lab: topics/20-availability/lab.md
+          - Quiz: topics/20-availability/quiz.md
+      - Single Point of Failure:
+          - Concept: topics/21-single-point-of-failure/concept.md
+          - Foundation: topics/21-single-point-of-failure/foundation.md
+          - Math Foundation: topics/21-single-point-of-failure/math-foundation.md
+          - Lab: topics/21-single-point-of-failure/lab.md
+          - Quiz: topics/21-single-point-of-failure/quiz.md
+      - CAP Theorem:
+          - Concept: topics/22-cap-theorem/concept.md
+          - Foundation: topics/22-cap-theorem/foundation.md
+          - Math Foundation: topics/22-cap-theorem/math-foundation.md
+          - Lab: topics/22-cap-theorem/lab.md
+          - Quiz: topics/22-cap-theorem/quiz.md
+      - Consistent Hashing:
+          - Concept: topics/23-consistent-hashing/concept.md
+          - Foundation: topics/23-consistent-hashing/foundation.md
+          - Math Foundation: topics/23-consistent-hashing/math-foundation.md
+          - Lab: topics/23-consistent-hashing/lab.md
+          - Quiz: topics/23-consistent-hashing/quiz.md
+      - Message Queues:
+          - Concept: topics/24-message-queues/concept.md
+          - Foundation: topics/24-message-queues/foundation.md
+          - Math Foundation: topics/24-message-queues/math-foundation.md
+          - Lab: topics/24-message-queues/lab.md
+          - Quiz: topics/24-message-queues/quiz.md
+      - Stateful vs Stateless:
+          - Concept: topics/25-stateful-vs-stateless/concept.md
+          - Foundation: topics/25-stateful-vs-stateless/foundation.md
+          - Math Foundation: topics/25-stateful-vs-stateless/math-foundation.md
+          - Lab: topics/25-stateful-vs-stateless/lab.md
+          - Quiz: topics/25-stateful-vs-stateless/quiz.md
+      - Concurrency vs Parallelism:
+          - Concept: topics/26-concurrency-vs-parallelism/concept.md
+          - Foundation: topics/26-concurrency-vs-parallelism/foundation.md
+          - Math Foundation: topics/26-concurrency-vs-parallelism/math-foundation.md
+          - Lab: topics/26-concurrency-vs-parallelism/lab.md
+          - Quiz: topics/26-concurrency-vs-parallelism/quiz.md
+      - Batch vs Stream Processing:
+          - Concept: topics/27-batch-vs-stream-processing/concept.md
+          - Foundation: topics/27-batch-vs-stream-processing/foundation.md
+          - Math Foundation: topics/27-batch-vs-stream-processing/math-foundation.md
+          - Lab: topics/27-batch-vs-stream-processing/lab.md
+          - Quiz: topics/27-batch-vs-stream-processing/quiz.md
+      - Bloom Filters:
+          - Concept: topics/28-bloom-filters/concept.md
+          - Foundation: topics/28-bloom-filters/foundation.md
+          - Math Foundation: topics/28-bloom-filters/math-foundation.md
+          - Lab: topics/28-bloom-filters/lab.md
+          - Quiz: topics/28-bloom-filters/quiz.md
+      - Geohashing:
+          - Concept: topics/29-geohashing/concept.md
+          - Foundation: topics/29-geohashing/foundation.md
+          - Math Foundation: topics/29-geohashing/math-foundation.md
+          - Lab: topics/29-geohashing/lab.md
+          - Quiz: topics/29-geohashing/quiz.md
