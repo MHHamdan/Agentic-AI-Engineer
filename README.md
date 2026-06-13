@@ -53,8 +53,7 @@ The result: a practical, technically deep, community-maintained reference that s
 - 🧪 **ML/AI practitioners** who know the modeling side and want a structured map of agent patterns, protocols, and production concerns.
 - 🎓 **Advanced learners** who already understand transformers, embeddings, and Python at a working level and want to go from notebook prototypes to evaluated, observable, deployable agents.
 
-If you've never written Python or used an LLM API, this isn't the right starting point. Try a foundational LLM course first, then come back.
-
+> **New to Python or LLM APIs?** Start with [AI Engineering Preparation](AI-Engineering-Preparation/README.md) first, then return here.
 ---
 
 ## 🧰 What you'll build
