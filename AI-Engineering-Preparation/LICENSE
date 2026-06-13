@@ -1,0 +1,30 @@
+AI Engineering Preparation — Licensing
+=======================================
+
+This sub-folder is dual-licensed, consistent with the parent Agentic AI Engineer
+repository.
+
+SPDX-License-Identifier: Apache-2.0 AND CC-BY-4.0
+
+1. Source code (scripts, notebooks, configuration, and code snippets)
+   Licensed under the Apache License, Version 2.0.
+   Full text: https://www.apache.org/licenses/LICENSE-2.0
+
+2. Prose and diagrams (Markdown documents, explanations, figures, Mermaid sources)
+   Licensed under the Creative Commons Attribution 4.0 International License
+   (CC-BY-4.0).
+   Full text: https://creativecommons.org/licenses/by/4.0/
+
+Attribution
+-----------
+When reusing prose or diagrams under CC-BY-4.0, attribute "AI Engineering
+Preparation (Agentic AI Engineer repository)" and link back to the source.
+
+Third-party material
+--------------------
+Referenced papers, standards, specifications, and official documentation remain
+under their own licenses and are cited, not reproduced. This track contains no
+text copied from the external articles used to shape its curriculum.
+
+If the parent repository carries top-level LICENSE files, those govern in case of
+any conflict.
