@@ -24,7 +24,7 @@ anthropic>=0.34
 google-generativeai>=0.7
 
 # LangChain / LangGraph 1.0+
-langchain>=1.0,<2.0
+langchain>=1.3.9,<2.0
 langchain-core>=1.0,<2.0
 langgraph>=1.0,<2.0
 
