@@ -2,11 +2,12 @@
 
 The math behind the track, kept to what an engineer needs to reason about design choices — not a textbook.
 
-> Batch 00: stub. Pages arrive with the content batches.
+## Pages
+
+1. [Embeddings and similarity](./01-embeddings-and-similarity.md) — vectors, dot product, cosine, PPMI, and what "nearest" means. *(Batch 01)*
 
 ## Planned pages
 
-1. Embeddings and similarity: vectors, dot product, cosine, and what "nearest" means.
 2. Attention, conceptually: queries, keys, values, and the softmax mix.
 3. Nearest-neighbor search: exact vs. approximate, and the recall/latency tradeoff.
 4. RL objectives: return, value, the policy-gradient idea.

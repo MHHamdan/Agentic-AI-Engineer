@@ -2,7 +2,11 @@
 
 Hands-on, runnable exercises. Labs are where the concepts become code.
 
-> Batch 00: stub. The first labs arrive with the content batches.
+## Available labs
+
+| # | Lab | Path | What you build |
+|---|---|---|---|
+| 01 | [Tokenization and embeddings](./01-tokenization-and-embeddings/) | 01 — LLM foundations | byte-pair encoding and count-based PPMI embeddings from scratch; cosine similarity |
 
 ## Conventions
 
@@ -12,9 +16,8 @@ Hands-on, runnable exercises. Labs are where the concepts become code.
 - **Honest stand-ins.** Where a lab simulates a model, judge, or service, it says so and points at what a production version swaps in.
 - **House layout.** Each lab is a folder with a `README.md`, a scaffold with `TODO`s, and a `solution/`.
 
-## Planned first labs (by path)
+## Planned next labs (by path)
 
-1. LLM foundations — tokenization and embedding similarity from scratch.
-2. Retrieval & memory — a minimal RAG pipeline; an ANN index tradeoff study.
-3. Agents — a tool-using agent loop.
-4. Evaluation — a small offline eval harness with a golden set.
+1. Retrieval & memory — a minimal RAG pipeline; an ANN index tradeoff study.
+2. Agents — a tool-using agent loop.
+3. Evaluation — a small offline eval harness with a golden set.
