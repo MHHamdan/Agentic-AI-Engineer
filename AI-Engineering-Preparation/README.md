@@ -2,7 +2,7 @@
 
 A structured, open preparation hub for **AI engineering** roles and system design — built inside the [Agentic AI Engineer](../) repository as a companion track. It turns the moving pieces of modern LLM and agent systems into a navigable curriculum: learning paths, modular concept notes, runnable labs, capstone projects, diagrams, a glossary, and a curated set of canonical references.
 
-> Status: **Batch 00 — scaffold.** This commit establishes the structure and the curriculum map. Content modules (concept notes, labs, diagrams, projects) land in later batches.
+> Status: **Batch 01 — LLM foundations.** Path 01 now has its six concept notes, the first runnable lab (tokenization and embeddings from scratch), a math page, and a diagram. The remaining paths are scaffolded and fill in batch by batch.
 
 ## Learning paths
 
@@ -34,10 +34,10 @@ AI-Engineering-Preparation/
 |---|---|---|
 | Learning paths | 5 | 5 |
 | Concept areas | 12 | 12 |
-| Concept notes | 0 | grows per batch |
-| Labs | 0 | grows per batch |
+| Concept notes | 6 | grows per batch |
+| Labs | 1 | grows per batch |
 | Projects (specs) | 5 | 5, then built out |
-| Math-foundations pages | 0 | grows per batch |
+| Math-foundations pages | 1 | grows per batch |
 
 ## Content policy
 
@@ -45,7 +45,7 @@ This track is original educational material. The external articles used to shape
 
 ## How this is built
 
-Development proceeds in numbered **batches**, the same way the parent repository is built. Each content batch ships a coordinated set — concept notes, at least one runnable lab, a diagram, new glossary terms, references, and navigation updates — verified before it is marked done. Batch 00 is the scaffold; see [`CHANGELOG.md`](./CHANGELOG.md) for history.
+Development proceeds in numbered **batches**, the same way the parent repository is built. Each content batch ships a coordinated set — concept notes, at least one runnable lab, a diagram, new glossary terms, references, and navigation updates — verified before it is marked done. See [`CHANGELOG.md`](./CHANGELOG.md) for history.
 
 ## License
 
