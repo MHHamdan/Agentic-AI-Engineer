@@ -32,6 +32,8 @@
 
 **Context rot.** The measured degradation in model output quality as input length grows, present even below the window limit; driven by lost-in-the-middle, attention dilution, and distractors. → `concepts/context/context-rot-and-failure-modes.md`.
 
+**Concept drift.** A change in the input-to-output relationship itself, so the same inputs now map to a different correct output; harder to detect than data drift because inputs can look familiar. → `concepts/ml-system-design/monitoring-and-drift.md`.
+
 **Context window.** The maximum span of tokens a model can attend to in one request. Instructions, state, retrieved memory, tool schemas, tool outputs, and the user's message all compete for it. → `concepts/context/`.
 
 **Cosine similarity.** The dot product of two length-normalized vectors, bounded in [-1, 1]; it compares direction (meaning) rather than magnitude, and is the measure behind retrieval. → `math-foundations/01-embeddings-and-similarity.md`.

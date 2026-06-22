@@ -3,6 +3,7 @@
 A structured, open preparation hub for **AI engineering** roles and system design — built inside the [Agentic AI Engineer](../) repository as a companion track. It turns the moving pieces of modern LLM and agent systems into a navigable curriculum: learning paths, modular concept notes, runnable labs, capstone projects, diagrams, a glossary, and a curated set of canonical references.
 
 > Status: **Batch 04 — Memory & context.** Paths 01–03 are complete: LLM foundations; ML & RL fundamentals; and retrieval & memory (RAG, vector databases, agent state vs. memory, the memory lifecycle, and context engineering), with four runnable labs. Paths 04 and 05 fill in next.
+> Status: **Batch 03 — Retrieval.** Paths 01 and 02 are complete; Path 03's retrieval half (RAG end-to-end and vector databases / ANN) is delivered, with a from-scratch RAG-and-ANN lab. Memory and context engineering complete Path 03 in the next batch.
 
 ## Learning paths
 
@@ -36,6 +37,8 @@ AI-Engineering-Preparation/
 | Concept areas | 12 | 12 |
 | Concept notes | 24 | grows per batch |
 | Labs | 4 | grows per batch |
+| Concept notes | 18 | grows per batch |
+| Labs | 3 | grows per batch |
 | Projects (specs) | 5 | 5, then built out |
 | Math-foundations pages | 3 | grows per batch |
 

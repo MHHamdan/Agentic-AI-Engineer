@@ -3,6 +3,7 @@
 How systems give a frozen model fresh, grounded knowledge — and how agents keep track of what they are doing across long tasks. This path covers retrieval-augmented generation, the vector databases under it, and the separation of agent state from memory.
 
 > Status: **delivered** (Batches 03–04). All nine modules, two runnable labs, a math page, and two diagrams are in place.
+> Status: **retrieval delivered** (Batch 03). RAG and vector-database notes, a runnable lab, a math page, and a diagram are in place. Memory and context engineering complete this path in the next batch.
 
 ## Learning objectives
 
@@ -14,6 +15,7 @@ How systems give a frozen model fresh, grounded knowledge — and how agents kee
 ## Modules
 
 ### Retrieval (Batch 03)
+### Retrieval — delivered
 
 | # | Note | Topic |
 |---|---|---|
@@ -39,6 +41,17 @@ How systems give a frozen model fresh, grounded knowledge — and how agents kee
 
 - [`labs/03-rag-and-ann/`](../../labs/03-rag-and-ann/) — a minimal RAG pipeline and an exact-vs-IVF nearest-neighbor tradeoff study.
 - [`labs/04-memory-and-context/`](../../labs/04-memory-and-context/) — a checkpointed state-vs-memory agent and a context-budget assembler.
+### Memory & context — next batch
+
+| # | Note | Topic |
+|---|---|---|
+| 7 | Agent state vs. memory | short-term, long-term, external |
+| 8 | The memory lifecycle | create, update, summarize, delete; consistency |
+| 9 | Context engineering | budgeting the window |
+
+## Lab
+
+- [`labs/03-rag-and-ann/`](../../labs/03-rag-and-ann/) — a minimal RAG pipeline and an exact-vs-IVF nearest-neighbor tradeoff study; offline, deterministic, with self-tests.
 
 ## Math
 
@@ -48,6 +61,9 @@ How systems give a frozen model fresh, grounded knowledge — and how agents kee
 
 - [`diagrams/rag-pipeline.md`](../../diagrams/rag-pipeline.md) — the indexing and query phases of RAG.
 - [`diagrams/agent-state-and-memory.md`](../../diagrams/agent-state-and-memory.md) — state, memory, and the assembled context window.
+## Diagram
+
+- [`diagrams/rag-pipeline.md`](../../diagrams/rag-pipeline.md) — the indexing and query phases of RAG.
 
 ## Concept areas in this path
 

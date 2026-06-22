@@ -23,4 +23,6 @@ Hands-on, runnable exercises. Labs are where the concepts become code.
 
 1. Agents — a tool-using agent loop.
 2. Patterns & MCP — a minimal MCP server and a pattern or two.
+1. Memory & context — a stateful agent with checkpointing.
+2. Agents — a tool-using agent loop.
 3. Evaluation — a small offline eval harness with a golden set.
