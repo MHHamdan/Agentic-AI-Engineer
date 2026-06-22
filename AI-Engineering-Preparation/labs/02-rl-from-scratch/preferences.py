@@ -20,7 +20,10 @@ Usage:
     python preferences.py --demo
 """
 from __future__ import annotations
-import argparse, math, sys
+
+import argparse
+import math
+import sys
 
 # Latent "true" quality of five candidate answers. The learner never sees these - only comparisons.
 TRUE_QUALITY = [0.1, 0.9, 0.5, 0.3, 0.7]
