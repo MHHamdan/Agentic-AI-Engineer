@@ -7,6 +7,7 @@ Hands-on, runnable exercises. Labs are where the concepts become code.
 | # | Lab | Path | What you build |
 |---|---|---|---|
 | 01 | [Tokenization and embeddings](./01-tokenization-and-embeddings/) | 01 — LLM foundations | byte-pair encoding and count-based PPMI embeddings from scratch; cosine similarity |
+| 02 | [RL from scratch](./02-rl-from-scratch/) | 02 — ML & RL fundamentals | tabular Q-learning on a gridworld; a Bradley-Terry reward model from preferences (RLHF core) |
 
 ## Conventions
 
