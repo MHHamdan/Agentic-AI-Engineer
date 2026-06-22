@@ -22,6 +22,7 @@ Canonical sources for the track: papers, standards, official documentation, and 
 - Packer, C., et al. (2023). *MemGPT: Towards LLMs as Operating Systems.* arXiv:2310.08560. <https://arxiv.org/abs/2310.08560>
 - Chhikara, P., et al. (2025). *Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory.* arXiv:2504.19413. <https://arxiv.org/abs/2504.19413>
 - LangGraph. *Persistence* (official documentation). <https://docs.langchain.com/oss/python/langgraph/persistence>
+- Hong, K., Troynikov, A., & Huber, J. (2025). *Context Rot: How Increasing Input Tokens Impacts LLM Performance.* Chroma technical report. <https://research.trychroma.com/context-rot>
 
 ## Agents, patterns, protocols
 - Yao, S., et al. (2022). *ReAct: Synergizing Reasoning and Acting in Language Models.* arXiv:2210.03629. <https://arxiv.org/abs/2210.03629>
