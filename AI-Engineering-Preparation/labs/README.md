@@ -9,6 +9,7 @@ Hands-on, runnable exercises. Labs are where the concepts become code.
 | 01 | [Tokenization and embeddings](./01-tokenization-and-embeddings/) | 01 — LLM foundations | byte-pair encoding and count-based PPMI embeddings from scratch; cosine similarity |
 | 02 | [RL from scratch](./02-rl-from-scratch/) | 02 — ML & RL fundamentals | tabular Q-learning on a gridworld; a Bradley-Terry reward model from preferences (RLHF core) |
 | 03 | [RAG and ANN](./03-rag-and-ann/) | 03 — Retrieval & memory | a minimal RAG pipeline (retrieve, ground, cite, abstain); an exact-vs-IVF nearest-neighbor tradeoff study |
+| 04 | [Memory and context](./04-memory-and-context/) | 03 — Retrieval & memory | a checkpointed state-vs-memory agent; a context-budget assembler (select / compress) |
 
 ## Conventions
 
@@ -20,6 +21,8 @@ Hands-on, runnable exercises. Labs are where the concepts become code.
 
 ## Planned next labs (by path)
 
+1. Agents — a tool-using agent loop.
+2. Patterns & MCP — a minimal MCP server and a pattern or two.
 1. Memory & context — a stateful agent with checkpointing.
 2. Agents — a tool-using agent loop.
 3. Evaluation — a small offline eval harness with a golden set.

@@ -16,9 +16,21 @@
 
 **BPE (byte-pair encoding).** A subword tokenization algorithm that starts from characters and repeatedly merges the most frequent adjacent pair, so common words become single tokens and rare words fall back to pieces. → `concepts/llm/tokens-and-embeddings.md`.
 
+**Checkpoint (and rollback).** A snapshot of agent task state taken before a step, so a later correction can roll back to it and re-run only the affected steps rather than restarting. → `concepts/memory/state-vs-memory.md`.
+
 **Chunking.** Splitting documents into passages before embedding them for retrieval; chunk size caps retrieval quality — too large dilutes, too small fragments. → `concepts/rag/chunking-and-retrieval.md`.
 
 **Citation (attribution).** Attributing each claim in an answer to the retrieved chunk it came from, making the answer verifiable and pushing the model to answer from context. → `concepts/rag/reranking-and-citation.md`.
+
+**Compaction.** Reversibly reducing context by stripping content recoverable from the environment and keeping a pointer (e.g. a file path instead of the file's contents); the lightest-touch context reduction. → `concepts/context/context-strategies.md`.
+
+**Concept drift.** A change in the input-to-output relationship itself, so the same inputs now map to a different correct output; harder to detect than data drift because inputs can look familiar. → `concepts/ml-system-design/monitoring-and-drift.md`.
+
+**Consolidation (memory).** Periodically summarizing many small memory entries into compact higher-level ones to keep the store small and retrievable, at the cost of detail. → `concepts/memory/memory-lifecycle.md`.
+
+**Context engineering.** The practice of deliberately designing what a model sees on every inference call, organized as write, select, compress, and isolate. → `concepts/context/context-engineering.md`.
+
+**Context rot.** The measured degradation in model output quality as input length grows, present even below the window limit; driven by lost-in-the-middle, attention dilution, and distractors. → `concepts/context/context-rot-and-failure-modes.md`.
 
 **Concept drift.** A change in the input-to-output relationship itself, so the same inputs now map to a different correct output; harder to detect than data drift because inputs can look familiar. → `concepts/ml-system-design/monitoring-and-drift.md`.
 
@@ -34,6 +46,8 @@
 
 **Embedding.** A numeric vector representing text (or other data) so that similar meanings sit close together, enabling search by meaning rather than exact keywords. → `concepts/vector-db/`.
 
+**External memory.** Reference knowledge an agent retrieves from but does not hold in context — documents, a knowledge base, a vector index; effectively unbounded. → `concepts/memory/memory-types.md`.
+
 **Feature store.** A system that computes, stores, and serves features from one definition to both training and serving, preventing training/serving skew; usually an offline (throughput) and an online (low-latency) half. → `concepts/ml-system-design/feature-stores.md`.
 
 **Fine-tuning.** Continuing to train a model on your data to change its behavior — tone, format, narrow skills — baking the change into the weights, as opposed to retrieval, which changes knowledge externally. → `concepts/llm/fine-tuning-vs-retrieval.md`.
@@ -48,9 +62,15 @@
 
 **IVF (inverted file).** An ANN index that clusters vectors into cells (k-means) and searches only the cells nearest the query; nprobe sets how many cells are searched. → `concepts/vector-db/ivf-and-quantization.md`.
 
+**Just-in-time retrieval.** Holding lightweight identifiers (file paths, queries) and loading the underlying content into context only when a step needs it, instead of front-loading everything. → `concepts/context/context-strategies.md`.
+
 **Knowledge cutoff.** The date past which a model has no parametric knowledge, because its weights were fixed at the end of training; the structural reason models cannot know recent or private facts on their own. → `concepts/llm/hallucination-and-cutoff.md`.
 
 **Logits.** The raw, unnormalized scores a model emits for every vocabulary token at a step, turned into probabilities by a softmax before decoding. → `concepts/llm/decoding-and-sampling.md`.
+
+**Long-term memory.** Information that persists across sessions — preferences, conventions, summaries of past conversations — retrieved into context when relevant. → `concepts/memory/memory-types.md`.
+
+**Lost in the middle.** The tendency of models to attend well to the start and end of a context but poorly to the middle, so buried facts are missed. → `concepts/context/context-rot-and-failure-modes.md`.
 
 **Memory (agent).** Information an agent carries across tasks — past decisions, lasting preferences, and external reference data — as distinct from state, which is the current task. → `concepts/memory/`.
 
@@ -86,9 +106,15 @@
 
 **RLHF (reinforcement learning from human feedback).** Aligning a model by learning a reward from human comparisons, then optimizing a policy against it: SFT, reward model, RL with a KL penalty. → `concepts/rl/rlhf.md`.
 
+**Short-term (working) memory.** The in-context conversation so far — messages, tool calls, and tool results — bounded by the window and gone when the session ends. → `concepts/memory/memory-types.md`.
+
 **Softmax.** The function that turns a vector of logits into a probability distribution that sums to one; used both inside attention and at the output to define next-token probabilities. → `concepts/llm/decoding-and-sampling.md`.
 
 **State (agent).** The agent's picture of the current task: the plan, active constraints, what is done, and what comes next. → `concepts/memory/`.
+
+**Sub-agent isolation.** Giving a subtask its own context window via a sub-agent that returns only a concise result, keeping the main agent's window free of subtask clutter. → `concepts/context/context-strategies.md`.
+
+**Summarization (context).** Lossily reducing a stretch of history into a shorter form with a model, recovering window space at the cost of discarded detail; used when reversible compaction is not enough. → `concepts/context/context-strategies.md`.
 
 **Temperature.** A decoding control that scales logits before the softmax: below 1 sharpens the distribution (more deterministic), above 1 flattens it (more varied), and 0 reduces to greedy. → `concepts/llm/decoding-and-sampling.md`.
 

@@ -2,6 +2,7 @@
 
 How systems give a frozen model fresh, grounded knowledge — and how agents keep track of what they are doing across long tasks. This path covers retrieval-augmented generation, the vector databases under it, and the separation of agent state from memory.
 
+> Status: **delivered** (Batches 03–04). All nine modules, two runnable labs, a math page, and two diagrams are in place.
 > Status: **retrieval delivered** (Batch 03). RAG and vector-database notes, a runnable lab, a math page, and a diagram are in place. Memory and context engineering complete this path in the next batch.
 
 ## Learning objectives
@@ -13,6 +14,7 @@ How systems give a frozen model fresh, grounded knowledge — and how agents kee
 
 ## Modules
 
+### Retrieval (Batch 03)
 ### Retrieval — delivered
 
 | # | Note | Topic |
@@ -24,6 +26,21 @@ How systems give a frozen model fresh, grounded knowledge — and how agents kee
 | 5 | [HNSW](../../concepts/vector-db/hnsw.md) | navigable graphs; layers; efSearch |
 | 6 | [IVF and quantization](../../concepts/vector-db/ivf-and-quantization.md) | cluster-and-probe; PQ; choosing an index |
 
+### Memory & context (Batch 04)
+
+| # | Note | Topic |
+|---|---|---|
+| 7 | [State vs. memory](../../concepts/memory/state-vs-memory.md) | rewindable state vs. durable memory |
+| 8 | [Short-term, long-term, and external memory](../../concepts/memory/memory-types.md) | the three tiers; RAM/disk |
+| 9 | [The memory lifecycle](../../concepts/memory/memory-lifecycle.md) | create/read/update/delete; consolidation; consistency |
+| 10 | [Context engineering](../../concepts/context/context-engineering.md) | write/select/compress/isolate |
+| 11 | [Context strategies](../../concepts/context/context-strategies.md) | just-in-time retrieval; compaction; note-taking; isolation |
+| 12 | [Context rot and failure modes](../../concepts/context/context-rot-and-failure-modes.md) | why long contexts degrade |
+
+## Labs
+
+- [`labs/03-rag-and-ann/`](../../labs/03-rag-and-ann/) — a minimal RAG pipeline and an exact-vs-IVF nearest-neighbor tradeoff study.
+- [`labs/04-memory-and-context/`](../../labs/04-memory-and-context/) — a checkpointed state-vs-memory agent and a context-budget assembler.
 ### Memory & context — next batch
 
 | # | Note | Topic |
@@ -40,6 +57,10 @@ How systems give a frozen model fresh, grounded knowledge — and how agents kee
 
 - [`math-foundations/03-nearest-neighbor-search.md`](../../math-foundations/03-nearest-neighbor-search.md) — the k-NN problem, exact cost, recall@k, and the IVF tradeoff.
 
+## Diagrams
+
+- [`diagrams/rag-pipeline.md`](../../diagrams/rag-pipeline.md) — the indexing and query phases of RAG.
+- [`diagrams/agent-state-and-memory.md`](../../diagrams/agent-state-and-memory.md) — state, memory, and the assembled context window.
 ## Diagram
 
 - [`diagrams/rag-pipeline.md`](../../diagrams/rag-pipeline.md) — the indexing and query phases of RAG.
