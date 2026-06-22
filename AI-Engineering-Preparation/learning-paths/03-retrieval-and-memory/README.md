@@ -2,6 +2,8 @@
 
 How systems give a frozen model fresh, grounded knowledge — and how agents keep track of what they are doing across long tasks. This path covers retrieval-augmented generation, the vector databases under it, and the separation of agent state from memory.
 
+> Status: **retrieval delivered** (Batch 03). RAG and vector-database notes, a runnable lab, a math page, and a diagram are in place. Memory and context engineering complete this path in the next batch.
+
 ## Learning objectives
 
 - Build a RAG pipeline: chunk, embed, retrieve, rerank, generate, and cite.
@@ -9,26 +11,42 @@ How systems give a frozen model fresh, grounded knowledge — and how agents kee
 - Separate agent state (the current task) from memory (what carries across tasks).
 - Design a memory lifecycle and a context budget that does not overflow the window.
 
-## Planned modules
+## Modules
 
-1. RAG end-to-end: the retrieve-then-generate pattern.
-2. Chunking, embeddings, and hybrid retrieval.
-3. Reranking and citation/attribution.
-4. Vector databases and ANN indexes (HNSW, IVF, product quantization).
-5. Agent state vs. memory: short-term, long-term, external.
-6. The memory lifecycle and consistency under change.
-7. Context engineering: budgeting the window.
+### Retrieval — delivered
+
+| # | Note | Topic |
+|---|---|---|
+| 1 | [RAG end-to-end](../../concepts/rag/rag-end-to-end.md) | retrieve-then-generate; grounding; abstention |
+| 2 | [Chunking and retrieval](../../concepts/rag/chunking-and-retrieval.md) | chunk sizing; lexical/dense/hybrid; top-k |
+| 3 | [Reranking and citation](../../concepts/rag/reranking-and-citation.md) | cross-encoder rerank; verifiable citation; coverage |
+| 4 | [Similarity and approximate nearest neighbors](../../concepts/vector-db/similarity-and-ann.md) | why exact stalls; recall@k; index families |
+| 5 | [HNSW](../../concepts/vector-db/hnsw.md) | navigable graphs; layers; efSearch |
+| 6 | [IVF and quantization](../../concepts/vector-db/ivf-and-quantization.md) | cluster-and-probe; PQ; choosing an index |
+
+### Memory & context — next batch
+
+| # | Note | Topic |
+|---|---|---|
+| 7 | Agent state vs. memory | short-term, long-term, external |
+| 8 | The memory lifecycle | create, update, summarize, delete; consistency |
+| 9 | Context engineering | budgeting the window |
+
+## Lab
+
+- [`labs/03-rag-and-ann/`](../../labs/03-rag-and-ann/) — a minimal RAG pipeline and an exact-vs-IVF nearest-neighbor tradeoff study; offline, deterministic, with self-tests.
+
+## Math
+
+- [`math-foundations/03-nearest-neighbor-search.md`](../../math-foundations/03-nearest-neighbor-search.md) — the k-NN problem, exact cost, recall@k, and the IVF tradeoff.
+
+## Diagram
+
+- [`diagrams/rag-pipeline.md`](../../diagrams/rag-pipeline.md) — the indexing and query phases of RAG.
 
 ## Concept areas in this path
 
-- [`concepts/rag`](../../concepts/rag/)
-- [`concepts/vector-db`](../../concepts/vector-db/)
-- [`concepts/memory`](../../concepts/memory/)
-- [`concepts/context`](../../concepts/context/)
-
-## Capstone
-
-- [`projects/rag-with-evals`](../../projects/rag-with-evals/)
+- [`concepts/rag`](../../concepts/rag/) · [`concepts/vector-db`](../../concepts/vector-db/) · [`concepts/memory`](../../concepts/memory/) · [`concepts/context`](../../concepts/context/)
 
 ## References
 

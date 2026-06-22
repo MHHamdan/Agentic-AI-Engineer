@@ -20,7 +20,10 @@ Usage:
     python qlearning.py --demo
 """
 from __future__ import annotations
-import argparse, random, sys
+
+import argparse
+import random
+import sys
 
 N = 4                      # 4x4 grid
 START = 0                  # top-left
@@ -32,10 +35,14 @@ OPTIMAL_STEPS = 2 * (N - 1)  # Manhattan distance start -> goal
 def step(state: int, action: int) -> tuple[int, float, bool]:
     """Deterministic transition. Reward: +10 at the goal, -1 per step otherwise (so shorter is better)."""
     r, c = divmod(state, N)
-    if action == 0:   r = max(0, r - 1)
-    elif action == 1: r = min(N - 1, r + 1)
-    elif action == 2: c = max(0, c - 1)
-    else:             c = min(N - 1, c + 1)
+    if action == 0:
+        r = max(0, r - 1)
+    elif action == 1:
+        r = min(N - 1, r + 1)
+    elif action == 2:
+        c = max(0, c - 1)
+    else:
+        c = min(N - 1, c + 1)
     ns = r * N + c
     return ns, (10.0 if ns == GOAL else -1.0), ns == GOAL
 
@@ -67,7 +74,8 @@ def greedy_policy(Q) -> list[int]:
 
 
 def greedy_path(Q, max_len: int = 50) -> list[int]:
-    s = START; path = [s]
+    s = START
+    path = [s]
     for _ in range(max_len):
         s, _, done = step(s, _argmax(Q[s]))
         path.append(s)
