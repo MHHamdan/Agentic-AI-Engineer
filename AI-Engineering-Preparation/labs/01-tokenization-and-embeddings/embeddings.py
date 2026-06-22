@@ -19,7 +19,10 @@ Usage:
     python embeddings.py --self-test
 """
 from __future__ import annotations
-import argparse, math, sys
+
+import argparse
+import math
+import sys
 
 CORPUS = [
     "the cat ate the food", "the dog ate the food", "the cat is a pet",
@@ -61,8 +64,9 @@ def ppmi(co: list[list[float]]) -> list[list[float]]:
 
 
 def cosine(a: list[float], b: list[float]) -> float:
-    dot = sum(x * y for x, y in zip(a, b))
-    na = math.sqrt(sum(x * x for x in a)); nb = math.sqrt(sum(y * y for y in b))
+    dot = sum(x * y for x, y in zip(a, b, strict=False))
+    na = math.sqrt(sum(x * x for x in a))
+    nb = math.sqrt(sum(y * y for y in b))
     return dot / (na * nb) if na and nb else 0.0
 
 

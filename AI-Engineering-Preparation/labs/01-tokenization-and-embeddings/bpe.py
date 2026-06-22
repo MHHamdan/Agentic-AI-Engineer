@@ -19,14 +19,16 @@ Usage:
     python bpe.py --self-test
 """
 from __future__ import annotations
-import argparse, sys
+
+import argparse
+import sys
 from collections import Counter
 
 END = "</w>"  # marks the end of a word so merges don't cross word boundaries
 
 
 def _pairs(symbols: list[str]) -> list[tuple[str, str]]:
-    return list(zip(symbols[:-1], symbols[1:]))
+    return list(zip(symbols[:-1], symbols[1:], strict=False))
 
 
 def train(corpus_freq: dict[str, int], num_merges: int) -> list[tuple[str, str]]:
