@@ -1,0 +1,16 @@
+Deep Generative Models module — Licensing
+=========================================
+
+Dual-licensed, consistent with the parent repository.
+
+SPDX-License-Identifier: Apache-2.0 AND CC-BY-4.0
+
+1. Source code (snippets, configuration)        — Apache-2.0
+   https://www.apache.org/licenses/LICENSE-2.0
+2. Prose and diagrams (Markdown, figures)        — CC-BY-4.0
+   https://creativecommons.org/licenses/by/4.0/
+
+Referenced papers remain under their own terms and are cited, not reproduced.
+This module contains no text copied from any source document; the explanations
+are original. If the parent repository carries top-level LICENSE files, those
+govern in case of conflict.
